@@ -1,32 +1,29 @@
 import React from "react";
-import { Button, CSSReset } from "@chakra-ui/core";
+import { CSSReset } from "@chakra-ui/core";
 import { ThemeProvider } from "@chakra-ui/core";
-import logo from "./logo.svg";
 import "./App.css";
 import HeaderBar from "./components/HeaderBar";
+import Content from "./components/Content";
+import { Box } from "@chakra-ui/core";
+import Garage from "./components/Garage";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <ThemeProvider>
       <CSSReset />
-      <HeaderBar />
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <Button variantColor="teal">Test</Button>
-        </header>
-      </div>
+      <BrowserRouter>
+        <Box pos="fixed" w="100%" h="100%" top="0" left="0">
+          <HeaderBar />
+          <Content>
+            <Switch>
+              <Route path="/garage">
+                <Garage />
+              </Route>
+            </Switch>
+          </Content>
+        </Box>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
