@@ -1,19 +1,15 @@
 import React from "react";
 import { Box } from "@chakra-ui/core";
 
-const CardExample = () => <Box h="2rem" bg="tomato" margin="0.2rem"></Box>;
+const Separator = () => <Box w="1rem" />;
 
-const ContentPanel = () => (
-  <Box w="10rem" h="100%" bg="white" overflowY="scroll">
-    <CardExample />
-    <CardExample />
-    <CardExample />
-    <CardExample />
-    <CardExample />
-    <CardExample />
-    <CardExample />
-    <CardExample />
-  </Box>
+const ContentPanel = ({ separator, children }) => (
+  <>
+    {separator && <Separator />}
+    <Box minW="10rem" h="100%" bg="white" overflowY="scroll">
+      {children}
+    </Box>
+  </>
 );
 
 export default ContentPanel;
