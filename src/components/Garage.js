@@ -9,6 +9,7 @@ const Garage = () => (
   <Flex justifyContent="center">
     <ContentPanel>
       <CardCard />
+      <CardCard />
     </ContentPanel>
     <ContentPanel separator>
       <CardExample />
