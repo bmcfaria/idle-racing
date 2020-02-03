@@ -17,14 +17,14 @@ const AttributeInfo = ({ name, value, upgrade, max }) => (
 );
 
 const CardCard = ({ image }) => (
-  <Flex w="16rem" margin="0.4rem 0.2rem" bg="antiquewhite">
+  <Flex w="16rem" margin="0.6rem 0.2rem">
     <Box w="5rem">
-      <Image w="100%" h="4.5rem" alt="car" src={image} bg="tomato" />
+      <Image w="100%" h="4.5rem" alt="car" bg="lightgray" />
       <Text textAlign="center" w="100%" fontSize="sm">
         Type: 4x4
       </Text>
     </Box>
-    <Box flexGrow="1" marginLeft="0.2rem" bg="lightgray">
+    <Box flexGrow="1" marginLeft="0.2rem">
       <Text textAlign="left" w="100%" fontSize="md">
         Porsche 911 Carrera
       </Text>
