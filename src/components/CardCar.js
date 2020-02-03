@@ -1,25 +1,11 @@
 import React from "react";
 import { Box, Flex, Image, Text } from "@chakra-ui/core";
-import AttributesBar from "./AttributesBar";
+import AttributeInfo from "./AttributeInfo";
 
-const AttributeInfo = ({ name, value, upgrade, max }) => (
-  <Flex>
-    <Box>
-      <Text textAlign="left" fontSize="xs">
-        {name}
-      </Text>
-      <AttributesBar upgrade={upgrade} max={max} />
-    </Box>
-    <Text textAlign="right" w="100%" fontSize="sm">
-      {value}
-    </Text>
-  </Flex>
-);
-
-const CardCard = ({ image }) => (
+const CardCar = ({ image }) => (
   <Flex w="16rem" margin="0.6rem 0.2rem">
     <Box w="5rem">
-      <Image w="100%" h="4.5rem" alt="car" bg="lightgray" />
+      <Image w="100%" h="4.5rem" alt="car" bg="lightgray" src={image} />
       <Text textAlign="center" w="100%" fontSize="sm">
         Type: 4x4
       </Text>
@@ -35,4 +21,4 @@ const CardCard = ({ image }) => (
   </Flex>
 );
 
-export default CardCard;
+export default CardCar;

@@ -12,12 +12,8 @@ const Breadcrumbs = () => (
       <BreadcrumbLink href="#">Home</BreadcrumbLink>
     </BreadcrumbItem>
 
-    <BreadcrumbItem>
-      <BreadcrumbLink href="#">Docs</BreadcrumbLink>
-    </BreadcrumbItem>
-
     <BreadcrumbItem isCurrentPage>
-      <BreadcrumbLink href="#">Breadcrumb</BreadcrumbLink>
+      <BreadcrumbLink href="#">Garage</BreadcrumbLink>
     </BreadcrumbItem>
   </Breadcrumb>
 );

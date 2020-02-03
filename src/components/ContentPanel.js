@@ -1,14 +1,24 @@
 import React from "react";
-import { Box } from "@chakra-ui/core";
+import { Box, Text, Flex } from "@chakra-ui/core";
 
 const Separator = () => <Box w="1rem" />;
 
-const ContentPanel = ({ separator, children }) => (
+const ContentPanel = ({ title, separator, wrap, children }) => (
   <>
     {separator && <Separator />}
-    <Box minW="10rem" h="100%" bg="white" overflowY="scroll">
-      {children}
-    </Box>
+    <Flex
+      minW="10rem"
+      h={wrap ? "fit-content" : "100%"}
+      bg="white"
+      direction="column"
+    >
+      <Text textAlign="center" fontWeight="bold">
+        {title}
+      </Text>
+      <Box minW="100%" h="100%" bg="white" overflowY="scroll">
+        {children}
+      </Box>
+    </Flex>
   </>
 );
 
