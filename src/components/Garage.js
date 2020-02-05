@@ -1,65 +1,91 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Flex } from "@chakra-ui/core";
 import ContentPanel from "./ContentPanel";
 import CardCard from "./CardCar";
 import CarDetails from "./CarDetails";
+import { CardCarContext } from "../context";
 
-const CardExample = () => <Box h="2rem" bg="tomato" margin="0.2rem"></Box>;
+const generateRandomAttribute = (base, unit, max, basePrice) => {
+  const upgrade = Math.round(Math.random() * max);
+  const value = base + unit * upgrade;
+  const nextValue = base + unit * (upgrade + 1);
+  const price = basePrice + Math.pow(basePrice * 0.1, upgrade);
+
+  return {
+    value: value,
+    upgradeValue: upgrade < max ? nextValue : value,
+    upgrade: upgrade,
+    max: max,
+    price: upgrade < max ? price : undefined,
+    priceRaw: price
+  };
+};
 
 const Divider = () => <Box w="100%" h="0" borderTop="1px solid black" />;
 
 class Car {
-  price = 599;
   image = undefined;
 
   constructor(id, name = "Porsche 911 Carrera", type = "4x4") {
     this.id = id;
     this.name = name;
     this.type = type;
-    this.acceleration = {
-      value: 180,
-      upgradeValue: 200,
-      upgrade: 1 + Math.round(Math.random()),
-      max: 5
-    };
-    this.topSpeed = {
-      value: 200,
-      upgradeValue: 220,
-      upgrade: 3,
-      max: 5
-    };
-    this.handling = {
-      value: 220,
-      upgradeValue: 240,
-      upgrade: 4,
-      max: 5
-    };
+
+    this.acceleration = generateRandomAttribute(100, 20, 5, 50);
+    this.topSpeed = generateRandomAttribute(100, 20, 5, 50);
+    this.handling = generateRandomAttribute(100, 20, 5, 50);
+
+    this.price =
+      500 +
+      (this.acceleration.price || this.acceleration.priceRaw) +
+      (this.topSpeed.price || this.topSpeed.priceRaw) +
+      (this.handling.price || this.handling.priceRaw);
   }
 }
 
-const cars = [...new Array(20)].map((_, index) => new Car(index));
+//TODO: change: Mock values
+const cars = [...new Array(20)].map((_, index) => new Car(index + 1));
 
-const Garage = () => (
-  <Flex justifyContent="center">
-    <ContentPanel title="Select Car">
-      {cars.map((car, index) => (
-        <React.Fragment key={car.id}>
-          {index > 0 && <Divider />}
-          <CardCard
-            name={car.name}
-            type={car.type}
-            image={car.image}
-            acceleration={car.acceleration}
-            topSpeed={car.topSpeed}
-            handling={car.handling}
+const Garage = () => {
+  const [selected, setSelected] = useState(1);
+
+  //TODO: change: simple selector, only for mocked data
+  const selectedCar = cars[selected - 1];
+
+  return (
+    <CardCarContext.Provider value={{ selected, setSelected }}>
+      <Flex justifyContent="center">
+        <ContentPanel title="Select Car">
+          {cars.map((car, index) => (
+            <React.Fragment key={car.id}>
+              {index > 0 && <Divider />}
+              <CardCard
+                id={car.id}
+                name={car.name}
+                type={car.type}
+                image={car.image}
+                acceleration={car.acceleration}
+                topSpeed={car.topSpeed}
+                handling={car.handling}
+              />
+            </React.Fragment>
+          ))}
+        </ContentPanel>
+        <ContentPanel title="Car Details" separator wrap>
+          <CarDetails
+            id={selectedCar.id}
+            name={selectedCar.name}
+            type={selectedCar.type}
+            image={selectedCar.image}
+            acceleration={selectedCar.acceleration}
+            topSpeed={selectedCar.topSpeed}
+            handling={selectedCar.handling}
+            price={selectedCar.price}
           />
-        </React.Fragment>
-      ))}
-    </ContentPanel>
-    <ContentPanel title="Car Details" separator wrap>
-      <CarDetails />
-    </ContentPanel>
-  </Flex>
-);
+        </ContentPanel>
+      </Flex>
+    </CardCarContext.Provider>
+  );
+};
 
 export default Garage;
