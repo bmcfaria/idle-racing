@@ -47,7 +47,7 @@ class Car {
 const cars = [...new Array(20)].map((_, index) => new Car(index + 1));
 
 const Garage = () => {
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState(0);
 
   //TODO: change: simple selector, only for mocked data
   const selectedCar = cars[selected - 1];
@@ -71,18 +71,20 @@ const Garage = () => {
             </React.Fragment>
           ))}
         </ContentPanel>
-        <ContentPanel title="Car Details" separator wrap>
-          <CarDetails
-            id={selectedCar.id}
-            name={selectedCar.name}
-            type={selectedCar.type}
-            image={selectedCar.image}
-            acceleration={selectedCar.acceleration}
-            topSpeed={selectedCar.topSpeed}
-            handling={selectedCar.handling}
-            price={selectedCar.price}
-          />
-        </ContentPanel>
+        {selectedCar && (
+          <ContentPanel title="Car Details" separator wrap>
+            <CarDetails
+              id={selectedCar.id}
+              name={selectedCar.name}
+              type={selectedCar.type}
+              image={selectedCar.image}
+              acceleration={selectedCar.acceleration}
+              topSpeed={selectedCar.topSpeed}
+              handling={selectedCar.handling}
+              price={selectedCar.price}
+            />
+          </ContentPanel>
+        )}
       </Flex>
     </CardCarContext.Provider>
   );

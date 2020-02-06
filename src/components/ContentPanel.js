@@ -15,7 +15,13 @@ const ContentPanel = ({ title, separator, wrap, children }) => (
       <Text textAlign="center" fontWeight="bold">
         {title}
       </Text>
-      <Box minW="100%" h="100%" bg="white" overflowY="scroll">
+      <Box
+        minW="100%"
+        h={wrap ? "fit-content" : "10rem"}
+        flexGrow="1"
+        bg="white"
+        overflowY="scroll"
+      >
         {children}
       </Box>
     </Flex>

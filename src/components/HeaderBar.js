@@ -2,9 +2,8 @@ import React from "react";
 import { Box } from "@chakra-ui/core";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/core";
 import { Flex } from "@chakra-ui/core";
-import { Button, ButtonGroup } from "@chakra-ui/core";
 import { Text } from "@chakra-ui/core";
-import { Link, useRouteMatch } from "react-router-dom";
+import Tabs from "./Tabs";
 
 const Breadcrumbs = () => (
   <Breadcrumb>
@@ -30,45 +29,12 @@ const Title = () => (
   </Flex>
 );
 
-const TabsButton = ({ to, children }) => {
-  const match = useRouteMatch(to);
-  return (
-    <Button
-      as={Link}
-      to={to}
-      variant={match ? "ghost" : "outline"}
-      borderRadius="0"
-      borderColor="black"
-      bg={match ? "lightgray" : "none"}
-    >
-      {children}
-    </Button>
-  );
-};
-
-const Tabs = () => (
-  <ButtonGroup spacing={0}>
-    <TabsButton to="/garage">Garage</TabsButton>
-    <TabsButton
-      as={Link}
-      to="/dealer"
-      variant="ghost"
-      borderRadius="0"
-      bg="lightgray"
-    >
-      Dealer
-    </TabsButton>
-    <TabsButton to="/race">Race</TabsButton>
-    <TabsButton to="/settings">Settings</TabsButton>
-  </ButtonGroup>
-);
-
-const HeaderBar = props => (
+const HeaderBar = () => (
   <header>
     <Box>
       <Flex align="center">
         <Title />
-        <Tabs />
+        <Tabs display={["none", "none", "flex"]} icon />
         <Box flexGrow="1" h="2.5rem" borderBottom="1px solid black" />
       </Flex>
       <Breadcrumbs />

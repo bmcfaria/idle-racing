@@ -1,28 +1,36 @@
 import React from "react";
-import { CSSReset } from "@chakra-ui/core";
+import { CSSReset, Flex } from "@chakra-ui/core";
 import { ThemeProvider } from "@chakra-ui/core";
 import "./App.css";
 import HeaderBar from "./components/HeaderBar";
 import Content from "./components/Content";
-import { Box } from "@chakra-ui/core";
 import Garage from "./components/Garage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Tabs from "./components/Tabs";
+import styled from "@emotion/styled";
+
+const BottomTabs = styled(Tabs)({
+  "& > a": {
+    flexGrow: 1
+  }
+});
 
 function App() {
   return (
     <ThemeProvider>
       <CSSReset />
       <BrowserRouter>
-        <Box pos="fixed" w="100%" h="100%" top="0" left="0">
+        <Flex direction="column" pos="fixed" w="100%" h="100%" top="0" left="0">
           <HeaderBar />
-          <Content>
+          <Content flexGrow="1">
             <Switch>
               <Route path="/garage">
                 <Garage />
               </Route>
             </Switch>
           </Content>
-        </Box>
+          <BottomTabs display={["flex", "flex", "none"]} iconOnly />
+        </Flex>
       </BrowserRouter>
     </ThemeProvider>
   );
