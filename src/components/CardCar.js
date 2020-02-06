@@ -26,7 +26,7 @@ const CardCar = ({
     } else {
       history.push({
         pathname: location.pathname,
-        state: { ...(location.state || {}), car: id }
+        state: { car: id }
       });
     }
   };

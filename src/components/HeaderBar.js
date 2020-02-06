@@ -1,32 +1,62 @@
 import React from "react";
 import { Box } from "@chakra-ui/core";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/core";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator
+} from "@chakra-ui/core";
 import { Flex } from "@chakra-ui/core";
 import { Text } from "@chakra-ui/core";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
 
 const Breadcrumbs = () => {
+  const location = useLocation();
+
   const matchGarage = useRouteMatch("/garage");
   const matchDealer = useRouteMatch("/dealer");
   const matchRace = useRouteMatch("/race");
   const matchSettings = useRouteMatch("/settings");
 
-  let selectedPage = "";
+  let selectedPage;
   selectedPage = matchGarage ? "Garage" : selectedPage;
   selectedPage = matchDealer ? "Dealer" : selectedPage;
   selectedPage = matchRace ? "Race" : selectedPage;
   selectedPage = matchSettings ? "Settings" : selectedPage;
 
+  let selectedPagePath = "/";
+  selectedPagePath = matchGarage ? "/garage" : selectedPagePath;
+  selectedPagePath = matchDealer ? "/dealer" : selectedPagePath;
+  selectedPagePath = matchRace ? "/race" : selectedPagePath;
+  selectedPagePath = matchSettings ? "/settings" : selectedPagePath;
+
+  const selecterCar = !!location?.state?.car;
+  console.log(selecterCar);
+
   return (
-    <Breadcrumb>
+    <Breadcrumb addSeparator={false}>
       <BreadcrumbItem>
-        <BreadcrumbLink href="#">Home</BreadcrumbLink>
+        <BreadcrumbLink as={Link} to="/">
+          Home
+        </BreadcrumbLink>
       </BreadcrumbItem>
 
-      <BreadcrumbItem isCurrentPage>
-        <BreadcrumbLink href="#">{selectedPage}</BreadcrumbLink>
-      </BreadcrumbItem>
+      {selectedPage && (
+        <BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbLink as={Link} to={selectedPagePath}>
+            {selectedPage}
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+      )}
+
+      {selecterCar && (
+        <BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbLink>Car</BreadcrumbLink>
+        </BreadcrumbItem>
+      )}
     </Breadcrumb>
   );
 };
