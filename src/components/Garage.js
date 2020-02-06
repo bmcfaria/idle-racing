@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Flex } from "@chakra-ui/core";
+import { useLocation } from "react-router-dom";
 import ContentPanel from "./ContentPanel";
 import CardCard from "./CardCar";
 import CarDetails from "./CarDetails";
-import { CardCarContext } from "../context";
 
 const generateRandomAttribute = (base, unit, max, basePrice) => {
   const upgrade = Math.round(Math.random() * max);
@@ -46,47 +46,66 @@ class Car {
 //TODO: change: Mock values
 const cars = [...new Array(20)].map((_, index) => new Car(index + 1));
 
+const Separator = props => <Box w="1rem" {...props} />;
+
 const Garage = () => {
-  const [selected, setSelected] = useState(0);
+  const location = useLocation();
+  console.log(location);
+
+  const selected = location?.state?.car;
 
   //TODO: change: simple selector, only for mocked data
   const selectedCar = cars[selected - 1];
 
   return (
-    <CardCarContext.Provider value={{ selected, setSelected }}>
-      <Flex justifyContent="center">
-        <ContentPanel title="Select Car">
-          {cars.map((car, index) => (
-            <React.Fragment key={car.id}>
-              {index > 0 && <Divider />}
-              <CardCard
-                id={car.id}
-                name={car.name}
-                type={car.type}
-                image={car.image}
-                acceleration={car.acceleration}
-                topSpeed={car.topSpeed}
-                handling={car.handling}
-              />
-            </React.Fragment>
-          ))}
-        </ContentPanel>
-        {selectedCar && (
-          <ContentPanel title="Car Details" separator wrap>
-            <CarDetails
-              id={selectedCar.id}
-              name={selectedCar.name}
-              type={selectedCar.type}
-              image={selectedCar.image}
-              acceleration={selectedCar.acceleration}
-              topSpeed={selectedCar.topSpeed}
-              handling={selectedCar.handling}
-              price={selectedCar.price}
+    <Flex justifyContent="center">
+      <ContentPanel
+        title="Select Car"
+        display={[
+          selectedCar ? "none" : "flex",
+          selectedCar ? "none" : "flex",
+          "flex"
+        ]}
+      >
+        {cars.map((car, index) => (
+          <React.Fragment key={car.id}>
+            {index > 0 && <Divider />}
+            <CardCard
+              id={car.id}
+              name={car.name}
+              type={car.type}
+              image={car.image}
+              acceleration={car.acceleration}
+              topSpeed={car.topSpeed}
+              handling={car.handling}
             />
-          </ContentPanel>
-        )}
-      </Flex>
-    </CardCarContext.Provider>
+          </React.Fragment>
+        ))}
+      </ContentPanel>
+      {selectedCar && (
+        <Separator
+          display={[
+            selectedCar ? "none" : "flex",
+            selectedCar ? "none" : "flex",
+            "flex"
+          ]}
+        />
+      )}
+      {selectedCar && (
+        <ContentPanel title="Car Details" wrap>
+          <CarDetails
+            id={selectedCar.id}
+            name={selectedCar.name}
+            type={selectedCar.type}
+            image={selectedCar.image}
+            acceleration={selectedCar.acceleration}
+            topSpeed={selectedCar.topSpeed}
+            handling={selectedCar.handling}
+            price={selectedCar.price}
+          />
+        </ContentPanel>
+      )}
+    </Flex>
   );
 };
 

@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Box, Flex, Image, Text } from "@chakra-ui/core";
 import AttributeInfo from "./AttributeInfo";
-import { CardCarContext } from "../context";
+import { useLocation, useHistory } from "react-router-dom";
 
 const CardCar = ({
   id,
@@ -12,11 +12,28 @@ const CardCar = ({
   topSpeed,
   handling
 }) => {
-  const { selected, setSelected } = useContext(CardCarContext);
+  const location = useLocation();
+  const history = useHistory();
+
+  // To improve mobile navigation,
+  // this way the back button will un-select instead off showing the previous selected
+  const setSelected = () => {
+    if (location?.state?.car) {
+      history.replace({
+        pathname: location.pathname,
+        state: { ...(location.state || {}), car: id }
+      });
+    } else {
+      history.push({
+        pathname: location.pathname,
+        state: { ...(location.state || {}), car: id }
+      });
+    }
+  };
 
   return (
-    <Box w="16rem" position="relative" onClick={() => setSelected(id)}>
-      {selected === id && (
+    <Box w="16rem" position="relative" onClick={setSelected}>
+      {location?.state?.car === id && (
         <Box position="absolute" w="100%" h="100%" bg="#B2F5EA77" />
       )}
       <Flex w="100%" padding="0.6rem 0.2rem" bg="white">

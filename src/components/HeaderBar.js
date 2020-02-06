@@ -3,19 +3,33 @@ import { Box } from "@chakra-ui/core";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/core";
 import { Flex } from "@chakra-ui/core";
 import { Text } from "@chakra-ui/core";
+import { useRouteMatch } from "react-router-dom";
 import Tabs from "./Tabs";
 
-const Breadcrumbs = () => (
-  <Breadcrumb>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="#">Home</BreadcrumbLink>
-    </BreadcrumbItem>
+const Breadcrumbs = () => {
+  const matchGarage = useRouteMatch("/garage");
+  const matchDealer = useRouteMatch("/dealer");
+  const matchRace = useRouteMatch("/race");
+  const matchSettings = useRouteMatch("/settings");
 
-    <BreadcrumbItem isCurrentPage>
-      <BreadcrumbLink href="#">Garage</BreadcrumbLink>
-    </BreadcrumbItem>
-  </Breadcrumb>
-);
+  let selectedPage = "";
+  selectedPage = matchGarage ? "Garage" : selectedPage;
+  selectedPage = matchDealer ? "Dealer" : selectedPage;
+  selectedPage = matchRace ? "Race" : selectedPage;
+  selectedPage = matchSettings ? "Settings" : selectedPage;
+
+  return (
+    <Breadcrumb>
+      <BreadcrumbItem>
+        <BreadcrumbLink href="#">Home</BreadcrumbLink>
+      </BreadcrumbItem>
+
+      <BreadcrumbItem isCurrentPage>
+        <BreadcrumbLink href="#">{selectedPage}</BreadcrumbLink>
+      </BreadcrumbItem>
+    </Breadcrumb>
+  );
+};
 
 const Title = () => (
   <Flex
