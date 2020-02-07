@@ -61,8 +61,6 @@ const Race = () => {
   //TODO: change: simple selector, only for mocked data
   const selectedCar = cars[selectedCarId - 1];
 
-  console.log(selectedRace, selectedCar);
-
   return (
     <Flex justifyContent="center">
       <RacePanel races={races} display={displayResponsivePanel(selectedRace)} />
