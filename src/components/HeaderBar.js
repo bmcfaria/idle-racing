@@ -69,7 +69,7 @@ const Title = () => (
     paddingRight="1rem"
     borderBottom="1px solid black"
   >
-    <Text fontSize="xl">Iddle Racing</Text>
+    <Text fontSize="xl">Idle Racing</Text>
   </Flex>
 );
 
