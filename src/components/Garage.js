@@ -4,53 +4,15 @@ import { useLocation } from "react-router-dom";
 import ContentPanel from "./ContentPanel";
 import CardCard from "./CardCar";
 import CarDetails from "./CarDetails";
-
-const generateRandomAttribute = (base, unit, max, basePrice) => {
-  const upgrade = Math.round(Math.random() * max);
-  const value = base + unit * upgrade;
-  const nextValue = base + unit * (upgrade + 1);
-  const price = basePrice + Math.pow(basePrice * 0.1, upgrade);
-
-  return {
-    value: value,
-    upgradeValue: upgrade < max ? nextValue : value,
-    upgrade: upgrade,
-    max: max,
-    price: upgrade < max ? price : undefined,
-    priceRaw: price
-  };
-};
+import { cars } from "../helpers/mockData";
+import { displayResponsivePanel } from "../helpers/utils";
 
 const Divider = () => <Box w="100%" h="0" borderTop="1px solid black" />;
-
-class Car {
-  image = undefined;
-
-  constructor(id, name = "Porsche 911 Carrera", type = "4x4") {
-    this.id = id;
-    this.name = name;
-    this.type = type;
-
-    this.acceleration = generateRandomAttribute(100, 20, 5, 50);
-    this.topSpeed = generateRandomAttribute(100, 20, 5, 50);
-    this.handling = generateRandomAttribute(100, 20, 5, 50);
-
-    this.price =
-      500 +
-      (this.acceleration.price || this.acceleration.priceRaw) +
-      (this.topSpeed.price || this.topSpeed.priceRaw) +
-      (this.handling.price || this.handling.priceRaw);
-  }
-}
-
-//TODO: change: Mock values
-const cars = [...new Array(20)].map((_, index) => new Car(index + 1));
 
 const Separator = props => <Box w="1rem" {...props} />;
 
 const Garage = () => {
   const location = useLocation();
-  console.log(location);
 
   const selected = location?.state?.car;
 
@@ -61,11 +23,7 @@ const Garage = () => {
     <Flex justifyContent="center">
       <ContentPanel
         title="Select Car"
-        display={[
-          selectedCar ? "none" : "flex",
-          selectedCar ? "none" : "flex",
-          "flex"
-        ]}
+        display={displayResponsivePanel(selectedCar)}
       >
         {cars.map((car, index) => (
           <React.Fragment key={car.id}>
@@ -83,13 +41,7 @@ const Garage = () => {
         ))}
       </ContentPanel>
       {selectedCar && (
-        <Separator
-          display={[
-            selectedCar ? "none" : "flex",
-            selectedCar ? "none" : "flex",
-            "flex"
-          ]}
-        />
+        <Separator display={displayResponsivePanel(selectedCar)} />
       )}
       {selectedCar && (
         <ContentPanel title="Car Details" wrap>

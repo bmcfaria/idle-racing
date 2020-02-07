@@ -32,7 +32,6 @@ const Breadcrumbs = () => {
   selectedPagePath = matchSettings ? "/settings" : selectedPagePath;
 
   const selecterCar = !!location?.state?.car;
-  console.log(selecterCar);
 
   return (
     <Breadcrumb addSeparator={false}>

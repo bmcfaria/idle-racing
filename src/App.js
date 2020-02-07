@@ -1,13 +1,13 @@
 import React from "react";
-import { CSSReset, Flex } from "@chakra-ui/core";
-import { ThemeProvider } from "@chakra-ui/core";
+import { CSSReset, Flex, ThemeProvider } from "@chakra-ui/core";
 import "./App.css";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import styled from "@emotion/styled";
 import HeaderBar from "./components/HeaderBar";
 import Content from "./components/Content";
 import Garage from "./components/Garage";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Tabs from "./components/Tabs";
-import styled from "@emotion/styled";
+import Race from "./components/Race";
 
 const BottomTabs = styled(Tabs)({
   "& > a": {
@@ -26,6 +26,9 @@ function App() {
             <Switch>
               <Route path="/garage">
                 <Garage />
+              </Route>
+              <Route path="/race">
+                <Race />
               </Route>
             </Switch>
           </Content>
