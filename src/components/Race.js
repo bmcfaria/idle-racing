@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 import ContentPanel from "./ContentPanel";
 import CardCar from "./CardCar";
 import CardRace from "./CardRace";
-import CarDetails from "./CarDetails";
 import { cars, races } from "../helpers/mockData";
 import { displayResponsivePanel } from "../helpers/utils";
 import RaceDetails from "./RaceDetails";
