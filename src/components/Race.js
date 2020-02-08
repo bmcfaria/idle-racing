@@ -7,6 +7,7 @@ import CardRace from "./CardRace";
 import CarDetails from "./CarDetails";
 import { cars, races } from "../helpers/mockData";
 import { displayResponsivePanel } from "../helpers/utils";
+import RaceDetails from "./RaceDetails";
 
 const Divider = () => <Box w="100%" h="0" borderTop="1px solid black" />;
 
@@ -78,16 +79,15 @@ const Race = () => {
         <Separator display={displayResponsivePanel(selectedCar)} />
       )}
       {selectedCar && (
-        <ContentPanel title="Car Details" wrap>
-          <CarDetails
-            id={selectedCar.id}
-            name={selectedCar.name}
-            type={selectedCar.type}
-            image={selectedCar.image}
-            acceleration={selectedCar.acceleration}
-            topSpeed={selectedCar.topSpeed}
-            handling={selectedCar.handling}
-            price={selectedCar.price}
+        <ContentPanel title="Race Details" wrap>
+          <RaceDetails
+            id={selectedRace.id}
+            name={selectedRace.name}
+            type={selectedRace.type}
+            image={selectedRace.image}
+            prizes={selectedRace.prizes}
+            duration={selectedRace.duration}
+            price={selectedRace.price}
           />
         </ContentPanel>
       )}
