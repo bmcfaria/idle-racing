@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Flex, Image, Text, Button } from "@chakra-ui/core";
 import AttributeInfo from "./AttributeInfo";
+import CardProgressOverlay from "./CardProgressOverlay";
 
 const AttributeUpgrade = ({
   name,
@@ -56,46 +57,60 @@ const CarDetails = ({
   topSpeed,
   handling,
   price
-}) => (
-  <Box w="16rem" margin="0.6rem 0.2rem">
-    <Image w="100%" h="9rem" alt="car" bg="lightgray" />
-    <Text textAlign="center" w="100%" fontSize="md" src={image}>
-      {name}
-    </Text>
-    <Text textAlign="left" w="100%" fontSize="sm">
-      Type: {type}
-    </Text>
-    <AttributeUpgrade
-      name="Acceleration"
-      value={acceleration.value}
-      upgradeValue={acceleration.upgradeValue}
-      upgrade={acceleration.upgrade}
-      max={acceleration.max}
-      price={acceleration.price}
-    />
-    <AttributeUpgrade
-      name="Top Speed"
-      value={topSpeed.value}
-      upgradeValue={topSpeed.upgradeValue}
-      upgrade={topSpeed.upgrade}
-      max={topSpeed.max}
-      price={topSpeed.price}
-    />
-    <AttributeUpgrade
-      name="Handling"
-      value={handling.value}
-      upgradeValue={handling.upgradeValue}
-      upgrade={handling.upgrade}
-      max={handling.max}
-      price={handling.price}
-    />
-    <Flex>
-      <Button variantColor="teal" variant="outline" margin="1rem auto">
-        Sell (${price})
-      </Button>
-    </Flex>
-  </Box>
-);
+}) => {
+  const racing = false;
+
+  return (
+    <Box position="relative" w="16rem">
+      {racing && (
+        <CardProgressOverlay
+          timeTotal={10}
+          timeLeft={9}
+          label="Race 1"
+          zIndex="1"
+        />
+      )}
+      <Box marginTop="0.6rem" padding="0 0.2rem 0.6rem">
+        <Image w="100%" h="8rem" alt="car" bg="lightgray" />
+        <Text textAlign="center" w="100%" fontSize="md" src={image}>
+          {name}
+        </Text>
+        <Text textAlign="left" w="100%" fontSize="sm">
+          Type: {type}
+        </Text>
+        <AttributeUpgrade
+          name="Acceleration"
+          value={acceleration.value}
+          upgradeValue={acceleration.upgradeValue}
+          upgrade={acceleration.upgrade}
+          max={acceleration.max}
+          price={acceleration.price}
+        />
+        <AttributeUpgrade
+          name="Top Speed"
+          value={topSpeed.value}
+          upgradeValue={topSpeed.upgradeValue}
+          upgrade={topSpeed.upgrade}
+          max={topSpeed.max}
+          price={topSpeed.price}
+        />
+        <AttributeUpgrade
+          name="Handling"
+          value={handling.value}
+          upgradeValue={handling.upgradeValue}
+          upgrade={handling.upgrade}
+          max={handling.max}
+          price={handling.price}
+        />
+        <Flex>
+          <Button variantColor="teal" variant="outline" margin="1rem auto">
+            Sell (${price})
+          </Button>
+        </Flex>
+      </Box>
+    </Box>
+  );
+};
 
 CarDetails.defaultProps = {
   acceleration: {},

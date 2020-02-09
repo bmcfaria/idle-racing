@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Flex, Image, Text } from "@chakra-ui/core";
 import AttributeInfo from "./AttributeInfo";
 import { useLocation, useHistory } from "react-router-dom";
+import CardProgressOverlay from "./CardProgressOverlay";
 
 const CardCar = ({
   id,
@@ -15,9 +16,13 @@ const CardCar = ({
   const location = useLocation();
   const history = useHistory();
 
+  const racing = false;
+
   // To improve mobile navigation,
   // this way the back button will un-select instead off showing the previous selected
   const setSelected = () => {
+    if (racing) return;
+
     if (location?.state?.car) {
       history.replace({
         pathname: location.pathname,
@@ -35,6 +40,9 @@ const CardCar = ({
     <Box w="16rem" position="relative" onClick={setSelected}>
       {location?.state?.car === id && (
         <Box position="absolute" w="100%" h="100%" bg="#B2F5EA77" />
+      )}
+      {racing && (
+        <CardProgressOverlay timeTotal={10} timeLeft={9} label="Race 1" />
       )}
       <Flex w="100%" padding="0.6rem 0.2rem" bg="white">
         <Box w="5rem">
