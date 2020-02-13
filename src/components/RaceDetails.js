@@ -1,12 +1,16 @@
 import React from "react";
 import { Box, Flex, Image, Text, Button } from "@chakra-ui/core";
 import CardProgressOverlay from "./CardProgressOverlay";
+import RaceResults from "./RaceResults";
 
 const RaceDetails = ({ id, name, type, image, prizes, duration, price }) => {
   const racing = false;
+  const results = false;
+
   return (
     <Box position="relative" w="16rem">
       {racing && <CardProgressOverlay timeTotal={10} timeLeft={9} zIndex="1" />}
+      {results && <RaceResults zIndex="1" />}
 
       <Flex flexDirection="column" marginTop="0.6rem" padding="0 0.2rem 0.6rem">
         <Image w="100%" h="8rem" alt="car" bg="lightgray" />
