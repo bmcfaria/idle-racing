@@ -72,13 +72,26 @@ const Title = () => (
   </Flex>
 );
 
+const Score = ({ value }) => (
+  <Flex
+    h="2.5rem"
+    align="center"
+    marginRight="1rem"
+    justifyContent="flex-end"
+  >
+    <Text fontSize="xl" >${value}</Text>
+  </Flex>
+)
+
 const HeaderBar = () => (
   <header>
     <Box>
       <Flex align="center">
         <Title />
         <Tabs display={["none", "none", "flex"]} icon />
-        <Box flexGrow="1" h="2.5rem" borderBottom="1px solid black" />
+        <Box flexGrow="1" h="2.5rem" borderBottom="1px solid black">
+          <Score value={9999999999} />
+        </Box>
       </Flex>
       <Breadcrumbs />
     </Box>
