@@ -10,6 +10,7 @@ import { Flex } from "@chakra-ui/core";
 import { Text } from "@chakra-ui/core";
 import { useRouteMatch, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
+import Notifications from "./Notifications";
 
 const Breadcrumbs = () => {
   const location = useLocation();
@@ -76,7 +77,6 @@ const Score = ({ value }) => (
   <Flex
     h="2.5rem"
     align="center"
-    marginRight="1rem"
     justifyContent="flex-end"
   >
     <Text fontSize="xl" >${value}</Text>
@@ -90,7 +90,10 @@ const HeaderBar = () => (
         <Title />
         <Tabs display={["none", "none", "flex"]} icon />
         <Box flexGrow="1" h="2.5rem" borderBottom="1px solid black">
-          <Score value={9999999999} />
+          <Flex h="2.5rem" justifyContent="flex-end">
+            <Score value={9999999999} />
+            <Notifications />
+          </Flex>
         </Box>
       </Flex>
       <Breadcrumbs />
