@@ -22,8 +22,8 @@ class Car {
     this.name = name;
     this.type = type;
 
-    this.acceleration = generateRandomAttribute(100, 20, 5, 50);
-    this.topSpeed = generateRandomAttribute(100, 20, 5, 50);
+    this.acceleration = generateRandomAttribute(100, 20, 6, 50);
+    this.topSpeed = generateRandomAttribute(100, 20, 4, 50);
     this.handling = generateRandomAttribute(100, 20, 5, 50);
 
     this.price =

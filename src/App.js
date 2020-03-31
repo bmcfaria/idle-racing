@@ -8,6 +8,7 @@ import Content from "./components/Content";
 import Garage from "./components/Garage";
 import Tabs from "./components/Tabs";
 import Race from "./components/Race";
+import Dealer from "./components/Dealer";
 
 const BottomTabs = styled(Tabs)({
   "& > a": {
@@ -29,6 +30,9 @@ function App() {
               </Route>
               <Route path="/race">
                 <Race />
+              </Route>
+              <Route path="/dealer">
+                <Dealer />
               </Route>
             </Switch>
           </Content>

@@ -11,8 +11,8 @@ const AttributeBlock = ({ selected }) => (
   />
 );
 
-const AttributesBar = ({ upgrade = 0, max = 1 }) => (
-  <Flex h="0.3rem">
+const AttributesBar = ({ upgrade = 0, max = 1, ...props }) => (
+  <Flex h="0.3rem" {...props}>
     {[...new Array(max)].map((_, index) => (
       <AttributeBlock selected={index < upgrade} key={index} />
     ))}
