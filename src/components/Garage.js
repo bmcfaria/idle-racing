@@ -4,8 +4,9 @@ import { useLocation } from "react-router-dom";
 import ContentPanel from "./ContentPanel";
 import CardCard from "./CardCar";
 import CarDetails from "./CarDetails";
-import { cars } from "../helpers/mockData";
 import { displayResponsivePanel } from "../helpers/utils";
+import { useSelector } from 'react-redux';
+import { garageCarsSelector } from '../state/selectors';
 
 const Divider = () => <Box w="100%" h="0" borderTop="1px solid black" />;
 
@@ -13,6 +14,7 @@ const Separator = props => <Box w="1rem" {...props} />;
 
 const Garage = () => {
   const location = useLocation();
+  const cars = useSelector(garageCarsSelector)
 
   const selected = location?.state?.car;
 

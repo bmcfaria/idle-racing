@@ -4,9 +4,10 @@ import { useLocation } from "react-router-dom";
 import ContentPanel from "./ContentPanel";
 import CardCar from "./CardCar";
 import CardRace from "./CardRace";
-import { cars, races } from "../helpers/mockData";
 import { displayResponsivePanel } from "../helpers/utils";
 import RaceDetails from "./RaceDetails";
+import { useSelector } from 'react-redux';
+import { garageCarsSelector, tracksSelector } from '../state/selectors';
 
 const Divider = () => <Box w="100%" h="0" borderTop="1px solid black" />;
 
@@ -52,6 +53,8 @@ const CarsPanel = ({ cars, ...props }) => (
 
 const Race = () => {
   const location = useLocation();
+  const cars = useSelector(garageCarsSelector)
+  const races = useSelector(tracksSelector)
 
   const selectedRaceId = location?.state?.race;
   const selectedCarId = location?.state?.car;

@@ -9,6 +9,10 @@ import Garage from "./components/Garage";
 import Tabs from "./components/Tabs";
 import Race from "./components/Race";
 import Dealer from "./components/Dealer";
+import { Provider } from 'react-redux';
+import configureStore from './state/configureStore';
+
+const store = configureStore()
 
 const BottomTabs = styled(Tabs)({
   "& > a": {
@@ -20,25 +24,27 @@ function App() {
   return (
     <ThemeProvider>
       <CSSReset />
-      <BrowserRouter>
-        <Flex direction="column" pos="fixed" w="100%" h="100%" top="0" left="0">
-          <HeaderBar />
-          <Content flexGrow="1">
-            <Switch>
-              <Route path="/garage">
-                <Garage />
-              </Route>
-              <Route path="/race">
-                <Race />
-              </Route>
-              <Route path="/dealer">
-                <Dealer />
-              </Route>
-            </Switch>
-          </Content>
-          <BottomTabs display={["flex", "flex", "none"]} iconOnly />
-        </Flex>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Flex direction="column" pos="fixed" w="100%" h="100%" top="0" left="0">
+            <HeaderBar />
+            <Content flexGrow="1">
+              <Switch>
+                <Route path="/garage">
+                  <Garage />
+                </Route>
+                <Route path="/race">
+                  <Race />
+                </Route>
+                <Route path="/dealer">
+                  <Dealer />
+                </Route>
+              </Switch>
+            </Content>
+            <BottomTabs display={["flex", "flex", "none"]} iconOnly />
+          </Flex>
+        </BrowserRouter>
+      </Provider>
     </ThemeProvider>
   );
 }
