@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Box, Flex, Text } from "@chakra-ui/core";
 import { MdNotifications } from "react-icons/md";
 import { useLocation, useHistory } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { notificationsSelector } from '../state/selectors';
 
 const NotificationItem = ({ item, onClose }) => {
   const location = useLocation();
@@ -49,11 +51,7 @@ const NotificationItem = ({ item, onClose }) => {
 
 const Notifications = () => {
   const [open, setOpen] = useState(false)
-
-  const items = [
-    { id: 0, won: true, position: 1, award: '$1200', track: { id: 1, name: 'Same race name' }, car: { id: 1, name: 'Same car name' } },
-    { id: 1, won: false, position: 2, award: undefined, track: { id: 2, name: 'Same race name' }, car: { id: 2, name: 'Same car name' } }
-  ]
+  const notifications = useSelector(notificationsSelector)
 
   const onClick = () => {
     setOpen(!open)
@@ -93,7 +91,7 @@ const Notifications = () => {
         zIndex="100"
         display={open ? "block" : "none"}
       >
-        {items.map(item => (
+        {notifications.map(item => (
           <NotificationItem key={item.id} item={item} onClose={onClick} />
         ))}
       </Box>

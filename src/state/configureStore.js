@@ -1,9 +1,11 @@
 import { createStore } from 'redux';
-import { cars, races } from "../helpers/mockData";
+import { cars, races, money, notifications } from "../helpers/mockData";
 
 const initialState = {
     cars,
-    races
+    races,
+    money,
+    notifications
 }
 
 const rootReducer = (state = initialState, action) => {

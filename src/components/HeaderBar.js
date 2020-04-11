@@ -11,6 +11,8 @@ import { Text } from "@chakra-ui/core";
 import { useRouteMatch, useLocation, Link } from "react-router-dom";
 import Tabs from "./Tabs";
 import Notifications from "./Notifications";
+import { useSelector } from 'react-redux';
+import { moneySelector } from '../state/selectors';
 
 const Breadcrumbs = () => {
   const location = useLocation();
@@ -83,22 +85,27 @@ const Score = ({ value }) => (
   </Flex>
 )
 
-const HeaderBar = () => (
-  <header>
-    <Box>
-      <Flex align="center">
-        <Title />
-        <Tabs display={["none", "none", "flex"]} icon />
-        <Box flexGrow="1" h="2.5rem" borderBottom="1px solid black">
-          <Flex h="2.5rem" justifyContent="flex-end">
-            <Score value={9999999999} />
-            <Notifications />
-          </Flex>
-        </Box>
-      </Flex>
-      <Breadcrumbs />
-    </Box>
-  </header>
-);
+const HeaderBar = () => {
+
+  const money = useSelector(moneySelector)
+
+  return (
+    <header>
+      <Box>
+        <Flex align="center">
+          <Title />
+          <Tabs display={["none", "none", "flex"]} icon />
+          <Box flexGrow="1" h="2.5rem" borderBottom="1px solid black">
+            <Flex h="2.5rem" justifyContent="flex-end">
+              <Score value={money} />
+              <Notifications />
+            </Flex>
+          </Box>
+        </Flex>
+        <Breadcrumbs />
+      </Box>
+    </header>
+  )
+};
 
 export default HeaderBar;

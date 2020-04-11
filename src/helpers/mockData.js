@@ -49,3 +49,8 @@ class Race {
 
 export const cars = [...new Array(20)].map((_, index) => new Car(index + 1));
 export const races = [...new Array(20)].map((_, index) => new Race(index + 1));
+export const money = 9999999999;
+export const notifications = [
+  { id: 0, won: true, position: 1, award: '$1200', track: { id: 1, name: 'Same race name' }, car: { id: 1, name: 'Same car name' } },
+  { id: 1, won: false, position: 2, award: undefined, track: { id: 2, name: 'Same race name' }, car: { id: 2, name: 'Same car name' } }
+];
