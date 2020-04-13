@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, Flex, Image, Text, Button } from "@chakra-ui/core";
-import CardProgressOverlay from "./CardProgressOverlay";
 import AttributesBar from "./AttributesBar";
+import { useDispatch, useSelector } from 'react-redux';
+import { buyCarAction } from '../state/actions';
+import { moneySelector } from '../state/selectors';
 
 const AttributeLabel = () => (
   <Flex position="relative" justifyContent="space-between">
@@ -22,8 +24,7 @@ const Attribute = ({
   value,
   upgradeValue,
   upgrade,
-  max,
-  price
+  max
 }) => (
     <Flex position="relative" h="1rem" justifyContent="space-between">
       <Text textAlign="center" fontSize="sm">
@@ -48,20 +49,18 @@ const CarDetails = ({
   handling,
   price
 }) => {
-  const racing = false;
+  const dispatch = useDispatch();
+  const money = useSelector(moneySelector);
+  const enoughMoney = money >= price;
+
+  const buy = () => {
+    dispatch(buyCarAction(id))
+  }
 
   return (
     <Box position="relative" w="16rem">
-      {racing && (
-        <CardProgressOverlay
-          timeTotal={10}
-          timeLeft={9}
-          label="Race 1"
-          zIndex="1"
-        />
-      )}
       <Box marginTop="0.6rem" padding="0 0.2rem 0.6rem">
-        <Image w="100%" h="8rem" alt="car" bg="lightgray" />
+        <Image w="100%" h="8rem" alt="car" bg="lightgray" src={image} />
         <Text textAlign="center" w="100%" fontSize="md">
           {name}
         </Text>
@@ -100,7 +99,13 @@ const CarDetails = ({
           {`Price: $${price}`}
         </Text>
         <Flex>
-          <Button variantColor="tomato" variant="outline" margin="0 auto">
+          <Button
+            variantColor="tomato"
+            variant="outline"
+            margin="0 auto"
+            onClick={buy}
+            isDisabled={!enoughMoney}
+          >
             Buy
           </Button>
         </Flex>

@@ -34,6 +34,10 @@ const RacePanel = ({ races, ...props }) => (
 
 const CarsPanel = ({ cars, ...props }) => (
   <ContentPanel title="Select Car" {...props}>
+    {cars.length === 0 && (
+      <div>No cars owned</div>
+    )}
+
     {cars.map((car, index) => (
       <React.Fragment key={car.id}>
         {index > 0 && <Divider />}

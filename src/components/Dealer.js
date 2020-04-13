@@ -18,8 +18,7 @@ const Dealer = () => {
 
   const selected = location?.state?.car;
 
-  //TODO: change: simple selector, only for mocked data
-  const selectedCar = cars[selected - 1];
+  const selectedCar = cars.find(item => item.id === selected);
 
   return (
     <Flex justifyContent="center">

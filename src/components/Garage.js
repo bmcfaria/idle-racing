@@ -18,8 +18,7 @@ const Garage = () => {
 
   const selected = location?.state?.car;
 
-  //TODO: change: simple selector, only for mocked data
-  const selectedCar = cars[selected - 1];
+  const selectedCar = cars.find(item => item.id === selected);
 
   return (
     <Flex justifyContent="center">
@@ -27,6 +26,10 @@ const Garage = () => {
         title="Select Car"
         display={displayResponsivePanel(selectedCar)}
       >
+        {cars.length === 0 && (
+          <div>No cars owned</div>
+        )}
+
         {cars.map((car, index) => (
           <React.Fragment key={car.id}>
             {index > 0 && <Divider />}

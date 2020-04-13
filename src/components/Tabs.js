@@ -22,12 +22,6 @@ const TabsButton = ({ to, children }) => {
 
 const Tabs = ({ icon, iconOnly, ...props }) => (
   <ButtonGroup spacing={0} display="flex" {...props}>
-    <TabsButton to="/garage">
-      {(icon || iconOnly) && (
-        <Box as={GiHomeGarage} marginRight={iconOnly ? "0" : "0.2rem"} />
-      )}
-      {!iconOnly && "Garage"}
-    </TabsButton>
     <TabsButton to="/dealer">
       {(icon || iconOnly) && (
         <Box as={IoMdCar} marginRight={iconOnly ? "0" : "0.2rem"} />
@@ -39,6 +33,12 @@ const Tabs = ({ icon, iconOnly, ...props }) => (
         <Box as={GiTrophyCup} marginRight={iconOnly ? "0" : "0.2rem"} />
       )}
       {!iconOnly && "Race"}
+    </TabsButton>
+    <TabsButton to="/garage">
+      {(icon || iconOnly) && (
+        <Box as={GiHomeGarage} marginRight={iconOnly ? "0" : "0.2rem"} />
+      )}
+      {!iconOnly && "Garage"}
     </TabsButton>
     <TabsButton to="/settings">
       {(icon || iconOnly) && (

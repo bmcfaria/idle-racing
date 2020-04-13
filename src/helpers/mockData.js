@@ -34,6 +34,20 @@ class Car {
   }
 }
 
+export class GarageCar {
+  constructor(car) {
+    this.id = `${car.id}-${new Date().getTime()}`;
+    this.name = car.name;
+    this.type = car.type;
+
+    this.acceleration = car.acceleration;
+    this.topSpeed = car.topSpeed;
+    this.handling = car.handling;
+
+    this.price = car.price;
+  }
+}
+
 class Race {
   image = undefined;
 

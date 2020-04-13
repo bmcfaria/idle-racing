@@ -86,7 +86,6 @@ const Score = ({ value }) => (
 )
 
 const HeaderBar = () => {
-
   const money = useSelector(moneySelector)
 
   return (
