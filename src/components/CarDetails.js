@@ -3,16 +3,26 @@ import { Box, Flex, Image, Text, Button } from "@chakra-ui/core";
 import AttributeInfo from "./AttributeInfo";
 import CardProgressOverlay from "./CardProgressOverlay";
 import { useDispatch } from 'react-redux';
-import { sellCarAction } from '../state/actions';
+import { ATTRIBUTE_TYPES } from '../helpers/utils';
+import { sellCarAction, upgradeAttributeAction } from '../state/actions';
 
 const AttributeUpgrade = ({
+  id,
   name,
   value,
   upgradeValue,
   upgrade,
   max,
-  price
-}) => (
+  price,
+  type
+}) => {
+  const dispatch = useDispatch();
+
+  const onClickUpgrade = () => {
+    dispatch(upgradeAttributeAction(type, id))
+  }
+
+  return (
     <Flex position="relative" h="2rem">
       <AttributeInfo flexGrow="1" name={name} upgrade={upgrade} max={max} />
       <Flex
@@ -44,11 +54,13 @@ const AttributeUpgrade = ({
         color="tomato"
         variant="outline"
         isDisabled={!price}
+        onClick={onClickUpgrade}
       >
         ${price}
       </Button>
     </Flex>
-  );
+  )
+};
 
 const CarDetails = ({
   id,
@@ -86,7 +98,9 @@ const CarDetails = ({
           Type: {type}
         </Text>
         <AttributeUpgrade
+          id={id}
           name="Acceleration"
+          type={ATTRIBUTE_TYPES.ACCELERATION}
           value={acceleration.value}
           upgradeValue={acceleration.upgradeValue}
           upgrade={acceleration.upgrade}
@@ -94,7 +108,9 @@ const CarDetails = ({
           price={acceleration.price}
         />
         <AttributeUpgrade
+          id={id}
           name="Top Speed"
+          type={ATTRIBUTE_TYPES.TOP_SPEED}
           value={topSpeed.value}
           upgradeValue={topSpeed.upgradeValue}
           upgrade={topSpeed.upgrade}
@@ -102,7 +118,9 @@ const CarDetails = ({
           price={topSpeed.price}
         />
         <AttributeUpgrade
+          id={id}
           name="Handling"
+          type={ATTRIBUTE_TYPES.HANDLING}
           value={handling.value}
           upgradeValue={handling.upgradeValue}
           upgrade={handling.upgrade}

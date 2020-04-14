@@ -1,51 +1,73 @@
-const generateRandomAttribute = (base, unit, max, basePrice) => {
-  const upgrade = Math.round(Math.random() * max);
+import { ATTRIBUTE_TYPES } from '../helpers/utils';
+
+const generateAttribute = (base, unit, max, basePrice, upgrade) => {
   const value = base + unit * upgrade;
   const nextValue = base + unit * (upgrade + 1);
   const price = basePrice + Math.pow(basePrice * 0.1, upgrade);
 
   return {
-    value: value,
+    base,
+    unit,
+    max,
+    basePrice,
+    value,
+    upgrade,
     upgradeValue: upgrade < max ? nextValue : value,
-    upgrade: upgrade,
-    max: max,
     price: upgrade < max ? price : undefined,
     priceRaw: price
   };
 };
 
-class Car {
-  image = undefined;
+const generateRandomAttribute = (base, unit, max, basePrice) => {
+  const upgrade = Math.round(Math.random() * max);
+  return generateAttribute(base, unit, max, basePrice, upgrade)
+};
 
-  constructor(id, name = "Some car name", type = "4x4") {
-    this.id = id;
-    this.name = name;
-    this.type = type;
+export const generateCarPrice = (attributes) => (
+  500 +
+  (attributes[ATTRIBUTE_TYPES.ACCELERATION].price || attributes[ATTRIBUTE_TYPES.ACCELERATION].priceRaw) +
+  (attributes[ATTRIBUTE_TYPES.TOP_SPEED].price || attributes[ATTRIBUTE_TYPES.TOP_SPEED].priceRaw) +
+  (attributes[ATTRIBUTE_TYPES.HANDLING].price || attributes[ATTRIBUTE_TYPES.HANDLING].priceRaw)
+)
 
-    this.acceleration = generateRandomAttribute(100, 20, 6, 50);
-    this.topSpeed = generateRandomAttribute(100, 20, 4, 50);
-    this.handling = generateRandomAttribute(100, 20, 5, 50);
+const generateCar = (id, name = "Some car name", type = "4x4") => {
+  const baseAttributes = {
+    id,
+    name,
+    type,
+    [ATTRIBUTE_TYPES.ACCELERATION]: generateRandomAttribute(100, 20, 6, 50),
+    [ATTRIBUTE_TYPES.TOP_SPEED]: generateRandomAttribute(100, 20, 4, 50),
+    [ATTRIBUTE_TYPES.HANDLING]: generateRandomAttribute(100, 20, 5, 50),
+  }
 
-    this.price =
-      500 +
-      (this.acceleration.price || this.acceleration.priceRaw) +
-      (this.topSpeed.price || this.topSpeed.priceRaw) +
-      (this.handling.price || this.handling.priceRaw);
+  return {
+    ...baseAttributes,
+    price: generateCarPrice(baseAttributes),
   }
 }
 
-export class GarageCar {
-  constructor(car) {
-    this.id = `${car.id}-${new Date().getTime()}`;
-    this.name = car.name;
-    this.type = car.type;
+export const generateGarageCar = (car) => ({
+  id: `${car.id}-${new Date().getTime()}`,
+  name: car.name,
+  type: car.type,
+  [ATTRIBUTE_TYPES.ACCELERATION]: car[ATTRIBUTE_TYPES.ACCELERATION],
+  [ATTRIBUTE_TYPES.TOP_SPEED]: car[ATTRIBUTE_TYPES.TOP_SPEED],
+  [ATTRIBUTE_TYPES.HANDLING]: car[ATTRIBUTE_TYPES.HANDLING],
+  price: ~~(car.price * 0.7),
+})
 
-    this.acceleration = car.acceleration;
-    this.topSpeed = car.topSpeed;
-    this.handling = car.handling;
-
-    this.price = car.price;
+export const upgradeAttribute = (attribute) => {
+  if (attribute.upgrade >= attribute.max) {
+    return attribute
   }
+
+  return generateAttribute(
+    attribute.base,
+    attribute.unit,
+    attribute.max,
+    attribute.basePrice,
+    attribute.upgrade + 1
+  )
 }
 
 class Race {
@@ -61,7 +83,7 @@ class Race {
   }
 }
 
-export const cars = [...new Array(20)].map((_, index) => new Car(index + 1));
+export const cars = [...new Array(20)].map((_, index) => generateCar(index + 1));
 export const races = [...new Array(20)].map((_, index) => new Race(index + 1));
 export const money = 9999999999;
 export const notifications = [

@@ -1,9 +1,17 @@
-import { BUY_CAR_TYPE, SELL_CAR_TYPE } from './actions'
-import { cars, races, money, notifications, GarageCar } from "../helpers/mockData";
+import { BUY_CAR_TYPE, SELL_CAR_TYPE, UPGRADE_ATTRIBUTE_TYPE } from './actions'
+import {
+    cars,
+    races,
+    money,
+    notifications,
+    generateGarageCar,
+    upgradeAttribute,
+    generateCarPrice
+} from "../helpers/mockData";
 
 const initialState = {
     dealerCars: cars,
-    garageCars: [],
+    garageCars: [generateGarageCar(cars[0])],
     races,
     money,
     notifications
@@ -24,7 +32,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
                 money: state.money - car.price,
                 garageCars: [
                     ...state.garageCars,
-                    new GarageCar(car)
+                    generateGarageCar(car)
                 ]
             }
         }
@@ -39,6 +47,31 @@ const rootReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 money: state.money + car.price,
                 garageCars: state.garageCars.filter(item => item.id !== car.id)
+            }
+        }
+        case UPGRADE_ATTRIBUTE_TYPE: {
+            const car = state.garageCars.find(item => item.id === payload.carId)
+
+            if (!car) {
+                return state
+            }
+
+            const attribute = car[payload.type]
+
+            if (!attribute.price || state.money - attribute.price < 0) {
+                return state
+            }
+
+            const newCar = Object.assign({}, car)
+            newCar[payload.type] = upgradeAttribute(attribute)
+            newCar.price = generateCarPrice(newCar)
+
+            const carIndex = state.garageCars.findIndex(item => item.id === car.id)
+            return {
+                ...state,
+                garageCars: Object.assign([], state.garageCars, {
+                    [carIndex]: newCar,
+                }),
             }
         }
         default: {
