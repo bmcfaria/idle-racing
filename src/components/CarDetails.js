@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Flex, Image, Text, Button } from "@chakra-ui/core";
 import AttributeInfo from "./AttributeInfo";
 import CardProgressOverlay from "./CardProgressOverlay";
+import { useDispatch } from 'react-redux';
+import { sellCarAction } from '../state/actions';
 
 const AttributeUpgrade = ({
   name,
@@ -11,42 +13,42 @@ const AttributeUpgrade = ({
   max,
   price
 }) => (
-  <Flex position="relative" h="2rem">
-    <AttributeInfo flexGrow="1" name={name} upgrade={upgrade} max={max} />
-    <Flex
-      w="100%"
-      textAlign="center"
-      position="absolute"
-      fontSize="sm"
-      justifyContent="center"
-    >
-      <Text textAlign="center" fontSize="sm">
-        {value}
-      </Text>
-      <Text
+    <Flex position="relative" h="2rem">
+      <AttributeInfo flexGrow="1" name={name} upgrade={upgrade} max={max} />
+      <Flex
+        w="100%"
         textAlign="center"
+        position="absolute"
         fontSize="sm"
-        marginLeft="0.2rem"
-        marginRight="0.2rem"
+        justifyContent="center"
       >
-        ->
+        <Text textAlign="center" fontSize="sm">
+          {value}
+        </Text>
+        <Text
+          textAlign="center"
+          fontSize="sm"
+          marginLeft="0.2rem"
+          marginRight="0.2rem"
+        >
+          ->
       </Text>
-      <Text textAlign="center" fontSize="sm" fontWeight="bold" color="tomato">
-        {upgradeValue}
-      </Text>
+        <Text textAlign="center" fontSize="sm" fontWeight="bold" color="tomato">
+          {upgradeValue}
+        </Text>
+      </Flex>
+      <Button
+        w="4rem"
+        h="1.5rem"
+        borderColor="tomato"
+        color="tomato"
+        variant="outline"
+        isDisabled={!price}
+      >
+        ${price}
+      </Button>
     </Flex>
-    <Button
-      w="4rem"
-      h="1.5rem"
-      borderColor="tomato"
-      color="tomato"
-      variant="outline"
-      isDisabled={!price}
-    >
-      ${price}
-    </Button>
-  </Flex>
-);
+  );
 
 const CarDetails = ({
   id,
@@ -59,6 +61,11 @@ const CarDetails = ({
   price
 }) => {
   const racing = false;
+  const dispatch = useDispatch();
+
+  const sell = () => {
+    dispatch(sellCarAction(id))
+  }
 
   return (
     <Box position="relative" w="16rem">
@@ -103,7 +110,12 @@ const CarDetails = ({
           price={handling.price}
         />
         <Flex>
-          <Button variantColor="teal" variant="outline" margin="1rem auto">
+          <Button
+            variantColor="teal"
+            variant="outline"
+            margin="1rem auto"
+            onClick={sell}
+          >
             Sell (${price})
           </Button>
         </Flex>

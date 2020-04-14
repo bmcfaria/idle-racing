@@ -63,10 +63,8 @@ const Race = () => {
   const selectedRaceId = location?.state?.race;
   const selectedCarId = location?.state?.car;
 
-  //TODO: change: simple selector, only for mocked data
-  const selectedRace = races[selectedRaceId - 1];
-  //TODO: change: simple selector, only for mocked data
-  const selectedCar = cars[selectedCarId - 1];
+  const selectedRace = races.find(item => item.id === selectedRaceId);
+  const selectedCar = cars.find(item => item.id === selectedCarId);
 
   return (
     <Flex justifyContent="center">

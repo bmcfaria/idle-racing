@@ -1,4 +1,4 @@
-import { BUY_CAR_TYPE } from './actions'
+import { BUY_CAR_TYPE, SELL_CAR_TYPE } from './actions'
 import { cars, races, money, notifications, GarageCar } from "../helpers/mockData";
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 
 const rootReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case BUY_CAR_TYPE:
+        case BUY_CAR_TYPE: {
             const car = state.dealerCars.find(item => item.id === payload.carId)
             const enoughMoney = state.money >= car?.price
 
@@ -27,8 +27,23 @@ const rootReducer = (state = initialState, { type, payload }) => {
                     new GarageCar(car)
                 ]
             }
-        default:
+        }
+        case SELL_CAR_TYPE: {
+            const car = state.garageCars.find(item => item.id === payload.carId)
+
+            if (!car) {
+                return state
+            }
+
+            return {
+                ...state,
+                money: state.money + car.price,
+                garageCars: state.garageCars.filter(item => item.id !== car.id)
+            }
+        }
+        default: {
             return state;
+        }
     }
 }
 
