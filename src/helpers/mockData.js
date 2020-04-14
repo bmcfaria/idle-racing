@@ -78,7 +78,7 @@ export const upgradeAttribute = attribute => {
 const generateTrack = (name = 'Some race name', type = '4x4') => ({
   id: uuid(),
   name: name,
-  duration: 3,
+  duration: 3 * 1000,
   price: 10,
   prizes: [1000, 500, 100],
   type: type,
@@ -86,6 +86,7 @@ const generateTrack = (name = 'Some race name', type = '4x4') => ({
 });
 
 export const generateRace = (car, track) => ({
+  id: uuid(),
   car: car.id,
   track: track.id,
   start: new Date().getTime(),

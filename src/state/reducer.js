@@ -40,6 +40,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         garageCars: [...state.garageCars, generateGarageCar(car)],
       };
     }
+
     case SELL_CAR_TYPE: {
       const car = state.garageCars.find(item => item.id === payload.carId);
 
@@ -53,6 +54,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         garageCars: state.garageCars.filter(item => item.id !== car.id),
       };
     }
+
     case UPGRADE_ATTRIBUTE_TYPE: {
       const car = state.garageCars.find(item => item.id === payload.carId);
 
@@ -78,20 +80,37 @@ const rootReducer = (state = initialState, { type, payload }) => {
         }),
       };
     }
+
     case START_RACE_TYPE: {
       const car = state.garageCars.find(item => item.id === payload.carId);
       const track = state.tracks.find(item => item.id === payload.trackId);
 
-      if (!car || !track) {
+      if (!car || !track || car.race || track.race) {
         return state;
       }
 
       const race = generateRace(car, track);
+
+      const carIndex = state.garageCars.findIndex(item => item.id === car.id);
+      const trackIndex = state.tracks.findIndex(item => item.id === track.id);
       return {
         ...state,
         races: [...state.races, race],
+        garageCars: Object.assign([], state.garageCars, {
+          [carIndex]: {
+            ...car,
+            race: race.id,
+          },
+        }),
+        tracks: Object.assign([], state.tracks, {
+          [trackIndex]: {
+            ...track,
+            race: race.id,
+          },
+        }),
       };
     }
+
     default: {
       return state;
     }

@@ -3,7 +3,7 @@ import { Box, Flex } from '@chakra-ui/core';
 import { useLocation } from 'react-router-dom';
 import ContentPanel from './ContentPanel';
 import CardCar from './CardCar';
-import CardRace from './CardRace';
+import CardTrack from './CardTrack';
 import { displayResponsivePanel } from '../helpers/utils';
 import RaceDetails from './RaceDetails';
 import { useSelector } from 'react-redux';
@@ -13,20 +13,12 @@ const Divider = () => <Box w="100%" h="0" borderTop="1px solid black" />;
 
 const Separator = props => <Box w="1rem" {...props} />;
 
-const RacePanel = ({ races, ...props }) => (
-  <ContentPanel title="Select Race" {...props}>
-    {races.map((race, index) => (
-      <React.Fragment key={race.id}>
+const TrackPanel = ({ tracks, ...props }) => (
+  <ContentPanel title="Select Track" {...props}>
+    {tracks.map((track, index) => (
+      <React.Fragment key={track.id}>
         {index > 0 && <Divider />}
-        <CardRace
-          id={race.id}
-          name={race.name}
-          type={race.type}
-          image={race.image}
-          prizes={race.prizes}
-          duration={race.duration}
-          price={race.price}
-        />
+        <CardTrack track={track} />
       </React.Fragment>
     ))}
   </ContentPanel>
@@ -56,20 +48,23 @@ const CarsPanel = ({ cars, ...props }) => (
 const Race = () => {
   const location = useLocation();
   const cars = useSelector(garageCarsSelector);
-  const races = useSelector(tracksSelector);
+  const tracks = useSelector(tracksSelector);
 
-  const selectedRaceId = location?.state?.track;
+  const selectedTrackId = location?.state?.track;
   const selectedCarId = location?.state?.car;
 
-  const selectedRace = races.find(item => item.id === selectedRaceId);
+  const selectedTrack = tracks.find(item => item.id === selectedTrackId);
   const selectedCar = cars.find(item => item.id === selectedCarId);
 
   return (
     <Flex justifyContent="center">
-      <RacePanel races={races} display={displayResponsivePanel(selectedRace)} />
-      {selectedRace && (
+      <TrackPanel
+        tracks={tracks}
+        display={displayResponsivePanel(selectedTrack)}
+      />
+      {selectedTrack && (
         <>
-          <Separator display={displayResponsivePanel(selectedRace)} />
+          <Separator display={displayResponsivePanel(selectedTrack)} />
 
           <CarsPanel
             cars={cars}
@@ -83,13 +78,13 @@ const Race = () => {
       {selectedCar && (
         <ContentPanel title="Race Details" wrap>
           <RaceDetails
-            id={selectedRace.id}
-            name={selectedRace.name}
-            type={selectedRace.type}
-            image={selectedRace.image}
-            prizes={selectedRace.prizes}
-            duration={selectedRace.duration}
-            price={selectedRace.price}
+            id={selectedTrack.id}
+            name={selectedTrack.name}
+            type={selectedTrack.type}
+            image={selectedTrack.image}
+            prizes={selectedTrack.prizes}
+            duration={selectedTrack.duration}
+            price={selectedTrack.price}
           />
         </ContentPanel>
       )}

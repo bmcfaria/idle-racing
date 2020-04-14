@@ -1,18 +1,22 @@
 import React from 'react';
 import { Box, Flex, Image, Text } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { raceSelector } from '../state/selectors';
 import CardProgressOverlay from './CardProgressOverlay';
 
-const CardRace = ({ id, name, type, image, prizes, duration, price }) => {
+const CardTrack = ({
+  track: { id, name, type, image, prizes, duration, price, race },
+}) => {
   const location = useLocation();
   const history = useHistory();
 
-  const racing = false;
+  const currentRace = useSelector(raceSelector(race));
 
   // To improve mobile navigation,
   // this way the back button will un-select instead off showing the previous selected
   const setSelected = () => {
-    if (racing) return;
+    if (currentRace) return;
 
     if (location?.state?.track) {
       history.replace({
@@ -32,7 +36,7 @@ const CardRace = ({ id, name, type, image, prizes, duration, price }) => {
       {location?.state?.track === id && (
         <Box position="absolute" w="100%" h="100%" bg="#B2F5EA77" />
       )}
-      {racing && <CardProgressOverlay timeTotal={10} timeLeft={9} />}
+      {currentRace && <CardProgressOverlay race={currentRace} />}
       <Flex w="100%" padding="0.6rem 0.2rem" bg="white">
         <Box w="5rem">
           <Image w="100%" h="4.5rem" alt="track" bg="lightgray" src={image} />
@@ -66,7 +70,7 @@ const CardRace = ({ id, name, type, image, prizes, duration, price }) => {
                   Duration:
                 </Text>
                 <Text textAlign="right" fontSize="xs">
-                  {duration}s
+                  {duration / 1000}s
                 </Text>
               </Flex>
               <Flex justifyContent="space-between">
@@ -85,8 +89,8 @@ const CardRace = ({ id, name, type, image, prizes, duration, price }) => {
   );
 };
 
-CardRace.defaultProps = {
+CardTrack.defaultProps = {
   prizes: [],
 };
 
-export default CardRace;
+export default CardTrack;

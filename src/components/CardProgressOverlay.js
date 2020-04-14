@@ -7,32 +7,29 @@ import {
   Flex,
 } from '@chakra-ui/core';
 
-const CardProgressOverlay = ({
-  timeTotal = 1,
-  timeLeft,
-  label,
-  big,
-  ...props
-}) => {
-  const [value, setValue] = useState(timeLeft);
-  const progress = ((timeTotal - value) * 100) / timeTotal;
+const CardProgressOverlay = ({ race, label, big, ...props }) => {
+  const [value, setValue] = useState(race.duration);
+  const progress = ((race.duration - value) * 100) / race.duration;
+  console.log(progress);
 
   useEffect(() => {
     const countDown = setInterval(() => {
-      setValue(prev => {
-        const nextValue = prev - 1;
-        if (nextValue <= 0) {
-          clearInterval(countDown);
-        }
+      const nextValue = race.duration - (new Date().getTime() - race.start);
+      if (nextValue <= 0) {
+        clearInterval(countDown);
+      }
 
-        return nextValue;
-      });
-    }, 1000);
+      setValue(nextValue);
+    }, 500);
 
     return () => {
       clearInterval(countDown);
     };
-  }, []);
+  }, [race]);
+
+  if (!race) {
+    return null;
+  }
 
   return (
     <Flex
@@ -45,12 +42,16 @@ const CardProgressOverlay = ({
     >
       <Box margin="auto">
         <CircularProgress
-          value={progress}
+          value={progress > 100 ? 100 : progress}
           color="blue"
           trackColor="blackAlpha"
           size={big ? '10rem' : '4rem'}
         >
-          <CircularProgressLabel color="white">{value}s</CircularProgressLabel>
+          {
+            <CircularProgressLabel color="white">
+              {Math.round(value / 1000)}s
+            </CircularProgressLabel>
+          }
         </CircularProgress>
         {label && (
           <Text color="white" ontSize="sm">
