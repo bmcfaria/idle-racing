@@ -14,28 +14,28 @@ const CardRace = ({ id, name, type, image, prizes, duration, price }) => {
   const setSelected = () => {
     if (racing) return;
 
-    if (location?.state?.race) {
+    if (location?.state?.track) {
       history.replace({
         pathname: location.pathname,
-        state: { ...(location.state || {}), race: id }
+        state: { ...(location.state || {}), track: id }
       });
     } else {
       history.push({
         pathname: location.pathname,
-        state: { ...(location.state || {}), race: id }
+        state: { ...(location.state || {}), track: id }
       });
     }
   };
 
   return (
     <Box w="16rem" position="relative" onClick={setSelected}>
-      {location?.state?.race === id && (
+      {location?.state?.track === id && (
         <Box position="absolute" w="100%" h="100%" bg="#B2F5EA77" />
       )}
       {racing && <CardProgressOverlay timeTotal={10} timeLeft={9} />}
       <Flex w="100%" padding="0.6rem 0.2rem" bg="white">
         <Box w="5rem">
-          <Image w="100%" h="4.5rem" alt="race" bg="lightgray" src={image} />
+          <Image w="100%" h="4.5rem" alt="track" bg="lightgray" src={image} />
           <Text textAlign="center" w="100%" fontSize="sm">
             Type: {type}
           </Text>

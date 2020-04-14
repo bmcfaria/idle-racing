@@ -60,7 +60,7 @@ const Race = () => {
   const cars = useSelector(garageCarsSelector)
   const races = useSelector(tracksSelector)
 
-  const selectedRaceId = location?.state?.race;
+  const selectedRaceId = location?.state?.track;
   const selectedCarId = location?.state?.car;
 
   const selectedRace = races.find(item => item.id === selectedRaceId);

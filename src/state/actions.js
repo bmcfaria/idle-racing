@@ -6,3 +6,7 @@ export const UPGRADE_ATTRIBUTE_TYPE = 'UPGRADE_ATTRIBUTE'
 export const upgradeAttributeAction = (type, carId) => (
     { type: UPGRADE_ATTRIBUTE_TYPE, payload: { type, carId } }
 )
+export const START_RACE_TYPE = 'START_RACE'
+export const startRaceAction = (carId, trackId) => (
+    { type: START_RACE_TYPE, payload: { carId, trackId } }
+)

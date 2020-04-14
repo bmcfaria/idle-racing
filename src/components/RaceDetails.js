@@ -1,11 +1,23 @@
 import React from "react";
 import { Box, Flex, Image, Text, Button } from "@chakra-ui/core";
 import CardProgressOverlay from "./CardProgressOverlay";
+import { useDispatch } from 'react-redux';
+import { startRaceAction } from '../state/actions';
 import RaceResults from "./RaceResults";
+import { useLocation } from "react-router-dom";
 
 const RaceDetails = ({ id, name, type, image, prizes, duration, price }) => {
   const racing = false;
   const results = false;
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const selectedRaceId = location?.state?.track;
+  const selectedCarId = location?.state?.car;
+
+  const race = () => {
+    dispatch(startRaceAction(selectedCarId, selectedRaceId))
+  }
 
   return (
     <Box position="relative" w="16rem">
@@ -60,6 +72,7 @@ const RaceDetails = ({ id, name, type, image, prizes, duration, price }) => {
           marginTop="0.2rem"
           marginLeft="auto"
           marginRight="auto"
+          onClick={race}
         >
           Race (${price})
         </Button>

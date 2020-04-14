@@ -1,3 +1,4 @@
+import uuid from 'uuid-random';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 
 const generateAttribute = (base, unit, max, basePrice, upgrade) => {
@@ -30,9 +31,9 @@ export const generateCarPrice = (attributes) => (
   (attributes[ATTRIBUTE_TYPES.HANDLING].price || attributes[ATTRIBUTE_TYPES.HANDLING].priceRaw)
 )
 
-const generateCar = (id, name = "Some car name", type = "4x4") => {
+const generateCar = (name = "Some car name", type = "4x4") => {
   const baseAttributes = {
-    id,
+    id: uuid(),
     name,
     type,
     [ATTRIBUTE_TYPES.ACCELERATION]: generateRandomAttribute(100, 20, 6, 50),
@@ -47,13 +48,15 @@ const generateCar = (id, name = "Some car name", type = "4x4") => {
 }
 
 export const generateGarageCar = (car) => ({
-  id: `${car.id}-${new Date().getTime()}`,
+  id: uuid(),
   name: car.name,
   type: car.type,
   [ATTRIBUTE_TYPES.ACCELERATION]: car[ATTRIBUTE_TYPES.ACCELERATION],
   [ATTRIBUTE_TYPES.TOP_SPEED]: car[ATTRIBUTE_TYPES.TOP_SPEED],
   [ATTRIBUTE_TYPES.HANDLING]: car[ATTRIBUTE_TYPES.HANDLING],
   price: ~~(car.price * 0.7),
+  dealerCar: car.id,
+  race: undefined,
 })
 
 export const upgradeAttribute = (attribute) => {
@@ -70,21 +73,25 @@ export const upgradeAttribute = (attribute) => {
   )
 }
 
-class Race {
-  image = undefined;
+const generateTrack = (name = "Some race name", type = "4x4") => ({
+  id: uuid(),
+  name: name,
+  duration: 3,
+  price: 10,
+  prizes: [1000, 500, 100],
+  type: type,
+  race: undefined,
+})
 
-  constructor(id, name = "Some race name", type = "4x4") {
-    this.id = id;
-    this.name = name;
-    this.duration = 3;
-    this.price = 10;
-    this.prizes = [1000, 500, 100];
-    this.type = type;
-  }
-}
+export const generateRace = (car, track) => ({
+  car: car.id,
+  track: track.id,
+  start: new Date().getTime(),
+  duration: track.duration,
+})
 
-export const cars = [...new Array(20)].map((_, index) => generateCar(index + 1));
-export const races = [...new Array(20)].map((_, index) => new Race(index + 1));
+export const cars = [...new Array(20)].map((_) => generateCar());
+export const tracks = [...new Array(20)].map((_) => generateTrack());
 export const money = 9999999999;
 export const notifications = [
   { id: 0, won: true, position: 1, award: '$1200', track: { id: 1, name: 'Same race name' }, car: { id: 1, name: 'Same car name' } },

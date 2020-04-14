@@ -1,20 +1,22 @@
-import { BUY_CAR_TYPE, SELL_CAR_TYPE, UPGRADE_ATTRIBUTE_TYPE } from './actions'
+import { BUY_CAR_TYPE, SELL_CAR_TYPE, UPGRADE_ATTRIBUTE_TYPE, START_RACE_TYPE } from './actions'
 import {
     cars,
-    races,
+    tracks,
     money,
     notifications,
     generateGarageCar,
     upgradeAttribute,
-    generateCarPrice
+    generateCarPrice,
+    generateRace
 } from "../helpers/mockData";
 
 const initialState = {
     dealerCars: cars,
     garageCars: [generateGarageCar(cars[0])],
-    races,
+    tracks,
     money,
-    notifications
+    notifications,
+    races: []
 }
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -72,6 +74,23 @@ const rootReducer = (state = initialState, { type, payload }) => {
                 garageCars: Object.assign([], state.garageCars, {
                     [carIndex]: newCar,
                 }),
+            }
+        }
+        case START_RACE_TYPE: {
+            const car = state.garageCars.find(item => item.id === payload.carId)
+            const track = state.tracks.find(item => item.id === payload.trackId)
+
+            if (!car || !track) {
+                return state
+            }
+
+            const race = generateRace(car, track)
+            return {
+                ...state,
+                races: [
+                    ...state.races,
+                    race,
+                ],
             }
         }
         default: {
