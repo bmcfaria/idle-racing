@@ -1,7 +1,7 @@
-import React from "react";
-import { Box, Flex, Image, Text } from "@chakra-ui/core";
-import { useLocation, useHistory } from "react-router-dom";
-import CardProgressOverlay from "./CardProgressOverlay";
+import React from 'react';
+import { Box, Flex, Image, Text } from '@chakra-ui/core';
+import { useLocation, useHistory } from 'react-router-dom';
+import CardProgressOverlay from './CardProgressOverlay';
 
 const CardRace = ({ id, name, type, image, prizes, duration, price }) => {
   const location = useLocation();
@@ -17,12 +17,12 @@ const CardRace = ({ id, name, type, image, prizes, duration, price }) => {
     if (location?.state?.track) {
       history.replace({
         pathname: location.pathname,
-        state: { ...(location.state || {}), track: id }
+        state: { ...(location.state || {}), track: id },
       });
     } else {
       history.push({
         pathname: location.pathname,
-        state: { ...(location.state || {}), track: id }
+        state: { ...(location.state || {}), track: id },
       });
     }
   };
@@ -86,7 +86,7 @@ const CardRace = ({ id, name, type, image, prizes, duration, price }) => {
 };
 
 CardRace.defaultProps = {
-  prizes: []
+  prizes: [],
 };
 
 export default CardRace;

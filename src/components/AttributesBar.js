@@ -1,12 +1,12 @@
-import React from "react";
-import { Box, Flex } from "@chakra-ui/core";
+import React from 'react';
+import { Box, Flex } from '@chakra-ui/core';
 
 const AttributeBlock = ({ selected }) => (
   <Box
     w="6px"
     h="5px"
     border="0.1px solid black"
-    bg={selected ? "#2F80ED" : "none"}
+    bg={selected ? '#2F80ED' : 'none'}
     marginLeft="0"
   />
 );

@@ -1,10 +1,10 @@
-import React from "react";
-import { Box, Flex } from "@chakra-ui/core";
-import { useLocation } from "react-router-dom";
-import ContentPanel from "./ContentPanel";
-import CardCard from "./CardCar";
-import CarDetails from "./CarDetails";
-import { displayResponsivePanel } from "../helpers/utils";
+import React from 'react';
+import { Box, Flex } from '@chakra-ui/core';
+import { useLocation } from 'react-router-dom';
+import ContentPanel from './ContentPanel';
+import CardCard from './CardCar';
+import CarDetails from './CarDetails';
+import { displayResponsivePanel } from '../helpers/utils';
 import { useSelector } from 'react-redux';
 import { garageCarsSelector } from '../state/selectors';
 
@@ -14,7 +14,7 @@ const Separator = props => <Box w="1rem" {...props} />;
 
 const Garage = () => {
   const location = useLocation();
-  const cars = useSelector(garageCarsSelector)
+  const cars = useSelector(garageCarsSelector);
 
   const selected = location?.state?.car;
 
@@ -26,9 +26,7 @@ const Garage = () => {
         title="Select Car"
         display={displayResponsivePanel(selectedCar)}
       >
-        {cars.length === 0 && (
-          <div>No cars owned</div>
-        )}
+        {cars.length === 0 && <div>No cars owned</div>}
 
         {cars.map((car, index) => (
           <React.Fragment key={car.id}>

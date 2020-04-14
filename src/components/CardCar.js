@@ -1,8 +1,8 @@
-import React from "react";
-import { Box, Flex, Image, Text } from "@chakra-ui/core";
-import AttributeInfo from "./AttributeInfo";
-import { useLocation, useHistory } from "react-router-dom";
-import CardProgressOverlay from "./CardProgressOverlay";
+import React from 'react';
+import { Box, Flex, Image, Text } from '@chakra-ui/core';
+import AttributeInfo from './AttributeInfo';
+import { useLocation, useHistory } from 'react-router-dom';
+import CardProgressOverlay from './CardProgressOverlay';
 
 const CardCar = ({
   id,
@@ -11,7 +11,7 @@ const CardCar = ({
   image,
   acceleration,
   topSpeed,
-  handling
+  handling,
 }) => {
   const location = useLocation();
   const history = useHistory();
@@ -26,12 +26,12 @@ const CardCar = ({
     if (location?.state?.car) {
       history.replace({
         pathname: location.pathname,
-        state: { ...(location.state || {}), car: id }
+        state: { ...(location.state || {}), car: id },
       });
     } else {
       history.push({
         pathname: location.pathname,
-        state: { ...(location.state || {}), car: id }
+        state: { ...(location.state || {}), car: id },
       });
     }
   };
@@ -82,7 +82,7 @@ const CardCar = ({
 CardCar.defaultProps = {
   acceleration: {},
   topSpeed: {},
-  handling: {}
+  handling: {},
 };
 
 export default CardCar;

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   CircularProgress,
   CircularProgressLabel,
   Text,
-  Flex
-} from "@chakra-ui/core";
+  Flex,
+} from '@chakra-ui/core';
 
 const CardProgressOverlay = ({
   timeTotal = 1,
@@ -48,7 +48,7 @@ const CardProgressOverlay = ({
           value={progress}
           color="blue"
           trackColor="blackAlpha"
-          size={big ? "10rem" : "4rem"}
+          size={big ? '10rem' : '4rem'}
         >
           <CircularProgressLabel color="white">{value}s</CircularProgressLabel>
         </CircularProgress>

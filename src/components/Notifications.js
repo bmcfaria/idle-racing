@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { Box, Flex, Text } from "@chakra-ui/core";
-import { MdNotifications } from "react-icons/md";
-import { useLocation, useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { Box, Flex, Text } from '@chakra-ui/core';
+import { MdNotifications } from 'react-icons/md';
+import { useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { notificationsSelector } from '../state/selectors';
 
 const NotificationItem = ({ item, onClose }) => {
   const location = useLocation();
   const history = useHistory();
-  const won = item?.won
-  const trackId = item?.track?.id
-  const trackName = item?.track?.name
-  const award = item?.award
-  const position = item?.position
-  const carName = item?.car?.name
-  const carId = item?.car?.id
+  const won = item?.won;
+  const trackId = item?.track?.id;
+  const trackName = item?.track?.name;
+  const award = item?.award;
+  const position = item?.position;
+  const carName = item?.car?.name;
+  const carId = item?.car?.id;
 
   const onClick = () => {
     history.push({
@@ -22,12 +22,12 @@ const NotificationItem = ({ item, onClose }) => {
       state: {
         ...(location.state || {}),
         race: trackId,
-        car: carId
-      }
+        car: carId,
+      },
     });
 
     onClose();
-  }
+  };
 
   return (
     <Box
@@ -38,7 +38,7 @@ const NotificationItem = ({ item, onClose }) => {
       backgroundColor="gray.100"
     >
       <Flex justifyContent="space-between">
-        <Text>{won ? "WON" : "LOST"}</Text>
+        <Text>{won ? 'WON' : 'LOST'}</Text>
         <Text>{trackName}</Text>
       </Flex>
       <Flex justifyContent="space-between">
@@ -46,16 +46,16 @@ const NotificationItem = ({ item, onClose }) => {
         <Text>{carName}</Text>
       </Flex>
     </Box>
-  )
-}
+  );
+};
 
 const Notifications = () => {
-  const [open, setOpen] = useState(false)
-  const notifications = useSelector(notificationsSelector)
+  const [open, setOpen] = useState(false);
+  const notifications = useSelector(notificationsSelector);
 
   const onClick = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
 
   return (
     <>
@@ -67,7 +67,7 @@ const Notifications = () => {
         w="2.5rem"
         paddingRight="0.5rem"
         paddingLeft="0.5rem"
-        color={open ? "white" : "inherit"}
+        color={open ? 'white' : 'inherit'}
         zIndex="100"
         onClick={onClick}
       />
@@ -78,7 +78,7 @@ const Notifications = () => {
         backgroundColor="black"
         opacity=".5"
         zIndex="99"
-        display={open ? "block" : "none"}
+        display={open ? 'block' : 'none'}
         onClick={onClick}
       />
       <Box
@@ -89,14 +89,14 @@ const Notifications = () => {
         h="13rem"
         backgroundColor="white"
         zIndex="100"
-        display={open ? "block" : "none"}
+        display={open ? 'block' : 'none'}
       >
         {notifications.map(item => (
           <NotificationItem key={item.id} item={item} onClose={onClick} />
         ))}
       </Box>
     </>
-  )
-}
+  );
+};
 
 export default Notifications;

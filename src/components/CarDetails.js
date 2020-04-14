@@ -1,7 +1,7 @@
-import React from "react";
-import { Box, Flex, Image, Text, Button } from "@chakra-ui/core";
-import AttributeInfo from "./AttributeInfo";
-import CardProgressOverlay from "./CardProgressOverlay";
+import React from 'react';
+import { Box, Flex, Image, Text, Button } from '@chakra-ui/core';
+import AttributeInfo from './AttributeInfo';
+import CardProgressOverlay from './CardProgressOverlay';
 import { useDispatch } from 'react-redux';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import { sellCarAction, upgradeAttributeAction } from '../state/actions';
@@ -14,13 +14,13 @@ const AttributeUpgrade = ({
   upgrade,
   max,
   price,
-  type
+  type,
 }) => {
   const dispatch = useDispatch();
 
   const onClickUpgrade = () => {
-    dispatch(upgradeAttributeAction(type, id))
-  }
+    dispatch(upgradeAttributeAction(type, id));
+  };
 
   return (
     <Flex position="relative" h="2rem">
@@ -42,7 +42,7 @@ const AttributeUpgrade = ({
           marginRight="0.2rem"
         >
           ->
-      </Text>
+        </Text>
         <Text textAlign="center" fontSize="sm" fontWeight="bold" color="tomato">
           {upgradeValue}
         </Text>
@@ -59,7 +59,7 @@ const AttributeUpgrade = ({
         ${price}
       </Button>
     </Flex>
-  )
+  );
 };
 
 const CarDetails = ({
@@ -70,14 +70,14 @@ const CarDetails = ({
   acceleration,
   topSpeed,
   handling,
-  price
+  price,
 }) => {
   const racing = false;
   const dispatch = useDispatch();
 
   const sell = () => {
-    dispatch(sellCarAction(id))
-  }
+    dispatch(sellCarAction(id));
+  };
 
   return (
     <Box position="relative" w="16rem">
@@ -145,7 +145,7 @@ const CarDetails = ({
 CarDetails.defaultProps = {
   acceleration: {},
   topSpeed: {},
-  handling: {}
+  handling: {},
 };
 
 export default CarDetails;

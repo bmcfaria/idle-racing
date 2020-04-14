@@ -1,10 +1,10 @@
-import React from "react";
-import { Box, Flex, Image, Text, Button } from "@chakra-ui/core";
-import CardProgressOverlay from "./CardProgressOverlay";
+import React from 'react';
+import { Box, Flex, Image, Text, Button } from '@chakra-ui/core';
+import CardProgressOverlay from './CardProgressOverlay';
 import { useDispatch } from 'react-redux';
 import { startRaceAction } from '../state/actions';
-import RaceResults from "./RaceResults";
-import { useLocation } from "react-router-dom";
+import RaceResults from './RaceResults';
+import { useLocation } from 'react-router-dom';
 
 const RaceDetails = ({ id, name, type, image, prizes, duration, price }) => {
   const racing = false;
@@ -16,8 +16,8 @@ const RaceDetails = ({ id, name, type, image, prizes, duration, price }) => {
   const selectedCarId = location?.state?.car;
 
   const race = () => {
-    dispatch(startRaceAction(selectedCarId, selectedRaceId))
-  }
+    dispatch(startRaceAction(selectedCarId, selectedRaceId));
+  };
 
   return (
     <Box position="relative" w="16rem">
@@ -84,7 +84,7 @@ const RaceDetails = ({ id, name, type, image, prizes, duration, price }) => {
 RaceDetails.defaultProps = {
   acceleration: {},
   topSpeed: {},
-  handling: {}
+  handling: {},
 };
 
 export default RaceDetails;

@@ -1,10 +1,10 @@
-import React from "react";
-import { Box, Text, Flex } from "@chakra-ui/core";
+import React from 'react';
+import { Box, Text, Flex } from '@chakra-ui/core';
 
 const ContentPanel = ({ title, separator, wrap, children, ...props }) => (
   <Flex
     minW="10rem"
-    h={wrap ? "fit-content" : "100%"}
+    h={wrap ? 'fit-content' : '100%'}
     bg="white"
     direction="column"
     {...props}
@@ -14,7 +14,7 @@ const ContentPanel = ({ title, separator, wrap, children, ...props }) => (
     </Text>
     <Box
       minW="100%"
-      h={wrap ? "fit-content" : "10rem"}
+      h={wrap ? 'fit-content' : '10rem'}
       flexGrow="1"
       bg="white"
       overflowY="scroll"

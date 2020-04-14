@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Flex } from "@chakra-ui/core";
+import React from 'react';
+import { Box, Flex } from '@chakra-ui/core';
 
 const Content = ({ children, ...props }) => (
   <Box

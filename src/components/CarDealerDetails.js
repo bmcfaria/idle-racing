@@ -1,6 +1,6 @@
-import React from "react";
-import { Box, Flex, Image, Text, Button } from "@chakra-ui/core";
-import AttributesBar from "./AttributesBar";
+import React from 'react';
+import { Box, Flex, Image, Text, Button } from '@chakra-ui/core';
+import AttributesBar from './AttributesBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { buyCarAction } from '../state/actions';
 import { moneySelector } from '../state/selectors';
@@ -17,27 +17,26 @@ const AttributeLabel = () => (
       Base value
     </Text>
   </Flex>
-)
+);
 
-const Attribute = ({
-  name,
-  value,
-  upgradeValue,
-  upgrade,
-  max
-}) => (
-    <Flex position="relative" h="1rem" justifyContent="space-between">
-      <Text textAlign="center" fontSize="sm">
-        {name}
-      </Text>
-      <Box position="absolute" w="100%">
-        <AttributesBar upgrade={upgrade} max={max} w="4rem" margin="0.5rem auto" />
-      </Box>
-      <Text textAlign="center" fontSize="sm">
-        {value}
-      </Text>
-    </Flex>
-  );
+const Attribute = ({ name, value, upgradeValue, upgrade, max }) => (
+  <Flex position="relative" h="1rem" justifyContent="space-between">
+    <Text textAlign="center" fontSize="sm">
+      {name}
+    </Text>
+    <Box position="absolute" w="100%">
+      <AttributesBar
+        upgrade={upgrade}
+        max={max}
+        w="4rem"
+        margin="0.5rem auto"
+      />
+    </Box>
+    <Text textAlign="center" fontSize="sm">
+      {value}
+    </Text>
+  </Flex>
+);
 
 const CarDetails = ({
   id,
@@ -47,15 +46,15 @@ const CarDetails = ({
   acceleration,
   topSpeed,
   handling,
-  price
+  price,
 }) => {
   const dispatch = useDispatch();
   const money = useSelector(moneySelector);
   const enoughMoney = money >= price;
 
   const buy = () => {
-    dispatch(buyCarAction(id))
-  }
+    dispatch(buyCarAction(id));
+  };
 
   return (
     <Box position="relative" w="16rem">
@@ -117,7 +116,7 @@ const CarDetails = ({
 CarDetails.defaultProps = {
   acceleration: {},
   topSpeed: {},
-  handling: {}
+  handling: {},
 };
 
 export default CarDetails;

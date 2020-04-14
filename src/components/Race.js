@@ -1,11 +1,11 @@
-import React from "react";
-import { Box, Flex } from "@chakra-ui/core";
-import { useLocation } from "react-router-dom";
-import ContentPanel from "./ContentPanel";
-import CardCar from "./CardCar";
-import CardRace from "./CardRace";
-import { displayResponsivePanel } from "../helpers/utils";
-import RaceDetails from "./RaceDetails";
+import React from 'react';
+import { Box, Flex } from '@chakra-ui/core';
+import { useLocation } from 'react-router-dom';
+import ContentPanel from './ContentPanel';
+import CardCar from './CardCar';
+import CardRace from './CardRace';
+import { displayResponsivePanel } from '../helpers/utils';
+import RaceDetails from './RaceDetails';
 import { useSelector } from 'react-redux';
 import { garageCarsSelector, tracksSelector } from '../state/selectors';
 
@@ -34,9 +34,7 @@ const RacePanel = ({ races, ...props }) => (
 
 const CarsPanel = ({ cars, ...props }) => (
   <ContentPanel title="Select Car" {...props}>
-    {cars.length === 0 && (
-      <div>No cars owned</div>
-    )}
+    {cars.length === 0 && <div>No cars owned</div>}
 
     {cars.map((car, index) => (
       <React.Fragment key={car.id}>
@@ -57,8 +55,8 @@ const CarsPanel = ({ cars, ...props }) => (
 
 const Race = () => {
   const location = useLocation();
-  const cars = useSelector(garageCarsSelector)
-  const races = useSelector(tracksSelector)
+  const cars = useSelector(garageCarsSelector);
+  const races = useSelector(tracksSelector);
 
   const selectedRaceId = location?.state?.track;
   const selectedCarId = location?.state?.car;

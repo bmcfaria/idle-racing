@@ -1,6 +1,6 @@
-import React from "react";
-import { Box, Flex, Text } from "@chakra-ui/core";
-import AttributesBar from "./AttributesBar";
+import React from 'react';
+import { Box, Flex, Text } from '@chakra-ui/core';
+import AttributesBar from './AttributesBar';
 
 const AttributeInfo = ({ name, value, upgrade, max, ...props }) => (
   <Flex {...props}>

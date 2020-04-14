@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, Button, Flex } from "@chakra-ui/core";
+import React from 'react';
+import { Text, Button, Flex } from '@chakra-ui/core';
 
 const RaceResults = ({ positions, ...props }) => (
   <Flex
@@ -28,7 +28,7 @@ const RaceResults = ({ positions, ...props }) => (
 );
 
 RaceResults.defaultProps = {
-  positions: [...new Array(10)]
+  positions: [...new Array(10)],
 };
 
 export default RaceResults;

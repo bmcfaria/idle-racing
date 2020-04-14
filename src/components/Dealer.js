@@ -1,10 +1,10 @@
-import React from "react";
-import { Box, Flex } from "@chakra-ui/core";
-import { useLocation } from "react-router-dom";
-import ContentPanel from "./ContentPanel";
-import CardCard from "./CardCar";
-import CarDealerDetails from "./CarDealerDetails";
-import { displayResponsivePanel } from "../helpers/utils";
+import React from 'react';
+import { Box, Flex } from '@chakra-ui/core';
+import { useLocation } from 'react-router-dom';
+import ContentPanel from './ContentPanel';
+import CardCard from './CardCar';
+import CarDealerDetails from './CarDealerDetails';
+import { displayResponsivePanel } from '../helpers/utils';
 import { useSelector } from 'react-redux';
 import { dealerCarsSelector } from '../state/selectors';
 
@@ -14,7 +14,7 @@ const Separator = props => <Box w="1rem" {...props} />;
 
 const Dealer = () => {
   const location = useLocation();
-  const cars = useSelector(dealerCarsSelector)
+  const cars = useSelector(dealerCarsSelector);
 
   const selected = location?.state?.car;
 
