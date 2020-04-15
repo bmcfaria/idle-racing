@@ -31,15 +31,7 @@ const CarsPanel = ({ cars, ...props }) => (
     {cars.map((car, index) => (
       <React.Fragment key={car.id}>
         {index > 0 && <Divider />}
-        <CardCar
-          id={car.id}
-          name={car.name}
-          type={car.type}
-          image={car.image}
-          acceleration={car.acceleration}
-          topSpeed={car.topSpeed}
-          handling={car.handling}
-        />
+        <CardCar car={car} />
       </React.Fragment>
     ))}
   </ContentPanel>
@@ -77,15 +69,7 @@ const Race = () => {
       )}
       {selectedCar && (
         <ContentPanel title="Race Details" wrap>
-          <RaceDetails
-            id={selectedTrack.id}
-            name={selectedTrack.name}
-            type={selectedTrack.type}
-            image={selectedTrack.image}
-            prizes={selectedTrack.prizes}
-            duration={selectedTrack.duration}
-            price={selectedTrack.price}
-          />
+          <RaceDetails track={selectedTrack} />
         </ContentPanel>
       )}
     </Flex>

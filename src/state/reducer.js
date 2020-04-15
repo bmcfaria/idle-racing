@@ -3,6 +3,7 @@ import {
   SELL_CAR_TYPE,
   UPGRADE_ATTRIBUTE_TYPE,
   START_RACE_TYPE,
+  END_RACE_TYPE,
 } from './actions';
 import {
   cars,
@@ -17,7 +18,7 @@ import {
 
 const initialState = {
   dealerCars: cars,
-  garageCars: [generateGarageCar(cars[0])],
+  garageCars: [generateGarageCar(cars[0]), generateGarageCar(cars[1])],
   tracks,
   money,
   notifications,
@@ -106,6 +107,38 @@ const rootReducer = (state = initialState, { type, payload }) => {
           [trackIndex]: {
             ...track,
             race: race.id,
+          },
+        }),
+      };
+    }
+
+    case END_RACE_TYPE: {
+      const race = state.races.find(item => item.id === payload.raceId);
+
+      if (!race) {
+        return state;
+      }
+
+      const car = state.garageCars.find(item => item.id === race.car);
+      const track = state.tracks.find(item => item.id === race.track);
+      const carIndex = state.garageCars.findIndex(item => item.id === car.id);
+      const trackIndex = state.tracks.findIndex(item => item.id === track.id);
+
+      // TODO: Calculate results
+      // TODO: add notification / history
+      return {
+        ...state,
+        races: state.races.filter(item => item.id !== race.id),
+        garageCars: Object.assign([], state.garageCars, {
+          [carIndex]: {
+            ...car,
+            race: undefined,
+          },
+        }),
+        tracks: Object.assign([], state.tracks, {
+          [trackIndex]: {
+            ...track,
+            race: undefined,
           },
         }),
       };

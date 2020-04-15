@@ -75,15 +75,27 @@ export const upgradeAttribute = attribute => {
   );
 };
 
-const generateTrack = (name = 'Some race name', type = '4x4') => ({
-  id: uuid(),
-  name: name,
-  duration: 3 * 1000,
-  price: 10,
-  prizes: [1000, 500, 100],
-  type: type,
-  race: undefined,
-});
+const generateTrack = (name = 'Some race name', type = '4x4') => {
+  const accelerationTemp = ~~(Math.random() * 100);
+  const topSpeedTemp = ~~(Math.random() * 100);
+  const handlingTemp = ~~(Math.random() * 100);
+  const totalTemp = accelerationTemp + topSpeedTemp + handlingTemp;
+
+  return {
+    id: uuid(),
+    name: name,
+    duration: (Math.round(Math.random() * 10) + 3) * 1000,
+    price: 10,
+    prizes: [1000, 500, 100],
+    type: type,
+    [ATTRIBUTE_TYPES.ACCELERATION]: accelerationTemp / totalTemp,
+    [ATTRIBUTE_TYPES.TOP_SPEED]: topSpeedTemp / totalTemp,
+    [ATTRIBUTE_TYPES.HANDLING]: handlingTemp / totalTemp,
+    race: undefined,
+    // TODO: get more realistic adversaries, maybe create a pool of competitors
+    competitors: cars,
+  };
+};
 
 export const generateRace = (car, track) => ({
   id: uuid(),
@@ -91,6 +103,7 @@ export const generateRace = (car, track) => ({
   track: track.id,
   start: new Date().getTime(),
   duration: track.duration,
+  name: track.name,
 });
 
 export const cars = [...new Array(20)].map(_ => generateCar());

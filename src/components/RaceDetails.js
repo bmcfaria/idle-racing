@@ -1,27 +1,43 @@
 import React from 'react';
 import { Box, Flex, Image, Text, Button } from '@chakra-ui/core';
 import CardProgressOverlay from './CardProgressOverlay';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startRaceAction } from '../state/actions';
 import RaceResults from './RaceResults';
 import { useLocation } from 'react-router-dom';
+import {
+  raceSelector,
+  garageCarsSelector,
+  tracksSelector,
+} from '../state/selectors';
+import { winProbability } from '../helpers/utils';
 
-const RaceDetails = ({ id, name, type, image, prizes, duration, price }) => {
-  const racing = false;
+const RaceDetails = ({
+  track: { name, type, image, prizes, duration, price, race },
+}) => {
   const results = false;
   const location = useLocation();
+  const cars = useSelector(garageCarsSelector);
+  const tracks = useSelector(tracksSelector);
   const dispatch = useDispatch();
 
-  const selectedRaceId = location?.state?.track;
+  const selectedTrackId = location?.state?.track;
   const selectedCarId = location?.state?.car;
 
-  const race = () => {
-    dispatch(startRaceAction(selectedCarId, selectedRaceId));
+  const selectedTrack = tracks.find(item => item.id === selectedTrackId);
+  const selectedCar = cars.find(item => item.id === selectedCarId);
+
+  const currentRace = useSelector(raceSelector(race));
+
+  const winProbabilityValue = winProbability(selectedCar, selectedTrack);
+
+  const startRace = () => {
+    dispatch(startRaceAction(selectedCarId, selectedTrackId));
   };
 
   return (
     <Box position="relative" w="16rem">
-      {racing && <CardProgressOverlay timeTotal={10} timeLeft={9} zIndex="1" />}
+      {currentRace && <CardProgressOverlay race={currentRace} />}
       {results && <RaceResults zIndex="1" />}
 
       <Flex flexDirection="column" marginTop="0.6rem" padding="0 0.2rem 0.6rem">
@@ -58,7 +74,7 @@ const RaceDetails = ({ id, name, type, image, prizes, duration, price }) => {
           </Box>
         </Flex>
         <Text textAlign="left" w="100%" fontSize="xs" color="tomato">
-          Win probability: ?%
+          Win probability: {winProbabilityValue}%
         </Text>
         <Text textAlign="center" w="100%" fontSize="xs">
           (Try upgrading your car or use a better one, to improve your chances
@@ -68,11 +84,11 @@ const RaceDetails = ({ id, name, type, image, prizes, duration, price }) => {
           borderColor="tomato"
           color="tomato"
           variant="outline"
-          isDisabled={!price}
+          isDisabled={!price || currentRace}
           marginTop="0.2rem"
           marginLeft="auto"
           marginRight="auto"
-          onClick={race}
+          onClick={startRace}
         >
           Race (${price})
         </Button>

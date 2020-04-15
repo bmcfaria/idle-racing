@@ -29,15 +29,7 @@ const Dealer = () => {
         {cars.map((car, index) => (
           <React.Fragment key={car.id}>
             {index > 0 && <Divider />}
-            <CardCard
-              id={car.id}
-              name={car.name}
-              type={car.type}
-              image={car.image}
-              acceleration={car.acceleration}
-              topSpeed={car.topSpeed}
-              handling={car.handling}
-            />
+            <CardCard car={car} />
           </React.Fragment>
         ))}
       </ContentPanel>

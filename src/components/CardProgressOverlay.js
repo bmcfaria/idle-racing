@@ -6,17 +6,20 @@ import {
   Text,
   Flex,
 } from '@chakra-ui/core';
+import { useDispatch } from 'react-redux';
+import { endRaceAction } from '../state/actions';
 
 const CardProgressOverlay = ({ race, label, big, ...props }) => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState(race.duration);
   const progress = ((race.duration - value) * 100) / race.duration;
-  console.log(progress);
 
   useEffect(() => {
     const countDown = setInterval(() => {
       const nextValue = race.duration - (new Date().getTime() - race.start);
       if (nextValue <= 0) {
         clearInterval(countDown);
+        dispatch(endRaceAction(race.id));
       }
 
       setValue(nextValue);
@@ -25,7 +28,7 @@ const CardProgressOverlay = ({ race, label, big, ...props }) => {
     return () => {
       clearInterval(countDown);
     };
-  }, [race]);
+  }, [dispatch, race]);
 
   if (!race) {
     return null;
@@ -55,7 +58,7 @@ const CardProgressOverlay = ({ race, label, big, ...props }) => {
         </CircularProgress>
         {label && (
           <Text color="white" ontSize="sm">
-            ({label})
+            ({race.name})
           </Text>
         )}
       </Box>

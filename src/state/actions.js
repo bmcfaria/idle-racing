@@ -18,3 +18,8 @@ export const startRaceAction = (carId, trackId) => ({
   type: START_RACE_TYPE,
   payload: { carId, trackId },
 });
+export const END_RACE_TYPE = 'END_RACE';
+export const endRaceAction = raceId => ({
+  type: END_RACE_TYPE,
+  payload: { raceId },
+});
