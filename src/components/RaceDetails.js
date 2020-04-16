@@ -9,6 +9,7 @@ import {
   raceSelector,
   garageCarsSelector,
   tracksSelector,
+  moneySelector,
 } from '../state/selectors';
 import { winProbability } from '../helpers/utils';
 
@@ -17,6 +18,7 @@ const RaceDetails = ({
 }) => {
   const results = false;
   const location = useLocation();
+  const money = useSelector(moneySelector);
   const cars = useSelector(garageCarsSelector);
   const tracks = useSelector(tracksSelector);
   const dispatch = useDispatch();
@@ -84,7 +86,7 @@ const RaceDetails = ({
           borderColor="tomato"
           color="tomato"
           variant="outline"
-          isDisabled={!price || currentRace}
+          isDisabled={money < price || currentRace}
           marginTop="0.2rem"
           marginLeft="auto"
           marginRight="auto"

@@ -106,24 +106,15 @@ export const generateRace = (car, track) => ({
   name: track.name,
 });
 
+export const generateNotification = (car, track, position, earnings) => ({
+  id: uuid(),
+  won: position === 1,
+  position,
+  award: `$${earnings}`,
+  track: { id: track.id, name: track.name },
+  car: { id: car.id, name: car.name },
+});
+
 export const cars = [...new Array(20)].map(_ => generateCar());
 export const tracks = [...new Array(20)].map(_ => generateTrack());
 export const money = 9999999999;
-export const notifications = [
-  {
-    id: 0,
-    won: true,
-    position: 1,
-    award: '$1200',
-    track: { id: 1, name: 'Same race name' },
-    car: { id: 1, name: 'Same car name' },
-  },
-  {
-    id: 1,
-    won: false,
-    position: 2,
-    award: undefined,
-    track: { id: 2, name: 'Same race name' },
-    car: { id: 2, name: 'Same car name' },
-  },
-];

@@ -9,19 +9,20 @@ import {
   cars,
   tracks,
   money,
-  notifications,
   generateGarageCar,
   upgradeAttribute,
   generateCarPrice,
   generateRace,
+  generateNotification,
 } from '../helpers/mockData';
+import { raceResults } from '../helpers/utils';
 
 const initialState = {
   dealerCars: cars,
   garageCars: [generateGarageCar(cars[0]), generateGarageCar(cars[1])],
   tracks,
   money,
-  notifications,
+  notifications: [],
   races: [],
 };
 
@@ -86,7 +87,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
       const car = state.garageCars.find(item => item.id === payload.carId);
       const track = state.tracks.find(item => item.id === payload.trackId);
 
-      if (!car || !track || car.race || track.race) {
+      if (
+        !car ||
+        !track ||
+        car.race ||
+        track.race ||
+        state.money < track.price
+      ) {
         return state;
       }
 
@@ -96,6 +103,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       const trackIndex = state.tracks.findIndex(item => item.id === track.id);
       return {
         ...state,
+        money: state.money - track.price,
         races: [...state.races, race],
         garageCars: Object.assign([], state.garageCars, {
           [carIndex]: {
@@ -124,10 +132,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
       const carIndex = state.garageCars.findIndex(item => item.id === car.id);
       const trackIndex = state.tracks.findIndex(item => item.id === track.id);
 
-      // TODO: Calculate results
-      // TODO: add notification / history
+      const results = raceResults(car, track);
+      const position = results.findIndex(item => item.id === car.id) + 1;
+
+      const earnings = ~~track.prizes[position - 1];
+
+      // TODO: add history
       return {
         ...state,
+        money: state.money + earnings,
         races: state.races.filter(item => item.id !== race.id),
         garageCars: Object.assign([], state.garageCars, {
           [carIndex]: {
@@ -141,6 +154,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
             race: undefined,
           },
         }),
+        notifications: [
+          generateNotification(car, track, position, earnings),
+          ...state.notifications,
+        ],
       };
     }
 

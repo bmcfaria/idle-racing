@@ -8,7 +8,6 @@ import { notificationsSelector } from '../state/selectors';
 const NotificationItem = ({ item, onClose }) => {
   const location = useLocation();
   const history = useHistory();
-  const won = item?.won;
   const trackId = item?.track?.id;
   const trackName = item?.track?.name;
   const award = item?.award;
@@ -21,7 +20,7 @@ const NotificationItem = ({ item, onClose }) => {
       pathname: '/race',
       state: {
         ...(location.state || {}),
-        race: trackId,
+        track: trackId,
         car: carId,
       },
     });
@@ -38,11 +37,11 @@ const NotificationItem = ({ item, onClose }) => {
       backgroundColor="gray.100"
     >
       <Flex justifyContent="space-between">
-        <Text>{won ? 'WON' : 'LOST'}</Text>
+        <Text>{award}</Text>
         <Text>{trackName}</Text>
       </Flex>
       <Flex justifyContent="space-between">
-        <Text>{won ? award : position}</Text>
+        <Text>({position})</Text>
         <Text>{carName}</Text>
       </Flex>
     </Box>

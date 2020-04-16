@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box,
   CircularProgress,
   CircularProgressLabel,
   Text,
@@ -43,11 +42,13 @@ const CardProgressOverlay = ({ race, label, big, ...props }) => {
       flexDirection="column"
       {...props}
     >
-      <Box margin="auto">
+      <Flex direction="column" margin="auto">
         <CircularProgress
           value={progress > 100 ? 100 : progress}
           color="blue"
           trackColor="blackAlpha"
+          marginLeft="auto"
+          marginRight="auto"
           size={big ? '10rem' : '4rem'}
         >
           {
@@ -61,7 +62,7 @@ const CardProgressOverlay = ({ race, label, big, ...props }) => {
             ({race.name})
           </Text>
         )}
-      </Box>
+      </Flex>
     </Flex>
   );
 };
