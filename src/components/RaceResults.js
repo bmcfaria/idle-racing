@@ -3,7 +3,10 @@ import { Text, Button, Flex } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
 import { closeResultsAction } from '../state/actions';
 
-const RaceResults = ({ pastRace: { id, positions }, ...props }) => {
+const RaceResults = ({
+  pastRace: { id, reward, position, results },
+  ...props
+}) => {
   const dispatch = useDispatch();
 
   const onClick = () => {
@@ -19,13 +22,13 @@ const RaceResults = ({ pastRace: { id, positions }, ...props }) => {
       {...props}
     >
       <Text color="white" ontSize="sm">
-        You placed: 3rd
+        {`You placed: ${position}`}
       </Text>
       <Text color="white" ontSize="sm">
-        Reward: $10
+        {`Reward: $${reward}`}
       </Text>
-      {positions.map((car, index) => (
-        <Text color="white" ontSize="xs" lineHeight="1rem">
+      {results.map((car, index) => (
+        <Text color="white" ontSize="xs" lineHeight="1rem" key={car.id}>
           {index + 1}: {car.name}
         </Text>
       ))}
@@ -40,10 +43,6 @@ const RaceResults = ({ pastRace: { id, positions }, ...props }) => {
       </Button>
     </Flex>
   );
-};
-
-RaceResults.defaultProps = {
-  positions: [...new Array(10)],
 };
 
 export default RaceResults;

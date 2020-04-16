@@ -141,7 +141,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
       const earnings = ~~track.prizes[position - 1];
 
-      const pastRace = generatePastRace(race, car, track, results);
+      const pastRace = generatePastRace(
+        race,
+        car,
+        track,
+        earnings,
+        position,
+        results
+      );
 
       // TODO: add history
       return {

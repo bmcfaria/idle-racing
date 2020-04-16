@@ -107,14 +107,23 @@ export const generateRace = (car, track) => ({
   name: track.name,
 });
 
-export const generatePastRace = (race, car, track, positions) => ({
+export const generatePastRace = (
+  race,
+  car,
+  track,
+  reward,
+  position,
+  results
+) => ({
   id: uuid(),
   race: race.id,
   car: car.id,
   track: track.id,
   time: new Date().getTime(),
   checked: false,
-  positions,
+  reward,
+  position,
+  results,
 });
 
 export const generateNotification = (car, track, position, earnings) => ({
