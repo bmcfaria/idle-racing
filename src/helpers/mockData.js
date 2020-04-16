@@ -92,6 +92,7 @@ const generateTrack = (name = 'Some race name', type = '4x4') => {
     [ATTRIBUTE_TYPES.TOP_SPEED]: topSpeedTemp / totalTemp,
     [ATTRIBUTE_TYPES.HANDLING]: handlingTemp / totalTemp,
     race: undefined,
+    lastRace: undefined,
     // TODO: get more realistic adversaries, maybe create a pool of competitors
     competitors: cars,
   };
@@ -104,6 +105,16 @@ export const generateRace = (car, track) => ({
   start: new Date().getTime(),
   duration: track.duration,
   name: track.name,
+});
+
+export const generatePastRace = (race, car, track, positions) => ({
+  id: uuid(),
+  race: race.id,
+  car: car.id,
+  track: track.id,
+  time: new Date().getTime(),
+  checked: false,
+  positions,
 });
 
 export const generateNotification = (car, track, position, earnings) => ({

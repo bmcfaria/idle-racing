@@ -23,3 +23,8 @@ export const endRaceAction = raceId => ({
   type: END_RACE_TYPE,
   payload: { raceId },
 });
+export const CLOSE_RESULTS_TYPE = 'CLOSE_RESULTS';
+export const closeResultsAction = pastRaceId => ({
+  type: CLOSE_RESULTS_TYPE,
+  payload: { pastRaceId },
+});

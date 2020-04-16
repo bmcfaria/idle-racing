@@ -31,6 +31,7 @@ export const winProbability = (car, track) => {
 export const raceResults = (car, track) => {
   const carScoreObject = {
     id: car.id,
+    name: `(YOU) ${car.name}`,
     score: calculateScore(car, track, true),
   };
 
@@ -39,6 +40,7 @@ export const raceResults = (car, track) => {
       ...result,
       {
         id: competitor.id,
+        name: competitor.name,
         score: calculateScore(competitor, track, true),
       },
     ],

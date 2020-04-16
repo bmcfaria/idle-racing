@@ -5,3 +5,5 @@ export const moneySelector = state => state.money;
 export const notificationsSelector = state => state.notifications;
 export const raceSelector = raceId => state =>
   state.races.find(item => item.id === raceId);
+export const pastRaceSelector = pastRaceId => state =>
+  state.pastRaces.find(item => item.id === pastRaceId);

@@ -10,24 +10,25 @@ import {
   garageCarsSelector,
   tracksSelector,
   moneySelector,
+  pastRaceSelector,
 } from '../state/selectors';
 import { winProbability } from '../helpers/utils';
 
 const RaceDetails = ({
   track: { name, type, image, prizes, duration, price, race },
 }) => {
-  const results = false;
+  const dispatch = useDispatch();
   const location = useLocation();
   const money = useSelector(moneySelector);
   const cars = useSelector(garageCarsSelector);
   const tracks = useSelector(tracksSelector);
-  const dispatch = useDispatch();
-
   const selectedTrackId = location?.state?.track;
   const selectedCarId = location?.state?.car;
-
   const selectedTrack = tracks.find(item => item.id === selectedTrackId);
   const selectedCar = cars.find(item => item.id === selectedCarId);
+
+  const pastRace = useSelector(pastRaceSelector(selectedTrack.lastRace));
+  const results = !!pastRace && pastRace.checked === false;
 
   const currentRace = useSelector(raceSelector(race));
 
@@ -40,7 +41,7 @@ const RaceDetails = ({
   return (
     <Box position="relative" w="16rem">
       {currentRace && <CardProgressOverlay race={currentRace} />}
-      {results && <RaceResults zIndex="1" />}
+      {results && <RaceResults zIndex="1" pastRace={pastRace} />}
 
       <Flex flexDirection="column" marginTop="0.6rem" padding="0 0.2rem 0.6rem">
         <Image w="100%" h="8rem" alt="car" bg="lightgray" />

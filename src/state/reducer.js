@@ -4,6 +4,7 @@ import {
   UPGRADE_ATTRIBUTE_TYPE,
   START_RACE_TYPE,
   END_RACE_TYPE,
+  CLOSE_RESULTS_TYPE,
 } from './actions';
 import {
   cars,
@@ -14,6 +15,7 @@ import {
   generateCarPrice,
   generateRace,
   generateNotification,
+  generatePastRace,
 } from '../helpers/mockData';
 import { raceResults } from '../helpers/utils';
 
@@ -24,6 +26,7 @@ const initialState = {
   money,
   notifications: [],
   races: [],
+  pastRaces: [],
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -66,7 +69,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
       const attribute = car[payload.type];
 
-      if (!attribute.price || state.money - attribute.price < 0) {
+      if (!attribute.price || state.money < attribute.price) {
         return state;
       }
 
@@ -77,6 +80,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       const carIndex = state.garageCars.findIndex(item => item.id === car.id);
       return {
         ...state,
+        money: state.money - attribute.price,
         garageCars: Object.assign([], state.garageCars, {
           [carIndex]: newCar,
         }),
@@ -137,6 +141,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
       const earnings = ~~track.prizes[position - 1];
 
+      const pastRace = generatePastRace(race, car, track, results);
+
       // TODO: add history
       return {
         ...state,
@@ -152,12 +158,37 @@ const rootReducer = (state = initialState, { type, payload }) => {
           [trackIndex]: {
             ...track,
             race: undefined,
+            lastRace: pastRace.id,
           },
         }),
         notifications: [
           generateNotification(car, track, position, earnings),
           ...state.notifications,
         ],
+        pastRaces: [pastRace, ...state.pastRaces],
+      };
+    }
+
+    case CLOSE_RESULTS_TYPE: {
+      const pastRace = state.pastRaces.find(
+        item => item.id === payload.pastRaceId
+      );
+
+      if (!pastRace) {
+        return state;
+      }
+      const pastRaceIndex = state.pastRaces.findIndex(
+        item => item.id === payload.pastRaceId
+      );
+
+      return {
+        ...state,
+        pastRaces: Object.assign([], state.garageCars, {
+          [pastRaceIndex]: {
+            ...pastRace,
+            checked: true,
+          },
+        }),
       };
     }
 
