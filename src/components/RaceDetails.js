@@ -14,6 +14,13 @@ import {
 } from '../state/selectors';
 import { winProbability } from '../helpers/utils';
 
+const winningChances = {
+  0: { text: 'BAD', color: 'tomato' },
+  1: { text: 'MAYBE', color: 'Goldenrod' },
+  2: { text: 'AVERAGE', color: 'Goldenrod' },
+  3: { text: 'GOOD', color: 'LimeGreen' },
+};
+
 const RaceDetails = ({
   track: { name, type, image, prizes, duration, price, race },
 }) => {
@@ -76,8 +83,13 @@ const RaceDetails = ({
             </Text>
           </Box>
         </Flex>
-        <Text textAlign="left" w="100%" fontSize="xs" color="tomato">
-          Win probability: {winProbabilityValue}%
+        <Text
+          textAlign="left"
+          w="100%"
+          fontSize="xs"
+          color={winningChances[winProbabilityValue].color}
+        >
+          Winning chances: {winningChances[winProbabilityValue].text}
         </Text>
         <Text textAlign="center" w="100%" fontSize="xs">
           (Try upgrading your car or use a better one, to improve your chances

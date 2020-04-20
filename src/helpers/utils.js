@@ -23,9 +23,39 @@ export const winProbability = (car, track) => {
     score: calculateScore(car, track),
   };
 
-  // TODO: calculate probability or some kind of better indicator
+  const results = track?.competitors?.reduce((result, competitor) => {
+    const tmpScore = calculateScore(competitor, track);
+    return {
+      better:
+        tmpScore > carScoreObject.score ? ~~result.better + 1 : ~~result.better,
+      equal:
+        tmpScore === carScoreObject.score ? ~~result.equal + 1 : ~~result.equal,
+      worse:
+        tmpScore < carScoreObject.score ? ~~result.worse + 1 : ~~result.worse,
+    };
+  }, {});
 
-  return carScoreObject.score;
+  if (results.better === 0) {
+    // Best result possible
+    // GREEN
+    return 3;
+  } else if (results.better < 3) {
+    // Runner up for 2nd or 3rd
+    // YELLOW
+    if (results.better + results.equal < 3) {
+      // Will win something
+      return 2;
+    } else {
+      // May or may not win anything
+      // ORANGE
+      return 1;
+    }
+  } else {
+    // (results.better >= 3
+    // Can't win
+    // RED
+    return 0;
+  }
 };
 
 export const raceResults = (car, track) => {
