@@ -1,16 +1,33 @@
 import React from 'react';
 import { Box, Flex } from '@chakra-ui/core';
 import { useLocation } from 'react-router-dom';
-import ContentPanel from './ContentPanel';
-import CardCard from './CardCar';
 import CarDetails from './CarDetails';
-import { displayResponsivePanel } from '../helpers/utils';
 import { useSelector } from 'react-redux';
 import { garageCarsSelector } from '../state/selectors';
+import CardCarSmall from './CardCarSmall';
+import Modal from './Modal';
+import styled from '@emotion/styled';
 
-const Divider = () => <Box w="100%" h="0" borderTop="1px solid black" />;
+const CARD_WIDTH = 304;
+const CARD_MARGIN = 28;
 
-const Separator = props => <Box w="1rem" {...props} />;
+const widthByCardsNumber = number =>
+  CARD_WIDTH * number + CARD_MARGIN * (number + 1);
+
+const CarsContainer = styled(Flex)`
+  width: ${widthByCardsNumber(1)}px;
+  padding-left: ${CARD_MARGIN}px;
+  /* box-sizing: content-box;
+  overflow-y: scroll; */
+
+  @media screen and (min-width: ${widthByCardsNumber(2)}px) {
+    width: ${widthByCardsNumber(2)}px;
+  }
+
+  @media screen and (min-width: ${widthByCardsNumber(3)}px) {
+    width: ${widthByCardsNumber(3)}px;
+  }
+`;
 
 const Garage = () => {
   const location = useLocation();
@@ -21,25 +38,9 @@ const Garage = () => {
   const selectedCar = cars.find(item => item.id === selected);
 
   return (
-    <Flex justifyContent="center">
-      <ContentPanel
-        title="Select Car"
-        display={displayResponsivePanel(selectedCar)}
-      >
-        {cars.length === 0 && <div>No cars owned</div>}
-
-        {cars.map((car, index) => (
-          <React.Fragment key={car.id}>
-            {index > 0 && <Divider />}
-            <CardCard car={car} />
-          </React.Fragment>
-        ))}
-      </ContentPanel>
-      {selectedCar && (
-        <Separator display={displayResponsivePanel(selectedCar)} />
-      )}
-      {selectedCar && (
-        <ContentPanel title="Car Details" wrap>
+    <Box>
+      <Modal isOpen={!!selectedCar} backOnClose>
+        {selectedCar && (
           <CarDetails
             id={selectedCar.id}
             name={selectedCar.name}
@@ -50,9 +51,20 @@ const Garage = () => {
             handling={selectedCar.handling}
             price={selectedCar.price}
           />
-        </ContentPanel>
-      )}
-    </Flex>
+        )}
+      </Modal>
+      <CarsContainer wrap="wrap" margin="0 auto">
+        {cars.map(car => (
+          <Box
+            key={car.id}
+            marginRight={`${CARD_MARGIN}px`}
+            marginBottom={`${CARD_MARGIN}px`}
+          >
+            <CardCarSmall car={car} />
+          </Box>
+        ))}
+      </CarsContainer>
+    </Box>
   );
 };
 

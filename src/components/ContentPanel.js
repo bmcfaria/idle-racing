@@ -3,7 +3,7 @@ import { Box, Text, Flex } from '@chakra-ui/core';
 
 const ContentPanel = ({ title, separator, wrap, children, ...props }) => (
   <Flex
-    minW="10rem"
+    minW="16rem"
     h={wrap ? 'fit-content' : '100%'}
     bg="white"
     direction="column"

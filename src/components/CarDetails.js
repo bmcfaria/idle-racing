@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Flex, Image, Text, Button } from '@chakra-ui/core';
+import { Box, Flex, Image, Text } from '@chakra-ui/core';
+import Button from './Button';
 import AttributeInfo from './AttributeInfo';
 import CardProgressOverlay from './CardProgressOverlay';
 import { useDispatch } from 'react-redux';
@@ -23,7 +24,7 @@ const AttributeUpgrade = ({
   };
 
   return (
-    <Flex position="relative" h="2rem">
+    <Flex position="relative" h="40px" alignItems="center">
       <AttributeInfo flexGrow="1" name={name} upgrade={upgrade} max={max} />
       <Flex
         w="100%"
@@ -47,15 +48,7 @@ const AttributeUpgrade = ({
           {upgradeValue}
         </Text>
       </Flex>
-      <Button
-        w="4rem"
-        h="1.5rem"
-        borderColor="tomato"
-        color="tomato"
-        variant="outline"
-        isDisabled={!price}
-        onClick={onClickUpgrade}
-      >
+      <Button w="4rem" secondary isDisabled={!price} onClick={onClickUpgrade}>
         ${price}
       </Button>
     </Flex>
@@ -80,7 +73,7 @@ const CarDetails = ({
   };
 
   return (
-    <Box position="relative" w="16rem">
+    <Box position="relative" w="304px" h="440px" bg="white" borderRadius="16px">
       {racing && (
         <CardProgressOverlay
           timeTotal={10}
@@ -89,51 +82,57 @@ const CarDetails = ({
           zIndex="1"
         />
       )}
-      <Box marginTop="0.6rem" padding="0 0.2rem 0.6rem">
-        <Image w="100%" h="8rem" alt="car" bg="lightgray" />
-        <Text textAlign="center" w="100%" fontSize="md" src={image}>
+      <Box marginTop="0.6rem" paddingLeft="16px" paddingRight="16px">
+        <Image
+          w="100%"
+          h="190px"
+          padding="16px 0"
+          alt="car"
+          // bg="lightgray"
+          objectFit="contain"
+          style={{ imageRendering: 'pixelated' }}
+          src={image}
+        />
+        <Text textAlign="center" w="100%" h="36px" fontSize="24px">
           {name}
         </Text>
-        <Text textAlign="left" w="100%" fontSize="sm">
+        <Text textAlign="left" w="100%" h="30px" fontSize="sm">
           Type: {type}
         </Text>
-        <AttributeUpgrade
-          id={id}
-          name="Acceleration"
-          type={ATTRIBUTE_TYPES.ACCELERATION}
-          value={acceleration.value}
-          upgradeValue={acceleration.upgradeValue}
-          upgrade={acceleration.upgrade}
-          max={acceleration.max}
-          price={acceleration.price}
-        />
-        <AttributeUpgrade
-          id={id}
-          name="Top Speed"
-          type={ATTRIBUTE_TYPES.TOP_SPEED}
-          value={topSpeed.value}
-          upgradeValue={topSpeed.upgradeValue}
-          upgrade={topSpeed.upgrade}
-          max={topSpeed.max}
-          price={topSpeed.price}
-        />
-        <AttributeUpgrade
-          id={id}
-          name="Handling"
-          type={ATTRIBUTE_TYPES.HANDLING}
-          value={handling.value}
-          upgradeValue={handling.upgradeValue}
-          upgrade={handling.upgrade}
-          max={handling.max}
-          price={handling.price}
-        />
-        <Flex>
-          <Button
-            variantColor="teal"
-            variant="outline"
-            margin="1rem auto"
-            onClick={sell}
-          >
+        <Box w="100%" h="120px">
+          <AttributeUpgrade
+            id={id}
+            name="Acceleration"
+            type={ATTRIBUTE_TYPES.ACCELERATION}
+            value={acceleration.value}
+            upgradeValue={acceleration.upgradeValue}
+            upgrade={acceleration.upgrade}
+            max={acceleration.max}
+            price={acceleration.price}
+          />
+          <AttributeUpgrade
+            id={id}
+            name="Top Speed"
+            type={ATTRIBUTE_TYPES.TOP_SPEED}
+            value={topSpeed.value}
+            upgradeValue={topSpeed.upgradeValue}
+            upgrade={topSpeed.upgrade}
+            max={topSpeed.max}
+            price={topSpeed.price}
+          />
+          <AttributeUpgrade
+            id={id}
+            name="Handling"
+            type={ATTRIBUTE_TYPES.HANDLING}
+            value={handling.value}
+            upgradeValue={handling.upgradeValue}
+            upgrade={handling.upgrade}
+            max={handling.max}
+            price={handling.price}
+          />
+        </Box>
+        <Flex h="64px">
+          <Button margin="auto" onClick={sell}>
             Sell (${price})
           </Button>
         </Flex>

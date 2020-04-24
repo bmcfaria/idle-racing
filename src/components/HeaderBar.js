@@ -13,6 +13,7 @@ import Tabs from './Tabs';
 import Notifications from './Notifications';
 import { useSelector } from 'react-redux';
 import { moneySelector } from '../state/selectors';
+import { zIndex } from '../helpers/theme';
 
 const Breadcrumbs = () => {
   const location = useLocation();
@@ -86,7 +87,15 @@ const HeaderBar = () => {
 
   return (
     <header>
-      <Box>
+      <Box w="100%" h="3.5rem" />
+      <Box
+        position="fixed"
+        top="0"
+        left="0"
+        w="100%"
+        zIndex={zIndex.headerBar}
+        bg="white"
+      >
         <Flex align="center">
           <Title />
           <Tabs display={['none', 'none', 'flex']} icon />

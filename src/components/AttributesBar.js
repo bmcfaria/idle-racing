@@ -4,9 +4,9 @@ import { Box, Flex } from '@chakra-ui/core';
 const AttributeBlock = ({ selected }) => (
   <Box
     w="6px"
-    h="5px"
+    h="6px"
     border="0.1px solid black"
-    bg={selected ? '#2F80ED' : 'none'}
+    bg={selected ? '#2F80ED' : 'unset'}
     marginLeft="0"
   />
 );

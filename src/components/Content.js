@@ -7,6 +7,7 @@ const Content = ({ children, ...props }) => (
     bg="lightgray"
     paddingTop="2rem"
     paddingBottom="2rem"
+    overflow="auto"
     {...props}
   >
     <Flex h="100%" justifyContent="center">

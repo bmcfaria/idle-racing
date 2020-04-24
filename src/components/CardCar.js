@@ -40,7 +40,15 @@ const CardCar = ({
       {currentRace && <CardProgressOverlay race={currentRace} label />}
       <Flex w="100%" padding="0.6rem 0.2rem" bg="white">
         <Box w="5rem">
-          <Image w="100%" h="4.5rem" alt="car" bg="lightgray" src={image} />
+          <Image
+            w="100%"
+            h="4.5rem"
+            alt="car"
+            // bg="lightgray"
+            objectFit="contain"
+            style={{ imageRendering: 'pixelated' }}
+            src={image}
+          />
           <Text textAlign="center" w="100%" fontSize="sm">
             Type: {type}
           </Text>

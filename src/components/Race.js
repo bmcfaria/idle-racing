@@ -8,6 +8,7 @@ import { displayResponsivePanel } from '../helpers/utils';
 import RaceDetails from './RaceDetails';
 import { useSelector } from 'react-redux';
 import { garageCarsSelector, tracksSelector } from '../state/selectors';
+import CardCarSmall from './CardCarSmall';
 
 const Divider = () => <Box w="100%" h="0" borderTop="1px solid black" />;
 
@@ -31,7 +32,7 @@ const CarsPanel = ({ cars, ...props }) => (
     {cars.map((car, index) => (
       <React.Fragment key={car.id}>
         {index > 0 && <Divider />}
-        <CardCar car={car} />
+        <CardCarSmall car={car} />
       </React.Fragment>
     ))}
   </ContentPanel>

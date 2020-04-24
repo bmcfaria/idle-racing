@@ -38,7 +38,7 @@ const Attribute = ({ name, value, upgradeValue, upgrade, max }) => (
   </Flex>
 );
 
-const CarDetails = ({
+const CarDealerDetails = ({
   id,
   name,
   type,
@@ -59,7 +59,15 @@ const CarDetails = ({
   return (
     <Box position="relative" w="16rem">
       <Box marginTop="0.6rem" padding="0 0.2rem 0.6rem">
-        <Image w="100%" h="8rem" alt="car" bg="lightgray" src={image} />
+        <Image
+          w="100%"
+          h="8rem"
+          alt="car"
+          // bg="lightgray"
+          objectFit="contain"
+          style={{ imageRendering: 'pixelated' }}
+          src={image}
+        />
         <Text textAlign="center" w="100%" fontSize="md">
           {name}
         </Text>
@@ -94,9 +102,6 @@ const CarDetails = ({
           max={handling.max}
           price={handling.price}
         />
-        <Text fontSize="md" marginTop="1rem">
-          {`Price: $${price}`}
-        </Text>
         <Flex>
           <Button
             variantColor="tomato"
@@ -104,8 +109,9 @@ const CarDetails = ({
             margin="0 auto"
             onClick={buy}
             isDisabled={!enoughMoney}
+            marginTop="1rem"
           >
-            Buy
+            {`$${price}`}
           </Button>
         </Flex>
       </Box>
@@ -113,10 +119,10 @@ const CarDetails = ({
   );
 };
 
-CarDetails.defaultProps = {
+CarDealerDetails.defaultProps = {
   acceleration: {},
   topSpeed: {},
   handling: {},
 };
 
-export default CarDetails;
+export default CarDealerDetails;

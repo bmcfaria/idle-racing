@@ -1,5 +1,24 @@
 import uuid from 'uuid-random';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
+import CarPath from '../assets/Cars/riot.png';
+import BuggyPath from '../assets/Cars/buggy.png';
+import BudSchoolPath from '../assets/Cars/bus_school.png';
+import ConvertiblePath from '../assets/Cars/convertible.png';
+import CyclePath from '../assets/Cars/cycle.png';
+import FormulaPath from '../assets/Cars/formula.png';
+import HotdogPath from '../assets/Cars/hotdog.png';
+import KartPath from '../assets/Cars/kart.png';
+
+const carImages = [
+  CarPath,
+  BuggyPath,
+  BudSchoolPath,
+  ConvertiblePath,
+  CyclePath,
+  FormulaPath,
+  HotdogPath,
+  KartPath,
+];
 
 const generateAttribute = (base, unit, max, basePrice, upgrade) => {
   const value = base + unit * upgrade;
@@ -41,6 +60,7 @@ const generateCar = (name = 'Some car name', type = '4x4') => {
     [ATTRIBUTE_TYPES.ACCELERATION]: generateRandomAttribute(100, 20, 6, 50),
     [ATTRIBUTE_TYPES.TOP_SPEED]: generateRandomAttribute(100, 20, 4, 50),
     [ATTRIBUTE_TYPES.HANDLING]: generateRandomAttribute(100, 20, 5, 50),
+    image: carImages[~~(Math.random() * carImages.length)],
   };
 
   return {
@@ -58,6 +78,7 @@ export const generateGarageCar = car => ({
   [ATTRIBUTE_TYPES.HANDLING]: car[ATTRIBUTE_TYPES.HANDLING],
   price: ~~(car.price * 0.7),
   dealerCar: car.id,
+  image: car.image,
   race: undefined,
 });
 
@@ -94,7 +115,7 @@ const generateTrack = (name = 'Some race name', type = '4x4') => {
     race: undefined,
     lastRace: undefined,
     // TODO: get more realistic adversaries, maybe create a pool of competitors
-    competitors: cars,
+    competitors: cars.slice(0, 9),
   };
 };
 
