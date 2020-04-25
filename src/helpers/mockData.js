@@ -52,7 +52,7 @@ export const generateCarPrice = attributes =>
   (attributes[ATTRIBUTE_TYPES.HANDLING].price ||
     attributes[ATTRIBUTE_TYPES.HANDLING].priceRaw);
 
-const generateCar = (name = 'Some car name', type = '4x4') => {
+const generateCar = (name = 'Some car name', type = '4x4', brand = 'basic') => {
   const baseAttributes = {
     id: uuid(),
     name,
@@ -61,6 +61,7 @@ const generateCar = (name = 'Some car name', type = '4x4') => {
     [ATTRIBUTE_TYPES.TOP_SPEED]: generateRandomAttribute(100, 20, 4, 50),
     [ATTRIBUTE_TYPES.HANDLING]: generateRandomAttribute(100, 20, 5, 50),
     image: carImages[~~(Math.random() * carImages.length)],
+    brand,
   };
 
   return {
@@ -79,6 +80,7 @@ export const generateGarageCar = car => ({
   price: ~~(car.price * 0.7),
   dealerCar: car.id,
   image: car.image,
+  brand: car.brand,
   race: undefined,
 });
 
@@ -156,6 +158,10 @@ export const generateNotification = (car, track, position, earnings) => ({
   car: { id: car.id, name: car.name },
 });
 
-export const cars = [...new Array(20)].map(_ => generateCar());
+export const cars = [
+  ...[...new Array(3)].map(_ => generateCar('Basic car name', '4x4', 'basic')),
+  ...[...new Array(20)].map(_ => generateCar('City car name', '4x4', 'city')),
+  ...[...new Array(10)].map(_ => generateCar('Track car name', '4x4', 'track')),
+];
 export const tracks = [...new Array(20)].map(_ => generateTrack());
 export const money = 9999999999;
