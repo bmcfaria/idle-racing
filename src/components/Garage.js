@@ -7,26 +7,13 @@ import { garageCarsSelector } from '../state/selectors';
 import CardCarSmall from './CardCarSmall';
 import Modal from './Modal';
 import styled from '@emotion/styled';
-
-const CARD_WIDTH = 304;
-const CARD_MARGIN = 28;
-
-const widthByCardsNumber = number =>
-  CARD_WIDTH * number + CARD_MARGIN * (number + 1);
+import {
+  cardsContainerWidthPaddingStyles,
+  CARD_MARGIN,
+} from '../helpers/theme';
 
 const CarsContainer = styled(Flex)`
-  width: ${widthByCardsNumber(1)}px;
-  padding-left: ${CARD_MARGIN}px;
-  /* box-sizing: content-box;
-  overflow-y: scroll; */
-
-  @media screen and (min-width: ${widthByCardsNumber(2)}px) {
-    width: ${widthByCardsNumber(2)}px;
-  }
-
-  @media screen and (min-width: ${widthByCardsNumber(3)}px) {
-    width: ${widthByCardsNumber(3)}px;
-  }
+  ${cardsContainerWidthPaddingStyles}
 `;
 
 const Garage = () => {
@@ -53,7 +40,7 @@ const Garage = () => {
           />
         )}
       </Modal>
-      <CarsContainer wrap="wrap" margin="0 auto">
+      <CarsContainer wrap="wrap">
         {cars.map(car => (
           <Box
             key={car.id}

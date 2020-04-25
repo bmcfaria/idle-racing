@@ -1,16 +1,20 @@
 import React from 'react';
 import { Box, Flex } from '@chakra-ui/core';
 import { useLocation } from 'react-router-dom';
-import ContentPanel from './ContentPanel';
-import CardCard from './CardCar';
 import CarDealerDetails from './CarDealerDetails';
-import { displayResponsivePanel } from '../helpers/utils';
 import { useSelector } from 'react-redux';
 import { dealerCarsSelector } from '../state/selectors';
+import CardCarSmall from './CardCarSmall';
+import Modal from './Modal';
+import styled from '@emotion/styled';
+import {
+  cardsContainerWidthPaddingStyles,
+  CARD_MARGIN,
+} from '../helpers/theme';
 
-const Divider = () => <Box w="100%" h="0" borderTop="1px solid black" />;
-
-const Separator = props => <Box w="1rem" {...props} />;
+const CarsContainer = styled(Flex)`
+  ${cardsContainerWidthPaddingStyles}
+`;
 
 const Dealer = () => {
   const location = useLocation();
@@ -21,23 +25,9 @@ const Dealer = () => {
   const selectedCar = cars.find(item => item.id === selected);
 
   return (
-    <Flex justifyContent="center">
-      <ContentPanel
-        title="Select Car"
-        display={displayResponsivePanel(selectedCar)}
-      >
-        {cars.map((car, index) => (
-          <React.Fragment key={car.id}>
-            {index > 0 && <Divider />}
-            <CardCard car={car} />
-          </React.Fragment>
-        ))}
-      </ContentPanel>
-      {selectedCar && (
-        <Separator display={displayResponsivePanel(selectedCar)} />
-      )}
-      {selectedCar && (
-        <ContentPanel title="Car Details" wrap>
+    <Box>
+      <Modal isOpen={!!selectedCar} backOnClose>
+        {selectedCar && (
           <CarDealerDetails
             id={selectedCar.id}
             name={selectedCar.name}
@@ -48,9 +38,20 @@ const Dealer = () => {
             handling={selectedCar.handling}
             price={selectedCar.price}
           />
-        </ContentPanel>
-      )}
-    </Flex>
+        )}
+      </Modal>
+      <CarsContainer wrap="wrap">
+        {cars.map((car, index) => (
+          <Box
+            key={car.id}
+            marginRight={`${CARD_MARGIN}px`}
+            marginBottom={`${CARD_MARGIN}px`}
+          >
+            <CardCarSmall car={car} />
+          </Box>
+        ))}
+      </CarsContainer>
+    </Box>
   );
 };
 

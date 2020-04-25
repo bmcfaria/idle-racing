@@ -57,7 +57,7 @@ const CarDealerDetails = ({
   };
 
   return (
-    <Box position="relative" w="16rem">
+    <Box position="relative" w="16rem" bg="white" borderRadius="16px">
       <Box marginTop="0.6rem" padding="0 0.2rem 0.6rem">
         <Image
           w="100%"

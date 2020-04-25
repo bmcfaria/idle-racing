@@ -55,7 +55,13 @@ const CardCarSmall = ({ car }) => {
   };
 
   return (
-    <Box w="304px" minH="100px" position="relative" onClick={setSelected}>
+    <Box
+      minW="304px"
+      w="304px"
+      minH="100px"
+      position="relative"
+      onClick={setSelected}
+    >
       <Box w="100%" h="100px" position="absolute">
         {location?.state?.car === id && (
           <Box
@@ -66,7 +72,9 @@ const CardCarSmall = ({ car }) => {
             bg="#B2F5EA77"
           />
         )}
-        {currentRace && <CardProgressOverlay race={currentRace} label />}
+        {currentRace && (
+          <CardProgressOverlay race={currentRace} label borderRadius="16px" />
+        )}
         <Flex
           w="100%"
           h="100%"
