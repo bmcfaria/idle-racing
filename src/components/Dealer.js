@@ -30,7 +30,11 @@ const Accordion = ({
   ...props
 }) => {
   const toggleOpen = () => {
-    setSelectedAccordion(value);
+    if (selectedAccordion === value) {
+      setSelectedAccordion();
+    } else {
+      setSelectedAccordion(value);
+    }
   };
 
   return (
