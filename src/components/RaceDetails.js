@@ -1,10 +1,11 @@
-import React from 'react';
-import { Box, Flex, Image, Text, Button } from '@chakra-ui/core';
+import React, { useState } from 'react';
+import { Box, Flex, Text, Button } from '@chakra-ui/core';
 import CardProgressOverlay from './CardProgressOverlay';
 import { useDispatch, useSelector } from 'react-redux';
 import { startRaceAction } from '../state/actions';
 import RaceResults from './RaceResults';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
+import { Link as ChakraLink } from '@chakra-ui/core';
 import {
   raceSelector,
   garageCarsSelector,
@@ -12,173 +13,170 @@ import {
   moneySelector,
   pastRaceSelector,
 } from '../state/selectors';
-import { winProbability } from '../helpers/utils';
 import styled from '@emotion/styled';
+import CardTrackContent from './CardTrackContent';
+import CardCarSmall from './CardCarSmall';
+import Modal from './Modal';
+import {
+  cardsContainerWidthPaddingStyles,
+  CARD_MARGIN,
+} from '../helpers/theme';
+import CardCarSmallContent from './CardCarSmallContent';
+import CardWinningChance from './CardWinningChance';
+import RaceDetailsSelectCar from './RaceDetailsSelectCar';
 
-const Triangle = styled(({ track, ...props }) => {
-  const width = 40;
-  const height = (width * Math.sqrt(3)) / 2;
-  const border = 1;
+const CarsContainer = styled(Flex)`
+  height: 50vh;
+  box-sizing: content-box;
+  overflow-y: scroll;
+  padding-top: 28px;
+  flex-wrap: wrap;
+  background-color: white;
+  border-radius: 16px;
 
-  const pointValue = (value = 0, x, y) => {
-    // value comes in percentage [0, 1]
-
-    const tmpValueWidth = ((value + 0.5) * width) / 1.5 / 2;
-    const tmpValueHeight = (tmpValueWidth * Math.sqrt(3)) / 2;
-
-    const middleHeightTriangle =
-      height + 2 * border - ((width / 2) * Math.sqrt(3)) / 2;
-
-    return `${width / 2 + tmpValueWidth * x + border},${
-      middleHeightTriangle + tmpValueHeight * y + border
-    }`;
-  };
-
-  const accPoint = pointValue(track?.acceleration, -1, 1);
-  const tspPoint = pointValue(track?.topSpeed, 0, -1);
-  const hanPoint = pointValue(track?.handling, 1, 1);
-
-  return (
-    <div {...props}>
-      <svg width={width + 2 * border} height={height + 2 * border}>
-        <polygon
-          className="outer-triangle"
-          points={`
-            ${width / 2 + border},${0 + border} 
-            ${0 + border},${height + border} 
-            ${width + border},${height + border}
-          `}
-        />
-        <polygon
-          className="inner-triangle"
-          points={`
-            ${tspPoint} 
-            ${accPoint} 
-            ${hanPoint}
-          `}
-        />
-        Sorry, your browser does not support inline SVG.
-      </svg>
-    </div>
-  );
-})`
-  margin: 4px;
-
-  .outer-triangle {
-    fill: transparent;
-    stroke: black;
-    stroke-width: 1;
-  }
-
-  .inner-triangle {
-    fill: #2f80ed80;
-    stroke-width: 1;
-  }
+  ${cardsContainerWidthPaddingStyles}
 `;
 
-const winningChances = {
-  0: { text: 'BAD', color: 'tomato' },
-  1: { text: 'MAYBE', color: 'Goldenrod' },
-  2: { text: 'AVERAGE', color: 'Goldenrod' },
-  3: { text: 'GOOD', color: 'LimeGreen' },
-};
-
-const RaceDetails = ({
-  track: { name, type, image, prizes, duration, price, race },
-}) => {
+const RaceDetails = ({ track: { price, race } }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const money = useSelector(moneySelector);
   const cars = useSelector(garageCarsSelector);
   const tracks = useSelector(tracksSelector);
   const selectedTrackId = location?.state?.track;
-  const selectedCarId = location?.state?.car;
   const selectedTrack = tracks.find(item => item.id === selectedTrackId);
-  const selectedCar = cars.find(item => item.id === selectedCarId);
+  const [selectedCar, setSelectedCar] = useState();
 
   const pastRace = useSelector(pastRaceSelector(selectedTrack.lastRace));
   const results = !!pastRace && pastRace.checked === false;
 
   const currentRace = useSelector(raceSelector(race));
 
-  const winProbabilityValue = winProbability(selectedCar, selectedTrack);
+  const [carsModal, setCarsModal] = useState();
 
   const startRace = () => {
-    dispatch(startRaceAction(selectedCarId, selectedTrackId));
+    dispatch(startRaceAction(selectedCar.id, selectedTrackId));
+  };
+
+  const selectCar = car => {
+    setSelectedCar(car);
+    setCarsModal(false);
   };
 
   return (
-    <Box position="relative" w="16rem">
-      {currentRace && <CardProgressOverlay race={currentRace} />}
-      {results && <RaceResults zIndex="1" pastRace={pastRace} />}
+    <Box position="relative" w="608px" bg="white" borderRadius="16px">
+      {currentRace && <CardProgressOverlay zIndex="1" race={currentRace} />}
 
-      <Flex flexDirection="column" marginTop="0.6rem" padding="0 0.2rem 0.6rem">
-        <Image w="100%" h="8rem" alt="car" bg="lightgray" />
-        <Text textAlign="center" w="100%" fontSize="md" src={image}>
-          {name}
-        </Text>
-        <Flex justifyContent="space-between">
-          <Box w="6rem">
-            <Text textAlign="left" w="100%" fontSize="sm">
-              Type: {type}
-            </Text>
-            <Triangle track={selectedTrack} />
-          </Box>
-          <Box>
-            <Text textAlign="left" w="100%" fontSize="sm">
-              Requirements: {type} cars
-            </Text>
-            <Text textAlign="left" fontSize="sm">
-              Prizes:
-            </Text>
-            {prizes.map(prize => (
-              <Text
-                textAlign="left"
-                fontSize="xs"
-                lineHeight="1rem"
-                key={prize}
+      <Modal isOpen={carsModal} onClose={() => setCarsModal(false)}>
+        <CarsContainer>
+          {cars.map(car => (
+            <Box
+              key={car.id}
+              marginRight={`${CARD_MARGIN}px`}
+              marginBottom={`${CARD_MARGIN}px`}
+            >
+              <CardCarSmall car={car} onClick={selectCar} />
+            </Box>
+          ))}
+        </CarsContainer>
+      </Modal>
+
+      <Flex>
+        <CardTrackContent
+          track={selectedTrack}
+          borderRadius="16px 0 0 16px"
+          imageBorderRadius="16px 0 0 0"
+        />
+        <Box w="50%" position="relative">
+          {results && <RaceResults pastRace={pastRace}>Race again</RaceResults>}
+          {!results && !selectedCar && (
+            <RaceDetailsSelectCar
+              bg="grey"
+              borderRadius="0 16px 16px 0"
+              onClick={() => setCarsModal(true)}
+            />
+          )}
+          {!results && selectedCar && (
+            <>
+              <CardCarSmallContent
+                car={selectedCar}
+                marginTop="32px"
+                padding="0 16px"
+              />
+              <CardWinningChance
+                car={selectedCar}
+                track={selectedTrack}
+                borderRadius="16px"
+                border="1px solid black"
+                w="calc(100% - 16px)"
+                h="24px"
+                margin="0 auto"
+              />
+              <Flex
+                w="100%"
+                h="32px"
+                padding="0 8px"
+                justifyContent="space-between"
+                alignItems="center"
               >
-                ${prize}
-              </Text>
-            ))}
-            <Text textAlign="left" fontSize="xs">
-              Duration: {duration}s
-            </Text>
-          </Box>
-        </Flex>
-        <Text
-          textAlign="left"
-          w="100%"
-          fontSize="xs"
-          color={winningChances[winProbabilityValue].color}
-        >
-          Winning chances: {winningChances[winProbabilityValue].text}
-        </Text>
-        <Text textAlign="center" w="100%" fontSize="xs">
-          (Try upgrading your car or use a better one, to improve your chances
-          of winning)
-        </Text>
-        <Button
-          borderColor="tomato"
-          color="tomato"
-          variant="outline"
-          isDisabled={money < price || currentRace}
-          marginTop="0.2rem"
-          marginLeft="auto"
-          marginRight="auto"
-          onClick={startRace}
-        >
-          Race (${price})
-        </Button>
+                <ChakraLink
+                  as={Link}
+                  to={{ pathname: '/garage', state: { car: selectedCar.id } }}
+                  fontSize="12px"
+                  color="tomato"
+                >
+                  Change car
+                </ChakraLink>
+                <ChakraLink
+                  as={Link}
+                  to={{ pathname: '/garage', state: { car: selectedCar.id } }}
+                  fontSize="12px"
+                  color="teal.500"
+                >
+                  Open in Garage
+                </ChakraLink>
+              </Flex>
+              <Box h="40px">
+                <Text textAlign="center" w="100%" fontSize="12px">
+                  (Try upgrading your car or use a better one, to improve your
+                  chances of winning)
+                </Text>
+              </Box>
+              <Box
+                w="calc(100% - 16px)"
+                h="72px"
+                border="1px solid black"
+                borderRadius="16px"
+                margin="8px auto"
+              >
+                <Text
+                  w="fit-content"
+                  fontSize="12px"
+                  bg="white"
+                  margin="-10px 0 0 16px"
+                  padding="0 4px"
+                >
+                  Powerups
+                </Text>
+              </Box>
+              <Flex h="72px">
+                <Button
+                  borderColor="tomato"
+                  color="tomato"
+                  variant="outline"
+                  isDisabled={money < price || currentRace}
+                  margin="auto"
+                  onClick={startRace}
+                >
+                  Race (${price})
+                </Button>
+              </Flex>
+            </>
+          )}
+        </Box>
       </Flex>
     </Box>
   );
-};
-
-RaceDetails.defaultProps = {
-  acceleration: {},
-  topSpeed: {},
-  handling: {},
 };
 
 export default RaceDetails;

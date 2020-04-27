@@ -5,6 +5,7 @@ import { closeResultsAction } from '../state/actions';
 
 const RaceResults = ({
   pastRace: { id, reward, position, results },
+  children,
   ...props
 }) => {
   const dispatch = useDispatch();
@@ -14,32 +15,21 @@ const RaceResults = ({
   };
 
   return (
-    <Flex
-      direction="column"
-      position="absolute"
-      w="100%"
-      bg="blackAlpha.800"
-      {...props}
-    >
-      <Text color="white" ontSize="sm">
-        {`You placed: ${position}`}
-      </Text>
-      <Text color="white" ontSize="sm">
-        {`Reward: $${reward}`}
-      </Text>
+    <Flex direction="column" w="100%" {...props}>
+      <Text ontSize="sm">{`You placed: ${position}`}</Text>
+      <Text ontSize="sm">{`Reward: $${reward}`}</Text>
       {results.map((car, index) => (
-        <Text color="white" ontSize="xs" lineHeight="1rem" key={car.id}>
+        <Text ontSize="xs" lineHeight="1rem" key={car.id}>
           {index + 1}: {car.name}
         </Text>
       ))}
       <Button
         variant="outline"
-        bg="white"
         marginLeft="auto"
         marginRight="auto"
         onClick={onClick}
       >
-        Ok
+        {children}
       </Button>
     </Flex>
   );

@@ -49,7 +49,7 @@ const Accordion = ({
         open={selectedAccordion === value}
         overflow="hidden"
       >
-        {cars.map((car, index) => (
+        {cars.map(car => (
           <Box
             key={car.id}
             marginRight={`${CARD_MARGIN}px`}
