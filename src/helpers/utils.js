@@ -23,19 +23,22 @@ export const winProbability = (car, track) => {
     score: calculateScore(car, track),
   };
 
-  const results = track?.competitors?.reduce((result, competitor) => {
-    const tmpScore = calculateScore(competitor, track);
-    return {
-      better:
-        tmpScore > carScoreObject.score ? ~~result.better + 1 : ~~result.better,
-      equal:
-        tmpScore === carScoreObject.score ? ~~result.equal + 1 : ~~result.equal,
-      worse:
-        tmpScore < carScoreObject.score ? ~~result.worse + 1 : ~~result.worse,
-    };
-  }, {});
+  const results = track?.competitors?.reduce(
+    (result, competitor) => {
+      const tmpScore = calculateScore(competitor, track);
+      return {
+        better:
+          tmpScore > carScoreObject.score ? result.better + 1 : result.better,
+        equal:
+          tmpScore === carScoreObject.score ? result.equal + 1 : result.equal,
+        worse:
+          tmpScore < carScoreObject.score ? result.worse + 1 : result.worse,
+      };
+    },
+    { better: 0, equal: 0, worse: 0 }
+  );
 
-  if (results.better === 0) {
+  if (results.better + results.equal === 0) {
     // Best result possible
     // GREEN
     return 3;
@@ -61,7 +64,7 @@ export const winProbability = (car, track) => {
 export const raceResults = (car, track) => {
   const carScoreObject = {
     id: car.id,
-    name: `(YOU) ${car.name}`,
+    name: car.name,
     score: calculateScore(car, track, true),
   };
 

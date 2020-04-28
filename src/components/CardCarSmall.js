@@ -1,27 +1,11 @@
 import React from 'react';
-import { Box, Flex, Image, Text } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import CardProgressOverlay from './CardProgressOverlay';
 import { raceSelector, tracksSelector } from '../state/selectors';
 import { useSelector } from 'react-redux';
-import { winProbability } from '../helpers/utils';
 import CardCarSmallContent from './CardCarSmallContent';
 import CardWinningChance from './CardWinningChance';
-
-const colors = {
-  green: '#00FF479E',
-  yellow: '#FFF5009E',
-  red: '#FF00009E',
-  gray: '#9B9B9B9E',
-};
-
-const winningChances = {
-  0: { text: 'BAD', color: colors.red },
-  1: { text: 'MAYBE', color: colors.yellow },
-  2: { text: 'AVERAGE', color: colors.yellow },
-  3: { text: 'GOOD', color: colors.green },
-  na: { text: 'N/A', color: colors.gray },
-};
 
 const CardCarSmall = ({ car, stripped, onClick, ...props }) => {
   const { id, race } = car;
@@ -32,10 +16,6 @@ const CardCarSmall = ({ car, stripped, onClick, ...props }) => {
   const selectedTrack = tracks.find(item => item.id === selectedTrackId);
 
   const currentRace = useSelector(raceSelector(race));
-
-  // TODO: not handling N/A yet
-  const winProbabilityValue =
-    selectedTrack && winProbability(car, selectedTrack);
 
   // To improve mobile navigation,
   // this way the back button will un-select instead off showing the previous selected

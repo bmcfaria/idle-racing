@@ -24,6 +24,7 @@ import {
 import CardCarSmallContent from './CardCarSmallContent';
 import CardWinningChance from './CardWinningChance';
 import RaceDetailsSelectCar from './RaceDetailsSelectCar';
+import { useOpenClose } from '../helpers/hooks';
 
 const CarsContainer = styled(Flex)`
   height: 50vh;
@@ -52,7 +53,7 @@ const RaceDetails = ({ track: { price, race } }) => {
 
   const currentRace = useSelector(raceSelector(race));
 
-  const [carsModal, setCarsModal] = useState();
+  const [carsModal, carsModalOpen, carsModalClose] = useOpenClose();
 
   const startRace = () => {
     dispatch(startRaceAction(selectedCar.id, selectedTrackId));
@@ -60,14 +61,20 @@ const RaceDetails = ({ track: { price, race } }) => {
 
   const selectCar = car => {
     setSelectedCar(car);
-    setCarsModal(false);
+    carsModalClose();
   };
 
   return (
     <Box position="relative" w="608px" bg="white" borderRadius="16px">
-      {currentRace && <CardProgressOverlay zIndex="1" race={currentRace} />}
+      {currentRace && (
+        <CardProgressOverlay
+          zIndex="1"
+          race={currentRace}
+          borderRadius="16px"
+        />
+      )}
 
-      <Modal isOpen={carsModal} onClose={() => setCarsModal(false)}>
+      <Modal isOpen={carsModal} onClose={carsModalClose}>
         <CarsContainer>
           {cars.map(car => (
             <Box
@@ -88,12 +95,16 @@ const RaceDetails = ({ track: { price, race } }) => {
           imageBorderRadius="16px 0 0 0"
         />
         <Box w="50%" position="relative">
-          {results && <RaceResults pastRace={pastRace}>Race again</RaceResults>}
+          {results && (
+            <RaceResults pastRace={pastRace} padding="0 32px">
+              Race again
+            </RaceResults>
+          )}
           {!results && !selectedCar && (
             <RaceDetailsSelectCar
               bg="grey"
               borderRadius="0 16px 16px 0"
-              onClick={() => setCarsModal(true)}
+              onClick={carsModalOpen}
             />
           )}
           {!results && selectedCar && (
@@ -120,10 +131,9 @@ const RaceDetails = ({ track: { price, race } }) => {
                 alignItems="center"
               >
                 <ChakraLink
-                  as={Link}
-                  to={{ pathname: '/garage', state: { car: selectedCar.id } }}
                   fontSize="12px"
                   color="tomato"
+                  onClick={carsModalOpen}
                 >
                   Change car
                 </ChakraLink>

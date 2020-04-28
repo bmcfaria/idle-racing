@@ -117,7 +117,7 @@ const generateTrack = (name = 'Some race name', type = '4x4') => {
     race: undefined,
     lastRace: undefined,
     // TODO: get more realistic adversaries, maybe create a pool of competitors
-    competitors: cars.slice(0, 9),
+    competitors: cars.slice(0, 8),
   };
 };
 

@@ -1,13 +1,32 @@
 import React from 'react';
-import { Text, Button, Flex } from '@chakra-ui/core';
-import { useDispatch } from 'react-redux';
+import { Text, Button, Flex, Image, Box } from '@chakra-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeResultsAction } from '../state/actions';
+import { dealerCarsSelector, garageCarsSelector } from '../state/selectors';
 
-const RaceResults = ({
-  pastRace: { id, reward, position, results },
-  children,
-  ...props
-}) => {
+const Row = ({ index, car, playerCarId }) => (
+  <Text
+    fontSize="14px"
+    lineHeight="1rem"
+    fontWeight={car.id === playerCarId ? 'bold' : 'unset'}
+  >
+    {index + 1}:{' '}
+    <Image
+      src={car.image}
+      objectFit="contain"
+      w="24px"
+      h="16px"
+      display="inline-block"
+    />{' '}
+    {car.id === playerCarId ? '(You) ' : ''}
+    {car.name}
+  </Text>
+);
+
+const RaceResults = ({ pastRace, children, ...props }) => {
+  const { id, reward, position, results } = pastRace;
+  const cars = useSelector(dealerCarsSelector);
+  const carsGarage = useSelector(garageCarsSelector);
   const dispatch = useDispatch();
 
   const onClick = () => {
@@ -16,17 +35,33 @@ const RaceResults = ({
 
   return (
     <Flex direction="column" w="100%" {...props}>
-      <Text ontSize="sm">{`You placed: ${position}`}</Text>
-      <Text ontSize="sm">{`Reward: $${reward}`}</Text>
-      {results.map((car, index) => (
-        <Text ontSize="xs" lineHeight="1rem" key={car.id}>
-          {index + 1}: {car.name}
-        </Text>
-      ))}
+      <Text fontSize="24px" textAlign="center" marginTop="8px">
+        Results
+      </Text>
+      <Box marginTop="16px">
+        {results.map((car, index) => (
+          <Row
+            key={car.id}
+            index={index}
+            car={
+              cars.find(item => item.id === car.id) ||
+              carsGarage.find(item => item.id === car.id)
+            }
+            playerCarId={pastRace.car}
+          >
+            {index + 1}: {car.name}
+          </Row>
+        ))}
+      </Box>
+      <Text fontSize="14px" marginTop="16px">
+        Reward:
+      </Text>
+      <Text fontSize="12px">{`$${reward}`}</Text>
       <Button
         variant="outline"
         marginLeft="auto"
         marginRight="auto"
+        marginTop="32px"
         onClick={onClick}
       >
         {children}
