@@ -28,3 +28,7 @@ export const closeResultsAction = pastRaceId => ({
   type: CLOSE_RESULTS_TYPE,
   payload: { pastRaceId },
 });
+export const CLEAR_NOTIFICATIONS_TYPE = 'CLEAR_NOTIFICATIONS';
+export const clearNotificationsAction = {
+  type: CLEAR_NOTIFICATIONS_TYPE,
+};

@@ -24,7 +24,7 @@ const Row = ({ index, car, playerCarId }) => (
 );
 
 const RaceResults = ({ pastRace, children, ...props }) => {
-  const { id, reward, position, results } = pastRace;
+  const { id, reward, results } = pastRace;
   const cars = useSelector(dealerCarsSelector);
   const carsGarage = useSelector(garageCarsSelector);
   const dispatch = useDispatch();

@@ -1,34 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import {
-  CircularProgress,
-  CircularProgressLabel,
-  Text,
-  Flex,
-} from '@chakra-ui/core';
-import { useDispatch } from 'react-redux';
-import { endRaceAction } from '../state/actions';
+import React from 'react';
+import { Text, Flex } from '@chakra-ui/core';
+import CardProgressCircle from './CardProgressCircle';
 
 const CardProgressOverlay = ({ race, label, big, ...props }) => {
-  const dispatch = useDispatch();
-  const [value, setValue] = useState(race.duration);
-  const progress = ((race.duration - value) * 100) / race.duration;
-
-  useEffect(() => {
-    const countDown = setInterval(() => {
-      const nextValue = race.duration - (new Date().getTime() - race.start);
-      if (nextValue <= 0) {
-        clearInterval(countDown);
-        dispatch(endRaceAction(race.id));
-      }
-
-      setValue(nextValue);
-    }, 500);
-
-    return () => {
-      clearInterval(countDown);
-    };
-  }, [dispatch, race]);
-
   if (!race) {
     return null;
   }
@@ -43,22 +17,15 @@ const CardProgressOverlay = ({ race, label, big, ...props }) => {
       {...props}
     >
       <Flex direction="column" margin="auto">
-        <CircularProgress
-          value={progress > 100 ? 100 : progress}
-          color="blue"
-          trackColor="blackAlpha"
+        <CardProgressCircle
+          race={race}
           marginLeft="auto"
           marginRight="auto"
           size={big ? '10rem' : '4rem'}
-        >
-          {
-            <CircularProgressLabel color="white">
-              {Math.round(value / 1000)}s
-            </CircularProgressLabel>
-          }
-        </CircularProgress>
+          textColor="white"
+        />
         {label && (
-          <Text color="white" ontSize="sm">
+          <Text color="white" fontSize="sm">
             ({race.name})
           </Text>
         )}

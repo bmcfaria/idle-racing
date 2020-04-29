@@ -65,7 +65,15 @@ const RaceDetails = ({ track: { price, race } }) => {
   };
 
   return (
-    <Box position="relative" w="608px" bg="white" borderRadius="16px">
+    <Box
+      position="relative"
+      w={['304px', '304px', '608px']}
+      h={['auto', 'auto', '396px']}
+      maxH="calc(100vh - 2 * 64px - 2 * 8px)"
+      overflowY={['scroll', 'scroll', 'unset']}
+      bg="white"
+      borderRadius="16px"
+    >
       {currentRace && (
         <CardProgressOverlay
           zIndex="1"
@@ -88,13 +96,13 @@ const RaceDetails = ({ track: { price, race } }) => {
         </CarsContainer>
       </Modal>
 
-      <Flex>
+      <Flex direction={['column', 'column', 'row']}>
         <CardTrackContent
           track={selectedTrack}
           borderRadius="16px 0 0 16px"
-          imageBorderRadius="16px 0 0 0"
+          imageBorderRadius={['16px 16px 0 0', '16px 16px 0 0', '16px 0 0 0']}
         />
-        <Box w="50%" position="relative">
+        <Box w={['100%', '100%', '50%']} position="relative">
           {results && (
             <RaceResults pastRace={pastRace} padding="0 32px">
               Race again
@@ -103,7 +111,12 @@ const RaceDetails = ({ track: { price, race } }) => {
           {!results && !selectedCar && (
             <RaceDetailsSelectCar
               bg="grey"
-              borderRadius="0 16px 16px 0"
+              borderRadius={[
+                '0, 0, 16px, 16px',
+                '0, 0, 16px, 16px',
+                '0 16px 16px 0',
+              ]}
+              padding="16px"
               onClick={carsModalOpen}
             />
           )}

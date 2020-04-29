@@ -1,65 +1,52 @@
 import React, { useState } from 'react';
-import { Box, Flex, Text } from '@chakra-ui/core';
-import { MdNotifications } from 'react-icons/md';
-import { useLocation, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { notificationsSelector } from '../state/selectors';
-
-const NotificationItem = ({ item, onClose }) => {
-  const location = useLocation();
-  const history = useHistory();
-  const trackId = item?.track?.id;
-  const trackName = item?.track?.name;
-  const award = item?.award;
-  const position = item?.position;
-  const carName = item?.car?.name;
-  const carId = item?.car?.id;
-
-  const onClick = () => {
-    history.push({
-      pathname: '/race',
-      state: {
-        ...(location.state || {}),
-        track: trackId,
-        car: carId,
-      },
-    });
-
-    onClose();
-  };
-
-  return (
-    <Box
-      borderBottom="solid 1px black"
-      onClick={onClick}
-      paddingLeft="0.5rem"
-      paddingRight="0.5rem"
-      backgroundColor="gray.100"
-    >
-      <Flex justifyContent="space-between">
-        <Text>{award}</Text>
-        <Text>{trackName}</Text>
-      </Flex>
-      <Flex justifyContent="space-between">
-        <Text>({position})</Text>
-        <Text>{carName}</Text>
-      </Flex>
-    </Box>
-  );
-};
+import {
+  Box,
+  Flex,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerBody,
+  DrawerFooter,
+  Button,
+  DrawerHeader,
+} from '@chakra-ui/core';
+import { GiFlyingFlag } from 'react-icons/gi';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  notificationsSelector,
+  racesSelector,
+  pastRacesSelector,
+} from '../state/selectors';
+import NotificationsActiveRace from './NotificationsActiveRace';
+import NotificationsPastRace from './NotificationsPastRace';
+import { useOpenClose } from '../helpers/hooks';
+import { clearNotificationsAction } from '../state/actions';
 
 const Notifications = () => {
-  const [open, setOpen] = useState(false);
+  const [open, onOpen, onClose] = useOpenClose(false);
+  const [page, setPage] = useState('races');
+  const dispatch = useDispatch();
   const notifications = useSelector(notificationsSelector);
+  const pastRaces = useSelector(pastRacesSelector);
+  const races = useSelector(racesSelector);
 
-  const onClick = () => {
-    setOpen(!open);
+  const clear = () => {
+    dispatch(clearNotificationsAction);
+  };
+
+  const pageRaces = () => {
+    setPage('races');
+  };
+
+  const pageHistory = () => {
+    setPage('history');
   };
 
   return (
     <>
       <Box
-        as={MdNotifications}
+        as={GiFlyingFlag}
         marginTop="auto"
         marginBottom="auto"
         size="1.5rem"
@@ -68,32 +55,84 @@ const Notifications = () => {
         paddingLeft="0.5rem"
         color={open ? 'white' : 'inherit'}
         zIndex="100"
-        onClick={onClick}
+        onClick={onOpen}
       />
-      <Box
-        position="fixed"
-        w="100%"
-        h="100%"
-        backgroundColor="black"
-        opacity=".5"
-        zIndex="99"
-        display={open ? 'block' : 'none'}
-        onClick={onClick}
-      />
-      <Box
-        position="absolute"
-        marginTop="2.5rem"
-        right="0.1rem"
-        w="13rem"
-        h="13rem"
-        backgroundColor="white"
-        zIndex="100"
-        display={open ? 'block' : 'none'}
-      >
-        {notifications.map(item => (
-          <NotificationItem key={item.id} item={item} onClose={onClick} />
-        ))}
-      </Box>
+      <Drawer isOpen={open} onClose={onClose} placement="right">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          {page === 'races' && (
+            <>
+              <DrawerHeader fontSize="24px">Races</DrawerHeader>
+
+              <DrawerBody>
+                <Box>
+                  {races.map(item => (
+                    <NotificationsActiveRace
+                      race={item.id}
+                      item={item}
+                      onClose={onClose}
+                    />
+                  ))}
+                </Box>
+
+                {notifications.length > 0 && (
+                  <Box
+                    w="calc(100% + 8px)"
+                    borderBottom="1px solid black"
+                    margin="4px -4px"
+                  />
+                )}
+
+                <Box>
+                  {notifications.map(item => (
+                    <NotificationsPastRace
+                      key={item.id}
+                      pastRace={item}
+                      onClose={onClose}
+                    />
+                  ))}
+                </Box>
+              </DrawerBody>
+
+              <DrawerFooter>
+                <Flex w="100%" justifyContent="space-between">
+                  <Button color="blue" onClick={pageHistory}>
+                    Open history
+                  </Button>
+                  <Button color="blue" onClick={clear}>
+                    Clear
+                  </Button>
+                </Flex>
+              </DrawerFooter>
+            </>
+          )}
+
+          {page === 'history' && (
+            <>
+              <DrawerHeader fontSize="24px">History</DrawerHeader>
+
+              <DrawerBody>
+                <Box>
+                  {pastRaces.map(item => (
+                    <NotificationsPastRace
+                      key={item.id}
+                      pastRace={item}
+                      onClose={onClose}
+                    />
+                  ))}
+                </Box>
+              </DrawerBody>
+
+              <DrawerFooter>
+                <Button color="blue" onClick={pageRaces}>
+                  Back
+                </Button>
+              </DrawerFooter>
+            </>
+          )}
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };

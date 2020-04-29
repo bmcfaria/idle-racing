@@ -5,6 +5,7 @@ import {
   START_RACE_TYPE,
   END_RACE_TYPE,
   CLOSE_RESULTS_TYPE,
+  CLEAR_NOTIFICATIONS_TYPE,
 } from './actions';
 import {
   cars,
@@ -14,7 +15,7 @@ import {
   upgradeAttribute,
   generateCarPrice,
   generateRace,
-  generateNotification,
+  // generateNotification,
   generatePastRace,
 } from '../helpers/mockData';
 import { raceResults } from '../helpers/utils';
@@ -178,10 +179,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
             lastRace: pastRace.id,
           },
         }),
-        notifications: [
-          generateNotification(car, track, position, earnings),
-          ...state.notifications,
-        ],
+        notifications: [pastRace, ...state.notifications],
         pastRaces: [pastRace, ...state.pastRaces],
       };
     }
@@ -206,6 +204,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
             checked: true,
           },
         }),
+      };
+    }
+
+    case CLEAR_NOTIFICATIONS_TYPE: {
+      return {
+        ...state,
+        notifications: [],
       };
     }
 

@@ -149,14 +149,14 @@ export const generatePastRace = (
   results,
 });
 
-export const generateNotification = (car, track, position, earnings) => ({
-  id: uuid(),
-  won: position === 1,
-  position,
-  award: `$${earnings}`,
-  track: { id: track.id, name: track.name },
-  car: { id: car.id, name: car.name },
-});
+// export const generateNotification = (car, track, position, earnings) => ({
+//   id: uuid(),
+//   won: position === 1,
+//   position,
+//   award: `$${earnings}`,
+//   track: { id: track.id, name: track.name },
+//   car: { id: car.id, name: car.name },
+// });
 
 export const cars = [
   ...[...new Array(3)].map(_ => generateCar('Basic car name', '4x4', 'basic')),
