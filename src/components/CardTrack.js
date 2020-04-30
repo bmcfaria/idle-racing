@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@chakra-ui/core';
+import { Box, Text, Flex } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { raceSelector } from '../state/selectors';
@@ -32,7 +32,13 @@ const CardTrack = ({ track }) => {
   };
 
   return (
-    <Box w="304px" h="396px" position="relative" onClick={setSelected}>
+    <Box
+      w="304px"
+      h="396px"
+      position="relative"
+      cursor="pointer"
+      onClick={setSelected}
+    >
       {location?.state?.track === id && (
         <Box
           position="absolute"
@@ -42,12 +48,29 @@ const CardTrack = ({ track }) => {
           borderRadius="16px"
         />
       )}
-      {currentRace && <CardProgressOverlay race={currentRace} />}
+      {currentRace && (
+        <CardProgressOverlay borderRadius="16px" race={currentRace} />
+      )}
       <CardTrackContent
         track={track}
         borderRadius="16px"
         imageBorderRadius="16px 16px 0 0"
       />
+      {track.lastRace && (
+        <Flex
+          w="100%"
+          h="100%"
+          borderRadius="16px"
+          bg="blackAlpha.800"
+          position="absolute"
+          top="0"
+          left="0"
+        >
+          <Text margin="auto" fontSize="24px" color="white">
+            Results
+          </Text>
+        </Flex>
+      )}
     </Box>
   );
 };

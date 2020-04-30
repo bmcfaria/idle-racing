@@ -43,11 +43,6 @@ const generateAttribute = (base, unit, max, basePrice, upgrade) => {
   };
 };
 
-const generateRandomAttribute = (base, unit, max, basePrice) => {
-  const upgrade = Math.round(Math.random() * max);
-  return generateAttribute(base, unit, max, basePrice, upgrade);
-};
-
 export const generateCarPrice = attributes =>
   500 +
   (attributes[ATTRIBUTE_TYPES.ACCELERATION].price ||
@@ -159,15 +154,6 @@ export const generatePastRace = (
   results,
 });
 
-// export const generateNotification = (car, track, position, earnings) => ({
-//   id: uuid(),
-//   won: position === 1,
-//   position,
-//   award: `$${earnings}`,
-//   track: { id: track.id, name: track.name },
-//   car: { id: car.id, name: car.name },
-// });
-
 export const cars = [
   ...carsFile.reduce(
     (results, car) =>
@@ -186,4 +172,4 @@ export const tracks = [
   ),
 ];
 
-export const money = 9999999999;
+export const money = 500;

@@ -22,15 +22,7 @@ import { raceResults } from '../helpers/utils';
 
 const initialState = {
   dealerCars: cars,
-  garageCars: [
-    generateGarageCar(cars[0]),
-    generateGarageCar(cars[1]),
-    generateGarageCar(cars[2]),
-    generateGarageCar(cars[3]),
-    generateGarageCar(cars[4]),
-    generateGarageCar(cars[5]),
-    generateGarageCar(cars[6]),
-  ],
+  garageCars: [],
   tracks,
   money,
   notifications: [],
@@ -190,16 +182,25 @@ const rootReducer = (state = initialState, { type, payload }) => {
       if (!pastRace) {
         return state;
       }
+      const track = state.tracks.find(item => item.id === pastRace.track);
+      const trackIndex = state.tracks.findIndex(item => item.id === track.id);
+
       const pastRaceIndex = state.pastRaces.findIndex(
         item => item.id === payload.pastRaceId
       );
 
       return {
         ...state,
-        pastRaces: Object.assign([], state.garageCars, {
+        pastRaces: Object.assign([], state.pastRaces, {
           [pastRaceIndex]: {
             ...pastRace,
             checked: true,
+          },
+        }),
+        tracks: Object.assign([], state.tracks, {
+          [trackIndex]: {
+            ...track,
+            lastRace: undefined,
           },
         }),
       };

@@ -4,7 +4,7 @@ import CardProgressOverlay from './CardProgressOverlay';
 import { useDispatch, useSelector } from 'react-redux';
 import { startRaceAction } from '../state/actions';
 import RaceResults from './RaceResults';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useHistory } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import {
   raceSelector,
@@ -29,7 +29,7 @@ import { useOpenClose } from '../helpers/hooks';
 const CarsContainer = styled(Flex)`
   height: 50vh;
   box-sizing: content-box;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding-top: 28px;
   flex-wrap: wrap;
   background-color: white;
@@ -41,6 +41,7 @@ const CarsContainer = styled(Flex)`
 const RaceDetails = ({ track: { price, race } }) => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
   const money = useSelector(moneySelector);
   const cars = useSelector(garageCarsSelector);
   const tracks = useSelector(tracksSelector);
@@ -57,6 +58,7 @@ const RaceDetails = ({ track: { price, race } }) => {
 
   const startRace = () => {
     dispatch(startRaceAction(selectedCar.id, selectedTrackId));
+    history.goBack();
   };
 
   const selectCar = car => {
@@ -84,6 +86,20 @@ const RaceDetails = ({ track: { price, race } }) => {
 
       <Modal isOpen={carsModal} onClose={carsModalClose}>
         <CarsContainer>
+          {cars.length === 0 && (
+            <Flex margin="auto" direction="column">
+              <Text fontSize="24px">You need to buy a car first</Text>
+              <ChakraLink
+                as={Link}
+                to="/dealer"
+                fontSize="12px"
+                color="teal.500"
+                margin="8px auto 0"
+              >
+                go to Dealer
+              </ChakraLink>
+            </Flex>
+          )}
           {cars.map(car => (
             <Box
               key={car.id}
@@ -191,7 +207,7 @@ const RaceDetails = ({ track: { price, race } }) => {
                   margin="auto"
                   onClick={startRace}
                 >
-                  Race (${price})
+                  Race ({price > 0 ? `$${price}` : 'FREE'})
                 </Button>
               </Flex>
             </>

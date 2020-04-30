@@ -4,6 +4,7 @@ import AttributesBar from './AttributesBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { buyCarAction } from '../state/actions';
 import { moneySelector } from '../state/selectors';
+import { useHistory } from 'react-router-dom';
 
 const AttributeLabel = () => (
   <Flex position="relative" justifyContent="space-between">
@@ -49,11 +50,13 @@ const CarDealerDetails = ({
   price,
 }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const money = useSelector(moneySelector);
   const enoughMoney = money >= price;
 
   const buy = () => {
     dispatch(buyCarAction(id));
+    history.goBack();
   };
 
   return (

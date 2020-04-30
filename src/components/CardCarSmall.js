@@ -48,6 +48,7 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
       minH="100px"
       position="relative"
       onClick={setSelected}
+      cursor="pointer"
       {...props}
     >
       <Box w="100%" h="100px" position="absolute">

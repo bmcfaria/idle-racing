@@ -14,6 +14,7 @@ const CardProgressOverlay = ({ race, label, big, ...props }) => {
       h="100%"
       bg="blackAlpha.800"
       flexDirection="column"
+      cursor="progress"
       {...props}
     >
       <Flex direction="column" margin="auto">
