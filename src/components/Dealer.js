@@ -55,7 +55,7 @@ const Accordion = ({
             marginRight={`${CARD_MARGIN}px`}
             marginBottom={`${CARD_MARGIN}px`}
           >
-            <CardCarSmall car={car} />
+            <CardCarSmall car={car} showPrice />
           </Box>
         ))}
       </CarsContainer>

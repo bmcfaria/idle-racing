@@ -30,8 +30,6 @@ const initialState = {
     generateGarageCar(cars[4]),
     generateGarageCar(cars[5]),
     generateGarageCar(cars[6]),
-    generateGarageCar(cars[7]),
-    generateGarageCar(cars[8]),
   ],
   tracks,
   money,

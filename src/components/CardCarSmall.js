@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@chakra-ui/core';
+import { Box, Text, Flex } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import CardProgressOverlay from './CardProgressOverlay';
 import { raceSelector, tracksSelector } from '../state/selectors';
@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux';
 import CardCarSmallContent from './CardCarSmallContent';
 import CardWinningChance from './CardWinningChance';
 
-const CardCarSmall = ({ car, stripped, onClick, ...props }) => {
-  const { id, race } = car;
+const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
+  const { id, race, price } = car;
   const location = useLocation();
   const history = useHistory();
   const tracks = useSelector(tracksSelector);
@@ -82,6 +82,19 @@ const CardCarSmall = ({ car, stripped, onClick, ...props }) => {
           borderRadius="16px"
           border="1px solid black"
         />
+      )}
+      {showPrice && (
+        <Flex w="100%" h="124px" borderRadius="16px" bg="black" color="white">
+          <Text
+            fontSize="14px"
+            lineHeight="24px"
+            textAlign="center"
+            w="100%"
+            marginTop="auto"
+          >
+            ${price}
+          </Text>
+        </Flex>
       )}
     </Box>
   );

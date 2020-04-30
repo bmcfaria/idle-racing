@@ -8,6 +8,11 @@ import CyclePath from '../assets/Cars/cycle.png';
 import FormulaPath from '../assets/Cars/formula.png';
 import HotdogPath from '../assets/Cars/hotdog.png';
 import KartPath from '../assets/Cars/kart.png';
+import carsFile from '../assets/lists/cars.json';
+import tracksFile from '../assets/lists/tracks.json';
+
+// To help on manual object creation
+window.uuid = uuid;
 
 const carImages = [
   CarPath,
@@ -52,23 +57,35 @@ export const generateCarPrice = attributes =>
   (attributes[ATTRIBUTE_TYPES.HANDLING].price ||
     attributes[ATTRIBUTE_TYPES.HANDLING].priceRaw);
 
-const generateCar = (name = 'Some car name', type = '4x4', brand = 'basic') => {
-  const baseAttributes = {
-    id: uuid(),
-    name,
-    type,
-    [ATTRIBUTE_TYPES.ACCELERATION]: generateRandomAttribute(100, 20, 6, 50),
-    [ATTRIBUTE_TYPES.TOP_SPEED]: generateRandomAttribute(100, 20, 4, 50),
-    [ATTRIBUTE_TYPES.HANDLING]: generateRandomAttribute(100, 20, 5, 50),
-    image: carImages[~~(Math.random() * carImages.length)],
-    brand,
-  };
-
-  return {
-    ...baseAttributes,
-    price: generateCarPrice(baseAttributes),
-  };
-};
+const generateCar = car => ({
+  id: car.id,
+  name: car.name,
+  type: car.type,
+  [ATTRIBUTE_TYPES.ACCELERATION]: generateAttribute(
+    car.acc,
+    1,
+    car['acc upgrades'],
+    50,
+    0
+  ),
+  [ATTRIBUTE_TYPES.TOP_SPEED]: generateAttribute(
+    car.tsp,
+    1,
+    car['tsp upgrades'],
+    50,
+    0
+  ),
+  [ATTRIBUTE_TYPES.HANDLING]: generateAttribute(
+    car.hnd,
+    1,
+    car['hnd upgrades'],
+    50,
+    0
+  ),
+  image: carImages[~~(Math.random() * carImages.length)],
+  brand: car.brand,
+  price: car.price,
+});
 
 export const generateGarageCar = car => ({
   id: uuid(),
@@ -98,28 +115,21 @@ export const upgradeAttribute = attribute => {
   );
 };
 
-const generateTrack = (name = 'Some race name', type = '4x4') => {
-  const accelerationTemp = ~~(Math.random() * 100);
-  const topSpeedTemp = ~~(Math.random() * 100);
-  const handlingTemp = ~~(Math.random() * 100);
-  const totalTemp = accelerationTemp + topSpeedTemp + handlingTemp;
-
-  return {
-    id: uuid(),
-    name: name,
-    duration: (Math.round(Math.random() * 10) + 3) * 1000,
-    price: 10,
-    prizes: [1000, 500, 100],
-    type: type,
-    [ATTRIBUTE_TYPES.ACCELERATION]: accelerationTemp / totalTemp,
-    [ATTRIBUTE_TYPES.TOP_SPEED]: topSpeedTemp / totalTemp,
-    [ATTRIBUTE_TYPES.HANDLING]: handlingTemp / totalTemp,
-    race: undefined,
-    lastRace: undefined,
-    // TODO: get more realistic adversaries, maybe create a pool of competitors
-    competitors: cars.slice(0, 8),
-  };
-};
+const generateTrack = track => ({
+  id: track.id,
+  name: track.name,
+  duration: track.duration * 1000,
+  price: track.price,
+  prizes: [track['prize 1'], track['prize 2'], track['prize 3']],
+  type: track.type,
+  [ATTRIBUTE_TYPES.ACCELERATION]: track.acc,
+  [ATTRIBUTE_TYPES.TOP_SPEED]: track.tsp,
+  [ATTRIBUTE_TYPES.HANDLING]: track.hnd,
+  race: undefined,
+  lastRace: undefined,
+  // TODO: get more realistic adversaries, maybe create a pool of competitors
+  competitors: cars.slice(0, 8),
+});
 
 export const generateRace = (car, track) => ({
   id: uuid(),
@@ -159,9 +169,21 @@ export const generatePastRace = (
 // });
 
 export const cars = [
-  ...[...new Array(3)].map(_ => generateCar('Basic car name', '4x4', 'basic')),
-  ...[...new Array(20)].map(_ => generateCar('City car name', '4x4', 'city')),
-  ...[...new Array(10)].map(_ => generateCar('Track car name', '4x4', 'track')),
+  ...carsFile.reduce(
+    (results, car) =>
+      car?.id.length > 0 ? [...results, generateCar(car)] : results,
+    []
+  ),
 ];
-export const tracks = [...new Array(20)].map(_ => generateTrack());
+
+export const tracks = [
+  ...tracksFile.reduce(
+    (results, track) =>
+      track?.id.length > 0 && track['prize 1']
+        ? [...results, generateTrack(track)]
+        : results,
+    []
+  ),
+];
+
 export const money = 9999999999;

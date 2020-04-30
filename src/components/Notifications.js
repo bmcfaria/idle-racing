@@ -57,7 +57,7 @@ const Notifications = () => {
         zIndex="100"
         onClick={onOpen}
       />
-      <Drawer isOpen={open} onClose={onClose} placement="right">
+      <Drawer isOpen={open} onClose={onClose} placement="right" isFullHeight>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
