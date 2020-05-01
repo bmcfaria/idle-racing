@@ -66,7 +66,7 @@ const Accordion = ({
 const Dealer = () => {
   const location = useLocation();
   const cars = useSelector(dealerCarsSelector);
-  const [selectedAccordion, setSelectedAccordion] = useState();
+  const [selectedAccordion, setSelectedAccordion] = useState(0);
 
   const selected = location?.state?.car;
 
