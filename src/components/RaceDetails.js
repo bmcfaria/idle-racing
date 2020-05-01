@@ -114,6 +114,8 @@ const RaceDetails = ({ track: { price, race } }) => {
 
       <Flex direction={['column', 'column', 'row']}>
         <CardTrackContent
+          w="304px"
+          h="396px"
           track={selectedTrack}
           borderRadius="16px 0 0 16px"
           imageBorderRadius={['16px 16px 0 0', '16px 16px 0 0', '16px 0 0 0']}

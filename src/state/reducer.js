@@ -50,7 +50,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case SELL_CAR_TYPE: {
       const car = state.garageCars.find(item => item.id === payload.carId);
 
-      if (!car || !!car.race) {
+      if (!car || !!car.race || state.garageCars.length === 1) {
         return state;
       }
 

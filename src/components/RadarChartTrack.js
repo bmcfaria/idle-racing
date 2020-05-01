@@ -21,9 +21,9 @@ const RadarChartTrack = styled(({ track, ...props }) => {
     }`;
   };
 
-  const accPoint = pointValue(track?.acceleration, -1, 1);
-  const tspPoint = pointValue(track?.topSpeed, 0, -1);
-  const hanPoint = pointValue(track?.handling, 1, 1);
+  const accPoint = pointValue(track?.acc, -1, 1);
+  const tspPoint = pointValue(track?.tsp, 0, -1);
+  const hanPoint = pointValue(track?.hnd, 1, 1);
 
   return (
     <div {...props}>

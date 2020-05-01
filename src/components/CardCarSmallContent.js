@@ -4,7 +4,7 @@ import AttributeInfo from './AttributeInfo';
 import { getImage } from '../helpers/imageMapping';
 
 const CardCarSmallContent = ({ car, ...props }) => {
-  const { name, type, acceleration, topSpeed, handling } = car;
+  const { name, type, acc, tsp, hnd } = car;
 
   return (
     <Flex minW="304px" w="304px" h="100px" verticalAlign="top" {...props}>
@@ -28,21 +28,21 @@ const CardCarSmallContent = ({ car, ...props }) => {
         </Text>
         <AttributeInfo
           name="Acceleration"
-          value={acceleration.value}
-          upgrade={acceleration.upgrade}
-          max={acceleration.max}
+          value={acc.value}
+          upgrade={acc.upgrade}
+          max={acc.max}
         />
         <AttributeInfo
           name="Top Speed"
-          value={topSpeed.value}
-          upgrade={topSpeed.upgrade}
-          max={topSpeed.max}
+          value={tsp.value}
+          upgrade={tsp.upgrade}
+          max={tsp.max}
         />
         <AttributeInfo
           name="Handling"
-          value={handling.value}
-          upgrade={handling.upgrade}
-          max={handling.max}
+          value={hnd.value}
+          upgrade={hnd.upgrade}
+          max={hnd.max}
         />
       </Box>
     </Flex>

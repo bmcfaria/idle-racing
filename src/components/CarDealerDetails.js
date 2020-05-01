@@ -41,7 +41,7 @@ const Attribute = ({ name, value, upgradeValue, upgrade, max }) => (
 );
 
 const CarDealerDetails = ({ car, ...props }) => {
-  const { id, name, type, acceleration, topSpeed, handling, price } = car;
+  const { id, name, type, acc, tsp, hnd, price } = car;
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -83,27 +83,27 @@ const CarDealerDetails = ({ car, ...props }) => {
         <AttributeLabel />
         <Attribute
           name="Acceleration"
-          value={acceleration.value}
-          upgradeValue={acceleration.upgradeValue}
-          upgrade={acceleration.upgrade}
-          max={acceleration.max}
-          price={acceleration.price}
+          value={acc.value}
+          upgradeValue={acc.upgradeValue}
+          upgrade={acc.upgrade}
+          max={acc.max}
+          price={acc.price}
         />
         <Attribute
           name="Top Speed"
-          value={topSpeed.value}
-          upgradeValue={topSpeed.upgradeValue}
-          upgrade={topSpeed.upgrade}
-          max={topSpeed.max}
-          price={topSpeed.price}
+          value={tsp.value}
+          upgradeValue={tsp.upgradeValue}
+          upgrade={tsp.upgrade}
+          max={tsp.max}
+          price={tsp.price}
         />
         <Attribute
           name="Handling"
-          value={handling.value}
-          upgradeValue={handling.upgradeValue}
-          upgrade={handling.upgrade}
-          max={handling.max}
-          price={handling.price}
+          value={hnd.value}
+          upgradeValue={hnd.upgradeValue}
+          upgrade={hnd.upgrade}
+          max={hnd.max}
+          price={hnd.price}
         />
         <Flex>
           <Button
@@ -120,12 +120,6 @@ const CarDealerDetails = ({ car, ...props }) => {
       </Box>
     </Box>
   );
-};
-
-CarDealerDetails.defaultProps = {
-  acceleration: {},
-  topSpeed: {},
-  handling: {},
 };
 
 export default CarDealerDetails;

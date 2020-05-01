@@ -37,6 +37,7 @@ const CardTrack = ({ track }) => {
       h="396px"
       position="relative"
       cursor="pointer"
+      borderRadius="16px"
       onClick={setSelected}
     >
       {location?.state?.track === id && (

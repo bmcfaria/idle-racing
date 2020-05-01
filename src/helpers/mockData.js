@@ -102,8 +102,6 @@ const generateTrack = track => ({
   [ATTRIBUTE_TYPES.HANDLING]: track.hnd / (track.acc + track.tsp + track.hnd),
   race: undefined,
   lastRace: undefined,
-  // TODO: get more realistic adversaries, maybe create a pool of competitors
-  competitors: cars.slice(0, 8),
 });
 
 export const generateRace = (car, track) => ({

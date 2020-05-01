@@ -4,10 +4,10 @@ import RadarChartTrack from './RadarChartTrack';
 import { getImage } from '../helpers/imageMapping';
 
 const CardTrackContent = ({ track, imageBorderRadius, ...props }) => {
-  const { name, type, prizes, duration, price } = track;
+  const { name, prizes, duration, price } = track;
 
   return (
-    <Box w="304px" h="396px" bg="white" {...props}>
+    <Box w="100%" h="100%" bg="white" {...props}>
       <Image
         w="100%"
         h="190px"

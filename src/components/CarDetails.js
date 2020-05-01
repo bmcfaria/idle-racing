@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import { sellCarAction, upgradeAttributeAction } from '../state/actions';
 import { getImage } from '../helpers/imageMapping';
-import { moneySelector } from '../state/selectors';
+import { moneySelector, garageCarsSelector } from '../state/selectors';
 
 const AttributeUpgrade = ({
   id,
@@ -64,9 +64,10 @@ const AttributeUpgrade = ({
 };
 
 const CarDetails = ({ car, ...props }) => {
-  const { id, name, type, acceleration, topSpeed, handling, price, race } = car;
+  const { id, name, type, acc, tsp, hnd, price, race } = car;
 
   const dispatch = useDispatch();
+  const garageCars = useSelector(garageCarsSelector);
 
   const sell = () => {
     dispatch(sellCarAction(id));
@@ -111,35 +112,39 @@ const CarDetails = ({ car, ...props }) => {
             id={id}
             name="Acceleration"
             type={ATTRIBUTE_TYPES.ACCELERATION}
-            value={acceleration.value}
-            upgradeValue={acceleration.upgradeValue}
-            upgrade={acceleration.upgrade}
-            max={acceleration.max}
-            price={acceleration.price}
+            value={acc.value}
+            upgradeValue={acc.upgradeValue}
+            upgrade={acc.upgrade}
+            max={acc.max}
+            price={acc.price}
           />
           <AttributeUpgrade
             id={id}
             name="Top Speed"
             type={ATTRIBUTE_TYPES.TOP_SPEED}
-            value={topSpeed.value}
-            upgradeValue={topSpeed.upgradeValue}
-            upgrade={topSpeed.upgrade}
-            max={topSpeed.max}
-            price={topSpeed.price}
+            value={tsp.value}
+            upgradeValue={tsp.upgradeValue}
+            upgrade={tsp.upgrade}
+            max={tsp.max}
+            price={tsp.price}
           />
           <AttributeUpgrade
             id={id}
             name="Handling"
             type={ATTRIBUTE_TYPES.HANDLING}
-            value={handling.value}
-            upgradeValue={handling.upgradeValue}
-            upgrade={handling.upgrade}
-            max={handling.max}
-            price={handling.price}
+            value={hnd.value}
+            upgradeValue={hnd.upgradeValue}
+            upgrade={hnd.upgrade}
+            max={hnd.max}
+            price={hnd.price}
           />
         </Box>
         <Flex h="64px">
-          <Button margin="auto" onClick={sell}>
+          <Button
+            margin="auto"
+            onClick={sell}
+            isDisabled={garageCars?.length === 1}
+          >
             Sell (${price})
           </Button>
         </Flex>
@@ -149,9 +154,9 @@ const CarDetails = ({ car, ...props }) => {
 };
 
 CarDetails.defaultProps = {
-  acceleration: {},
-  topSpeed: {},
-  handling: {},
+  acc: {},
+  tsp: {},
+  hnd: {},
 };
 
 export default CarDetails;

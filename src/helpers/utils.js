@@ -1,3 +1,7 @@
+import competitorsFile from '../assets/lists/competitors.json';
+
+const competitors = competitorsFile.filter(item => item?.['track name'].length);
+
 export const displayResponsivePanel = condition => [
   condition ? 'none' : 'flex',
   condition ? 'none' : 'flex',
@@ -5,17 +9,23 @@ export const displayResponsivePanel = condition => [
 ];
 
 export const ATTRIBUTE_TYPES = {
-  ACCELERATION: 'acceleration',
-  TOP_SPEED: 'topSpeed',
-  HANDLING: 'handling',
+  ACCELERATION: 'acc',
+  TOP_SPEED: 'tsp',
+  HANDLING: 'hnd',
 };
 
 const calculateScore = (car, track, withRandom = false) =>
   track[ATTRIBUTE_TYPES.ACCELERATION] *
-    car[ATTRIBUTE_TYPES.ACCELERATION].value +
-  track[ATTRIBUTE_TYPES.TOP_SPEED] * car[ATTRIBUTE_TYPES.TOP_SPEED].value +
-  track[ATTRIBUTE_TYPES.HANDLING] * car[ATTRIBUTE_TYPES.HANDLING].value +
+    (car[ATTRIBUTE_TYPES.ACCELERATION].value ||
+      car[ATTRIBUTE_TYPES.ACCELERATION]) +
+  track[ATTRIBUTE_TYPES.TOP_SPEED] *
+    (car[ATTRIBUTE_TYPES.TOP_SPEED].value || car[ATTRIBUTE_TYPES.TOP_SPEED]) +
+  track[ATTRIBUTE_TYPES.HANDLING] *
+    (car[ATTRIBUTE_TYPES.HANDLING].value || car[ATTRIBUTE_TYPES.HANDLING]) +
   (withRandom ? Math.random() * 0.000001 : 0);
+
+const getCompetitors = trackId =>
+  competitors.filter(item => item['track id'] === trackId);
 
 export const winProbability = (car, track) => {
   const carScoreObject = {
@@ -23,7 +33,7 @@ export const winProbability = (car, track) => {
     score: calculateScore(car, track),
   };
 
-  const results = track?.competitors?.reduce(
+  const results = getCompetitors(track.id).reduce(
     (result, competitor) => {
       const tmpScore = calculateScore(competitor, track);
       return {
@@ -68,12 +78,12 @@ export const raceResults = (car, track) => {
     score: calculateScore(car, track, true),
   };
 
-  const results = track?.competitors?.reduce(
+  const results = getCompetitors(track.id).reduce(
     (result, competitor) => [
       ...result,
       {
-        id: competitor.id,
-        name: competitor.name,
+        id: competitor['car id'],
+        name: competitor['car name'],
         score: calculateScore(competitor, track, true),
       },
     ],
