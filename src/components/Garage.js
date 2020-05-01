@@ -27,18 +27,7 @@ const Garage = () => {
   return (
     <Box>
       <Modal isOpen={!!selectedCar} backOnClose>
-        {selectedCar && (
-          <CarDetails
-            id={selectedCar.id}
-            name={selectedCar.name}
-            type={selectedCar.type}
-            image={selectedCar.image}
-            acceleration={selectedCar.acceleration}
-            topSpeed={selectedCar.topSpeed}
-            handling={selectedCar.handling}
-            price={selectedCar.price}
-          />
-        )}
+        {selectedCar && <CarDetails car={selectedCar} />}
       </Modal>
       <CarsContainer wrap="wrap">
         {cars.map(car => (

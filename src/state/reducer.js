@@ -50,7 +50,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case SELL_CAR_TYPE: {
       const car = state.garageCars.find(item => item.id === payload.carId);
 
-      if (!car) {
+      if (!car || !!car.race) {
         return state;
       }
 
@@ -64,7 +64,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case UPGRADE_ATTRIBUTE_TYPE: {
       const car = state.garageCars.find(item => item.id === payload.carId);
 
-      if (!car) {
+      if (!car || !!car.race) {
         return state;
       }
 

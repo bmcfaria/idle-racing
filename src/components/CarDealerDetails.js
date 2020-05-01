@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { buyCarAction } from '../state/actions';
 import { moneySelector } from '../state/selectors';
 import { useHistory } from 'react-router-dom';
+import { getImage } from '../helpers/imageMapping';
 
 const AttributeLabel = () => (
   <Flex position="relative" justifyContent="space-between">
@@ -39,16 +40,9 @@ const Attribute = ({ name, value, upgradeValue, upgrade, max }) => (
   </Flex>
 );
 
-const CarDealerDetails = ({
-  id,
-  name,
-  type,
-  image,
-  acceleration,
-  topSpeed,
-  handling,
-  price,
-}) => {
+const CarDealerDetails = ({ car, ...props }) => {
+  const { id, name, type, acceleration, topSpeed, handling, price } = car;
+
   const dispatch = useDispatch();
   const history = useHistory();
   const money = useSelector(moneySelector);
@@ -60,7 +54,13 @@ const CarDealerDetails = ({
   };
 
   return (
-    <Box position="relative" w="16rem" bg="white" borderRadius="16px">
+    <Box
+      position="relative"
+      w="16rem"
+      bg="white"
+      borderRadius="16px"
+      {...props}
+    >
       <Box marginTop="0.6rem" padding="0 0.2rem 0.6rem">
         <Image
           w="100%"
@@ -69,7 +69,7 @@ const CarDealerDetails = ({
           // bg="lightgray"
           objectFit="contain"
           style={{ imageRendering: 'pixelated' }}
-          src={image}
+          src={getImage(car)}
         />
         <Text textAlign="center" w="100%" fontSize="md">
           {name}

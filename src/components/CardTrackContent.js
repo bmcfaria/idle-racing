@@ -1,22 +1,20 @@
 import React from 'react';
 import { Box, Flex, Image, Text } from '@chakra-ui/core';
 import RadarChartTrack from './RadarChartTrack';
+import { getImage } from '../helpers/imageMapping';
 
 const CardTrackContent = ({ track, imageBorderRadius, ...props }) => {
-  const { name, type, image, prizes, duration, price } = track;
+  const { name, type, prizes, duration, price } = track;
 
   return (
     <Box w="304px" h="396px" bg="white" {...props}>
       <Image
         w="100%"
         h="190px"
-        alt="car"
+        alt="track"
         objectFit="cover"
         borderRadius={imageBorderRadius}
-        src={
-          image ||
-          'https://images.unsplash.com/photo-1527757780101-05985993b2e7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1275&q=80'
-        }
+        src={getImage(track)}
       />
       <Text textAlign="center" w="100%" h="36px" fontSize="24px">
         {name}

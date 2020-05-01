@@ -181,23 +181,29 @@ const RaceDetails = ({ track: { price, race } }) => {
                   chances of winning)
                 </Text>
               </Box>
-              <Box
+              <Flex
                 w="calc(100% - 16px)"
                 h="72px"
                 border="1px solid black"
                 borderRadius="16px"
                 margin="8px auto"
+                position="relative"
               >
                 <Text
                   w="fit-content"
                   fontSize="12px"
+                  top="-10px"
+                  left="16px"
                   bg="white"
-                  margin="-10px 0 0 16px"
                   padding="0 4px"
+                  position="absolute"
                 >
                   Powerups
                 </Text>
-              </Box>
+                <Text fontSize="16px" margin="auto">
+                  TO BE DEVELOPED
+                </Text>
+              </Flex>
               <Flex h="72px">
                 <Button
                   borderColor="tomato"

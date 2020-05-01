@@ -3,6 +3,7 @@ import { Text, Button, Flex, Image, Box } from '@chakra-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeResultsAction } from '../state/actions';
 import { dealerCarsSelector, garageCarsSelector } from '../state/selectors';
+import { getImage } from '../helpers/imageMapping';
 
 const Row = ({ index, car, playerCarId }) => (
   <Text
@@ -12,7 +13,7 @@ const Row = ({ index, car, playerCarId }) => (
   >
     {index + 1}:{' '}
     <Image
-      src={car.image}
+      src={getImage(car)}
       objectFit="contain"
       w="24px"
       h="16px"

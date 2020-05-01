@@ -3,9 +3,11 @@ import { Box, Flex, Image, Text } from '@chakra-ui/core';
 import Button from './Button';
 import AttributeInfo from './AttributeInfo';
 import CardProgressOverlay from './CardProgressOverlay';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import { sellCarAction, upgradeAttributeAction } from '../state/actions';
+import { getImage } from '../helpers/imageMapping';
+import { moneySelector } from '../state/selectors';
 
 const AttributeUpgrade = ({
   id,
@@ -18,6 +20,7 @@ const AttributeUpgrade = ({
   type,
 }) => {
   const dispatch = useDispatch();
+  const money = useSelector(moneySelector);
 
   const onClickUpgrade = () => {
     dispatch(upgradeAttributeAction(type, id));
@@ -48,24 +51,21 @@ const AttributeUpgrade = ({
           {upgradeValue}
         </Text>
       </Flex>
-      <Button w="4rem" secondary isDisabled={!price} onClick={onClickUpgrade}>
+      <Button
+        w="4rem"
+        secondary
+        isDisabled={!price || money < price}
+        onClick={onClickUpgrade}
+      >
         ${price}
       </Button>
     </Flex>
   );
 };
 
-const CarDetails = ({
-  id,
-  name,
-  type,
-  image,
-  acceleration,
-  topSpeed,
-  handling,
-  price,
-}) => {
-  const racing = false;
+const CarDetails = ({ car, ...props }) => {
+  const { id, name, type, acceleration, topSpeed, handling, price, race } = car;
+
   const dispatch = useDispatch();
 
   const sell = () => {
@@ -73,8 +73,15 @@ const CarDetails = ({
   };
 
   return (
-    <Box position="relative" w="304px" h="440px" bg="white" borderRadius="16px">
-      {racing && (
+    <Box
+      position="relative"
+      w="304px"
+      h="440px"
+      bg="white"
+      borderRadius="16px"
+      {...props}
+    >
+      {race && (
         <CardProgressOverlay
           timeTotal={10}
           timeLeft={9}
@@ -91,7 +98,7 @@ const CarDetails = ({
           // bg="lightgray"
           objectFit="contain"
           style={{ imageRendering: 'pixelated' }}
-          src={image}
+          src={getImage(car)}
         />
         <Text textAlign="center" w="100%" h="36px" fontSize="24px">
           {name}

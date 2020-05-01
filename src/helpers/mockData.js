@@ -1,29 +1,10 @@
 import uuid from 'uuid-random';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
-import CarPath from '../assets/Cars/riot.png';
-import BuggyPath from '../assets/Cars/buggy.png';
-import BudSchoolPath from '../assets/Cars/bus_school.png';
-import ConvertiblePath from '../assets/Cars/convertible.png';
-import CyclePath from '../assets/Cars/cycle.png';
-import FormulaPath from '../assets/Cars/formula.png';
-import HotdogPath from '../assets/Cars/hotdog.png';
-import KartPath from '../assets/Cars/kart.png';
 import carsFile from '../assets/lists/cars.json';
 import tracksFile from '../assets/lists/tracks.json';
 
 // To help on manual object creation
 window.uuid = uuid;
-
-const carImages = [
-  CarPath,
-  BuggyPath,
-  BudSchoolPath,
-  ConvertiblePath,
-  CyclePath,
-  FormulaPath,
-  HotdogPath,
-  KartPath,
-];
 
 const generateAttribute = (base, unit, max, basePrice, upgrade) => {
   const value = base + unit * upgrade;
@@ -77,7 +58,6 @@ const generateCar = car => ({
     50,
     0
   ),
-  image: carImages[~~(Math.random() * carImages.length)],
   brand: car.brand,
   price: car.price,
 });
@@ -91,7 +71,6 @@ export const generateGarageCar = car => ({
   [ATTRIBUTE_TYPES.HANDLING]: car[ATTRIBUTE_TYPES.HANDLING],
   price: ~~(car.price * 0.7),
   dealerCar: car.id,
-  image: car.image,
   brand: car.brand,
   race: undefined,
 });
@@ -117,9 +96,10 @@ const generateTrack = track => ({
   price: track.price,
   prizes: [track['prize 1'], track['prize 2'], track['prize 3']],
   type: track.type,
-  [ATTRIBUTE_TYPES.ACCELERATION]: track.acc,
-  [ATTRIBUTE_TYPES.TOP_SPEED]: track.tsp,
-  [ATTRIBUTE_TYPES.HANDLING]: track.hnd,
+  [ATTRIBUTE_TYPES.ACCELERATION]:
+    track.acc / (track.acc + track.tsp + track.hnd),
+  [ATTRIBUTE_TYPES.TOP_SPEED]: track.tsp / (track.acc + track.tsp + track.hnd),
+  [ATTRIBUTE_TYPES.HANDLING]: track.hnd / (track.acc + track.tsp + track.hnd),
   race: undefined,
   lastRace: undefined,
   // TODO: get more realistic adversaries, maybe create a pool of competitors
@@ -172,4 +152,4 @@ export const tracks = [
   ),
 ];
 
-export const money = 500;
+export const money = 5000;

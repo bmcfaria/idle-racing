@@ -75,18 +75,7 @@ const Dealer = () => {
   return (
     <Box>
       <Modal isOpen={!!selectedCar} backOnClose>
-        {selectedCar && (
-          <CarDealerDetails
-            id={selectedCar.id}
-            name={selectedCar.name}
-            type={selectedCar.type}
-            image={selectedCar.image}
-            acceleration={selectedCar.acceleration}
-            topSpeed={selectedCar.topSpeed}
-            handling={selectedCar.handling}
-            price={selectedCar.price}
-          />
-        )}
+        {selectedCar && <CarDealerDetails car={selectedCar} />}
       </Modal>
       <Accordion
         name="Basic cars"
