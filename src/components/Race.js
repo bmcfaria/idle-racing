@@ -20,7 +20,7 @@ const Race = () => {
         <RaceDetails track={selectedTrack} />
       </Modal>
       {tracks.map(track => (
-        <Box marginTop="16px">
+        <Box marginTop="16px" key={track.id}>
           <CardTrack track={track} key={track.id} />
         </Box>
       ))}

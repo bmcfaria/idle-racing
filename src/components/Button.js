@@ -8,7 +8,6 @@ const variantColors = {
 
 const Button = ({ children, secondary, ...props }) => (
   <ButtonChakra
-    variantColor={secondary ? variantColors.secondary : variantColors.primary}
     borderColor={secondary ? variantColors.secondary : variantColors.primary}
     color={secondary ? variantColors.secondary : variantColors.primary}
     variant="outline"

@@ -107,7 +107,6 @@ const CarDealerDetails = ({ car, ...props }) => {
         />
         <Flex>
           <Button
-            variantColor="tomato"
             variant="outline"
             margin="0 auto"
             onClick={buy}
