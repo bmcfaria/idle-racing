@@ -26,9 +26,6 @@ const CardTrackContent = ({ track, imageBorderRadius, ...props }) => {
           justifyContent="space-between"
           paddingLeft="24px"
         >
-          <Text textAlign="left" w="100%" fontSize="14px">
-            Type: {type}
-          </Text>
           <RadarChartTrack track={track} />
           <Box>
             <Text textAlign="left" w="100%" fontSize="14px" marginTop="8px">

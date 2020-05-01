@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 const RadarChartTrack = styled(({ track, ...props }) => {
+  const marginTriangle = 30;
   const width = 40;
   const height = (width * Math.sqrt(3)) / 2;
   const border = 1;
@@ -26,23 +27,42 @@ const RadarChartTrack = styled(({ track, ...props }) => {
 
   return (
     <div {...props}>
-      <svg width={width + 2 * border} height={height + 2 * border}>
-        <polygon
-          className="outer-triangle"
-          points={`
-              ${width / 2 + border},${0 + border} 
-              ${0 + border},${height + border} 
-              ${width + border},${height + border}
-            `}
-        />
-        <polygon
-          className="inner-triangle"
-          points={`
-              ${tspPoint} 
-              ${accPoint} 
-              ${hanPoint}
-            `}
-        />
+      <svg
+        width={width + 2 * border + marginTriangle}
+        height={height + 2 * border + marginTriangle}
+      >
+        <svg
+          width={width + 2 * border}
+          height={height + 2 * border}
+          x={marginTriangle / 2}
+          y={marginTriangle / 2 + 2}
+        >
+          <polygon
+            className="outer-triangle"
+            points={`
+          ${width / 2 + border},${0 + border} 
+          ${0 + border},${height + border} 
+          ${width + border},${height + border}
+          `}
+          />
+          <polygon
+            className="inner-triangle"
+            points={`
+          ${tspPoint} 
+          ${accPoint} 
+          ${hanPoint}
+          `}
+          />
+        </svg>
+        <text x="0" y="100%" fontSize="12px">
+          Acc
+        </text>
+        <text x="50%" y="12" fontSize="12px" textAnchor="middle">
+          Tsp
+        </text>
+        <text x="100%" y="100%" fontSize="12px" textAnchor="end">
+          Hnd
+        </text>
         Sorry, your browser does not support inline SVG.
       </svg>
     </div>
