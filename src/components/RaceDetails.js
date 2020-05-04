@@ -144,7 +144,7 @@ const RaceDetails = ({ track: { price, race } }) => {
     <Box
       position="relative"
       w={['304px', '304px', '608px']}
-      h={['auto', 'auto', '220px']}
+      h={['auto', 'auto', '236px']}
       maxH="calc(100vh - 2 * 64px - 2 * 8px)"
       overflowY={['scroll', 'scroll', 'unset']}
       bg="white"
@@ -189,7 +189,7 @@ const RaceDetails = ({ track: { price, race } }) => {
       <Flex direction={['column', 'column', 'row']}>
         <CardTrackContent
           w="304px"
-          minH="220px"
+          minH="236px"
           track={selectedTrack}
           borderRadius="16px 0 0 16px"
           imageBorderRadius={['16px 16px 0 0', '16px 16px 0 0', '16px 0 0 0']}
@@ -205,6 +205,8 @@ const RaceDetails = ({ track: { price, race } }) => {
             startRace={startRace}
             results={results}
             pastRace={pastRace}
+            borderLeft="1px solid black"
+            borderRight="1px solid black"
           />
         </CardTrackContent>
         <Box w="50%" display={['none', 'none', 'block']} position="relative">

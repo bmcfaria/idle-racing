@@ -13,7 +13,13 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
           {name}
         </Text>
       </Flex>
-      <Box w="100%" h="74px" position="relative">
+      <Box
+        w="100%"
+        h="74px"
+        position="relative"
+        borderLeft="1px solid black"
+        borderRight="1px solid black"
+      >
         <Image
           w="100%"
           h="100%"
@@ -36,7 +42,15 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
           left="16px"
         />
       </Box>
-      <Flex w="100%" h="74px" bg="white" paddingLeft="32px">
+      <Flex
+        w="100%"
+        h="90px"
+        bg="white"
+        paddingTop="8px"
+        paddingLeft="32px"
+        borderLeft="1px solid black"
+        borderRight="1px solid black"
+      >
         <Box w="50%">
           <Text textAlign="left" w="100%" fontSize="14px">
             Prizes:

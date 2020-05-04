@@ -97,7 +97,7 @@ const generateTrack = track => ({
   duration: track.duration * 1000,
   price: track.price,
   prizes: [track['prize 1'], track['prize 2'], track['prize 3']],
-  type: track.type,
+  category: track.category,
   [ATTRIBUTE_TYPES.ACCELERATION]:
     track.acc / (track.acc + track.tsp + track.hnd),
   [ATTRIBUTE_TYPES.TOP_SPEED]: track.tsp / (track.acc + track.tsp + track.hnd),

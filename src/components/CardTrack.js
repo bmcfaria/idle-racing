@@ -34,7 +34,7 @@ const CardTrack = ({ track }) => {
   return (
     <Box
       w="304px"
-      h="220px"
+      h="236px"
       position="relative"
       cursor="pointer"
       borderRadius="16px"
@@ -50,7 +50,11 @@ const CardTrack = ({ track }) => {
         />
       )}
       {currentRace && (
-        <CardProgressOverlay borderRadius="16px" race={currentRace} />
+        <CardProgressOverlay
+          zIndex="1"
+          borderRadius="16px"
+          race={currentRace}
+        />
       )}
       <CardTrackContent
         track={track}

@@ -2,31 +2,41 @@ import React from 'react';
 import { Text, Button, Flex, Image, Box } from '@chakra-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeResultsAction } from '../state/actions';
-import { dealerCarsSelector, garageCarsSelector } from '../state/selectors';
+import {
+  dealerCarsSelector,
+  garageCarsSelector,
+  trackSelector,
+} from '../state/selectors';
 import { getImage } from '../helpers/imageMapping';
 
-const Row = ({ index, car, playerCarId }) => (
-  <Text
+const Row = ({ index, car, playerCarId, prize }) => (
+  <Flex
     fontSize="14px"
     lineHeight="1rem"
     fontWeight={car.id === playerCarId ? 'bold' : 'unset'}
+    cursor="pointer"
   >
-    {index + 1}:{' '}
+    {index + 1}:
     <Image
       src={getImage(car)}
       objectFit="contain"
       w="24px"
       h="16px"
       display="inline-block"
-    />{' '}
-    {car.id === playerCarId ? '(You) ' : ''}
-    {car.name}
-  </Text>
+      marginLeft="4px"
+    />
+    <Text marginLeft="4px">
+      {car.id === playerCarId ? '(You) ' : ''}
+      {car.name}
+    </Text>
+    <Text marginLeft="auto">{prize}</Text>
+  </Flex>
 );
 
 const RaceResults = ({ pastRace, children, ...props }) => {
-  const { id, reward, results } = pastRace;
+  const { id, results, track: trackId } = pastRace;
   const cars = useSelector(dealerCarsSelector);
+  const track = useSelector(trackSelector(trackId));
   const carsGarage = useSelector(garageCarsSelector);
   const dispatch = useDispatch();
 
@@ -36,10 +46,10 @@ const RaceResults = ({ pastRace, children, ...props }) => {
 
   return (
     <Flex direction="column" w="100%" {...props}>
-      <Text fontSize="24px" textAlign="center" marginTop="8px">
+      <Text fontSize="18px" textAlign="center" marginTop="8px">
         Results
       </Text>
-      <Box marginTop="16px">
+      <Box>
         {results.map((car, index) => (
           <Row
             key={car.id}
@@ -49,20 +59,16 @@ const RaceResults = ({ pastRace, children, ...props }) => {
               carsGarage.find(item => item.id === car.id)
             }
             playerCarId={pastRace.car}
-          >
-            {index + 1}: {car.name}
-          </Row>
+            prize={`$${~~track.prizes[index]}`}
+          />
         ))}
       </Box>
-      <Text fontSize="14px" marginTop="16px">
-        Reward:
-      </Text>
-      <Text fontSize="12px">{`$${reward}`}</Text>
       <Button
         variant="outline"
         marginLeft="auto"
         marginRight="auto"
-        marginTop="32px"
+        marginTop="8px"
+        marginBottom="8px"
         onClick={onClick}
       >
         {children}

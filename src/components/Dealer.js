@@ -1,67 +1,23 @@
 import React, { useState } from 'react';
-import { Box, Flex, Text } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/core';
 import { useLocation } from 'react-router-dom';
 import CarDealerDetails from './CarDealerDetails';
 import { useSelector } from 'react-redux';
 import { dealerCarsSelector } from '../state/selectors';
-import CardCarSmall from './CardCarSmall';
 import Modal from './Modal';
-import styled from '@emotion/styled';
-import {
-  cardsContainerWidthPaddingStyles,
-  CARD_MARGIN,
-} from '../helpers/theme';
+import Accordion from './Accordion';
+import AccordionItem from './AccordionItem';
+import CardCarSmall from './CardCarSmall';
 
-const CarsContainer = styled(Flex)`
-  max-height: ${({ open }) => (open ? '50vh' : 0)};
-  overflow-y: scroll;
-  box-sizing: content-box;
-  transition: max-height 0.5s;
-
-  ${cardsContainerWidthPaddingStyles}
-`;
-
-const Accordion = ({
-  name,
-  cars = [],
-  value,
-  selectedAccordion,
-  setSelectedAccordion,
-  ...props
-}) => {
-  const toggleOpen = () => {
-    if (selectedAccordion === value) {
-      setSelectedAccordion();
-    } else {
-      setSelectedAccordion(value);
-    }
-  };
-
-  return (
-    <Box bg="white" borderRadius="16px" {...props}>
-      <Flex w="100%" h="48px" onClick={toggleOpen}>
-        <Text margin="auto" fontSize="xl">
-          {name}
-        </Text>
-      </Flex>
-      <CarsContainer
-        wrap="wrap"
-        open={selectedAccordion === value}
-        overflow="hidden"
-      >
-        {cars.map(car => (
-          <Box
-            key={car.id}
-            marginRight={`${CARD_MARGIN}px`}
-            marginBottom={`${CARD_MARGIN}px`}
-          >
-            <CardCarSmall car={car} showPrice />
-          </Box>
-        ))}
-      </CarsContainer>
-    </Box>
-  );
-};
+const AccordionContent = ({ cars }) => (
+  <>
+    {cars.map(car => (
+      <AccordionItem key={car.id}>
+        <CardCarSmall car={car} showPrice />
+      </AccordionItem>
+    ))}
+  </>
+);
 
 const Dealer = () => {
   const location = useLocation();
@@ -82,24 +38,27 @@ const Dealer = () => {
         value={0}
         selectedAccordion={selectedAccordion}
         setSelectedAccordion={setSelectedAccordion}
-        cars={cars.filter(item => item.brand === 'basic')}
-      />
+      >
+        <AccordionContent cars={cars.filter(item => item.brand === 'basic')} />
+      </Accordion>
       <Accordion
         name="City cars"
         value={1}
         selectedAccordion={selectedAccordion}
         setSelectedAccordion={setSelectedAccordion}
         marginTop="16px"
-        cars={cars.filter(item => item.brand === 'city')}
-      />
+      >
+        <AccordionContent cars={cars.filter(item => item.brand === 'city')} />
+      </Accordion>
       <Accordion
         name="Track cars"
         value={2}
         selectedAccordion={selectedAccordion}
         setSelectedAccordion={setSelectedAccordion}
         marginTop="16px"
-        cars={cars.filter(item => item.brand === 'track')}
-      />
+      >
+        <AccordionContent cars={cars.filter(item => item.brand === 'track')} />
+      </Accordion>
     </Box>
   );
 };

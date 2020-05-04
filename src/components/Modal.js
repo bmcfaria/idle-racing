@@ -27,7 +27,7 @@ const Modal = ({ children, isOpen, onClose, backOnClose, ...props }) => {
           width="100%"
           height="100%"
           position="fixed"
-          bg="#00000080"
+          bg="#000000c0"
           display="flex"
           zIndex={zIndex.modalBackground}
           onClick={onCloseClick}
