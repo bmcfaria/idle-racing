@@ -34,7 +34,7 @@ const CardTrack = ({ track }) => {
   return (
     <Box
       w="304px"
-      h="396px"
+      h="220px"
       position="relative"
       cursor="pointer"
       borderRadius="16px"

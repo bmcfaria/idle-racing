@@ -21,10 +21,9 @@ import {
   cardsContainerWidthPaddingStyles,
   CARD_MARGIN,
 } from '../helpers/theme';
-import CardCarSmallContent from './CardCarSmallContent';
-import CardWinningChance from './CardWinningChance';
 import RaceDetailsSelectCar from './RaceDetailsSelectCar';
 import { useOpenClose } from '../helpers/hooks';
+import RaceDetailsSelectedCar from './RaceDetailsSelectedCar';
 
 const CarsContainer = styled(Flex)`
   height: 50vh;
@@ -37,6 +36,81 @@ const CarsContainer = styled(Flex)`
 
   ${cardsContainerWidthPaddingStyles}
 `;
+
+const ActionContent = ({
+  selectedCar,
+  selectedTrack,
+  carsModalOpen,
+  money,
+  price,
+  currentRace,
+  startRace,
+  results,
+  pastRace,
+  ...props
+}) => (
+  <Box h="100%" {...props}>
+    {results && (
+      <RaceResults pastRace={pastRace} padding="0 32px">
+        Race again
+      </RaceResults>
+    )}
+    {!results && !selectedCar && (
+      <RaceDetailsSelectCar
+        bg="grey"
+        borderRadius={['0, 0, 16px, 16px', '0, 0, 16px, 16px', '0 16px 16px 0']}
+        padding="16px"
+        onClick={carsModalOpen}
+      />
+    )}
+
+    {!results && selectedCar && (
+      <>
+        <RaceDetailsSelectedCar
+          car={selectedCar}
+          track={selectedTrack}
+          carsModalOpen={carsModalOpen}
+          marginTop={[0, 0, '8px']}
+        />
+        <Flex
+          w="calc(100% - 16px)"
+          h="40px"
+          border="1px solid black"
+          borderRadius="16px"
+          margin="8px auto"
+          position="relative"
+        >
+          <Text
+            w="fit-content"
+            fontSize="12px"
+            top="-10px"
+            left="16px"
+            bg="white"
+            padding="0 4px"
+            position="absolute"
+          >
+            Powerups
+          </Text>
+          <Text fontSize="16px" margin="auto">
+            TO BE DEVELOPED
+          </Text>
+        </Flex>
+        <Flex h="56px">
+          <Button
+            borderColor="tomato"
+            color="tomato"
+            variant="outline"
+            isDisabled={money < price || currentRace}
+            margin="auto"
+            onClick={startRace}
+          >
+            Race
+          </Button>
+        </Flex>
+      </>
+    )}
+  </Box>
+);
 
 const RaceDetails = ({ track: { price, race } }) => {
   const dispatch = useDispatch();
@@ -70,7 +144,7 @@ const RaceDetails = ({ track: { price, race } }) => {
     <Box
       position="relative"
       w={['304px', '304px', '608px']}
-      h={['auto', 'auto', '396px']}
+      h={['auto', 'auto', '220px']}
       maxH="calc(100vh - 2 * 64px - 2 * 8px)"
       overflowY={['scroll', 'scroll', 'unset']}
       bg="white"
@@ -115,111 +189,36 @@ const RaceDetails = ({ track: { price, race } }) => {
       <Flex direction={['column', 'column', 'row']}>
         <CardTrackContent
           w="304px"
-          h="396px"
+          minH="220px"
           track={selectedTrack}
           borderRadius="16px 0 0 16px"
           imageBorderRadius={['16px 16px 0 0', '16px 16px 0 0', '16px 0 0 0']}
-        />
-        <Box w={['100%', '100%', '50%']} position="relative">
-          {results && (
-            <RaceResults pastRace={pastRace} padding="0 32px">
-              Race again
-            </RaceResults>
-          )}
-          {!results && !selectedCar && (
-            <RaceDetailsSelectCar
-              bg="grey"
-              borderRadius={[
-                '0, 0, 16px, 16px',
-                '0, 0, 16px, 16px',
-                '0 16px 16px 0',
-              ]}
-              padding="16px"
-              onClick={carsModalOpen}
-            />
-          )}
-          {!results && selectedCar && (
-            <>
-              <CardCarSmallContent
-                car={selectedCar}
-                marginTop="32px"
-                padding="0 16px"
-              />
-              <CardWinningChance
-                car={selectedCar}
-                track={selectedTrack}
-                borderRadius="16px"
-                border="1px solid black"
-                w="calc(100% - 16px)"
-                h="24px"
-                margin="0 auto"
-              />
-              <Flex
-                w="100%"
-                h="32px"
-                padding="0 8px"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <ChakraLink
-                  fontSize="12px"
-                  color="tomato"
-                  onClick={carsModalOpen}
-                >
-                  Change car
-                </ChakraLink>
-                <ChakraLink
-                  as={Link}
-                  to={{ pathname: '/garage', state: { car: selectedCar.id } }}
-                  fontSize="12px"
-                  color="teal.500"
-                >
-                  Open in Garage
-                </ChakraLink>
-              </Flex>
-              <Box h="40px">
-                <Text textAlign="center" w="100%" fontSize="12px">
-                  (Try upgrading your car or use a better one, to improve your
-                  chances of winning)
-                </Text>
-              </Box>
-              <Flex
-                w="calc(100% - 16px)"
-                h="72px"
-                border="1px solid black"
-                borderRadius="16px"
-                margin="8px auto"
-                position="relative"
-              >
-                <Text
-                  w="fit-content"
-                  fontSize="12px"
-                  top="-10px"
-                  left="16px"
-                  bg="white"
-                  padding="0 4px"
-                  position="absolute"
-                >
-                  Powerups
-                </Text>
-                <Text fontSize="16px" margin="auto">
-                  TO BE DEVELOPED
-                </Text>
-              </Flex>
-              <Flex h="72px">
-                <Button
-                  borderColor="tomato"
-                  color="tomato"
-                  variant="outline"
-                  isDisabled={money < price || currentRace}
-                  margin="auto"
-                  onClick={startRace}
-                >
-                  Race ({price > 0 ? `$${price}` : 'FREE'})
-                </Button>
-              </Flex>
-            </>
-          )}
+        >
+          <ActionContent
+            display={['block', 'block', 'none']}
+            selectedCar={selectedCar}
+            selectedTrack={selectedTrack}
+            carsModalOpen={carsModalOpen}
+            money={money}
+            price={price}
+            currentRace={currentRace}
+            startRace={startRace}
+            results={results}
+            pastRace={pastRace}
+          />
+        </CardTrackContent>
+        <Box w="50%" display={['none', 'none', 'block']} position="relative">
+          <ActionContent
+            selectedCar={selectedCar}
+            selectedTrack={selectedTrack}
+            carsModalOpen={carsModalOpen}
+            money={money}
+            price={price}
+            currentRace={currentRace}
+            startRace={startRace}
+            results={results}
+            pastRace={pastRace}
+          />
         </Box>
       </Flex>
     </Box>

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { Box } from '@chakra-ui/core';
 
 const RadarChartTrack = styled(({ track, ...props }) => {
   const marginTriangle = 30;
@@ -26,7 +27,7 @@ const RadarChartTrack = styled(({ track, ...props }) => {
   const hanPoint = pointValue(track?.hnd, 1, 1);
 
   return (
-    <div {...props}>
+    <Box {...props}>
       <svg
         width={width + 2 * border + marginTriangle}
         height={height + 2 * border + marginTriangle}
@@ -54,30 +55,28 @@ const RadarChartTrack = styled(({ track, ...props }) => {
           `}
           />
         </svg>
-        <text x="0" y="100%" fontSize="12px">
+        <text x="0" y="100%" fontSize="12px" fill="white">
           Acc
         </text>
-        <text x="50%" y="12" fontSize="12px" textAnchor="middle">
+        <text x="50%" y="12" fontSize="12px" fill="white" textAnchor="middle">
           Tsp
         </text>
-        <text x="100%" y="100%" fontSize="12px" textAnchor="end">
+        <text x="100%" y="100%" fontSize="12px" fill="white" textAnchor="end">
           Hnd
         </text>
         Sorry, your browser does not support inline SVG.
       </svg>
-    </div>
+    </Box>
   );
 })`
-  margin: 4px;
-
   .outer-triangle {
     fill: transparent;
-    stroke: black;
+    stroke: white;
     stroke-width: 1;
   }
 
   .inner-triangle {
-    fill: #2f80ed80;
+    fill: white;
     stroke-width: 1;
   }
 `;

@@ -3,47 +3,42 @@ import { Box, Flex, Image, Text } from '@chakra-ui/core';
 import RadarChartTrack from './RadarChartTrack';
 import { getImage } from '../helpers/imageMapping';
 
-const CardTrackContent = ({ track, imageBorderRadius, ...props }) => {
+const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
   const { name, prizes, duration, price } = track;
 
   return (
-    <Box w="100%" h="100%" bg="white" {...props}>
-      <Image
-        w="100%"
-        h="190px"
-        alt="track"
-        objectFit="cover"
-        borderRadius={imageBorderRadius}
-        src={getImage(track)}
-      />
-      <Text textAlign="center" w="100%" h="36px" fontSize="24px">
-        {name}
-      </Text>
-      <Flex>
-        <Flex
-          w="50%"
-          direction="column"
-          justifyContent="space-between"
-          paddingLeft="24px"
-        >
-          <RadarChartTrack track={track} />
-          <Box>
-            <Text textAlign="left" w="100%" fontSize="14px" marginTop="8px">
-              Price:
-            </Text>
-            <Text textAlign="left" w="100%" fontSize="12px">
-              -${price}
-            </Text>
-          </Box>
-        </Flex>
+    <Box w="100%" h="100%" bg="black" {...props}>
+      <Flex w="100%" h="40px">
+        <Text margin="auto" fontSize="24px" color="white">
+          {name}
+        </Text>
+      </Flex>
+      <Box w="100%" h="74px" position="relative">
+        <Image
+          w="100%"
+          h="100%"
+          alt="track"
+          objectFit="cover"
+          src={getImage(track)}
+        />
+        <Box
+          w="100%"
+          h="100%"
+          top="0"
+          left="0"
+          position="absolute"
+          backgroundImage="linear-gradient(to right, #000F , #0000)"
+        />
+        <RadarChartTrack
+          track={track}
+          position="absolute"
+          top="2px"
+          left="16px"
+        />
+      </Box>
+      <Flex w="100%" h="74px" bg="white" paddingLeft="32px">
         <Box w="50%">
           <Text textAlign="left" w="100%" fontSize="14px">
-            Requirements:
-          </Text>
-          <Text textAlign="left" w="100%" fontSize="12px">
-            - 4x4 Cars
-          </Text>
-          <Text textAlign="left" w="100%" fontSize="14px" marginTop="8px">
             Prizes:
           </Text>
           {prizes.map((prize, index) => (
@@ -57,13 +52,30 @@ const CardTrackContent = ({ track, imageBorderRadius, ...props }) => {
               {index + 1} - ${prize}
             </Text>
           ))}
-          <Text textAlign="left" w="100%" fontSize="14px" marginTop="8px">
-            Duration:
+        </Box>
+        <Box w="50%">
+          <Text textAlign="left" w="100%" fontSize="14px">
+            Requirements:
           </Text>
           <Text textAlign="left" w="100%" fontSize="12px">
-            - {duration / 1000}s
+            - None
           </Text>
         </Box>
+      </Flex>
+
+      {children && (
+        <Box bg="white" borderTop="1px solid gray">
+          {children}
+        </Box>
+      )}
+
+      <Flex w="100%" h="32px">
+        <Text margin="auto" fontSize="14px" color="white">
+          {duration / 1000}s
+        </Text>
+        <Text margin="auto" fontSize="14px" color="white">
+          {price === 0 ? 'FREE' : `$${price}`}
+        </Text>
       </Flex>
     </Box>
   );
