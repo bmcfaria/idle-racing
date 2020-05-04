@@ -31,8 +31,6 @@ const CarsContainer = styled(Flex)`
   overflow-y: auto;
   padding-top: 28px;
   flex-wrap: wrap;
-  background-color: white;
-  border-radius: 16px;
 
   ${cardsContainerWidthPaddingStyles}
 `;
@@ -159,31 +157,33 @@ const RaceDetails = ({ track: { price, race } }) => {
       )}
 
       <Modal isOpen={carsModal} onClose={carsModalClose}>
-        <CarsContainer>
-          {cars.length === 0 && (
-            <Flex margin="auto" direction="column">
-              <Text fontSize="24px">You need to buy a car first</Text>
-              <ChakraLink
-                as={Link}
-                to="/dealer"
-                fontSize="12px"
-                color="teal.500"
-                margin="8px auto 0"
+        <Box bg="white" borderRadius="16px">
+          <CarsContainer>
+            {cars.length === 0 && (
+              <Flex margin="auto" direction="column">
+                <Text fontSize="24px">You need to buy a car first</Text>
+                <ChakraLink
+                  as={Link}
+                  to="/dealer"
+                  fontSize="12px"
+                  color="teal.500"
+                  margin="8px auto 0"
+                >
+                  go to Dealer
+                </ChakraLink>
+              </Flex>
+            )}
+            {cars.map(car => (
+              <Box
+                key={car.id}
+                marginRight={`${CARD_MARGIN}px`}
+                marginBottom={`${CARD_MARGIN}px`}
               >
-                go to Dealer
-              </ChakraLink>
-            </Flex>
-          )}
-          {cars.map(car => (
-            <Box
-              key={car.id}
-              marginRight={`${CARD_MARGIN}px`}
-              marginBottom={`${CARD_MARGIN}px`}
-            >
-              <CardCarSmall car={car} onClick={selectCar} />
-            </Box>
-          ))}
-        </CarsContainer>
+                <CardCarSmall car={car} onClick={selectCar} />
+              </Box>
+            ))}
+          </CarsContainer>
+        </Box>
       </Modal>
 
       <Flex direction={['column', 'column', 'row']}>

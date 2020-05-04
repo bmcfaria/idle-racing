@@ -12,6 +12,7 @@ export const widthByCardsNumber = number =>
 export const cardsContainerWidthPaddingStyles = `
   width: ${widthByCardsNumber(1)};
   padding-left: ${CARD_MARGIN}px;
+  margin-right: -${CARD_MARGIN}px;
 
   @media screen and (min-width: ${widthByCardsNumber(2)}) {
     width: ${widthByCardsNumber(2)};
