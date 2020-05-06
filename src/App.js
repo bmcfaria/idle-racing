@@ -11,6 +11,7 @@ import Race from './components/Race';
 import Dealer from './components/Dealer';
 import { Provider } from 'react-redux';
 import configureStore from './state/configureStore';
+import Home from './components/Home';
 
 const store = configureStore();
 
@@ -45,6 +46,9 @@ function App() {
                 </Route>
                 <Route path="/dealer">
                   <Dealer />
+                </Route>
+                <Route>
+                  <Home />
                 </Route>
               </Switch>
             </Content>
