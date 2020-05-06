@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Flex, Text, Image } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
-import CardWinningChance from './CardWinningChance';
+import RaceDetailsSelectedCarWinningChance from './RaceDetailsSelectedCarWinningChance';
 import { getImage } from '../helpers/imageMapping';
 
 const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
@@ -29,15 +29,13 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
           </Flex>
         </Box>
       </Flex>
-      <CardWinningChance
+
+      <RaceDetailsSelectedCarWinningChance
+        marginTop="4px"
         car={car}
         track={track}
-        borderRadius="16px"
-        border="1px solid black"
-        w="calc(100% - 16px)"
-        h="24px"
-        margin="0 auto"
       />
+
       <Flex
         w="100%"
         h="32px"
@@ -57,14 +55,6 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
           Open in Garage
         </ChakraLink>
       </Flex>
-      {false && (
-        <Box h="40px">
-          <Text textAlign="center" w="100%" fontSize="12px">
-            (Try upgrading your car or use a better one, to improve your chances
-            of winning)
-          </Text>
-        </Box>
-      )}
     </Box>
   );
 };

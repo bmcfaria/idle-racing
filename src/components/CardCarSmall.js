@@ -42,8 +42,8 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
 
   useEffect(() => {
     const currentTime = new Date().getTime();
+
     garageCars.forEach(element => {
-      console.log(currentTime - car.timestamp);
       if (
         element.dealerCar === car.id &&
         currentTime - element.timestamp <= 1000

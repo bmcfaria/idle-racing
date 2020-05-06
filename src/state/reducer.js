@@ -22,7 +22,7 @@ import { raceResults } from '../helpers/utils';
 
 const initialState = {
   dealerCars: cars,
-  garageCars: [],
+  garageCars: [generateGarageCar(cars[0])],
   tracks,
   money,
   notifications: [],
