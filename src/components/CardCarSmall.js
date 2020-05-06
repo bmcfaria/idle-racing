@@ -1,21 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Text, Flex } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import CardProgressOverlay from './CardProgressOverlay';
-import { raceSelector, tracksSelector } from '../state/selectors';
+import {
+  raceSelector,
+  tracksSelector,
+  moneySelector,
+  garageCarsSelector,
+} from '../state/selectors';
 import { useSelector } from 'react-redux';
 import CardCarSmallContent from './CardCarSmallContent';
 import CardWinningChance from './CardWinningChance';
+import styled from '@emotion/styled';
+
+const BoughtAnimation = styled(Flex)`
+  animation: fadeOut ease 1.5s;
+  opacity: 0;
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+`;
 
 const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
   const { id, race, price } = car;
   const location = useLocation();
   const history = useHistory();
+  const money = useSelector(moneySelector);
   const tracks = useSelector(tracksSelector);
+  const garageCars = useSelector(garageCarsSelector);
   const selectedTrackId = location?.state?.track;
   const selectedTrack = tracks.find(item => item.id === selectedTrackId);
+  const [bought, setBought] = useState();
 
   const currentRace = useSelector(raceSelector(race));
+
+  useEffect(() => {
+    const currentTime = new Date().getTime();
+    garageCars.forEach(element => {
+      console.log(currentTime - car.timestamp);
+      if (
+        element.dealerCar === car.id &&
+        currentTime - element.timestamp <= 1000
+      ) {
+        setBought(true);
+      }
+    });
+  }, [garageCars, car.id, car.timestamp]);
 
   // To improve mobile navigation,
   // this way the back button will un-select instead off showing the previous selected
@@ -61,6 +97,19 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
             bg="#B2F5EA77"
           />
         )}
+        {bought && (
+          <BoughtAnimation
+            position="absolute"
+            w="100%"
+            h="100%"
+            bg="blackAlpha.800"
+            borderRadius="16px"
+          >
+            <Text fontSize="24px" margin="auto" color="white">
+              Bought
+            </Text>
+          </BoughtAnimation>
+        )}
         {currentRace && (
           <CardProgressOverlay race={currentRace} label borderRadius="16px" />
         )}
@@ -85,13 +134,14 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
         />
       )}
       {showPrice && (
-        <Flex w="100%" h="124px" borderRadius="16px" bg="black" color="white">
+        <Flex w="100%" h="124px" borderRadius="16px" bg="black">
           <Text
             fontSize="14px"
             lineHeight="24px"
             textAlign="center"
             w="100%"
             marginTop="auto"
+            color={money < price ? 'tomato' : 'white'}
           >
             ${price}
           </Text>

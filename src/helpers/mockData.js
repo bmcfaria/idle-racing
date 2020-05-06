@@ -75,6 +75,7 @@ export const generateGarageCar = car => ({
   dealerCar: car.id,
   brand: car.brand,
   race: undefined,
+  timestamp: new Date().getTime(),
 });
 
 export const upgradeAttribute = attribute => {
