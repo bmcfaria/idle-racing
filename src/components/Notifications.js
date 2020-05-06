@@ -69,6 +69,7 @@ const Notifications = () => {
                 <Box>
                   {races.map(item => (
                     <NotificationsActiveRace
+                      key={item.id}
                       race={item.id}
                       item={item}
                       onClose={onClose}

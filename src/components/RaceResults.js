@@ -52,7 +52,7 @@ const RaceResults = ({ pastRace, children, ...props }) => {
       <Box>
         {results.map((car, index) => (
           <Row
-            key={car.id}
+            key={`${car.id}_${index}`}
             index={index}
             car={
               cars.find(item => item.id === car.id) ||

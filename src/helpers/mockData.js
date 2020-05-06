@@ -40,21 +40,21 @@ const generateCar = car => ({
   [ATTRIBUTE_TYPES.ACCELERATION]: generateAttribute(
     car.acc,
     1,
-    car['acc upgrades'],
+    car['acc ups'],
     ~~(car.price / 10),
     0
   ),
   [ATTRIBUTE_TYPES.TOP_SPEED]: generateAttribute(
     car.tsp,
     1,
-    car['tsp upgrades'],
+    car['tsp ups'],
     ~~(car.price / 10),
     0
   ),
   [ATTRIBUTE_TYPES.HANDLING]: generateAttribute(
     car.hnd,
     1,
-    car['hnd upgrades'],
+    car['hnd ups'],
     ~~(car.price / 10),
     0
   ),

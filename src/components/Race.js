@@ -43,14 +43,14 @@ const Race = () => {
         />
       </Accordion>
       <Accordion
-        name="Basic races"
+        name="City races"
         value={1}
         selectedAccordion={selectedAccordion}
         setSelectedAccordion={setSelectedAccordion}
         marginTop="16px"
       >
         <AccordionContent
-          tracks={tracks.filter(item => item.category === 'basic')}
+          tracks={tracks.filter(item => item.category === 'city')}
         />
       </Accordion>
     </Box>
