@@ -4,18 +4,40 @@ import { CardWinningChanceComponent } from './CardWinningChance';
 import { winProbability } from '../helpers/utils';
 import { zIndex } from '../helpers/theme';
 import { MdInfo, MdInfoOutline } from 'react-icons/md';
+import styled from '@emotion/styled';
+import { useSelector, useDispatch } from 'react-redux';
+import { tutorialWinChanceSelector } from '../state/selectors';
+import { disableTutorialWinChanceAction } from '../state/actions';
 
 const GOOD_VALUE = 3;
+
+const CallForAttention = styled(Box)`
+  animation: blink 0.5s alternate infinite;
+
+  @keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.9;
+    }
+  }
+`;
 
 const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
   const [showTip, setShowTip] = useState();
   const [hover, setHover] = useState();
+  const dispatch = useDispatch();
+  const showTutorial = useSelector(tutorialWinChanceSelector);
   const winProbabilityValue = track && winProbability(car, track);
 
   const goodChances = winProbabilityValue === GOOD_VALUE;
 
   const toggleTip = () => {
     setShowTip(!showTip);
+    if (showTutorial) {
+      dispatch(disableTutorialWinChanceAction);
+    }
   };
 
   return (
@@ -127,6 +149,17 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
             />
           )}
         </Box>
+
+        {showTutorial && (
+          <CallForAttention
+            w="calc(100% - 16px)"
+            h="24px"
+            borderRadius="16px"
+            position="absolute"
+            left="8px"
+            bg="white"
+          />
+        )}
 
         {showTip && Number.isInteger(winProbabilityValue) && (
           <Box

@@ -18,3 +18,5 @@ export const raceSelector = raceId => state =>
 export const pastRacesSelector = state => state.pastRaces;
 export const pastRaceSelector = pastRaceId => state =>
   state.pastRaces.find(item => item.id === pastRaceId);
+
+export const tutorialWinChanceSelector = state => state.tutorial.winChance;

@@ -6,6 +6,7 @@ import {
   END_RACE_TYPE,
   CLOSE_RESULTS_TYPE,
   CLEAR_NOTIFICATIONS_TYPE,
+  DISABLE_TUTORIAL_WINCHANCE_TYPE,
 } from './actions';
 import {
   cars,
@@ -28,6 +29,9 @@ const initialState = {
   notifications: [],
   races: [],
   pastRaces: [],
+  tutorial: {
+    winChance: true,
+  },
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -210,6 +214,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         notifications: [],
+      };
+    }
+
+    case DISABLE_TUTORIAL_WINCHANCE_TYPE: {
+      return {
+        ...state,
+        tutorial: {
+          ...state.tutorial,
+          winChance: false,
+        },
       };
     }
 
