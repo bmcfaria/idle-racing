@@ -45,11 +45,12 @@ const ActionContent = ({
   startRace,
   results,
   pastRace,
+  raceAgain,
   ...props
 }) => (
   <Box h="100%" {...props}>
     {results && (
-      <RaceResults pastRace={pastRace} padding="0 32px">
+      <RaceResults pastRace={pastRace} raceAgain={raceAgain} padding="0 32px">
         Race again
       </RaceResults>
     )}
@@ -138,6 +139,10 @@ const RaceDetails = ({ track: { price, race } }) => {
     carsModalClose();
   };
 
+  const raceAgain = car => {
+    selectCar(car);
+  };
+
   return (
     <Box
       position="relative"
@@ -207,6 +212,7 @@ const RaceDetails = ({ track: { price, race } }) => {
             pastRace={pastRace}
             borderLeft="1px solid black"
             borderRight="1px solid black"
+            raceAgain={raceAgain}
           />
         </CardTrackContent>
         <Box w="50%" display={['none', 'none', 'block']} position="relative">
@@ -220,6 +226,7 @@ const RaceDetails = ({ track: { price, race } }) => {
             startRace={startRace}
             results={results}
             pastRace={pastRace}
+            raceAgain={raceAgain}
           />
         </Box>
       </Flex>

@@ -109,6 +109,7 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
             {[...Array(GOOD_VALUE - winProbabilityValue).keys()].map(
               (_, index) => (
                 <CardWinningChanceComponent
+                  key={index + 1}
                   winProbabilityValue={GOOD_VALUE - index}
                   borderRadius="16px"
                   border="1px solid black"
@@ -171,6 +172,7 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
           >
             {[...Array(winProbabilityValue).keys()].map((_, index) => (
               <CardWinningChanceComponent
+                key={index + 1}
                 winProbabilityValue={winProbabilityValue - (index + 1)}
                 borderRadius="16px"
                 border="1px solid black"

@@ -33,7 +33,7 @@ const Row = ({ index, car, playerCarId, prize }) => (
   </Flex>
 );
 
-const RaceResults = ({ pastRace, children, ...props }) => {
+const RaceResults = ({ pastRace, raceAgain, children, ...props }) => {
   const { id, results, track: trackId } = pastRace;
   const cars = useSelector(dealerCarsSelector);
   const track = useSelector(trackSelector(trackId));
@@ -42,6 +42,7 @@ const RaceResults = ({ pastRace, children, ...props }) => {
 
   const onClick = () => {
     dispatch(closeResultsAction(id));
+    raceAgain && raceAgain(carsGarage.find(car => car.id === pastRace.car));
   };
 
   return (
