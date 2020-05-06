@@ -2,9 +2,12 @@ import React from 'react';
 import { Box, Flex, Image, Text } from '@chakra-ui/core';
 import RadarChartTrack from './RadarChartTrack';
 import { getImage } from '../helpers/imageMapping';
+import { useSelector } from 'react-redux';
+import { moneySelector } from '../state/selectors';
 
 const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
   const { name, prizes, duration, price } = track;
+  const money = useSelector(moneySelector);
 
   return (
     <Box w="100%" h="100%" bg="black" {...props}>
@@ -87,7 +90,11 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
         <Text margin="auto" fontSize="14px" color="white">
           {duration / 1000}s
         </Text>
-        <Text margin="auto" fontSize="14px" color="white">
+        <Text
+          margin="auto"
+          fontSize="14px"
+          color={money < price ? 'tomato' : 'white'}
+        >
           {price === 0 ? 'FREE' : `$${price}`}
         </Text>
       </Flex>

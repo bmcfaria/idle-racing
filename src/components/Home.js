@@ -1,16 +1,10 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
-import CarDetails from './CarDetails';
 import { useSelector } from 'react-redux';
 import { garageCarsSelector } from '../state/selectors';
-import CardCarSmall from './CardCarSmall';
-import Modal from './Modal';
 import styled from '@emotion/styled';
-import {
-  cardsContainerWidthPaddingStyles,
-  CARD_MARGIN,
-} from '../helpers/theme';
-import { useLocation, Link } from 'react-router-dom';
+import { cardsContainerWidthPaddingStyles } from '../helpers/theme';
+import { Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 
 const CarsContainer = styled(Flex)`
