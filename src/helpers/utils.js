@@ -98,3 +98,27 @@ export const raceResults = (car, track) => {
 
 export const capitalize = str =>
   str.charAt(0).toUpperCase() + str.toLowerCase().slice(1);
+
+export const doMeetRequirements = (car, requirements) => {
+  if (!requirements || requirements.length === 0) {
+    return true;
+  }
+
+  return requirements.reduce((result, requirement) => {
+    if (requirement.type === 'no_ups') {
+      const noUpgrades =
+        car.acc.upgrade === 0 && car.tsp.upgrade === 0 && car.hnd.upgrade === 0;
+      return !!noUpgrades;
+    }
+
+    if (requirement.type === 'brand') {
+      return car.brand === requirement.value;
+    }
+
+    if (requirement.type === 'car') {
+      const isCorrectCar = car.dealerCar === requirement.value;
+      return result || isCorrectCar;
+    }
+    return false;
+  }, false);
+};

@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import CardCarSmallContent from './CardCarSmallContent';
 import CardWinningChance from './CardWinningChance';
 import styled from '@emotion/styled';
+import { doMeetRequirements } from '../helpers/utils';
 
 const BoughtAnimation = styled(Flex)`
   animation: fadeOut ease 1.5s;
@@ -40,6 +41,11 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
 
   const currentRace = useSelector(raceSelector(race));
 
+  const meetsRequirements = doMeetRequirements(
+    car,
+    selectedTrack?.requirements
+  );
+
   useEffect(() => {
     const currentTime = new Date().getTime();
 
@@ -56,6 +62,8 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
   // To improve mobile navigation,
   // this way the back button will un-select instead off showing the previous selected
   const setSelected = () => {
+    if (!meetsRequirements) return;
+
     if (onClick) {
       onClick(car);
 
@@ -84,7 +92,7 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
       minH="100px"
       position="relative"
       onClick={setSelected}
-      cursor="pointer"
+      cursor={meetsRequirements ? 'pointer' : 'unset'}
       {...props}
     >
       <Box w="100%" h="100px" position="absolute">
@@ -113,6 +121,25 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
         {currentRace && (
           <CardProgressOverlay race={currentRace} label borderRadius="16px" />
         )}
+        {!meetsRequirements && (
+          <Flex
+            position="absolute"
+            w="100%"
+            h="100%"
+            bg="blackAlpha.800"
+            flexDirection="column"
+            borderRadius="16px"
+          >
+            <Text
+              fontSize="24px"
+              textAlign="center"
+              margin="auto"
+              color="white"
+            >
+              Don't meet the requirements
+            </Text>
+          </Flex>
+        )}
         <CardCarSmallContent
           padding="0 16px"
           bg="white"
@@ -127,6 +154,7 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
         <CardWinningChance
           car={car}
           track={selectedTrack}
+          meetsRequirements={meetsRequirements}
           w="100%"
           h="124px"
           borderRadius="16px"

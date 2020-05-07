@@ -40,9 +40,10 @@ export const CardWinningChanceComponent = ({
   </Flex>
 );
 
-const CardWinningChance = ({ car, track, ...props }) => {
-  // TODO: not handling N/A yet
-  const winProbabilityValue = track && winProbability(car, track);
+const CardWinningChance = ({ car, track, meetsRequirements, ...props }) => {
+  const winProbabilityValue = !meetsRequirements
+    ? 'na'
+    : track && winProbability(car, track);
 
   return (
     <CardWinningChanceComponent

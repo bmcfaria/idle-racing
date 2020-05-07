@@ -24,6 +24,7 @@ import {
 import RaceDetailsSelectCar from './RaceDetailsSelectCar';
 import { useOpenClose } from '../helpers/hooks';
 import RaceDetailsSelectedCar from './RaceDetailsSelectedCar';
+import { doMeetRequirements } from '../helpers/utils';
 
 const CarsContainer = styled(Flex)`
   height: 50vh;
@@ -46,6 +47,7 @@ const ActionContent = ({
   results,
   pastRace,
   raceAgain,
+  meetsRequirements,
   ...props
 }) => (
   <Box h="100%" {...props}>
@@ -99,7 +101,7 @@ const ActionContent = ({
             borderColor="tomato"
             color="tomato"
             variant="outline"
-            isDisabled={money < price || currentRace}
+            isDisabled={money < price || currentRace || !meetsRequirements}
             margin="auto"
             onClick={startRace}
           >
@@ -129,7 +131,14 @@ const RaceDetails = ({ track: { price, race } }) => {
 
   const [carsModal, carsModalOpen, carsModalClose] = useOpenClose();
 
+  const meetsRequirements =
+    selectedCar && doMeetRequirements(selectedCar, selectedTrack?.requirements);
+
   const startRace = () => {
+    if (!meetsRequirements) {
+      return;
+    }
+
     dispatch(startRaceAction(selectedCar.id, selectedTrackId));
     history.goBack();
   };
@@ -213,6 +222,7 @@ const RaceDetails = ({ track: { price, race } }) => {
             borderLeft="1px solid black"
             borderRight="1px solid black"
             raceAgain={raceAgain}
+            meetsRequirements={meetsRequirements}
           />
         </CardTrackContent>
         <Box w="50%" display={['none', 'none', 'block']} position="relative">
@@ -227,6 +237,7 @@ const RaceDetails = ({ track: { price, race } }) => {
             results={results}
             pastRace={pastRace}
             raceAgain={raceAgain}
+            meetsRequirements={meetsRequirements}
           />
         </Box>
       </Flex>
