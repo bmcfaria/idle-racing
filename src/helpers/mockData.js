@@ -92,6 +92,55 @@ export const upgradeAttribute = attribute => {
   );
 };
 
+const parseRequirement = rawRequirement => {
+  if (rawRequirement.startsWith('no_ups')) {
+    return {
+      type: 'no_ups',
+    };
+  }
+
+  if (rawRequirement.startsWith('car_')) {
+    return {
+      type: 'car',
+      value: rawRequirement.split('_')[1],
+    };
+  }
+
+  if (rawRequirement.startsWith('brand_')) {
+    return {
+      type: 'brand',
+      value: rawRequirement.split('_')[1],
+    };
+  }
+
+  if (rawRequirement.startsWith('type_')) {
+    return {
+      type: 'type',
+      value: rawRequirement.split('_')[1],
+    };
+  }
+
+  if (rawRequirement.startsWith('attr_')) {
+    const splitAttrLimiter = rawRequirement.split('_');
+    return {
+      type: 'attr',
+      value: {
+        compare: splitAttrLimiter[1],
+        attr: splitAttrLimiter[2],
+      },
+    };
+  }
+};
+
+const parseRequirements = rawRequirements => {
+  return rawRequirements
+    .trim()
+    .slice(1, -1)
+    .split(',')
+    .filter(item => item.length > 0)
+    .map(requirement => parseRequirement(requirement));
+};
+
 const generateTrack = track => ({
   id: track.id,
   name: track.name,
@@ -105,6 +154,7 @@ const generateTrack = track => ({
   [ATTRIBUTE_TYPES.HANDLING]: track.hnd / (track.acc + track.tsp + track.hnd),
   race: undefined,
   lastRace: undefined,
+  requirements: parseRequirements(track.requirements),
 });
 
 export const generateRace = (car, track) => ({

@@ -1,4 +1,6 @@
 export const dealerCarsSelector = state => state.dealerCars;
+export const dealerCarSelector = carId => state =>
+  state.dealerCars.find(item => item.id === carId);
 
 export const garageCarsSelector = state => state.garageCars;
 export const garageCarSelector = carId => state =>

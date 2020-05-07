@@ -4,9 +4,10 @@ import RadarChartTrack from './RadarChartTrack';
 import { getImage } from '../helpers/imageMapping';
 import { useSelector } from 'react-redux';
 import { moneySelector } from '../state/selectors';
+import RequirementsList from './RequirementsList';
 
 const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
-  const { name, prizes, duration, price } = track;
+  const { name, prizes, duration, price, requirements } = track;
   const money = useSelector(moneySelector);
 
   return (
@@ -74,9 +75,7 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
           <Text textAlign="left" w="100%" fontSize="14px">
             Requirements:
           </Text>
-          <Text textAlign="left" w="100%" fontSize="12px">
-            - None
-          </Text>
+          <RequirementsList requirements={requirements} />
         </Box>
       </Flex>
 
