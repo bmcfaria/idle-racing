@@ -7,6 +7,7 @@ import {
   CLOSE_RESULTS_TYPE,
   CLEAR_NOTIFICATIONS_TYPE,
   DISABLE_TUTORIAL_WINCHANCE_TYPE,
+  RESET_TYPE,
 } from './actions';
 import {
   cars,
@@ -16,7 +17,6 @@ import {
   upgradeAttribute,
   generateCarPrice,
   generateRace,
-  // generateNotification,
   generatePastRace,
 } from '../helpers/mockData';
 import { raceResults } from '../helpers/utils';
@@ -36,6 +36,10 @@ const initialState = {
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case RESET_TYPE: {
+      return initialState;
+    }
+
     case BUY_CAR_TYPE: {
       const car = state.dealerCars.find(item => item.id === payload.carId);
       const enoughMoney = state.money >= car?.price;

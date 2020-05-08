@@ -1,3 +1,8 @@
+export const RESET_TYPE = 'RESET';
+export const resetAction = {
+  type: RESET_TYPE,
+};
+
 export const BUY_CAR_TYPE = 'BUY_CAR';
 export const buyCarAction = carId => ({
   type: BUY_CAR_TYPE,
