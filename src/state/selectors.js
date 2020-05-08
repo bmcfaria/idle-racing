@@ -1,6 +1,9 @@
-export const dealerCarsSelector = state => state.dealerCars;
-export const dealerCarSelector = carId => state =>
-  state.dealerCars.find(item => item.id === carId);
+import { cars as dealerCars } from '../helpers/mockData';
+
+// Dealer cars are global and they're not in the state/store
+export const dealerCarsSelector = () => dealerCars;
+export const dealerCarSelector = carId => () =>
+  dealerCars.find(item => item.id === carId);
 
 export const garageCarsSelector = state => state.garageCars;
 export const garageCarSelector = carId => state =>

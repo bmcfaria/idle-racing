@@ -10,7 +10,7 @@ import {
   RESET_TYPE,
 } from './actions';
 import {
-  cars,
+  cars as dealerCars,
   tracks,
   money,
   generateGarageCar,
@@ -22,7 +22,6 @@ import {
 import { raceResults } from '../helpers/utils';
 
 const initialState = {
-  dealerCars: cars,
   garageCars: [],
   tracks,
   money,
@@ -41,7 +40,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     }
 
     case BUY_CAR_TYPE: {
-      const car = state.dealerCars.find(item => item.id === payload.carId);
+      const car = dealerCars.find(item => item.id === payload.carId);
       const enoughMoney = state.money >= car?.price;
 
       if (!car || !enoughMoney) {
