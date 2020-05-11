@@ -9,7 +9,9 @@ window.uuid = uuid;
 const generateAttribute = (base, unit, max, basePrice, upgrade) => {
   const value = base + unit * upgrade;
   const nextValue = base + unit * (upgrade + 1);
-  const price = basePrice + (Math.pow(basePrice * 0.5, upgrade) - 1);
+  const price = Math.round(
+    basePrice + (Math.pow(basePrice * 0.5, 1 + upgrade / 10) - 1)
+  );
 
   return {
     base,
@@ -24,14 +26,11 @@ const generateAttribute = (base, unit, max, basePrice, upgrade) => {
   };
 };
 
-export const generateCarPrice = attributes =>
-  500 +
-  (attributes[ATTRIBUTE_TYPES.ACCELERATION].price ||
-    attributes[ATTRIBUTE_TYPES.ACCELERATION].priceRaw) +
-  (attributes[ATTRIBUTE_TYPES.TOP_SPEED].price ||
-    attributes[ATTRIBUTE_TYPES.TOP_SPEED].priceRaw) +
-  (attributes[ATTRIBUTE_TYPES.HANDLING].price ||
-    attributes[ATTRIBUTE_TYPES.HANDLING].priceRaw);
+export const generateCarPrice = car =>
+  car.basePrice +
+  200 * car[ATTRIBUTE_TYPES.ACCELERATION].upgrade +
+  200 * car[ATTRIBUTE_TYPES.TOP_SPEED].upgrade +
+  200 * car[ATTRIBUTE_TYPES.HANDLING].upgrade;
 
 const generateCar = car => ({
   id: car.id,
@@ -71,6 +70,7 @@ export const generateGarageCar = car => ({
   [ATTRIBUTE_TYPES.ACCELERATION]: car[ATTRIBUTE_TYPES.ACCELERATION],
   [ATTRIBUTE_TYPES.TOP_SPEED]: car[ATTRIBUTE_TYPES.TOP_SPEED],
   [ATTRIBUTE_TYPES.HANDLING]: car[ATTRIBUTE_TYPES.HANDLING],
+  basePrice: ~~(car.price * carDevaluation),
   price: ~~(car.price * carDevaluation),
   dealerCar: car.id,
   brand: car.brand,
@@ -203,4 +203,4 @@ export const tracks = [
   ),
 ];
 
-export const money = 550;
+export const money = 5500000;
