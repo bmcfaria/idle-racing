@@ -59,6 +59,7 @@ const generateCar = car => ({
   ),
   brand: car.brand,
   price: car.price,
+  reward: car.reward,
 });
 
 const carDevaluation = 0.5;

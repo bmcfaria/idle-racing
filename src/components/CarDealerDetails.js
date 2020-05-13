@@ -41,7 +41,7 @@ const Attribute = ({ name, value, upgradeValue, upgrade, max }) => (
 );
 
 const CarDealerDetails = ({ car, ...props }) => {
-  const { id, name, type, acc, tsp, hnd, price } = car;
+  const { id, name, type, acc, tsp, hnd, price, reward } = car;
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -110,10 +110,10 @@ const CarDealerDetails = ({ car, ...props }) => {
             variant="outline"
             margin="0 auto"
             onClick={buy}
-            isDisabled={!enoughMoney}
+            isDisabled={!enoughMoney || reward}
             marginTop="1rem"
           >
-            {`$${price}`}
+            {reward ? 'Reward' : `$${price}`}
           </Button>
         </Flex>
       </Box>

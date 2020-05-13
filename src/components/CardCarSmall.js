@@ -29,7 +29,7 @@ const BoughtAnimation = styled(Flex)`
 `;
 
 const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
-  const { id, race, price } = car;
+  const { id, race, price, reward } = car;
   const location = useLocation();
   const history = useHistory();
   const money = useSelector(moneySelector);
@@ -171,7 +171,7 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
             marginTop="auto"
             color={money < price ? 'tomato' : 'white'}
           >
-            ${price}
+            {reward ? 'Reward' : `$${price}`}
           </Text>
         </Flex>
       )}

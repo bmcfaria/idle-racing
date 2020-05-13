@@ -78,7 +78,7 @@ const Title = () => (
 
 const Score = ({ value }) => (
   <Flex h="2.5rem" align="center" justifyContent="flex-end">
-    <Text fontSize="xl">${value}</Text>
+    <Text fontSize="xl">${~~value}</Text>
   </Flex>
 );
 

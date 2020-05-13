@@ -41,6 +41,7 @@ const Dealer = () => {
       >
         <AccordionContent cars={cars.filter(item => item.brand === 'basic')} />
       </Accordion>
+
       <Accordion
         name="City cars"
         value={1}
@@ -50,14 +51,53 @@ const Dealer = () => {
       >
         <AccordionContent cars={cars.filter(item => item.brand === 'city')} />
       </Accordion>
+
       <Accordion
-        name="Track cars"
+        name="Offroad cars"
         value={2}
         selectedAccordion={selectedAccordion}
         setSelectedAccordion={setSelectedAccordion}
         marginTop="16px"
       >
-        <AccordionContent cars={cars.filter(item => item.brand === 'track')} />
+        <AccordionContent
+          cars={cars.filter(item => item.brand === 'offroad')}
+        />
+      </Accordion>
+
+      <Accordion
+        name="Super cars"
+        value={3}
+        selectedAccordion={selectedAccordion}
+        setSelectedAccordion={setSelectedAccordion}
+        marginTop="16px"
+      >
+        <AccordionContent
+          cars={cars.filter(item => item.brand === 'supercar')}
+        />
+      </Accordion>
+
+      <Accordion
+        name="Racer cars"
+        value={4}
+        selectedAccordion={selectedAccordion}
+        setSelectedAccordion={setSelectedAccordion}
+        marginTop="16px"
+      >
+        <AccordionContent
+          cars={cars.filter(
+            item => item.brand === 'racer' || item.brand === 'nascar'
+          )}
+        />
+      </Accordion>
+
+      <Accordion
+        name="F1 cars"
+        value={5}
+        selectedAccordion={selectedAccordion}
+        setSelectedAccordion={setSelectedAccordion}
+        marginTop="16px"
+      >
+        <AccordionContent cars={cars.filter(item => item.brand === 'f1')} />
       </Accordion>
     </Box>
   );
