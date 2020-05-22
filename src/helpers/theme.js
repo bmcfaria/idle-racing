@@ -4,6 +4,20 @@ export const zIndex = {
   modalBackground: 10,
 };
 
+export const colors = {
+  red: '#FFADAD',
+  orange: '#FFD6A5',
+  yellow: '#FDFFB6',
+  green: '#CAFFBF',
+  lightBlue: '#9BF6FF',
+  blue: '#A0C4FF',
+  purple: '#BDB2FF',
+  pink: '#FFC6FF',
+  white: '#FFFFFC',
+  lightGray: '#F4F4F3',
+  darkGray: '#4E4E4E',
+};
+
 export const CARD_WIDTH = 304;
 export const CARD_MARGIN = 28;
 
@@ -26,4 +40,5 @@ export const cardsContainerWidthPaddingStyles = `
 
 export default {
   zIndex,
+  colors,
 };

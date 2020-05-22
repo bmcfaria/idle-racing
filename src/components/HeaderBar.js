@@ -13,7 +13,7 @@ import Tabs from './Tabs';
 import Notifications from './Notifications';
 import { useSelector } from 'react-redux';
 import { moneySelector } from '../state/selectors';
-import { zIndex } from '../helpers/theme';
+import { zIndex, colors } from '../helpers/theme';
 
 const Breadcrumbs = () => {
   const location = useLocation();
@@ -76,19 +76,67 @@ const Title = () => (
   </Flex>
 );
 
-const Score = ({ value }) => (
-  <Flex h="2.5rem" align="center" justifyContent="flex-end">
-    <Text fontSize="xl">${~~value}</Text>
-  </Flex>
+const TriangleArrow = () => (
+  <svg
+    width="25"
+    height="23"
+    viewBox="0 0 25 23"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M9.72217 2.48096C10.8769 0.480955 13.7636 0.480957 14.9183 2.48096L23.8728 17.9906C25.0275 19.9906 23.5842 22.4906 21.2748 22.4906H3.36573C1.05633 22.4906 -0.387041 19.9906 0.767659 17.9906L9.72217 2.48096Z"
+      fill="#FFFFFC"
+    />
+  </svg>
 );
 
-const HeaderBar = () => {
+const Navigation = () => <Box />;
+
+const Money = props => {
   const money = useSelector(moneySelector);
 
   return (
+    <Flex
+      w="100%"
+      h="100%"
+      align="center"
+      justifyContent="center"
+      position="absolute"
+      {...props}
+    >
+      <Text fontSize="xl" color={colors.yellow}>
+        $
+      </Text>
+      <Text fontSize="xl" color={colors.white}>
+        {~~money}
+      </Text>
+    </Flex>
+  );
+};
+
+const HeaderBar = () => {
+  return (
     <header>
+      {/* spacer */}
       <Box w="100%" h="3.5rem" />
+
       <Box
+        position="fixed"
+        top="0"
+        left="0"
+        w="100%"
+        h="48px"
+        zIndex={zIndex.headerBar}
+        bg={colors.blue}
+      >
+        <Flex h="100%" justifyContent="space-between">
+          <TriangleArrow />
+          <Money />
+          <Notifications />
+        </Flex>
+      </Box>
+      {/* <Box
         position="fixed"
         top="0"
         left="0"
@@ -107,7 +155,7 @@ const HeaderBar = () => {
           </Box>
         </Flex>
         <Breadcrumbs />
-      </Box>
+      </Box> */}
     </header>
   );
 };

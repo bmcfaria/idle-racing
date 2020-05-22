@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import configureStore from './state/configureStore';
 import Home from './components/Home';
 import Settings from './components/Settings';
+import { colors } from './helpers/theme';
 
 const store = configureStore();
 
@@ -47,7 +48,8 @@ function App() {
             h="100%"
             top="0"
             left="0"
-            style={{ fontFamily: 'Righteous-Regular' }}
+            fontFamily="Righteous-Regular"
+            bg={colors.white}
           >
             <HeaderBar />
             <Content flexGrow="1">
