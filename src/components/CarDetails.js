@@ -145,7 +145,7 @@ const CarDetails = ({ car, ...props }) => {
             onClick={sell}
             isDisabled={garageCars?.length === 1}
           >
-            Sell (${price})
+            Sell (${~~price})
           </Button>
         </Flex>
       </Box>
