@@ -1,5 +1,5 @@
 import React from 'react';
-import { CSSReset, Flex, ThemeProvider } from '@chakra-ui/core';
+import { CSSReset, Flex, ThemeProvider, theme } from '@chakra-ui/core';
 import './App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import styled from '@emotion/styled';
@@ -22,9 +22,21 @@ const BottomTabs = styled(Tabs)({
   },
 });
 
+console.log(theme);
+
+const customTheme = {
+  ...theme,
+  fonts: {
+    ...theme.fonts,
+    body: `Righteous-Regular, ${theme.fonts.body}`,
+    heading: `Righteous-Regular, ${theme.fonts.heading}`,
+    mono: `Righteous-Regular, ${theme.fonts.mono}`,
+  },
+};
+
 function App() {
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={customTheme}>
       <CSSReset />
       <Provider store={store}>
         <BrowserRouter>
@@ -35,6 +47,7 @@ function App() {
             h="100%"
             top="0"
             left="0"
+            style={{ fontFamily: 'Righteous-Regular' }}
           >
             <HeaderBar />
             <Content flexGrow="1">

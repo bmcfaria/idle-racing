@@ -14,6 +14,7 @@ const TabsButton = ({ to, children }) => {
       borderRadius="0"
       borderColor="black"
       bg={match ? 'lightgray' : 'none'}
+      fontWeight="inherit"
     >
       {children}
     </Button>

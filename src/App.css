@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'Righteous-Regular';
+  src: local('Righteous-Regular'),
+    url(./assets/fonts/Righteous-Regular.ttf) format('truetype');
+}
