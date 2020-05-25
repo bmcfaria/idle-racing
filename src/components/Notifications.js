@@ -10,8 +10,9 @@ import {
   DrawerFooter,
   Button,
   DrawerHeader,
+  CircularProgress,
 } from '@chakra-ui/core';
-import { GiFlyingFlag } from 'react-icons/gi';
+import { MdFlag } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   notificationsSelector,
@@ -22,6 +23,18 @@ import NotificationsActiveRace from './NotificationsActiveRace';
 import NotificationsPastRace from './NotificationsPastRace';
 import { useOpenClose } from '../helpers/hooks';
 import { clearNotificationsAction } from '../state/actions';
+import { colors } from '../helpers/theme';
+import styled from '@emotion/styled';
+
+// Workaround to override the circle color without the theme color variants
+const CustomCircularProgress = styled(CircularProgress)`
+  circle {
+    color: ${colors.white};
+  }
+  circle:nth-of-type(2) {
+    color: ${colors.darkGray};
+  }
+`;
 
 const Notifications = () => {
   const [open, onOpen, onClose] = useOpenClose(false);
@@ -43,20 +56,36 @@ const Notifications = () => {
     setPage('history');
   };
 
+  const isRacing = races?.length > 0;
+
   return (
     <>
-      <Box
-        as={GiFlyingFlag}
-        marginTop="auto"
-        marginBottom="auto"
-        size="1.5rem"
-        w="2.5rem"
-        paddingRight="0.5rem"
-        paddingLeft="0.5rem"
-        color={open ? 'white' : 'inherit'}
+      <Flex
+        position="relative"
         zIndex="100"
+        w="48px"
+        h="48px"
+        color={colors.white}
         onClick={onOpen}
-      />
+      >
+        <Box
+          as={MdFlag}
+          margin="auto"
+          size="100%"
+          w="24px"
+          h="24px"
+          color={open ? 'black' : colors.white}
+        />
+        <CustomCircularProgress
+          w="40px"
+          h="40px"
+          margin="4px"
+          position="absolute"
+          value={0}
+          isIndeterminate={isRacing}
+          capIsRound
+        />
+      </Flex>
       <Drawer isOpen={open} onClose={onClose} placement="right" isFullHeight>
         <DrawerOverlay />
         <DrawerContent>

@@ -1,15 +1,8 @@
 import React from 'react';
-import { Box, Flex, Text, Button } from '@chakra-ui/core';
+import { Flex, Text, Button } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
-import styled from '@emotion/styled';
-import { cardsContainerWidthPaddingStyles } from '../helpers/theme';
+import { colors } from '../helpers/theme';
 import { resetAction } from '../state/actions';
-
-const Container = styled(Flex)`
-  ${cardsContainerWidthPaddingStyles}
-  margin: 0;
-  padding: 0;
-`;
 
 const Settings = () => {
   const dispatch = useDispatch();
@@ -19,21 +12,28 @@ const Settings = () => {
   };
 
   return (
-    <Box>
-      <Container direction="column" bg="white" borderRadius="16px" minH="50vh">
-        <Text marginTop="16px" textAlign="center" fontSize="32px">
-          Settings
-        </Text>
-        <Flex margin="auto" direction="column">
-          <Text textAlign="center" fontSize="16px">
-            Reset saved game
-          </Text>
-          <Button margin="16px auto" onClick={reset}>
-            Reset
-          </Button>
-        </Flex>
-      </Container>
-    </Box>
+    <Flex
+      w="240px"
+      h="80px"
+      borderRadius="16px"
+      direction="column"
+      bg={colors.lightGray}
+      alignItems="center"
+    >
+      <Text h="30px" lineHeight="30px" textAlign="center" fontSize="18px">
+        Delete save data
+      </Text>
+      <Button
+        h="32px"
+        marginTop="4px"
+        bg={colors.red}
+        fontWeight="inherit"
+        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+        onClick={reset}
+      >
+        Delete
+      </Button>
+    </Flex>
   );
 };
 

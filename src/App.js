@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import HeaderBar from './components/HeaderBar';
 import Content from './components/Content';
 import Garage from './components/Garage';
-import Tabs from './components/Tabs';
+import Navigation from './components/Navigation';
 import Race from './components/Race';
 import Dealer from './components/Dealer';
 import { Provider } from 'react-redux';
@@ -16,12 +16,6 @@ import Settings from './components/Settings';
 import { colors } from './helpers/theme';
 
 const store = configureStore();
-
-const BottomTabs = styled(Tabs)({
-  '& > a': {
-    flexGrow: 1,
-  },
-});
 
 console.log(theme);
 
@@ -71,7 +65,7 @@ function App() {
                 </Route>
               </Switch>
             </Content>
-            <BottomTabs display={['flex', 'flex', 'none']} iconOnly />
+            <Navigation />
           </Flex>
         </BrowserRouter>
       </Provider>
