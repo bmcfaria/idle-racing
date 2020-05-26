@@ -204,4 +204,4 @@ export const tracks = [
   ),
 ];
 
-export const money = 5500000;
+export const money = 580;

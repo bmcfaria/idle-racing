@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Text, Flex } from '@chakra-ui/core';
+import { Box, Text, Flex, Image } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import CardProgressOverlay from './CardProgressOverlay';
 import {
   raceSelector,
   tracksSelector,
-  moneySelector,
   garageCarsSelector,
 } from '../state/selectors';
 import { useSelector } from 'react-redux';
-import CardCarSmallContent from './CardCarSmallContent';
 import CardWinningChance from './CardWinningChance';
 import styled from '@emotion/styled';
-import { doMeetRequirements } from '../helpers/utils';
+import {
+  doMeetRequirements,
+  capitalize,
+  ATTRIBUTE_TYPES,
+} from '../helpers/utils';
+import { colors } from '../helpers/theme';
+import { getImage } from '../helpers/imageMapping';
+import AttributeCircle from './AttributeCircle';
 
 const BoughtAnimation = styled(Flex)`
   animation: fadeOut ease 1.5s;
@@ -28,11 +33,17 @@ const BoughtAnimation = styled(Flex)`
   }
 `;
 
-const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
-  const { id, race, price, reward } = car;
+const CardCarSmall = ({
+  car,
+  stripped,
+  onClick,
+  showPrice,
+  garage,
+  ...props
+}) => {
+  const { id, race } = car;
   const location = useLocation();
   const history = useHistory();
-  const money = useSelector(moneySelector);
   const tracks = useSelector(tracksSelector);
   const garageCars = useSelector(garageCarsSelector);
   const selectedTrackId = location?.state?.track;
@@ -85,18 +96,21 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
     }
   };
 
+  const color = garage ? colors.lightBlue : colors.orange;
+
   return (
     <Box
-      minW="304px"
-      w="304px"
-      minH="100px"
+      w="160px"
+      h={garage ? '180px' : '124px'}
       position="relative"
       onClick={setSelected}
       cursor={meetsRequirements ? 'pointer' : 'unset'}
+      borderRadius="16px"
+      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
       {...props}
     >
       <Box w="100%" h="100px" position="absolute">
-        {location?.state?.car === id && (
+        {/* {location?.state?.car === id && (
           <Box
             position="absolute"
             w="100%"
@@ -104,23 +118,8 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
             borderRadius="16px"
             bg="#B2F5EA77"
           />
-        )}
-        {bought && (
-          <BoughtAnimation
-            position="absolute"
-            w="100%"
-            h="100%"
-            bg="blackAlpha.800"
-            borderRadius="16px"
-          >
-            <Text fontSize="24px" margin="auto" color="white">
-              Bought
-            </Text>
-          </BoughtAnimation>
-        )}
-        {currentRace && (
-          <CardProgressOverlay race={currentRace} label borderRadius="16px" />
-        )}
+        )} */}
+
         {!meetsRequirements && (
           <Flex
             position="absolute"
@@ -140,7 +139,7 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
             </Text>
           </Flex>
         )}
-        <CardCarSmallContent
+        {/* <CardCarSmallContent
           padding="0 16px"
           bg="white"
           {...(!stripped && {
@@ -148,7 +147,7 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
             borderRadius: '16px',
           })}
           car={car}
-        />
+        /> */}
       </Box>
       {selectedTrack && (
         <CardWinningChance
@@ -161,7 +160,79 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
           border="1px solid black"
         />
       )}
-      {showPrice && (
+      <Flex w="100%" h="100%" direction="column" borderRadius="16px" bg={color}>
+        <Text
+          fontSize="14px"
+          lineHeight="24px"
+          textAlign="center"
+          w="100%"
+          marginTop="100px"
+        >
+          {car.name}
+        </Text>
+        {garage && (
+          <Flex justifyContent="space-evenly">
+            <AttributeCircle
+              attr={car[ATTRIBUTE_TYPES.ACCELERATION]}
+              text="ACC"
+            />
+            <AttributeCircle attr={car[ATTRIBUTE_TYPES.TOP_SPEED]} text="TSP" />
+            <AttributeCircle attr={car[ATTRIBUTE_TYPES.HANDLING]} text="HND" />
+          </Flex>
+        )}
+      </Flex>
+      <Box
+        w="100%"
+        h="100px"
+        position="absolute"
+        top="0"
+        left="0"
+        borderRadius="16px"
+        color={colors.darkGray}
+        fontSize="12px"
+        lineHeight="12px"
+      >
+        <Image
+          w="100%"
+          h="100px"
+          alt="car"
+          borderRadius="16px"
+          border={`1px solid ${color}`}
+          objectFit="contain"
+          bg={colors.white}
+          src={getImage(car)}
+        />
+        <Text top="8px" left="8px" position="absolute">
+          {capitalize(car.brand)}
+        </Text>
+        <Text bottom="8px" right="8px" position="absolute">
+          {car.type}
+        </Text>
+      </Box>
+      {bought && (
+        <BoughtAnimation
+          position="absolute"
+          top="0"
+          left="0"
+          w="100%"
+          h="100%"
+          bg={colors.green}
+          borderRadius="16px"
+        >
+          <Text fontSize="24px" margin="auto">
+            Bought
+          </Text>
+        </BoughtAnimation>
+      )}
+      {currentRace && (
+        <CardProgressOverlay
+          race={currentRace}
+          car={car}
+          label
+          borderRadius="16px"
+        />
+      )}
+      {/* {showPrice && (
         <Flex w="100%" h="124px" borderRadius="16px" bg="black">
           <Text
             fontSize="14px"
@@ -174,7 +245,7 @@ const CardCarSmall = ({ car, stripped, onClick, showPrice, ...props }) => {
             {reward ? 'Reward' : `$${price}`}
           </Text>
         </Flex>
-      )}
+      )} */}
     </Box>
   );
 };

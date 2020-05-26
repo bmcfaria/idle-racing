@@ -2,6 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { CircularProgress, CircularProgressLabel } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
 import { endRaceAction } from '../state/actions';
+import styled from '@emotion/styled';
+import { colors } from '../helpers/theme';
+
+const CustomCircularProgress = styled(CircularProgress)`
+  circle {
+    color: transparent;
+  }
+  circle:nth-of-type(2) {
+    color: ${colors.blue};
+  }
+`;
 
 const CardProgressCircle = ({ race, textColor = 'black', ...props }) => {
   const dispatch = useDispatch();
@@ -29,11 +40,11 @@ const CardProgressCircle = ({ race, textColor = 'black', ...props }) => {
   }
 
   return (
-    <CircularProgress
+    <CustomCircularProgress
       value={progress > 100 ? 100 : progress}
-      color="blue"
-      trackColor="blackAlpha"
+      trackColor="transparent"
       size="4rem"
+      capIsRound
       {...props}
     >
       {
@@ -41,7 +52,7 @@ const CardProgressCircle = ({ race, textColor = 'black', ...props }) => {
           {Math.round(value / 1000)}s
         </CircularProgressLabel>
       }
-    </CircularProgress>
+    </CustomCircularProgress>
   );
 };
 

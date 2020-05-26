@@ -2,7 +2,6 @@ import React from 'react';
 import { CSSReset, Flex, ThemeProvider, theme } from '@chakra-ui/core';
 import './App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import styled from '@emotion/styled';
 import HeaderBar from './components/HeaderBar';
 import Content from './components/Content';
 import Garage from './components/Garage';
@@ -16,8 +15,6 @@ import Settings from './components/Settings';
 import { colors } from './helpers/theme';
 
 const store = configureStore();
-
-console.log(theme);
 
 const customTheme = {
   ...theme,

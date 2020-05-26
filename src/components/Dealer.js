@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box } from '@chakra-ui/core';
 import { useLocation } from 'react-router-dom';
-import CarDealerDetails from './CarDealerDetails';
+import CarDetailsDealer from './CarDetailsDealer';
 import { useSelector } from 'react-redux';
 import { dealerCarsSelector } from '../state/selectors';
 import Modal from './Modal';
@@ -31,7 +31,7 @@ const Dealer = () => {
   return (
     <Box>
       <Modal isOpen={!!selectedCar} backOnClose>
-        {selectedCar && <CarDealerDetails car={selectedCar} />}
+        {selectedCar && <CarDetailsDealer car={selectedCar} />}
       </Modal>
       <Accordion
         name="Basic cars"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
-import CarDetails from './CarDetails';
+import CarDetailsGarage from './CarDetailsGarage';
 import { useSelector } from 'react-redux';
 import { garageCarsSelector } from '../state/selectors';
 import CardCarSmall from './CardCarSmall';
@@ -33,7 +33,7 @@ const Garage = () => {
   return (
     <Box>
       <Modal isOpen={!!selectedCar} backOnClose>
-        {selectedCar && <CarDetails car={selectedCar} />}
+        {selectedCar && <CarDetailsGarage car={selectedCar} />}
       </Modal>
       <Flex direction="column" bg="white" borderRadius="16px" minH="50vh">
         {cars.length === 0 && (
@@ -57,7 +57,7 @@ const Garage = () => {
               marginRight={`${CARD_MARGIN}px`}
               marginBottom={`${CARD_MARGIN}px`}
             >
-              <CardCarSmall car={car} />
+              <CardCarSmall car={car} garage />
             </Box>
           ))}
         </CarsContainer>

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button, Box, Flex, Text } from '@chakra-ui/core';
+import { Box, Flex, Text } from '@chakra-ui/core';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { GiHomeGarage, GiTrophyCup } from 'react-icons/gi';
 import { IoMdCar, IoMdSettings } from 'react-icons/io';
 import { colors } from '../helpers/theme';
+import Button from './Button';
 
 const NavigationButton = ({ icon, to, text }) => {
   const match = useRouteMatch(to);
@@ -16,17 +17,6 @@ const NavigationButton = ({ icon, to, text }) => {
       borderRadius="20px"
       color={colors.white}
       bg={match ? colors.purple : colors.blue}
-      fontWeight="inherit"
-      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-      _hover={{
-        boxShadow: 'none',
-      }}
-      _active={{
-        borderColor: 'black',
-      }}
-      _focus={{
-        boxShadow: `0 0 0 3px ${colors.blue}`,
-      }}
     >
       <Flex w="100%" h="100%" alignItems="center">
         <Box w="24px" h="24px" as={icon} />

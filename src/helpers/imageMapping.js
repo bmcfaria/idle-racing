@@ -6,9 +6,10 @@ import sedan from '../assets/cars/rounded_red.png';
 import station from '../assets/cars/station.png';
 import suv from '../assets/cars/suv.png';
 import showoff from '../assets/cars/sports_convertible.png';
+import basicCarBlue from '../assets/cars/basic_car_6_blue.png';
 
 export const carImages = {
-  'bfd0a683-708e-4055-8914-6fe4521b140a': kart,
+  'bfd0a683-708e-4055-8914-6fe4521b140a': basicCarBlue, //kart,
 
   'b69a0ab5-5583-408c-9534-058a1b12fcb1': buggy,
   '6776d914-e538-4d47-bfe1-496d036b9b2f': hatchback,
