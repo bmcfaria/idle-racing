@@ -8,6 +8,8 @@ import suv from '../assets/cars/suv.png';
 import showoff from '../assets/cars/sports_convertible.png';
 import basicCarBlue from '../assets/cars/basic_car_6_blue.png';
 
+import { ReactComponent as TrackImage1 } from '../assets/tracks/track1.svg';
+
 export const carImages = {
   'bfd0a683-708e-4055-8914-6fe4521b140a': basicCarBlue, //kart,
 
@@ -43,4 +45,5 @@ export const imageMapping = {
   ...trackImages,
 };
 
-export const getImage = item => imageMapping[item.dealerCar || item.id];
+export const getImageCar = item => carImages[item.dealerCar || item.id];
+export const getImageTrack = item => TrackImage1; // trackImages[item.dealerCar || item.id];

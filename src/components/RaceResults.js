@@ -7,7 +7,7 @@ import {
   garageCarsSelector,
   trackSelector,
 } from '../state/selectors';
-import { getImage } from '../helpers/imageMapping';
+import { getImageCar } from '../helpers/imageMapping';
 
 const Row = ({ index, car, playerCarId, prize }) => (
   <Flex
@@ -18,7 +18,7 @@ const Row = ({ index, car, playerCarId, prize }) => (
   >
     {index + 1}:
     <Image
-      src={getImage(car)}
+      src={getImageCar(car)}
       objectFit="contain"
       w="24px"
       h="16px"

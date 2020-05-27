@@ -20,11 +20,13 @@ import Modal from './Modal';
 import {
   cardsContainerWidthPaddingStyles,
   CARD_MARGIN,
+  colors,
 } from '../helpers/theme';
 import RaceDetailsSelectCar from './RaceDetailsSelectCar';
 import { useOpenClose } from '../helpers/hooks';
 import RaceDetailsSelectedCar from './RaceDetailsSelectedCar';
 import { doMeetRequirements } from '../helpers/utils';
+import CardCarSmallRace from './CardCarSmallRace';
 
 const CarsContainer = styled(Flex)`
   height: 50vh;
@@ -57,12 +59,7 @@ const ActionContent = ({
       </RaceResults>
     )}
     {!results && !selectedCar && (
-      <RaceDetailsSelectCar
-        bg="grey"
-        borderRadius={['0, 0, 16px, 16px', '0, 0, 16px, 16px', '0 16px 16px 0']}
-        padding="16px"
-        onClick={carsModalOpen}
-      />
+      <RaceDetailsSelectCar onClick={carsModalOpen} />
     )}
 
     {!results && selectedCar && (
@@ -155,11 +152,10 @@ const RaceDetails = ({ track: { price, race } }) => {
   return (
     <Box
       position="relative"
-      w={['304px', '304px', '608px']}
-      h={['auto', 'auto', '236px']}
-      maxH="calc(100vh - 2 * 64px - 2 * 8px)"
+      w="320px"
+      h="180px"
       overflowY={['scroll', 'scroll', 'unset']}
-      bg="white"
+      bg={colors.darkGray}
       borderRadius="16px"
     >
       {currentRace && (
@@ -193,22 +189,20 @@ const RaceDetails = ({ track: { price, race } }) => {
                 marginRight={`${CARD_MARGIN}px`}
                 marginBottom={`${CARD_MARGIN}px`}
               >
-                <CardCarSmall car={car} onClick={selectCar} />
+                <CardCarSmallRace car={car} onClick={selectCar} />
               </Box>
             ))}
           </CarsContainer>
         </Box>
       </Modal>
 
-      <Flex direction={['column', 'column', 'row']}>
+      <Flex direction="row">
         <CardTrackContent
-          w="304px"
-          minH="236px"
+          w="50%"
           track={selectedTrack}
           borderRadius="16px 0 0 16px"
-          imageBorderRadius={['16px 16px 0 0', '16px 16px 0 0', '16px 0 0 0']}
-        >
-          <ActionContent
+        />
+        {/* <ActionContent
             display={['block', 'block', 'none']}
             selectedCar={selectedCar}
             selectedTrack={selectedTrack}
@@ -223,9 +217,9 @@ const RaceDetails = ({ track: { price, race } }) => {
             borderRight="1px solid black"
             raceAgain={raceAgain}
             meetsRequirements={meetsRequirements}
-          />
-        </CardTrackContent>
-        <Box w="50%" display={['none', 'none', 'block']} position="relative">
+            />
+            </CardTrackContent> */}
+        <Box w="50%" position="relative">
           <ActionContent
             selectedCar={selectedCar}
             selectedTrack={selectedTrack}

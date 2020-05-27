@@ -19,21 +19,16 @@ import { colors } from '../helpers/theme';
 import { getImageCar } from '../helpers/imageMapping';
 import AttributeCircle from './AttributeCircle';
 
-const BoughtAnimation = styled(Flex)`
-  animation: fadeOut ease 1.5s;
-  opacity: 0;
+const CarAttribute = ({ text, attr, ...props }) => (
+  <Box w="48px" lineHeight="14px" textAlign="center" {...props}>
+    <Text fontSize="12px" color={colors.darkGray}>
+      {text}
+    </Text>
+    <Text fontSize="14px">{attr}</Text>
+  </Box>
+);
 
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-`;
-
-const CardCarSmall = ({
+const CardCarSmallRace = ({
   car,
   stripped,
   onClick,
@@ -101,7 +96,7 @@ const CardCarSmall = ({
   return (
     <Box
       w="160px"
-      h={garage ? '180px' : '124px'}
+      h="136px"
       position="relative"
       onClick={setSelected}
       cursor={meetsRequirements ? 'pointer' : 'unset'}
@@ -136,33 +131,63 @@ const CardCarSmall = ({
           track={selectedTrack}
           meetsRequirements={meetsRequirements}
           w="100%"
-          h="124px"
+          h="100%"
           borderRadius="16px"
-          border="1px solid black"
         />
       )}
-      <Flex w="100%" h="100%" direction="column" borderRadius="16px" bg={color}>
-        <Text
-          fontSize="14px"
-          lineHeight="24px"
-          textAlign="center"
+      <Flex
+        w="100%"
+        h="116px"
+        direction="column"
+        top="0"
+        left="0"
+        position="absolute"
+        borderRadius="16px"
+        bg={colors.lightGray}
+      >
+        <Flex
           w="100%"
-          marginTop="100px"
+          h="52px"
+          border={`1px solid ${colors.lightGray}`}
+          borderRadius="16px"
+          bg={colors.white}
+          justifyContent="space-evenly"
         >
+          <Image
+            maxW="80px"
+            h="100%"
+            alt="car"
+            borderRadius="16px"
+            objectFit="contain"
+            src={getImageCar(car)}
+          />
+          <Flex
+            direction="column"
+            justifyContent="space-evenly"
+            lineHeight="12px"
+            textAlign="center"
+            fontSize="12px"
+          >
+            <Text>{capitalize(car.brand)}</Text>
+            <Text color={colors.darkGray}>{car.type}</Text>
+          </Flex>
+        </Flex>
+        <Text fontSize="14px" lineHeight="24px" textAlign="center" w="100%">
           {car.name}
         </Text>
-        {garage && (
-          <Flex justifyContent="space-evenly">
-            <AttributeCircle
-              attr={car[ATTRIBUTE_TYPES.ACCELERATION]}
-              text="ACC"
-            />
-            <AttributeCircle attr={car[ATTRIBUTE_TYPES.TOP_SPEED]} text="TSP" />
-            <AttributeCircle attr={car[ATTRIBUTE_TYPES.HANDLING]} text="HND" />
-          </Flex>
-        )}
+        <Flex marginTop="4px" justifyContent="center">
+          <CarAttribute
+            attr={car[ATTRIBUTE_TYPES.ACCELERATION].value}
+            text="ACC"
+          />
+          <CarAttribute
+            attr={car[ATTRIBUTE_TYPES.TOP_SPEED].value}
+            text="TSP"
+          />
+          <CarAttribute attr={car[ATTRIBUTE_TYPES.HANDLING].value} text="HND" />
+        </Flex>
       </Flex>
-      <Box
+      {/* <Box
         w="100%"
         h="100px"
         position="absolute"
@@ -189,22 +214,7 @@ const CardCarSmall = ({
         <Text bottom="8px" right="8px" position="absolute">
           {car.type}
         </Text>
-      </Box>
-      {bought && (
-        <BoughtAnimation
-          position="absolute"
-          top="0"
-          left="0"
-          w="100%"
-          h="100%"
-          bg={colors.green}
-          borderRadius="16px"
-        >
-          <Text fontSize="24px" margin="auto">
-            Bought
-          </Text>
-        </BoughtAnimation>
-      )}
+      </Box> */}
       {currentRace && (
         <CardProgressOverlay
           race={currentRace}
@@ -217,4 +227,4 @@ const CardCarSmall = ({
   );
 };
 
-export default CardCarSmall;
+export default CardCarSmallRace;

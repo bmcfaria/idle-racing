@@ -32,8 +32,8 @@ export const CardWinningChanceComponent = ({
       w="100%"
       alignSelf="flex-end"
       textAlign="center"
-      fontSize="14px"
-      lineHeight="24px"
+      fontSize="12px"
+      lineHeight="20px"
     >
       Winning chances: {winningChances[winProbabilityValue].text}
     </Text>

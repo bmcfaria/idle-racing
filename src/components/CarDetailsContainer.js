@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, Image, Text } from '@chakra-ui/core';
-import { getImage } from '../helpers/imageMapping';
+import { getImageCar } from '../helpers/imageMapping';
 import { colors } from '../helpers/theme';
 import { capitalize } from '../helpers/utils';
 
@@ -38,7 +38,7 @@ const CarDetailsContainer = ({
           border={`1px solid ${bg}`}
           bg={colors.white}
           objectFit="contain"
-          src={getImage(car)}
+          src={getImageCar(car)}
         />
         <Text top="8px" left="8px" position="absolute">
           {capitalize(brand)}

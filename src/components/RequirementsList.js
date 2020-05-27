@@ -1,9 +1,10 @@
 import React from 'react';
 import { Flex, Image, Text } from '@chakra-ui/core';
-import { getImage } from '../helpers/imageMapping';
+import { getImageCar } from '../helpers/imageMapping';
 import { useSelector } from 'react-redux';
 import { dealerCarSelector, garageCarsSelector } from '../state/selectors';
 import { capitalize } from '../helpers/utils';
+import { colors } from '../helpers/theme';
 
 const RequirementsListNoUps = () => {
   const garagesCars = useSelector(garageCarsSelector);
@@ -15,13 +16,11 @@ const RequirementsListNoUps = () => {
 
   return (
     <Text
-      textAlign="left"
-      w="100%"
       h="16px"
       fontSize="12px"
-      color={!!carWithNoUpgrades ? 'unset' : 'tomato'}
+      color={!!carWithNoUpgrades ? 'unset' : colors.red}
     >
-      - No Upgrades
+      no-ups
     </Text>
   );
 };
@@ -33,13 +32,11 @@ const RequirementsListBrand = ({ brand }) => {
 
   return (
     <Text
-      textAlign="left"
-      w="100%"
       h="16px"
       fontSize="12px"
-      color={!!carFromBrand ? 'unset' : 'tomato'}
+      color={!!carFromBrand ? 'unset' : colors.red}
     >
-      - {capitalize(brand)} cars only
+      {brand}
     </Text>
   );
 };
@@ -51,36 +48,18 @@ const RequirementsListCar = ({ carId }) => {
   const carOwned = garagesCars.find(item => item.dealerCar === carId);
 
   return (
-    <Flex h="16px">
-      <Text textAlign="left" h="16px" fontSize="12px">
-        -
-      </Text>
-      <Image
-        w="24px"
-        alt="car"
-        margin="auto 4px"
-        objectFit="contain"
-        style={{ imageRendering: 'pixelated' }}
-        src={getImage(car)}
-      />
-      <Text
-        textAlign="left"
-        fontSize="12px"
-        color={carOwned ? 'unset' : 'tomato'}
-      >
-        {car.name}
-      </Text>
-    </Flex>
+    <Image
+      maxW="24px"
+      h="16px"
+      objectFit="contain"
+      alt="car"
+      src={getImageCar(car)}
+    />
   );
 };
 
-const RequirementsList = ({ requirements }) => (
-  <>
-    {requirements.length === 0 && (
-      <Text textAlign="left" w="100%" h="16px" fontSize="12px">
-        - None
-      </Text>
-    )}
+const RequirementsList = ({ requirements, ...props }) => (
+  <Flex justifyContent="space-around" {...props}>
     {requirements.map((requirement, index) => (
       <React.Fragment key={`${requirement.type}_${index}`}>
         {requirement.type === 'no_ups' && <RequirementsListNoUps />}
@@ -92,7 +71,7 @@ const RequirementsList = ({ requirements }) => (
         )}
       </React.Fragment>
     ))}
-  </>
+  </Flex>
 );
 
 export default RequirementsList;

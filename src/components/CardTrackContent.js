@@ -1,103 +1,136 @@
 import React from 'react';
 import { Box, Flex, Image, Text } from '@chakra-ui/core';
 import RadarChartTrack from './RadarChartTrack';
-import { getImage } from '../helpers/imageMapping';
+import { getImageTrack } from '../helpers/imageMapping';
 import { useSelector } from 'react-redux';
 import { moneySelector } from '../state/selectors';
 import RequirementsList from './RequirementsList';
+import { colors } from '../helpers/theme';
+import { ATTRIBUTE_TYPES } from '../helpers/utils';
+
+const TrackAttribute = ({ name, value, ...props }) => {
+  const color = percentageValue => {
+    if (percentageValue < 1 / 3) {
+      return colors.red;
+    }
+
+    if (percentageValue > 2 / 3) {
+      return colors.green;
+    }
+
+    return colors.orange;
+  };
+
+  return (
+    <Box w="20px" {...props}>
+      <Text textAlign="center" fontSize="10px" lineHeight="10px">
+        {name}
+      </Text>
+      <Box w="100%" h="3px" bg={colors.darkGray}>
+        <Box w={`${value * 100}%`} h="100%" bg={color(value)} />
+      </Box>
+    </Box>
+  );
+};
+
+const TrackPrize = ({ text, prize, ...props }) => (
+  <Box w="48px" fontSize="12px" lineHeight="14px" {...props}>
+    <Text textAlign="center" color={colors.darkGray}>
+      {text}
+    </Text>
+    <Text textAlign="center">${prize}</Text>
+  </Box>
+);
 
 const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
   const { name, prizes, duration, price, requirements } = track;
   const money = useSelector(moneySelector);
 
   return (
-    <Box w="100%" h="100%" bg="black" {...props}>
-      <Flex w="100%" h="40px">
-        <Text margin="auto" fontSize="24px" color="white">
+    <Flex
+      w="100%"
+      h="100%"
+      direction="column"
+      bg={colors.darkGray}
+      borderRadius="16px"
+      {...props}
+    >
+      <Box
+        w="160px"
+        h="160px"
+        border={`1px solid ${colors.darkGray}`}
+        bg={colors.lightGray}
+        borderRadius="16px"
+      >
+        <Flex
+          w="calc(100% - 2px)"
+          h="calc(100px - 2px)"
+          margin="1px"
+          left="0"
+          position="relative"
+          bg={colors.white}
+          borderRadius="16px"
+        >
+          <Box
+            margin="auto"
+            color={colors.darkGray}
+            as={getImageTrack(track)}
+          />
+
+          <Flex
+            top="4px"
+            w="100%"
+            position="absolute"
+            justifyContent="space-around"
+          >
+            <TrackAttribute
+              name="ACC"
+              value={track[ATTRIBUTE_TYPES.ACCELERATION]}
+            />
+            <TrackAttribute
+              name="TSP"
+              value={track[ATTRIBUTE_TYPES.TOP_SPEED]}
+            />
+            <TrackAttribute
+              name="HND"
+              value={track[ATTRIBUTE_TYPES.HANDLING]}
+            />
+          </Flex>
+
+          <RequirementsList
+            bottom="4px"
+            w="100%"
+            position="absolute"
+            requirements={requirements}
+          />
+        </Flex>
+
+        <Text textAlign="center" fontSize="14px">
           {name}
         </Text>
-      </Flex>
-      <Box
-        w="100%"
-        h="74px"
-        position="relative"
-        borderLeft="1px solid black"
-        borderRight="1px solid black"
-      >
-        <Image
-          w="100%"
-          h="100%"
-          alt="track"
-          objectFit="cover"
-          src={getImage(track)}
-        />
-        <Box
-          w="100%"
-          h="100%"
-          top="0"
-          left="0"
-          position="absolute"
-          backgroundImage="linear-gradient(to right, #000F , #0000)"
-        />
-        <RadarChartTrack
-          track={track}
-          position="absolute"
-          top="2px"
-          left="16px"
-        />
-      </Box>
-      <Flex
-        w="100%"
-        h="90px"
-        bg="white"
-        paddingTop="8px"
-        paddingLeft="32px"
-        borderLeft="1px solid black"
-        borderRight="1px solid black"
-      >
-        <Box w="50%">
-          <Text textAlign="left" w="100%" fontSize="14px">
-            Prizes:
-          </Text>
-          {prizes.map((prize, index) => (
-            <Text
-              textAlign="left"
-              w="100%"
-              fontSize="12px"
-              lineHeight="16px"
-              key={prize}
-            >
-              {index + 1} - ${prize}
-            </Text>
-          ))}
-        </Box>
-        <Box w="50%">
-          <Text textAlign="left" w="100%" fontSize="14px">
-            Requirements:
-          </Text>
-          <RequirementsList requirements={requirements} />
-        </Box>
-      </Flex>
 
-      {children && (
+        <Flex marginTop="4px" justifyContent="center">
+          <TrackPrize text="1st" prize={prizes[0]} />
+          <TrackPrize text="2nd" prize={prizes[1]} />
+          <TrackPrize text="3rd" prize={prizes[2]} />
+        </Flex>
+      </Box>
+
+      {/* {children && (
         <Box bg="white" borderTop="1px solid gray">
           {children}
         </Box>
-      )}
+      )} */}
 
-      <Flex w="100%" h="32px">
-        <Text margin="auto" fontSize="14px" color="white">
+      <Flex w="100%" h="20px" fontSize="12px">
+        <Text margin="auto" color="white">
           {duration / 1000}s
         </Text>
-        <Text
-          margin="auto"
-          fontSize="14px"
-          color={money < price ? 'tomato' : 'white'}
-        >
+        <Text margin="auto" color={money < price ? 'tomato' : 'white'}>
           {price === 0 ? 'FREE' : `$${price}`}
         </Text>
       </Flex>
-    </Box>
+    </Flex>
   );
 };
 

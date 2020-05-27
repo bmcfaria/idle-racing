@@ -3,7 +3,7 @@ import { Box, Flex, Text, Image } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import RaceDetailsSelectedCarWinningChance from './RaceDetailsSelectedCarWinningChance';
-import { getImage } from '../helpers/imageMapping';
+import { getImageCar } from '../helpers/imageMapping';
 
 const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
   return (
@@ -16,7 +16,7 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
           alt="car"
           objectFit="contain"
           style={{ imageRendering: 'pixelated' }}
-          src={getImage(car)}
+          src={getImageCar(car)}
         />
         <Box flexGrow="1" paddingLeft="16px" margin="auto 0">
           <Text textAlign="center" fontSize="18px">
