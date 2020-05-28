@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Flex, Text, Button } from '@chakra-ui/core';
+import React, { useState, useEffect } from 'react';
+import { Box, Flex, Text } from '@chakra-ui/core';
 import CardProgressOverlay from './CardProgressOverlay';
 import { useDispatch, useSelector } from 'react-redux';
 import { startRaceAction } from '../state/actions';
@@ -27,6 +27,7 @@ import { useOpenClose } from '../helpers/hooks';
 import RaceDetailsSelectedCar from './RaceDetailsSelectedCar';
 import { doMeetRequirements } from '../helpers/utils';
 import CardCarSmallRace from './CardCarSmallRace';
+import Button from './Button';
 
 const CarsContainer = styled(Flex)`
   height: 50vh;
@@ -48,15 +49,16 @@ const ActionContent = ({
   startRace,
   results,
   pastRace,
-  raceAgain,
   meetsRequirements,
   ...props
 }) => (
-  <Box h="100%" {...props}>
+  <Flex h="100%" direction="column" {...props}>
     {results && (
-      <RaceResults pastRace={pastRace} raceAgain={raceAgain} padding="0 32px">
-        Race again
-      </RaceResults>
+      <RaceResults
+        pastRace={pastRace}
+        raceAgain={startRace}
+        selectCar={carsModalOpen}
+      />
     )}
     {!results && !selectedCar && (
       <RaceDetailsSelectCar onClick={carsModalOpen} />
@@ -68,46 +70,25 @@ const ActionContent = ({
           car={selectedCar}
           track={selectedTrack}
           carsModalOpen={carsModalOpen}
-          marginTop={[0, 0, '8px']}
         />
-        <Flex
-          w="calc(100% - 16px)"
-          h="40px"
-          border="1px solid black"
-          borderRadius="16px"
-          margin="8px auto"
-          position="relative"
-        >
-          <Text
-            w="fit-content"
-            fontSize="12px"
-            top="-10px"
-            left="16px"
-            bg="white"
-            padding="0 4px"
-            position="absolute"
-          >
-            Powerups
-          </Text>
-          <Text fontSize="16px" margin="auto">
-            TO BE DEVELOPED
-          </Text>
-        </Flex>
-        <Flex h="56px">
+        <Box margin="auto auto 20px">
           <Button
-            borderColor="tomato"
-            color="tomato"
-            variant="outline"
+            w="96px"
             isDisabled={money < price || currentRace || !meetsRequirements}
-            margin="auto"
+            bg={colors.white}
+            color={colors.darkGray}
+            _hover={{
+              bg: colors.blue,
+              color: colors.white,
+            }}
             onClick={startRace}
           >
             Race
           </Button>
-        </Flex>
+        </Box>
       </>
     )}
-  </Box>
+  </Flex>
 );
 
 const RaceDetails = ({ track: { price, race } }) => {
@@ -124,6 +105,12 @@ const RaceDetails = ({ track: { price, race } }) => {
   const pastRace = useSelector(pastRaceSelector(selectedTrack.lastRace));
   const results = !!pastRace && pastRace.checked === false;
 
+  useEffect(() => {
+    if (results && pastRace) {
+      setSelectedCar(cars.find(car => car.id === pastRace.car));
+    }
+  }, [results, pastRace, cars]);
+
   const currentRace = useSelector(raceSelector(race));
 
   const [carsModal, carsModalOpen, carsModalClose] = useOpenClose();
@@ -131,7 +118,7 @@ const RaceDetails = ({ track: { price, race } }) => {
   const meetsRequirements =
     selectedCar && doMeetRequirements(selectedCar, selectedTrack?.requirements);
 
-  const startRace = () => {
+  const startRace = id => {
     if (!meetsRequirements) {
       return;
     }
@@ -143,10 +130,6 @@ const RaceDetails = ({ track: { price, race } }) => {
   const selectCar = car => {
     setSelectedCar(car);
     carsModalClose();
-  };
-
-  const raceAgain = car => {
-    selectCar(car);
   };
 
   return (
@@ -202,23 +185,6 @@ const RaceDetails = ({ track: { price, race } }) => {
           track={selectedTrack}
           borderRadius="16px 0 0 16px"
         />
-        {/* <ActionContent
-            display={['block', 'block', 'none']}
-            selectedCar={selectedCar}
-            selectedTrack={selectedTrack}
-            carsModalOpen={carsModalOpen}
-            money={money}
-            price={price}
-            currentRace={currentRace}
-            startRace={startRace}
-            results={results}
-            pastRace={pastRace}
-            borderLeft="1px solid black"
-            borderRight="1px solid black"
-            raceAgain={raceAgain}
-            meetsRequirements={meetsRequirements}
-            />
-            </CardTrackContent> */}
         <Box w="50%" position="relative">
           <ActionContent
             selectedCar={selectedCar}
@@ -230,7 +196,6 @@ const RaceDetails = ({ track: { price, race } }) => {
             startRace={startRace}
             results={results}
             pastRace={pastRace}
-            raceAgain={raceAgain}
             meetsRequirements={meetsRequirements}
           />
         </Box>

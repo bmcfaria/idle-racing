@@ -20,22 +20,20 @@ const winningChances = {
 
 export const CardWinningChanceComponent = ({
   winProbabilityValue,
+  short,
   ...props
 }) => (
   <Flex
     w="100%"
     borderRadius="16px"
     bg={winningChances[winProbabilityValue].color}
+    lineHeight="20px"
+    fontSize="12px"
     {...props}
   >
-    <Text
-      w="100%"
-      alignSelf="flex-end"
-      textAlign="center"
-      fontSize="12px"
-      lineHeight="20px"
-    >
-      Winning chances: {winningChances[winProbabilityValue].text}
+    <Text w="100%" alignSelf="flex-end" textAlign="center">
+      {!short ? 'Winning chances: ' : ''}
+      {winningChances[winProbabilityValue].text}
     </Text>
   </Flex>
 );

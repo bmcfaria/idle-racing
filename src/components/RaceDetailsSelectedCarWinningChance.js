@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { tutorialWinChanceSelector } from '../state/selectors';
 import { disableTutorialWinChanceAction } from '../state/actions';
+import Button from './Button';
 
 const GOOD_VALUE = 3;
 
@@ -45,7 +46,6 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
       direction="column"
       position="relative"
       cursor="pointer"
-      minH="24px"
       onClick={toggleTip}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -124,31 +124,40 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
 
         <Box
           w="100%"
+          h="24px"
           bg={showTip ? 'black' : 'unset'}
           top={showTip ? '-2px' : 0}
           padding={showTip ? '2px 0' : 0}
           position="absolute"
           zIndex={showTip ? zIndex.winChanceTip : 'unset'}
         >
-          <CardWinningChanceComponent
-            winProbabilityValue={winProbabilityValue}
+          <Button
             borderRadius="16px"
-            border="1px solid black"
             w="calc(100% - 16px)"
-            h="24px"
+            h="100%"
             marginLeft="8px"
-          />
-          {!showTip && (
-            <Box
-              as={hover ? MdInfo : MdInfoOutline}
-              w="16px"
-              h="16px"
-              top={'4px'}
-              right="16px"
-              position="absolute"
-              zIndex={'unset'}
+            padding="0"
+            bg="transparent"
+            verticalAlign="top"
+          >
+            <CardWinningChanceComponent
+              winProbabilityValue={winProbabilityValue}
+              fontSize="14px"
+              lineHeight="24px"
+              short
             />
-          )}
+            {!showTip && (
+              <Box
+                as={hover ? MdInfo : MdInfoOutline}
+                w="16px"
+                h="16px"
+                top="4px"
+                right="8px"
+                position="absolute"
+                zIndex={'unset'}
+              />
+            )}
+          </Button>
         </Box>
 
         {showTutorial && (
