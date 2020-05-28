@@ -75,7 +75,7 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
             GOOD_VALUE * 3 +
             2 +
             16 +
-            (goodChances ? 20 : 40) +
+            (goodChances ? 40 : 90) +
             16
           }px`}
           bg="white"
@@ -85,7 +85,7 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
         >
           <Text
             w="100%"
-            h={goodChances ? '20px' : '40px'}
+            h={goodChances ? '40px' : '90px'}
             marginTop="auto"
             textAlign="center"
             fontSize="14px"
@@ -112,10 +112,10 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
                   key={index + 1}
                   winProbabilityValue={GOOD_VALUE - index}
                   borderRadius="16px"
-                  border="1px solid black"
                   w="100%"
                   h="24px"
                   marginTop="4px"
+                  short
                 />
               )
             )}
@@ -184,10 +184,10 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
                 key={index + 1}
                 winProbabilityValue={winProbabilityValue - (index + 1)}
                 borderRadius="16px"
-                border="1px solid black"
                 w="100%"
                 h="24px"
                 marginTop="4px"
+                short
               />
             ))}
           </Box>
