@@ -86,9 +86,9 @@ const Notifications = () => {
           capIsRound
         />
       </Flex>
-      <Drawer isOpen={open} onClose={onClose} placement="right" isFullHeight>
+      <Drawer isOpen={open} onClose={onClose} placement="right">
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent borderLeft={`2px solid ${colors.darkGray}`}>
           <DrawerCloseButton />
           {page === 'races' && (
             <>
@@ -109,8 +109,8 @@ const Notifications = () => {
                 {notifications.length > 0 && (
                   <Box
                     w="calc(100% + 8px)"
-                    borderBottom="1px solid black"
-                    margin="4px -4px"
+                    borderBottom={`1px solid ${colors.darkGray}`}
+                    margin="8px -4px"
                   />
                 )}
 
@@ -125,7 +125,7 @@ const Notifications = () => {
                 </Box>
               </DrawerBody>
 
-              <DrawerFooter>
+              {/* <DrawerFooter>
                 <Flex w="100%" justifyContent="space-between">
                   <Button color="blue" onClick={pageHistory}>
                     Open history
@@ -134,11 +134,11 @@ const Notifications = () => {
                     Clear
                   </Button>
                 </Flex>
-              </DrawerFooter>
+              </DrawerFooter> */}
             </>
           )}
 
-          {page === 'history' && (
+          {/* {page === 'history' && (
             <>
               <DrawerHeader fontSize="24px">History</DrawerHeader>
 
@@ -160,7 +160,7 @@ const Notifications = () => {
                 </Button>
               </DrawerFooter>
             </>
-          )}
+          )} */}
         </DrawerContent>
       </Drawer>
     </>

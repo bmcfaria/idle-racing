@@ -16,6 +16,8 @@ import { colors } from './helpers/theme';
 
 const store = configureStore();
 
+console.log(theme);
+
 const customTheme = {
   ...theme,
   fonts: {
@@ -39,7 +41,6 @@ function App() {
             h="100%"
             top="0"
             left="0"
-            fontFamily="Righteous-Regular"
             bg={colors.white}
           >
             <HeaderBar />

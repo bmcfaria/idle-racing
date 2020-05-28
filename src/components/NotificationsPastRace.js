@@ -3,6 +3,7 @@ import { Box, Flex, Text } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { garageCarSelector, trackSelector } from '../state/selectors';
+import { colors } from '../helpers/theme';
 
 const NotificationsPastRace = ({ pastRace, onClose }) => {
   const location = useLocation();
@@ -32,7 +33,7 @@ const NotificationsPastRace = ({ pastRace, onClose }) => {
       w="100%"
       h="48px"
       padding="0 8px"
-      border="1px solid gray"
+      border={`2px solid ${reward ? colors.green : colors.darkGray}`}
       borderRadius="4px"
       marginTop="4px"
       fontSize="14px"

@@ -5,26 +5,34 @@ import { useSelector } from 'react-redux';
 import { garageCarsSelector } from '../state/selectors';
 import CardCarSmall from './CardCarSmall';
 import Modal from './Modal';
-import styled from '@emotion/styled';
-import {
-  cardsContainerWidthPaddingStyles,
-  CARD_MARGIN,
-} from '../helpers/theme';
 import { useLocation, Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
+import { useDynamicCardContainerWidth } from '../helpers/hooks';
 
-const CarsContainer = styled(Flex)`
-  box-sizing: content-box;
-  overflow-y: auto;
-  padding-top: 28px;
-  flex-wrap: wrap;
-
-  ${cardsContainerWidthPaddingStyles}
-`;
+const CarsContainer = ({ cars, ...props }) => (
+  <>
+    {cars.length > 0 && (
+      <Flex
+        wrap="wrap"
+        margin="0 auto"
+        paddingLeft="16px"
+        boxSizing="content-box"
+        {...props}
+      >
+        {cars.map(car => (
+          <Box marginRight="16px" marginBottom="16px">
+            <CardCarSmall car={car} garage />
+          </Box>
+        ))}
+      </Flex>
+    )}
+  </>
+);
 
 const Garage = () => {
   const location = useLocation();
   const cars = useSelector(garageCarsSelector);
+  const containerWidth = useDynamicCardContainerWidth();
 
   const selected = location?.state?.car;
 
@@ -35,7 +43,7 @@ const Garage = () => {
       <Modal isOpen={!!selectedCar} backOnClose>
         {selectedCar && <CarDetailsGarage car={selectedCar} />}
       </Modal>
-      <Flex direction="column" bg="white" borderRadius="16px" minH="50vh">
+      <Flex direction="column" minH="50vh">
         {cars.length === 0 && (
           <Flex margin="auto" direction="column">
             <Text fontSize="24px">Your garage is empty</Text>
@@ -50,17 +58,38 @@ const Garage = () => {
             </ChakraLink>
           </Flex>
         )}
-        <CarsContainer wrap="wrap">
-          {cars.map(car => (
-            <Box
-              key={car.id}
-              marginRight={`${CARD_MARGIN}px`}
-              marginBottom={`${CARD_MARGIN}px`}
-            >
-              <CardCarSmall car={car} garage />
-            </Box>
-          ))}
-        </CarsContainer>
+        <CarsContainer
+          w={`${containerWidth}px`}
+          cars={cars.filter(item => item.brand === 'basic')}
+        />
+        <CarsContainer
+          w={`${containerWidth}px`}
+          marginTop="24px"
+          cars={cars.filter(item => item.brand === 'city')}
+        />
+        <CarsContainer
+          w={`${containerWidth}px`}
+          marginTop="24px"
+          cars={cars.filter(item => item.brand === 'offroad')}
+        />
+        <CarsContainer
+          w={`${containerWidth}px`}
+          marginTop="24px"
+          cars={cars.filter(item => item.brand === 'supercar')}
+        />
+        <CarsContainer
+          w={`${containerWidth}px`}
+          marginTop="24px"
+          cars={cars.filter(item => item.brand === 'nascar')}
+        />
+        <CarsContainer
+          w={`${containerWidth}px`}
+          marginTop="24px"
+          cars={cars.filter(item => item.brand === 'f1')}
+        />
+
+        {/* spacer */}
+        <Box minH="64px" />
       </Flex>
     </Box>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
 export const useOpenClose = defaultValue => {
@@ -28,4 +28,38 @@ export const useCurrentPageName = () => {
   selectedPage = matchSettings ? 'Settings' : selectedPage;
 
   return selectedPage;
+};
+
+const getWindowDimensions = () => {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+};
+
+export const useWindowDimensions = () => {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+};
+
+export const useDynamicCardContainerWidth = (
+  cardWidth = 160,
+  cardMargin = 16
+) => {
+  const { width } = useWindowDimensions();
+
+  return Math.floor((width - 2 * 24) / (160 + 16)) * (160 + 16);
 };

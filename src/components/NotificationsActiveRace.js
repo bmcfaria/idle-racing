@@ -8,6 +8,7 @@ import {
   trackSelector,
 } from '../state/selectors';
 import CardProgressCircle from './CardProgressCircle';
+import { colors } from '../helpers/theme';
 
 const NotificationsActiveRace = ({ race, onClose }) => {
   const location = useLocation();
@@ -36,10 +37,11 @@ const NotificationsActiveRace = ({ race, onClose }) => {
       onClick={onClick}
       w="100%"
       h="48px"
-      border="1px solid black"
+      border={`2px solid ${colors.orange}`}
       borderRadius="4px"
       paddingLeft="8px"
       marginTop="4px"
+      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
     >
       <CardProgressCircle
         margin="auto 0"
