@@ -15,7 +15,6 @@ import {
 } from '../state/selectors';
 import styled from '@emotion/styled';
 import CardTrackContent from './CardTrackContent';
-import CardCarSmall from './CardCarSmall';
 import Modal from './Modal';
 import {
   cardsContainerWidthPaddingStyles,

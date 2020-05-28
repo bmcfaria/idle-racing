@@ -2,9 +2,14 @@ import React from 'react';
 import { Box, Text, Flex } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { raceSelector, garageCarSelector } from '../state/selectors';
+import {
+  raceSelector,
+  garageCarSelector,
+  pastRaceSelector,
+} from '../state/selectors';
 import CardProgressOverlay from './CardProgressOverlay';
 import CardTrackContent from './CardTrackContent';
+import { colors } from '../helpers/theme';
 
 const CardTrack = ({ track }) => {
   const { id, race } = track;
@@ -12,7 +17,8 @@ const CardTrack = ({ track }) => {
   const history = useHistory();
 
   const currentRace = useSelector(raceSelector(race));
-  const car = useSelector(garageCarSelector(currentRace?.car));
+  const pastRace = useSelector(pastRaceSelector(track.lastRace));
+  const car = useSelector(garageCarSelector(currentRace?.car || pastRace?.car));
 
   // To improve mobile navigation,
   // this way the back button will un-select instead off showing the previous selected
@@ -69,15 +75,20 @@ const CardTrack = ({ track }) => {
         <Flex
           w="100%"
           h="100%"
+          direction="column"
+          justifyContent="space-between"
+          alignItems="center"
+          padding="8px 0"
           borderRadius="16px"
-          bg="blackAlpha.800"
+          bg={`${colors.white}FA`}
+          color={colors.darkGray}
           position="absolute"
           top="0"
           left="0"
         >
-          <Text margin="auto" fontSize="24px" color="white">
-            Results
-          </Text>
+          <Text fontSize="14px">({track?.name})</Text>
+          <Text fontSize="24px">Results</Text>
+          <Text fontSize="14px">({car?.name})</Text>
         </Flex>
       )}
     </Box>

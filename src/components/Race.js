@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Box } from '@chakra-ui/core';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import CardTrack from './CardTrack';
 import RaceDetails from './RaceDetails';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { tracksSelector } from '../state/selectors';
 import Modal from './Modal';
 import Accordion from './Accordion';
 import AccordionItem from './AccordionItem';
+import { closeResultsAction } from '../state/actions';
 
 const AccordionContent = ({ tracks }) => (
   <>
@@ -20,16 +21,24 @@ const AccordionContent = ({ tracks }) => (
 );
 
 const Race = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
   const tracks = useSelector(tracksSelector);
   const [selectedAccordion, setSelectedAccordion] = useState(0);
 
   const selectedTrackId = location?.state?.track;
   const selectedTrack = tracks.find(item => item.id === selectedTrackId);
 
+  const onClose = () => {
+    const track = tracks.find(element => element.id === location?.state.track);
+    dispatch(closeResultsAction(track?.lastRace));
+    history.goBack();
+  };
+
   return (
     <Box>
-      <Modal isOpen={!!selectedTrack} backOnClose>
+      <Modal isOpen={!!selectedTrack} onClose={onClose}>
         <RaceDetails track={selectedTrack} />
       </Modal>
       <Accordion
