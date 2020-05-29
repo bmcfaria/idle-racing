@@ -68,7 +68,8 @@ const Money = props => {
       w="100%"
       h="100%"
       align="center"
-      justifyContent="center"
+      justifyContent={['flex-end', 'center']}
+      paddingRight={['52px', 0]}
       position="absolute"
       {...props}
     >

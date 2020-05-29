@@ -70,7 +70,7 @@ const Dealer = () => {
       />
 
       {/* spacer */}
-      <Box minH="64px" />
+      <Box minH={['80px', '64px']} />
     </Box>
   );
 };
