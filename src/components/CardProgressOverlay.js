@@ -3,7 +3,13 @@ import { Text, Flex } from '@chakra-ui/core';
 import CardProgressCircle from './CardProgressCircle';
 import { colors } from '../helpers/theme';
 
-const CardProgressOverlay = ({ race, label, car, big, ...props }) => {
+const CardProgressOverlay = ({
+  race,
+  label,
+  car,
+  circleSize = '116px',
+  ...props
+}) => {
   if (!race) {
     return null;
   }
@@ -30,7 +36,7 @@ const CardProgressOverlay = ({ race, label, car, big, ...props }) => {
       )}
       <CardProgressCircle
         race={race}
-        size={big ? '10rem' : '116px'}
+        size={circleSize}
         textColor={colors.darkGray}
       />
       {car && (

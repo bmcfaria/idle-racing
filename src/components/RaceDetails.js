@@ -13,30 +13,61 @@ import {
   moneySelector,
   pastRaceSelector,
 } from '../state/selectors';
-import styled from '@emotion/styled';
 import CardTrackContent from './CardTrackContent';
 import Modal from './Modal';
-import {
-  cardsContainerWidthPaddingStyles,
-  CARD_MARGIN,
-  colors,
-} from '../helpers/theme';
+import { colors } from '../helpers/theme';
 import RaceDetailsSelectCar from './RaceDetailsSelectCar';
-import { useOpenClose } from '../helpers/hooks';
+import { useOpenClose, useDynamicCardContainerWidth } from '../helpers/hooks';
 import RaceDetailsSelectedCar from './RaceDetailsSelectedCar';
 import { doMeetRequirements } from '../helpers/utils';
 import CardCarSmallRace from './CardCarSmallRace';
 import Button from './Button';
 
-const CarsContainer = styled(Flex)`
-  height: 50vh;
-  box-sizing: content-box;
-  overflow-y: auto;
-  padding-top: 28px;
-  flex-wrap: wrap;
+const CarsContainer = ({ cars, selectCar, ...props }) => {
+  const containerWidth = useDynamicCardContainerWidth();
 
-  ${cardsContainerWidthPaddingStyles}
-`;
+  return (
+    <Box
+      maxH="calc(100vh - 2 * 48px - 2 * 32px)"
+      overflowY="scroll"
+      borderRadius="16px"
+    >
+      <Flex
+        w={`${containerWidth}px`}
+        minH="40vh"
+        wrap="wrap"
+        margin="0 auto"
+        paddingTop="16px"
+        paddingLeft="16px"
+        boxSizing="content-box"
+        bg={colors.white}
+        {...props}
+      >
+        {cars.length === 0 && (
+          <Flex margin="auto" direction="column">
+            <Text textAlign="center" fontSize="24px">
+              You need to buy a car first
+            </Text>
+            <ChakraLink
+              as={Link}
+              to="/dealer"
+              fontSize="12px"
+              color="teal.500"
+              margin="8px auto 0"
+            >
+              go to Dealer
+            </ChakraLink>
+          </Flex>
+        )}
+        {cars.map(car => (
+          <Box marginRight="16px" marginBottom="16px" key={car.id}>
+            <CardCarSmallRace car={car} onClick={selectCar} />
+          </Box>
+        ))}
+      </Flex>
+    </Box>
+  );
+};
 
 const ActionContent = ({
   selectedCar,
@@ -149,33 +180,7 @@ const RaceDetails = ({ track: { price, race } }) => {
       )}
 
       <Modal isOpen={carsModal} onClose={carsModalClose}>
-        <Box bg="white" borderRadius="16px">
-          <CarsContainer>
-            {cars.length === 0 && (
-              <Flex margin="auto" direction="column">
-                <Text fontSize="24px">You need to buy a car first</Text>
-                <ChakraLink
-                  as={Link}
-                  to="/dealer"
-                  fontSize="12px"
-                  color="teal.500"
-                  margin="8px auto 0"
-                >
-                  go to Dealer
-                </ChakraLink>
-              </Flex>
-            )}
-            {cars.map(car => (
-              <Box
-                key={car.id}
-                marginRight={`${CARD_MARGIN}px`}
-                marginBottom={`${CARD_MARGIN}px`}
-              >
-                <CardCarSmallRace car={car} onClick={selectCar} />
-              </Box>
-            ))}
-          </CarsContainer>
-        </Box>
+        <CarsContainer cars={cars} selectCar={selectCar} />
       </Modal>
 
       <Flex direction="row">

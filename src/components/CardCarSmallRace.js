@@ -170,6 +170,7 @@ const CardCarSmallRace = ({
           car={car}
           label
           borderRadius="16px"
+          circleSize="72px"
         />
       )}
     </Box>
