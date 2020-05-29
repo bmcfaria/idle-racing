@@ -1,24 +1,32 @@
-import buggy from '../assets/cars/buggy.png';
-import hatchback from '../assets/cars/sedan.png';
-import coupe from '../assets/cars/sports_race.png';
-import sedan from '../assets/cars/rounded_red.png';
-import station from '../assets/cars/station.png';
-import suv from '../assets/cars/suv.png';
-import showoff from '../assets/cars/sports_convertible.png';
-import basicCarBlue from '../assets/cars/basic_car_6_blue.png';
+import basicCarBlue from '../assets/cars/basic_car.png';
+import cityCompactBlue from '../assets/cars/city_compact.png';
+import cityHatchbackBlue from '../assets/cars/city_hatchback.png';
+import cityCoupeBlue from '../assets/cars/city_coupe.png';
+import citySedanBlue from '../assets/cars/city_sedan.png';
+import citySwBlue from '../assets/cars/city_sw.png';
+import citySuvBlue from '../assets/cars/city_suv.png';
+import cityShowoffBlue from '../assets/cars/city_showoff.png';
+
+import superRoundBlue from '../assets/cars/super_round.png';
+import superSlimBlue from '../assets/cars/super_slim.png';
+import superMuscleBlue from '../assets/cars/super_muscle.png';
 
 import { ReactComponent as TrackImage1 } from '../assets/tracks/track1.svg';
 
 export const carImages = {
-  'bfd0a683-708e-4055-8914-6fe4521b140a': basicCarBlue, //kart,
+  'bfd0a683-708e-4055-8914-6fe4521b140a': basicCarBlue,
 
-  'b69a0ab5-5583-408c-9534-058a1b12fcb1': buggy,
-  '6776d914-e538-4d47-bfe1-496d036b9b2f': hatchback,
-  '3aaa1fcb-2763-48cf-bd90-c46ada09774f': coupe,
-  '8de89ed7-83e8-472c-a33f-bf8efc900eaf': sedan,
-  'b6e9af84-a636-449c-ae0e-b32b7be0b6f8': station,
-  'ae7f795c-ea0e-4ea8-9d8d-b6da011235cb': suv,
-  '0f33d97f-3d4a-4999-bd1d-5eddf16ee8e8': showoff,
+  'b69a0ab5-5583-408c-9534-058a1b12fcb1': cityCompactBlue,
+  '6776d914-e538-4d47-bfe1-496d036b9b2f': cityHatchbackBlue,
+  '3aaa1fcb-2763-48cf-bd90-c46ada09774f': cityCoupeBlue,
+  '8de89ed7-83e8-472c-a33f-bf8efc900eaf': citySedanBlue,
+  'b6e9af84-a636-449c-ae0e-b32b7be0b6f8': citySwBlue,
+  'ae7f795c-ea0e-4ea8-9d8d-b6da011235cb': citySuvBlue,
+  '0f33d97f-3d4a-4999-bd1d-5eddf16ee8e8': cityShowoffBlue,
+
+  'cc7b7f79-a0e2-45de-9924-26d49588be83': superRoundBlue,
+  '2e1ad8b3-82de-48dd-8c45-e2537c162fa0': superSlimBlue,
+  'd22301f8-fe6a-4e61-822c-43fa053c6a6b': superMuscleBlue,
 };
 
 export const trackImages = {
