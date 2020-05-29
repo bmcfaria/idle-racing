@@ -3,7 +3,6 @@ import { Flex, Image, Text } from '@chakra-ui/core';
 import { getImageCar } from '../helpers/imageMapping';
 import { useSelector } from 'react-redux';
 import { dealerCarSelector, garageCarsSelector } from '../state/selectors';
-import { capitalize } from '../helpers/utils';
 import { colors } from '../helpers/theme';
 
 const RequirementsListNoUps = () => {
@@ -43,9 +42,6 @@ const RequirementsListBrand = ({ brand }) => {
 
 const RequirementsListCar = ({ carId }) => {
   const car = useSelector(dealerCarSelector(carId));
-  const garagesCars = useSelector(garageCarsSelector);
-
-  const carOwned = garagesCars.find(item => item.dealerCar === carId);
 
   return (
     <Image

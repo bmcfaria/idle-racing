@@ -17,7 +17,7 @@ const CarsContainer = ({ cars, ...props }) => (
     {...props}
   >
     {cars.map(car => (
-      <Box marginRight="16px" marginBottom="16px">
+      <Box marginRight="16px" marginBottom="16px" key={car.id}>
         <CardCarSmall car={car} />
       </Box>
     ))}

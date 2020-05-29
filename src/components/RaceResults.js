@@ -7,7 +7,6 @@ import {
   garageCarsSelector,
   trackSelector,
 } from '../state/selectors';
-import { getImageCar } from '../helpers/imageMapping';
 import { colors } from '../helpers/theme';
 import Button from './Button';
 

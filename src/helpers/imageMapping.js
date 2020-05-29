@@ -1,4 +1,3 @@
-import kart from '../assets/cars/kart.png';
 import buggy from '../assets/cars/buggy.png';
 import hatchback from '../assets/cars/sedan.png';
 import coupe from '../assets/cars/sports_race.png';

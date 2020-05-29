@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Flex } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import CardTrack from './CardTrack';
@@ -7,10 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { tracksSelector } from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
-import {
-  useWindowDimensions,
-  useDynamicCardContainerWidth,
-} from '../helpers/hooks';
+import { useDynamicCardContainerWidth } from '../helpers/hooks';
 
 const TracksContainer = ({ tracks, ...props }) => (
   <Flex
@@ -21,7 +18,7 @@ const TracksContainer = ({ tracks, ...props }) => (
     {...props}
   >
     {tracks.map(track => (
-      <Box marginRight="16px" marginBottom="16px">
+      <Box marginRight="16px" marginBottom="16px" key={track.id}>
         <CardTrack track={track} />
       </Box>
     ))}

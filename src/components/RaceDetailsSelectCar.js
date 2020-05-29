@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Flex } from '@chakra-ui/core';
 import styled from '@emotion/styled';
 import Button from './Button';

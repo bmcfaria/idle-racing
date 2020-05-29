@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Box, Text, Flex, Image } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import CardProgressOverlay from './CardProgressOverlay';
-import {
-  raceSelector,
-  tracksSelector,
-  garageCarsSelector,
-} from '../state/selectors';
+import { raceSelector, tracksSelector } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import CardWinningChance from './CardWinningChance';
-import styled from '@emotion/styled';
 import {
   doMeetRequirements,
   capitalize,
@@ -17,7 +12,6 @@ import {
 } from '../helpers/utils';
 import { colors } from '../helpers/theme';
 import { getImageCar } from '../helpers/imageMapping';
-import AttributeCircle from './AttributeCircle';
 
 const CarAttribute = ({ text, attr, ...props }) => (
   <Box w="48px" lineHeight="14px" textAlign="center" {...props}>
@@ -40,10 +34,8 @@ const CardCarSmallRace = ({
   const location = useLocation();
   const history = useHistory();
   const tracks = useSelector(tracksSelector);
-  const garageCars = useSelector(garageCarsSelector);
   const selectedTrackId = location?.state?.track;
   const selectedTrack = tracks.find(item => item.id === selectedTrackId);
-  const [bought, setBought] = useState();
 
   const currentRace = useSelector(raceSelector(race));
 
@@ -51,19 +43,6 @@ const CardCarSmallRace = ({
     car,
     selectedTrack?.requirements
   );
-
-  useEffect(() => {
-    const currentTime = new Date().getTime();
-
-    garageCars.forEach(element => {
-      if (
-        element.dealerCar === car.id &&
-        currentTime - element.timestamp <= 1000
-      ) {
-        setBought(true);
-      }
-    });
-  }, [garageCars, car.id, car.timestamp]);
 
   // To improve mobile navigation,
   // this way the back button will un-select instead off showing the previous selected
@@ -90,8 +69,6 @@ const CardCarSmallRace = ({
       });
     }
   };
-
-  const color = garage ? colors.lightBlue : colors.orange;
 
   return (
     <Box
@@ -187,34 +164,6 @@ const CardCarSmallRace = ({
           <CarAttribute attr={car[ATTRIBUTE_TYPES.HANDLING].value} text="HND" />
         </Flex>
       </Flex>
-      {/* <Box
-        w="100%"
-        h="100px"
-        position="absolute"
-        top="0"
-        left="0"
-        borderRadius="16px"
-        color={colors.darkGray}
-        fontSize="12px"
-        lineHeight="12px"
-      >
-        <Image
-          w="100%"
-          h="100px"
-          alt="car"
-          borderRadius="16px"
-          border={`1px solid ${color}`}
-          objectFit="contain"
-          bg={colors.white}
-          src={getImageCar(car)}
-        />
-        <Text top="8px" left="8px" position="absolute">
-          {capitalize(car.brand)}
-        </Text>
-        <Text bottom="8px" right="8px" position="absolute">
-          {car.type}
-        </Text>
-      </Box> */}
       {currentRace && (
         <CardProgressOverlay
           race={currentRace}

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Flex, Image, Text } from '@chakra-ui/core';
-import RadarChartTrack from './RadarChartTrack';
+import { Box, Flex, Text } from '@chakra-ui/core';
 import { getImageTrack } from '../helpers/imageMapping';
 import { useSelector } from 'react-redux';
 import { moneySelector } from '../state/selectors';
@@ -115,12 +114,6 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
           <TrackPrize text="3rd" prize={prizes[2]} />
         </Flex>
       </Box>
-
-      {/* {children && (
-        <Box bg="white" borderTop="1px solid gray">
-          {children}
-        </Box>
-      )} */}
 
       <Flex w="100%" h="20px" fontSize="12px">
         <Text margin="auto" color="white">

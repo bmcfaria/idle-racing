@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Flex,
@@ -7,22 +7,15 @@ import {
   DrawerContent,
   DrawerCloseButton,
   DrawerBody,
-  DrawerFooter,
-  Button,
   DrawerHeader,
   CircularProgress,
 } from '@chakra-ui/core';
 import { MdFlag } from 'react-icons/md';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  notificationsSelector,
-  racesSelector,
-  pastRacesSelector,
-} from '../state/selectors';
+import { useSelector } from 'react-redux';
+import { notificationsSelector, racesSelector } from '../state/selectors';
 import NotificationsActiveRace from './NotificationsActiveRace';
 import NotificationsPastRace from './NotificationsPastRace';
 import { useOpenClose } from '../helpers/hooks';
-import { clearNotificationsAction } from '../state/actions';
 import { colors } from '../helpers/theme';
 import styled from '@emotion/styled';
 
@@ -38,23 +31,8 @@ const CustomCircularProgress = styled(CircularProgress)`
 
 const Notifications = () => {
   const [open, onOpen, onClose] = useOpenClose(false);
-  const [page, setPage] = useState('races');
-  const dispatch = useDispatch();
   const notifications = useSelector(notificationsSelector);
-  const pastRaces = useSelector(pastRacesSelector);
   const races = useSelector(racesSelector);
-
-  const clear = () => {
-    dispatch(clearNotificationsAction);
-  };
-
-  const pageRaces = () => {
-    setPage('races');
-  };
-
-  const pageHistory = () => {
-    setPage('history');
-  };
 
   const isRacing = races?.length > 0;
 
@@ -90,77 +68,38 @@ const Notifications = () => {
         <DrawerOverlay />
         <DrawerContent borderLeft={`2px solid ${colors.darkGray}`}>
           <DrawerCloseButton />
-          {page === 'races' && (
-            <>
-              <DrawerHeader fontSize="24px">Races</DrawerHeader>
+          <DrawerHeader fontSize="24px">Races</DrawerHeader>
 
-              <DrawerBody>
-                <Box>
-                  {races.map(item => (
-                    <NotificationsActiveRace
-                      key={item.id}
-                      race={item.id}
-                      item={item}
-                      onClose={onClose}
-                    />
-                  ))}
-                </Box>
+          <DrawerBody>
+            <Box>
+              {races.map(item => (
+                <NotificationsActiveRace
+                  key={item.id}
+                  race={item.id}
+                  item={item}
+                  onClose={onClose}
+                />
+              ))}
+            </Box>
 
-                {notifications.length > 0 && (
-                  <Box
-                    w="calc(100% + 8px)"
-                    borderBottom={`1px solid ${colors.darkGray}`}
-                    margin="8px -4px"
-                  />
-                )}
+            {notifications.length > 0 && (
+              <Box
+                w="calc(100% + 8px)"
+                borderBottom={`1px solid ${colors.darkGray}`}
+                margin="8px -4px"
+              />
+            )}
 
-                <Box>
-                  {notifications.map(item => (
-                    <NotificationsPastRace
-                      key={item.id}
-                      pastRace={item}
-                      onClose={onClose}
-                    />
-                  ))}
-                </Box>
-              </DrawerBody>
-
-              {/* <DrawerFooter>
-                <Flex w="100%" justifyContent="space-between">
-                  <Button color="blue" onClick={pageHistory}>
-                    Open history
-                  </Button>
-                  <Button color="blue" onClick={clear}>
-                    Clear
-                  </Button>
-                </Flex>
-              </DrawerFooter> */}
-            </>
-          )}
-
-          {/* {page === 'history' && (
-            <>
-              <DrawerHeader fontSize="24px">History</DrawerHeader>
-
-              <DrawerBody>
-                <Box>
-                  {pastRaces.map(item => (
-                    <NotificationsPastRace
-                      key={item.id}
-                      pastRace={item}
-                      onClose={onClose}
-                    />
-                  ))}
-                </Box>
-              </DrawerBody>
-
-              <DrawerFooter>
-                <Button color="blue" onClick={pageRaces}>
-                  Back
-                </Button>
-              </DrawerFooter>
-            </>
-          )} */}
+            <Box>
+              {notifications.map(item => (
+                <NotificationsPastRace
+                  key={item.id}
+                  pastRace={item}
+                  onClose={onClose}
+                />
+              ))}
+            </Box>
+          </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
