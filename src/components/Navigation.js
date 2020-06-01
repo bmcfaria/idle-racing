@@ -1,8 +1,10 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { Link, useRouteMatch } from 'react-router-dom';
-import { GiHomeGarage, GiTrophyCup } from 'react-icons/gi';
-import { IoMdCar, IoMdSettings } from 'react-icons/io';
+import { ReactComponent as CarIcon } from '../assets/icons/car.svg';
+import { ReactComponent as TrophyIcon } from '../assets/icons/trophy.svg';
+import { ReactComponent as GarageIcon } from '../assets/icons/garage.svg';
+import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
 import { colors } from '../helpers/theme';
 import Button from './Button';
 
@@ -12,7 +14,6 @@ const NavigationButton = ({ icon, to, text }) => {
     <Button
       as={Link}
       to={to}
-      // w={['unset', '176px']}
       w="176px"
       h={['64px', '40px']}
       borderRadius={['4px', '20px']}
@@ -52,10 +53,10 @@ const Navigation = ({ icon, iconOnly, ...props }) => (
     paddingLeft={['2px', 0]}
     {...props}
   >
-    <NavigationButton icon={IoMdCar} to="/dealer" text="Dealer" />
-    <NavigationButton icon={GiTrophyCup} to="/race" text="Race" />
-    <NavigationButton icon={GiHomeGarage} to="/garage" text="Garage" />
-    <NavigationButton icon={IoMdSettings} to="/settings" text="Settings" />
+    <NavigationButton icon={CarIcon} to="/dealer" text="Dealer" />
+    <NavigationButton icon={TrophyIcon} to="/race" text="Race" />
+    <NavigationButton icon={GarageIcon} to="/garage" text="Garage" />
+    <NavigationButton icon={SettingsIcon} to="/settings" text="Settings" />
   </Flex>
 );
 
