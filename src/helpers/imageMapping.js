@@ -29,6 +29,8 @@ import f1SupersonicBlue from '../assets/cars/f1_supersonic.png';
 import vanHippiePink from '../assets/cars/van_hippie_pink.png';
 import truckRoadBlue from '../assets/cars/truck_road.png';
 import truckSpeedBlue from '../assets/cars/truck_speed.png';
+import pickupFarmerBlue from '../assets/cars/pickup_farmer.png';
+import pickupMonsterBlue from '../assets/cars/pickup_monster.png';
 
 import { ReactComponent as TrackImage1 } from '../assets/tracks/track1.svg';
 
@@ -60,6 +62,8 @@ export const carImages = {
   '61a059e3-b499-4d3e-b1f9-98e7f0a8eefb': vanHippiePink,
   '27a29591-f0a8-4e82-a071-63c6275b1141': truckRoadBlue,
   'c8065d5e-f5da-4fcf-ac86-86ed08ec1527': truckSpeedBlue,
+  '7da2553b-8562-475e-bd0e-6a777266ce1e': pickupFarmerBlue,
+  '88e4396b-d676-459c-be43-da7f56debc04': pickupMonsterBlue,
 };
 
 export const trackImages = {
