@@ -20,6 +20,8 @@ import superSlimRed from '../assets/cars/super_slim_red.png';
 import superMuscleBlue from '../assets/cars/super_muscle.png';
 
 import nascarSpeedBlue from '../assets/cars/nascar_speed.png';
+import racerQuickieBlue from '../assets/cars/racer_quickie.png';
+import racerLeMansBlue from '../assets/cars/racer_le_mans.png';
 
 import f1EntryBlue from '../assets/cars/f1_entry.png';
 import f1PowerBlue from '../assets/cars/f1_power.png';
@@ -54,6 +56,8 @@ export const carImages = {
   'd22301f8-fe6a-4e61-822c-43fa053c6a6b': superMuscleBlue,
 
   '2e926f09-bd0b-40d4-bba1-8cc5044ff4a7': nascarSpeedBlue,
+  '3ea79070-3bfb-4ab3-b29b-f4952447cfba': racerQuickieBlue,
+  'c6aae711-49d9-418c-91c4-f1c57f835cb8': racerLeMansBlue,
 
   '28388317-5514-49ec-8d5b-b5029182e2ba': f1EntryBlue,
   '333242d7-bae7-4d54-980b-8b8c4a9decbc': f1PowerBlue,
