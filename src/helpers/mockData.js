@@ -60,6 +60,8 @@ const generateCar = car => ({
   brand: car.brand,
   price: car.price,
   reward: car.reward,
+  total: car.total,
+  totalUp: car['total up'],
 });
 
 const carDevaluation = 0.5;
@@ -149,10 +151,10 @@ const generateTrack = track => ({
   price: track.price,
   prizes: [track['prize 1'], track['prize 2'], track['prize 3']],
   category: track.category,
-  [ATTRIBUTE_TYPES.ACCELERATION]:
-    track.acc / (track.acc + track.tsp + track.hnd),
-  [ATTRIBUTE_TYPES.TOP_SPEED]: track.tsp / (track.acc + track.tsp + track.hnd),
-  [ATTRIBUTE_TYPES.HANDLING]: track.hnd / (track.acc + track.tsp + track.hnd),
+  [ATTRIBUTE_TYPES.ACCELERATION]: track.acc > 1 ? 1 : track.acc,
+  [ATTRIBUTE_TYPES.TOP_SPEED]: track.tsp > 1 ? 1 : track.tsp,
+  [ATTRIBUTE_TYPES.HANDLING]: track.hnd > 1 ? 1 : track.hnd,
+  max: track.max,
   race: undefined,
   lastRace: undefined,
   requirements: parseRequirements(track.requirements),

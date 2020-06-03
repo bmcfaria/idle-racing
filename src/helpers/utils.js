@@ -1,4 +1,5 @@
 import competitorsFile from '../assets/lists/competitors.json';
+import { cars } from './mockData';
 
 const competitors = competitorsFile.filter(item => item?.['track name'].length);
 
@@ -24,8 +25,81 @@ const calculateScore = (car, track, withRandom = false) =>
     (car[ATTRIBUTE_TYPES.HANDLING].value || car[ATTRIBUTE_TYPES.HANDLING]) +
   (withRandom ? Math.random() * 0.000001 : 0);
 
-const getCompetitors = trackId =>
-  competitors.filter(item => item['track id'] === trackId);
+const cloneCar = car => ({
+  ...car,
+  acc: { ...car.acc },
+  tsp: { ...car.tsp },
+  hnd: { ...car.hnd },
+});
+
+const attrUpgradeValue = (attr, car, max) => {
+  const compAttrs = {
+    acc: ['tsp', 'hnd'],
+    tsp: ['acc', 'hnd'],
+    hnd: ['acc', 'tsp'],
+  };
+
+  let result = 0;
+  if (
+    car[attr].value +
+      car[compAttrs[attr][0]].value +
+      car[compAttrs[attr][1]].value <
+    max
+  ) {
+    result =
+      car[attr].base +
+        car[attr].max +
+        car[compAttrs[attr][0]].value +
+        car[compAttrs[attr][1]].value >
+      max
+        ? ~~(
+            Math.random() *
+            (1 +
+              max -
+              (car[attr].base +
+                car[attr].max +
+                car[compAttrs[attr][0]].value +
+                car[compAttrs[attr][1]].value))
+          )
+        : ~~(Math.random() * (1 + car[attr].max - car[attr].base));
+  }
+
+  return result;
+};
+
+const calculateCompetitors = track => {
+  const requirements = track.requirements;
+
+  const compatibleCars = cars.reduce(
+    (result, car) =>
+      doMeetRequirements(car, requirements) && car.total <= track.max
+        ? [...result, cloneCar(car)]
+        : result,
+    []
+  );
+
+  const competitors = [...Array(8)].map(() =>
+    cloneCar(compatibleCars[~~(Math.random() * compatibleCars.length)])
+  );
+
+  if (requirements.find(req => req.type === 'no_ups')) {
+    return competitors;
+  }
+
+  const competitorsProcessed = competitors.map(car => {
+    car.acc.value += attrUpgradeValue('acc', car, track.max);
+    car.tsp.value += attrUpgradeValue('tsp', car, track.max);
+    car.hnd.value += attrUpgradeValue('hnd', car, track.max);
+
+    return car;
+  });
+
+  return competitorsProcessed;
+};
+
+const getCompetitors = track =>
+  // competitors.filter(item => item['track id'] === track.id);
+  calculateCompetitors(track);
 
 export const winProbability = (car, track) => {
   const carScoreObject = {
@@ -33,7 +107,7 @@ export const winProbability = (car, track) => {
     score: calculateScore(car, track),
   };
 
-  const results = getCompetitors(track.id).reduce(
+  const results = getCompetitors(track).reduce(
     (result, competitor) => {
       const tmpScore = calculateScore(competitor, track);
       return {
@@ -78,12 +152,12 @@ export const raceResults = (car, track) => {
     score: calculateScore(car, track, true),
   };
 
-  const results = getCompetitors(track.id).reduce(
+  const results = getCompetitors(track).reduce(
     (result, competitor) => [
       ...result,
       {
-        id: competitor['car id'],
-        name: competitor['car name'],
+        id: competitor.id,
+        name: competitor.name,
         score: calculateScore(competitor, track, true),
       },
     ],
@@ -104,21 +178,34 @@ export const doMeetRequirements = (car, requirements) => {
     return true;
   }
 
+  const specificAllowedCars = requirements.reduce((result, requirement) => {
+    if (requirement.type === 'car') {
+      return [...result, requirement.value];
+    }
+
+    // default
+    return result;
+  }, []);
+
+  if (
+    specificAllowedCars.length > 0 &&
+    !specificAllowedCars.includes(car.dealerCar || car.id)
+  ) {
+    return false;
+  }
+
   return requirements.reduce((result, requirement) => {
     if (requirement.type === 'no_ups') {
       const noUpgrades =
         car.acc.upgrade === 0 && car.tsp.upgrade === 0 && car.hnd.upgrade === 0;
-      return !!noUpgrades;
+      return result && !!noUpgrades;
     }
 
     if (requirement.type === 'brand') {
-      return car.brand === requirement.value;
+      return result && car.brand === requirement.value;
     }
 
-    if (requirement.type === 'car') {
-      const isCorrectCar = car.dealerCar === requirement.value;
-      return result || isCorrectCar;
-    }
-    return false;
-  }, false);
+    // default
+    return result;
+  }, true);
 };
