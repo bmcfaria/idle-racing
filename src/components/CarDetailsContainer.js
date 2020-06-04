@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, Image, Text } from '@chakra-ui/core';
-import { getImageCar } from '../helpers/imageMapping';
+import getImageCar from '../helpers/imageMappingCars';
 import { colors } from '../helpers/theme';
 import { capitalize } from '../helpers/utils';
 

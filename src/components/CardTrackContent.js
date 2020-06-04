@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
-import { getImageTrack } from '../helpers/imageMapping';
+import getImageTrack from '../helpers/imageMappingTracks';
 import { useSelector } from 'react-redux';
 import { moneySelector } from '../state/selectors';
 import RequirementsList from './RequirementsList';

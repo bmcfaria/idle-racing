@@ -16,7 +16,7 @@ import {
   ATTRIBUTE_TYPES,
 } from '../helpers/utils';
 import { colors } from '../helpers/theme';
-import { getImageCar } from '../helpers/imageMapping';
+import getImageCar from '../helpers/imageMappingCars';
 import AttributeCircle from './AttributeCircle';
 
 const BoughtAnimation = styled(Flex)`

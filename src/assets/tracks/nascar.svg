@@ -1,0 +1,13 @@
+<svg
+  width="130"
+  height="45"
+  viewBox="0 0 130 45"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M3 23C3 11.9543 11.9543 3 23 3H63.96H107.5C118.27 3 127 11.7304 127 22.5C127 33.2696 118.27 42 107.5 42H63.96H22C11.5066 42 3 33.4934 3 23Z"
+    stroke="currentColor"
+    strokeWidth="6"
+  />
+</svg>

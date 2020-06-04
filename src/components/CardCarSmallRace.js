@@ -11,7 +11,7 @@ import {
   ATTRIBUTE_TYPES,
 } from '../helpers/utils';
 import { colors } from '../helpers/theme';
-import { getImageCar } from '../helpers/imageMapping';
+import getImageCar from '../helpers/imageMappingCars';
 
 const CarAttribute = ({ text, attr, ...props }) => (
   <Box w="48px" lineHeight="14px" textAlign="center" {...props}>

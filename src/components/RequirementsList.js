@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Image, Text } from '@chakra-ui/core';
-import { getImageCar } from '../helpers/imageMapping';
+import getImageCar from '../helpers/imageMappingCars';
 import { useSelector } from 'react-redux';
 import { dealerCarSelector, garageCarsSelector } from '../state/selectors';
 import { colors } from '../helpers/theme';
