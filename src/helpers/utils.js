@@ -1,7 +1,4 @@
-import competitorsFile from '../assets/lists/competitors.json';
 import { cars } from './mockData';
-
-const competitors = competitorsFile.filter(item => item?.['track name'].length);
 
 export const displayResponsivePanel = condition => [
   condition ? 'none' : 'flex',

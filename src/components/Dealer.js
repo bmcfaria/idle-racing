@@ -73,6 +73,11 @@ const Dealer = () => {
         marginTop="24px"
         cars={cars.filter(item => item.brand === 'f1')}
       />
+      <CarsContainer
+        w={`${containerWidth}px`}
+        marginTop="24px"
+        cars={cars.filter(item => item.brand === 'heavy')}
+      />
 
       {/* spacer */}
       <Box minH={['80px', '64px']} />

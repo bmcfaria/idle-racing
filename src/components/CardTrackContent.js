@@ -6,6 +6,7 @@ import { moneySelector } from '../state/selectors';
 import RequirementsList from './RequirementsList';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
+import abbreviate from 'number-abbreviate';
 
 const TrackAttribute = ({ name, value, ...props }) => {
   const color = percentageValue => {
@@ -37,7 +38,7 @@ const TrackPrize = ({ text, prize, ...props }) => (
     <Text textAlign="center" color={colors.darkGray}>
       {text}
     </Text>
-    <Text textAlign="center">${prize}</Text>
+    <Text textAlign="center">${abbreviate(prize)}</Text>
   </Box>
 );
 
@@ -120,7 +121,7 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
           {duration / 1000}s
         </Text>
         <Text margin="auto" color={money < price ? 'tomato' : 'white'}>
-          {price === 0 ? 'FREE' : `$${price}`}
+          {price === 0 ? 'FREE' : `$${abbreviate(price)}`}
         </Text>
       </Flex>
     </Flex>

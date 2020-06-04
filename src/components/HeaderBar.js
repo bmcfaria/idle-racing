@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { moneySelector } from '../state/selectors';
 import { zIndex, colors } from '../helpers/theme';
 import { useCurrentPageName } from '../helpers/hooks';
+import abbreviate from 'number-abbreviate';
 
 const RoundTriange = props => (
   <svg
@@ -77,7 +78,7 @@ const Money = props => {
         $
       </Text>
       <Text fontSize="24px" color={colors.white}>
-        {~~money}
+        {abbreviate(money)}
       </Text>
     </Flex>
   );

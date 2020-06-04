@@ -56,6 +56,16 @@ const Race = () => {
         marginTop="24px"
         tracks={tracks.filter(item => item.category === 'city')}
       />
+      <TracksContainer
+        w={`${containerWidth}px`}
+        marginTop="24px"
+        tracks={tracks.filter(item => item.category === 'offroad')}
+      />
+      <TracksContainer
+        w={`${containerWidth}px`}
+        marginTop="24px"
+        tracks={tracks.filter(item => item.category === 'track')}
+      />
 
       {/* spacer */}
       <Box minH={['80px', '64px']} />
