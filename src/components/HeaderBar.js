@@ -78,7 +78,7 @@ const Money = props => {
         $
       </Text>
       <Text fontSize="24px" color={colors.white}>
-        {abbreviate(money)}
+        {abbreviate(money, 1)}
       </Text>
     </Flex>
   );

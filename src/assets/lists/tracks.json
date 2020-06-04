@@ -386,18 +386,18 @@
   {
     "name": "24h",
     "category": "track",
-    "price": 2592000,
+    "price": 100000,
     "duration": 86400,
     "requirements": "",
     "acc": 0.5,
     "tsp": 0.8,
     "hnd": 0.6,
-    "prize 1": 5184000,
-    "prize 2": 2592000,
-    "prize 3": 1036800,
+    "prize 1": 5000000,
+    "prize 2": 2500000,
+    "prize 3": 1000000,
     "id": "91e8c4e3-bdcf-4634-909f-7f910aade85f",
     "max": 48,
-    "mpt": 60
+    "mpt": 57.87037037
   },
   {
     "name": "Nascar",

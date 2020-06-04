@@ -38,7 +38,7 @@ const TrackPrize = ({ text, prize, ...props }) => (
     <Text textAlign="center" color={colors.darkGray}>
       {text}
     </Text>
-    <Text textAlign="center">${abbreviate(prize)}</Text>
+    <Text textAlign="center">${(abbreviate(prize), 1)}</Text>
   </Box>
 );
 
@@ -121,7 +121,7 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
           {duration / 1000}s
         </Text>
         <Text margin="auto" color={money < price ? 'tomato' : 'white'}>
-          {price === 0 ? 'FREE' : `$${abbreviate(price)}`}
+          {price === 0 ? 'FREE' : `$${abbreviate(price, 1)}`}
         </Text>
       </Flex>
     </Flex>
