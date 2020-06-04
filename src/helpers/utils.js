@@ -69,7 +69,7 @@ const calculateCompetitors = track => {
 
   const compatibleCars = cars.reduce(
     (result, car) =>
-      doMeetRequirements(car, requirements) && car.total <= track.max
+      doMeetRequirements(car, requirements, true) && car.total <= track.max
         ? [...result, cloneCar(car)]
         : result,
     []
@@ -170,7 +170,35 @@ export const raceResults = (car, track) => {
 export const capitalize = str =>
   str.charAt(0).toUpperCase() + str.toLowerCase().slice(1);
 
-export const doMeetRequirements = (car, requirements) => {
+export const validateAttrRequirements = (car, requirements, upgradable) => {
+  return requirements.reduce((result, requirement) => {
+    if (requirement.type === 'attr') {
+      const sum =
+        car[requirement.value.attr].value +
+        (upgradable
+          ? car[requirement.value.attr].max -
+            car[requirement.value.attr].upgrade
+          : 0) -
+        requirement.value.value;
+      if (requirement.value.compare === 'lt') {
+        return result && sum < 0;
+      }
+      if (requirement.value.compare === 'eq') {
+        return result && sum === 0;
+      }
+      if (requirement.value.compare === 'gt') {
+        return result && sum > 0;
+      }
+
+      return result;
+    }
+
+    // default
+    return result;
+  }, true);
+};
+
+export const doMeetRequirements = (car, requirements, upgradable) => {
   if (!requirements || requirements.length === 0) {
     return true;
   }
@@ -191,7 +219,7 @@ export const doMeetRequirements = (car, requirements) => {
     return false;
   }
 
-  return requirements.reduce((result, requirement) => {
+  const noUpsBrandType = requirements.reduce((result, requirement) => {
     if (requirement.type === 'no_ups') {
       const noUpgrades =
         car.acc.upgrade === 0 && car.tsp.upgrade === 0 && car.hnd.upgrade === 0;
@@ -202,7 +230,19 @@ export const doMeetRequirements = (car, requirements) => {
       return result && car.brand === requirement.value;
     }
 
+    if (requirement.type === 'type') {
+      return result && car.type === requirement.value;
+    }
+
     // default
     return result;
   }, true);
+
+  if (!noUpsBrandType) {
+    return false;
+  }
+
+  const noUps = requirements.find(req => req.type === 'no_ups');
+
+  return validateAttrRequirements(car, requirements, !noUps && upgradable);
 };

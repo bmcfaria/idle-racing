@@ -128,8 +128,9 @@ const parseRequirement = rawRequirement => {
     return {
       type: 'attr',
       value: {
-        compare: splitAttrLimiter[1],
-        attr: splitAttrLimiter[2],
+        attr: splitAttrLimiter[1],
+        compare: splitAttrLimiter[2],
+        value: splitAttrLimiter[3],
       },
     };
   }
