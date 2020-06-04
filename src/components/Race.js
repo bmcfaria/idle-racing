@@ -36,7 +36,7 @@ const TracksContainer = ({ tracks, locked, ...props }) => (
         left="-0"
         position="absolute"
         borderRadius="16px"
-        bg={hexAlpha(colors.lightGray, 0.95)}
+        bg={hexAlpha(colors.lightGray, 0.98)}
       >
         <Text fontSize="24px" textAlign="center" margin="auto">
           Win a race in the previous section to unlock this one
