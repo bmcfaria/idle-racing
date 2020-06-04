@@ -29,7 +29,8 @@ const CarsContainer = ({ cars, selectCar, ...props }) => {
   return (
     <Box
       maxH="calc(100vh - 2 * 48px - 2 * 32px)"
-      overflowY="scroll"
+      overflowX="hidden"
+      overflowY="auto"
       borderRadius="16px"
     >
       <Flex

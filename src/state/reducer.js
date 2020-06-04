@@ -31,6 +31,15 @@ const initialState = {
   tutorial: {
     winChance: true,
   },
+  locked: {
+    race: {
+      free: false,
+      city: true,
+      offroad: true,
+      track: true,
+    },
+  },
+  version: 0.1,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -178,6 +187,24 @@ const rootReducer = (state = initialState, { type, payload }) => {
         }),
         notifications: [pastRace, ...state.notifications],
         pastRaces: [pastRace, ...state.pastRaces],
+        locked: {
+          ...state.locked,
+          race: {
+            ...state.locked.race,
+            city:
+              track.category === 'free' && position === 1
+                ? false
+                : state.locked.race.city,
+            offroad:
+              track.category === 'city' && position === 1
+                ? false
+                : state.locked.race.city,
+            track:
+              track.category === 'offroad' && position === 1
+                ? false
+                : state.locked.race.city,
+          },
+        },
       };
     }
 

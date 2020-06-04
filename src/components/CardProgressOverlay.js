@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, Flex } from '@chakra-ui/core';
 import CardProgressCircle from './CardProgressCircle';
 import { colors } from '../helpers/theme';
+import hexAlpha from 'hex-alpha';
 
 const CardProgressOverlay = ({
   race,
@@ -22,7 +23,7 @@ const CardProgressOverlay = ({
       top="0"
       left="0"
       padding="8px 0"
-      bg={`${colors.white}FA`}
+      bg={hexAlpha(colors.white, 0.98)}
       cursor="progress"
       direction="column"
       justifyContent="space-between"

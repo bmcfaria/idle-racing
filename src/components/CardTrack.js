@@ -10,6 +10,7 @@ import {
 import CardProgressOverlay from './CardProgressOverlay';
 import CardTrackContent from './CardTrackContent';
 import { colors } from '../helpers/theme';
+import hexAlpha from 'hex-alpha';
 
 const CardTrack = ({ track }) => {
   const { id, race } = track;
@@ -80,7 +81,7 @@ const CardTrack = ({ track }) => {
           alignItems="center"
           padding="8px 0"
           borderRadius="16px"
-          bg={`${colors.white}FA`}
+          bg={hexAlpha(colors.white, 0.98)}
           color={colors.darkGray}
           position="absolute"
           top="0"

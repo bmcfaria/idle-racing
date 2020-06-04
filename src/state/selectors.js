@@ -25,3 +25,4 @@ export const pastRaceSelector = pastRaceId => state =>
   state.pastRaces.find(item => item.id === pastRaceId);
 
 export const tutorialWinChanceSelector = state => state.tutorial.winChance;
+export const lockedSelector = state => state.locked;
