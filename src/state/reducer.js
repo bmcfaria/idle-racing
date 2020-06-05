@@ -12,7 +12,6 @@ import {
 import {
   cars as dealerCars,
   tracks,
-  money,
   generateGarageCar,
   upgradeAttribute,
   generateCarPrice,
@@ -24,7 +23,7 @@ import { raceResults } from '../helpers/utils';
 const initialState = {
   garageCars: [],
   tracks,
-  money,
+  money: 650,
   notifications: [],
   races: [],
   pastRaces: [],

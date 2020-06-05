@@ -38,7 +38,7 @@ const TrackPrize = ({ text, prize, ...props }) => (
     <Text textAlign="center" color={colors.darkGray}>
       {text}
     </Text>
-    <Text textAlign="center">${(abbreviate(prize), 1)}</Text>
+    <Text textAlign="center">${abbreviate(prize, 1)}</Text>
   </Box>
 );
 
