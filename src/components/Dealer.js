@@ -56,12 +56,12 @@ const Dealer = () => {
       <CarsContainer
         w={`${containerWidth}px`}
         marginTop="24px"
-        cars={cars.filter(item => item.brand === 'racer')}
+        cars={cars.filter(item => item.brand === 'supercar')}
       />
       <CarsContainer
         w={`${containerWidth}px`}
         marginTop="24px"
-        cars={cars.filter(item => item.brand === 'supercar')}
+        cars={cars.filter(item => item.brand === 'racer')}
       />
       <CarsContainer
         w={`${containerWidth}px`}
