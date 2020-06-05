@@ -190,18 +190,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
           ...state.locked,
           race: {
             ...state.locked.race,
-            city:
-              track.category === 'free' && position === 1
-                ? false
-                : state.locked.race.city,
-            offroad:
-              track.category === 'city' && position === 1
-                ? false
-                : state.locked.race.city,
-            track:
-              track.category === 'offroad' && position === 1
-                ? false
-                : state.locked.race.city,
+            ...(track.category === 'free' && position === 1 && { city: false }),
+            ...(track.category === 'city' &&
+              position === 1 && { offroad: false }),
+            ...(track.category === 'offroad' &&
+              position === 1 && { track: false }),
           },
         },
       };
