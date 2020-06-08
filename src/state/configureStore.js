@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-import rootReducer from './reducer';
+import rootReducer, { initialState } from './reducer';
 import throttle from 'lodash/throttle';
 
 const inDev = process.env.NODE_ENV === 'development';
@@ -10,7 +10,24 @@ const loadState = () => {
     if (serializedState === null) {
       return undefined;
     }
-    return JSON.parse(serializedState);
+    const state = JSON.parse(serializedState);
+    // Pre-fill with initial state to prevent errors on old dated states
+    return {
+      ...initialState,
+      ...state,
+      pageNotifications: {
+        ...initialState.pageNotifications,
+        ...state.pageNotifications,
+      },
+      tutorial: {
+        ...initialState.tutorial,
+        ...state.tutorial,
+      },
+      locked: {
+        ...initialState.locked,
+        ...state.locked,
+      },
+    };
   } catch (err) {
     return undefined;
   }

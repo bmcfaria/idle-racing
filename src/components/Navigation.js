@@ -7,8 +7,26 @@ import { ReactComponent as GarageIcon } from '../assets/icons/garage.svg';
 import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
 import { colors } from '../helpers/theme';
 import Button from './Button';
+import styled from '@emotion/styled';
+import { useSelector } from 'react-redux';
+import { pageNotificationsSelector } from '../state/selectors';
 
-const NavigationButton = ({ icon, to, text }) => {
+const BlinkingDot = styled(Box)`
+  animation: pulseBlink 1s ease-out infinite;
+
+  @keyframes pulseBlink {
+    0% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+`;
+
+const NavigationButton = ({ icon, to, text, notification }) => {
   const match = useRouteMatch(to);
   return (
     <Button
@@ -20,14 +38,36 @@ const NavigationButton = ({ icon, to, text }) => {
       color={colors.white}
       bg={match ? colors.purple : colors.blue}
       marginRight={['2px', 0]}
+      paddingLeft="0"
+      paddingRight="0"
     >
-      <Flex w="100%" h="100%" alignItems="center">
+      <Flex
+        w="100%"
+        h="100%"
+        alignItems="center"
+        position="relative"
+        paddingLeft="1rem"
+        paddingRight="1rem"
+      >
         <Box
           w={['36px', '24px']}
           h={['36px', '24px']}
           as={icon}
           margin="0 auto"
         />
+
+        {notification && (
+          <Flex w="12px" h="12px" right={['4px', '4px']} position="absolute">
+            <BlinkingDot
+              w="8px"
+              h="8px"
+              margin="auto"
+              borderRadius="50%"
+              bg={colors.white}
+            />
+          </Flex>
+        )}
+
         <Text
           display={['none', 'block']}
           flexGrow="1"
@@ -41,23 +81,32 @@ const NavigationButton = ({ icon, to, text }) => {
   );
 };
 
-const Navigation = ({ icon, iconOnly, ...props }) => (
-  <Flex
-    w="100%"
-    h="80px"
-    position="fixed"
-    bottom="0"
-    background={`linear-gradient(180deg, ${colors.white}00 0%, ${colors.white} 100%)`}
-    justifyContent="space-evenly"
-    alignItems="center"
-    paddingLeft={['2px', 0]}
-    {...props}
-  >
-    <NavigationButton icon={CarIcon} to="/dealer" text="Dealer" />
-    <NavigationButton icon={TrophyIcon} to="/race" text="Race" />
-    <NavigationButton icon={GarageIcon} to="/garage" text="Garage" />
-    <NavigationButton icon={SettingsIcon} to="/settings" text="Settings" />
-  </Flex>
-);
+const Navigation = ({ icon, iconOnly, ...props }) => {
+  const pageNotifications = useSelector(pageNotificationsSelector);
+
+  return (
+    <Flex
+      w="100%"
+      h="80px"
+      position="fixed"
+      bottom="0"
+      background={`linear-gradient(180deg, ${colors.white}00 0%, ${colors.white} 100%)`}
+      justifyContent="space-evenly"
+      alignItems="center"
+      paddingLeft={['2px', 0]}
+      {...props}
+    >
+      <NavigationButton icon={CarIcon} to="/dealer" text="Dealer" />
+      <NavigationButton icon={TrophyIcon} to="/race" text="Race" />
+      <NavigationButton
+        icon={GarageIcon}
+        to="/garage"
+        text="Garage"
+        notification={pageNotifications?.garagePage}
+      />
+      <NavigationButton icon={SettingsIcon} to="/settings" text="Settings" />
+    </Flex>
+  );
+};
 
 export default Navigation;

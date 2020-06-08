@@ -41,3 +41,14 @@ export const DISABLE_TUTORIAL_WINCHANCE_TYPE = 'DISABLE_TUTORIAL_WINCHANCE';
 export const disableTutorialWinChanceAction = {
   type: DISABLE_TUTORIAL_WINCHANCE_TYPE,
 };
+
+export const OPEN_GARAGE_TYPE = 'OPEN_GARAGE';
+export const openGarageAction = {
+  type: OPEN_GARAGE_TYPE,
+};
+
+export const OPEN_GARAGE_CAR_TYPE = 'OPEN_GARAGE_CAR';
+export const openGarageCarAction = carId => ({
+  type: OPEN_GARAGE_CAR_TYPE,
+  payload: { carId },
+});

@@ -19,6 +19,20 @@ import { colors } from '../helpers/theme';
 import getImageCar from '../helpers/imageMappingCars';
 import AttributeCircle from './AttributeCircle';
 
+const BlinkCard = styled(Box)`
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  animation: ${({ blink }) => (blink ? 'blink 1s ease infinite' : 'none')};
+
+  @keyframes blink {
+    50% {
+      box-shadow: none;
+    }
+    100% {
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+  }
+`;
+
 const BoughtAnimation = styled(Flex)`
   animation: fadeOut ease 1.5s;
   opacity: 0;
@@ -39,6 +53,7 @@ const CardCarSmall = ({
   onClick,
   showPrice,
   garage,
+  notification,
   ...props
 }) => {
   const { id, race } = car;
@@ -99,14 +114,14 @@ const CardCarSmall = ({
   const color = garage ? colors.lightBlue : colors.orange;
 
   return (
-    <Box
+    <BlinkCard
       w="160px"
       h={garage ? '180px' : '124px'}
       position="relative"
       onClick={setSelected}
       cursor={meetsRequirements ? 'pointer' : 'unset'}
       borderRadius="16px"
-      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+      blink={garage && notification}
       {...props}
     >
       <Box w="100%" h="100px" position="absolute">
@@ -213,7 +228,7 @@ const CardCarSmall = ({
           borderRadius="16px"
         />
       )}
-    </Box>
+    </BlinkCard>
   );
 };
 

@@ -1,42 +1,59 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import CarDetailsGarage from './CarDetailsGarage';
-import { useSelector } from 'react-redux';
-import { garageCarsSelector } from '../state/selectors';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  garageCarsSelector,
+  pageNotificationsGarageSelector,
+} from '../state/selectors';
 import CardCarSmall from './CardCarSmall';
 import Modal from './Modal';
 import { useLocation, Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
+import { openGarageAction } from '../state/actions';
 
-const CarsContainer = ({ cars, ...props }) => (
-  <>
-    {cars.length > 0 && (
-      <Flex
-        wrap="wrap"
-        margin="0 auto"
-        paddingLeft="16px"
-        boxSizing="content-box"
-        {...props}
-      >
-        {cars.map(car => (
-          <Box marginRight="16px" marginBottom="16px" key={car.id}>
-            <CardCarSmall car={car} garage />
-          </Box>
-        ))}
-      </Flex>
-    )}
-  </>
-);
+const CarsContainer = ({ cars, ...props }) => {
+  const pageNotificationsGarage = useSelector(pageNotificationsGarageSelector);
+
+  return (
+    <>
+      {cars.length > 0 && (
+        <Flex
+          wrap="wrap"
+          margin="0 auto"
+          paddingLeft="16px"
+          boxSizing="content-box"
+          {...props}
+        >
+          {cars.map(car => (
+            <Box marginRight="16px" marginBottom="16px" key={car.id}>
+              <CardCarSmall
+                car={car}
+                garage
+                notification={pageNotificationsGarage?.includes(car.id)}
+              />
+            </Box>
+          ))}
+        </Flex>
+      )}
+    </>
+  );
+};
 
 const Garage = () => {
   const location = useLocation();
   const cars = useSelector(garageCarsSelector);
   const containerWidth = useDynamicCardContainerWidth();
+  const dispatch = useDispatch();
 
   const selected = location?.state?.car;
 
   const selectedCar = cars.find(item => item.id === selected);
+
+  useEffect(() => {
+    dispatch(openGarageAction);
+  }, [dispatch]);
 
   return (
     <Box>

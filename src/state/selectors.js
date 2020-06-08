@@ -26,3 +26,8 @@ export const pastRaceSelector = pastRaceId => state =>
 
 export const tutorialWinChanceSelector = state => state.tutorial.winChance;
 export const lockedSelector = state => state.locked;
+
+export const pageNotificationsSelector = state => state.pageNotifications;
+
+export const pageNotificationsGarageSelector = state =>
+  state.pageNotifications?.garage;

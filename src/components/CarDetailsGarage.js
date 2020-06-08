@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Flex, Text } from '@chakra-ui/core';
 import Button from './Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
-import { sellCarAction, upgradeAttributeAction } from '../state/actions';
+import {
+  sellCarAction,
+  upgradeAttributeAction,
+  openGarageCarAction,
+} from '../state/actions';
 import { moneySelector, garageCarsSelector } from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
 import { colors } from '../helpers/theme';
@@ -49,6 +53,10 @@ const CarDetailsGarage = ({ car, ...props }) => {
 
   const dispatch = useDispatch();
   const garageCars = useSelector(garageCarsSelector);
+
+  useEffect(() => {
+    dispatch(openGarageCarAction(id));
+  }, [dispatch, id]);
 
   const title =
     (!confirmationState && name) ||

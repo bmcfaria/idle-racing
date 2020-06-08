@@ -8,6 +8,8 @@ import {
   CLEAR_NOTIFICATIONS_TYPE,
   DISABLE_TUTORIAL_WINCHANCE_TYPE,
   RESET_TYPE,
+  OPEN_GARAGE_TYPE,
+  OPEN_GARAGE_CAR_TYPE,
 } from './actions';
 import {
   cars as dealerCars,
@@ -20,11 +22,15 @@ import {
 } from '../helpers/mockData';
 import { raceResults } from '../helpers/utils';
 
-const initialState = {
+export const initialState = {
   garageCars: [],
   tracks,
   money: 650,
   notifications: [],
+  pageNotifications: {
+    garagePage: false,
+    garage: [],
+  },
   races: [],
   pastRaces: [],
   tutorial: {
@@ -38,7 +44,7 @@ const initialState = {
       track: true,
     },
   },
-  version: 0.1,
+  version: 0.2,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -55,10 +61,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
+      const garageCar = generateGarageCar(car);
+
       return {
         ...state,
         money: state.money - car.price,
-        garageCars: [...state.garageCars, generateGarageCar(car)],
+        garageCars: [...state.garageCars, garageCar],
+        pageNotifications: {
+          ...state.pageNotifications,
+          garagePage: true,
+          garage: [...state.pageNotifications.garage, garageCar.id],
+        },
       };
     }
 
@@ -245,6 +258,28 @@ const rootReducer = (state = initialState, { type, payload }) => {
         tutorial: {
           ...state.tutorial,
           winChance: false,
+        },
+      };
+    }
+
+    case OPEN_GARAGE_TYPE: {
+      return {
+        ...state,
+        pageNotifications: {
+          ...state.pageNotifications,
+          garagePage: false,
+        },
+      };
+    }
+
+    case OPEN_GARAGE_CAR_TYPE: {
+      return {
+        ...state,
+        pageNotifications: {
+          ...state.pageNotifications,
+          garage: state.pageNotifications.garage.filter(
+            item => item !== payload.carId
+          ),
         },
       };
     }
