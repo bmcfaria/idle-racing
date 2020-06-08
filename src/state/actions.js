@@ -37,9 +37,14 @@ export const CLEAR_NOTIFICATIONS_TYPE = 'CLEAR_NOTIFICATIONS';
 export const clearNotificationsAction = {
   type: CLEAR_NOTIFICATIONS_TYPE,
 };
+
 export const DISABLE_TUTORIAL_WINCHANCE_TYPE = 'DISABLE_TUTORIAL_WINCHANCE';
 export const disableTutorialWinChanceAction = {
   type: DISABLE_TUTORIAL_WINCHANCE_TYPE,
+};
+export const DISABLE_TUTORIAL_UPGRADE_TYPE = 'DISABLE_TUTORIAL_UPGRADE';
+export const disableTutorialUpgradeAction = {
+  type: DISABLE_TUTORIAL_UPGRADE_TYPE,
 };
 
 export const OPEN_GARAGE_TYPE = 'OPEN_GARAGE';

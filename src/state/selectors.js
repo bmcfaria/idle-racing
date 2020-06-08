@@ -24,7 +24,8 @@ export const pastRacesSelector = state => state.pastRaces;
 export const pastRaceSelector = pastRaceId => state =>
   state.pastRaces.find(item => item.id === pastRaceId);
 
-export const tutorialWinChanceSelector = state => state.tutorial.winChance;
+export const tutorialWinChanceSelector = state => state.tutorial?.winChance;
+export const tutorialUpgradeSelector = state => state.tutorial?.upgrade;
 export const lockedSelector = state => state.locked;
 
 export const pageNotificationsSelector = state => state.pageNotifications;

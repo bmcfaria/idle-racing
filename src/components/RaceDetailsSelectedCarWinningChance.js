@@ -4,26 +4,13 @@ import { CardWinningChanceComponent } from './CardWinningChance';
 import { winProbability } from '../helpers/utils';
 import { zIndex } from '../helpers/theme';
 import { MdInfo, MdInfoOutline } from 'react-icons/md';
-import styled from '@emotion/styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { tutorialWinChanceSelector } from '../state/selectors';
 import { disableTutorialWinChanceAction } from '../state/actions';
 import Button from './Button';
+import CallForAttention from './CallForAttention';
 
 const GOOD_VALUE = 3;
-
-const CallForAttention = styled(Box)`
-  animation: blink 0.5s alternate infinite;
-
-  @keyframes blink {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0.9;
-    }
-  }
-`;
 
 const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
   const [showTip, setShowTip] = useState();
@@ -167,7 +154,6 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
             borderRadius="16px"
             position="absolute"
             left="8px"
-            bg="white"
           />
         )}
 

@@ -10,6 +10,7 @@ import {
   RESET_TYPE,
   OPEN_GARAGE_TYPE,
   OPEN_GARAGE_CAR_TYPE,
+  DISABLE_TUTORIAL_UPGRADE_TYPE,
 } from './actions';
 import {
   cars as dealerCars,
@@ -35,6 +36,7 @@ export const initialState = {
   pastRaces: [],
   tutorial: {
     winChance: true,
+    upgrade: true,
   },
   locked: {
     race: {
@@ -258,6 +260,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
         tutorial: {
           ...state.tutorial,
           winChance: false,
+        },
+      };
+    }
+
+    case DISABLE_TUTORIAL_UPGRADE_TYPE: {
+      return {
+        ...state,
+        tutorial: {
+          ...state.tutorial,
+          upgrade: false,
         },
       };
     }

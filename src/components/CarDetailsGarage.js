@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Text } from '@chakra-ui/core';
+import { Flex, Text, Box } from '@chakra-ui/core';
 import Button from './Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
@@ -7,11 +7,17 @@ import {
   sellCarAction,
   upgradeAttributeAction,
   openGarageCarAction,
+  disableTutorialUpgradeAction,
 } from '../state/actions';
-import { moneySelector, garageCarsSelector } from '../state/selectors';
+import {
+  moneySelector,
+  garageCarsSelector,
+  tutorialUpgradeSelector,
+} from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
 import { colors } from '../helpers/theme';
 import AttributeCircle from './AttributeCircle';
+import CallForAttention from './CallForAttention';
 
 const AttributeCircleButton = ({
   attr,
@@ -20,29 +26,48 @@ const AttributeCircleButton = ({
   confirmationState,
   ...props
 }) => {
+  const tutorial = useSelector(tutorialUpgradeSelector);
+  const dispatch = useDispatch();
   const [hoverOnAttr, setHoverOnAttr] = useState();
   const disabled =
     (confirmationState && confirmationState !== text) ||
     attr.upgrade >= attr.max;
 
+  const disableTutorial = () => {
+    dispatch(disableTutorialUpgradeAction);
+  };
+
   return (
-    <Button
-      w="56px"
-      h="56px"
-      bg={disabled ? 'transparent' : colors.lightBlue}
-      border={`1px solid ${colors.white}`}
-      onMouseEnter={() => !disabled && setHoverOnAttr(true)}
-      onMouseLeave={() => setHoverOnAttr()}
-      isDisabled={disabled}
-      {...props}
-    >
-      <AttributeCircle
-        attr={attr}
-        text={text}
-        showMax
-        nextUpgrade={hoverOnAttr || confirmationState === text}
-      />
-    </Button>
+    <Box position="relative">
+      <Button
+        w="56px"
+        h="56px"
+        bg={disabled ? 'transparent' : colors.lightBlue}
+        border={`1px solid ${colors.white}`}
+        onMouseEnter={() => !disabled && setHoverOnAttr(true)}
+        onMouseLeave={() => setHoverOnAttr()}
+        isDisabled={disabled}
+        {...props}
+      >
+        <AttributeCircle
+          attr={attr}
+          text={text}
+          showMax
+          nextUpgrade={hoverOnAttr || confirmationState === text}
+        />
+      </Button>
+      {tutorial && (
+        <CallForAttention
+          w="100%"
+          h="100%"
+          top="0"
+          left="0"
+          borderRadius="4px"
+          position="absolute"
+          onMouseEnter={disableTutorial}
+        />
+      )}
+    </Box>
   );
 };
 
