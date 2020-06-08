@@ -46,7 +46,7 @@ const AttributeCircleButton = ({
         border={`1px solid ${colors.white}`}
         onMouseEnter={() => !disabled && setHoverOnAttr(true)}
         onMouseLeave={() => setHoverOnAttr()}
-        isDisabled={disabled}
+        disabled={attr.upgrade >= attr.max}
         {...props}
       >
         <AttributeCircle
@@ -171,6 +171,7 @@ const CarDetailsGarage = ({ car, ...props }) => {
       <Flex w="100%" justifyContent="space-evenly">
         <Button
           onClick={buttonCallback}
+          minW="72px"
           h="24px"
           fontSize="12px"
           isDisabled={buttonDisable}
@@ -182,6 +183,7 @@ const CarDetailsGarage = ({ car, ...props }) => {
         {confirmationState && (
           <Button
             onClick={() => setConfirmationState()}
+            minW="72px"
             h="24px"
             fontSize="12px"
             color={colors.darkGray}
