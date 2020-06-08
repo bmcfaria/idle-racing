@@ -16,8 +16,6 @@ import { colors } from './helpers/theme';
 
 const store = configureStore();
 
-console.log(theme);
-
 const customTheme = {
   ...theme,
   fonts: {

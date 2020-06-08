@@ -1,6 +1,5 @@
 import React from 'react';
-import { Flex, Image, Text } from '@chakra-ui/core';
-import getImageCar from '../helpers/imageMappingCars';
+import { Flex, Text } from '@chakra-ui/core';
 import { useSelector } from 'react-redux';
 import { dealerCarSelector, garageCarsSelector } from '../state/selectors';
 import { colors } from '../helpers/theme';
@@ -79,16 +78,22 @@ const RequirementsListAttr = ({ attr, requirements }) => {
 };
 
 const RequirementsListCar = ({ carId }) => {
+  const garagesCars = useSelector(garageCarsSelector);
   const car = useSelector(dealerCarSelector(carId));
 
+  const meetRequirement = garagesCars.find(
+    garageCar => garageCar.dealerCar === car.id,
+    true
+  );
+
   return (
-    <Image
-      maxW="24px"
+    <Text
       h="16px"
-      objectFit="contain"
-      alt="car"
-      src={getImageCar(car)}
-    />
+      fontSize="12px"
+      color={!!meetRequirement ? 'unset' : colors.red}
+    >
+      {car.name.split(' ').pop()}
+    </Text>
   );
 };
 
