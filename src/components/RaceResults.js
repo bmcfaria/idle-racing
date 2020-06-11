@@ -15,13 +15,13 @@ const Row = ({ index, car, playerCarId, prize }) => (
     w="100%"
     fontSize="12px"
     lineHeight="12px"
-    color={car.id === playerCarId ? colors.blue : colors.white}
+    color={car?.id === playerCarId ? colors.blue : colors.white}
     cursor="pointer"
   >
     <Text w="8px" textAlign="center">
       {index + 1}
     </Text>
-    <Text marginLeft="2px">- {car.name}</Text>
+    <Text marginLeft="2px">- {car ? car.name : 'Selled car'}</Text>
     <Text marginLeft="auto">{prize}</Text>
   </Flex>
 );
