@@ -89,7 +89,7 @@ const CardTrack = ({ track }) => {
         >
           <Text fontSize="14px">({track?.name})</Text>
           <Text fontSize="24px">Results</Text>
-          <Text fontSize="14px">({car ? car.name : 'selled car'})</Text>
+          <Text fontSize="14px">({car ? car.name : '[selled car]'})</Text>
         </Flex>
       )}
     </Box>
