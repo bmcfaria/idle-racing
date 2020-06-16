@@ -44,7 +44,7 @@ const NotificationsPastRace = ({ pastRace, onClose }) => {
       </Flex>
       <Flex justifyContent="space-between" h="24px">
         <Text>Position: {position}</Text>
-        <Text>{car.name}</Text>
+        <Text>{car ? car.name : '[selled car]'}</Text>
       </Flex>
     </Box>
   );
