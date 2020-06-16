@@ -5,10 +5,11 @@ import { Text } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import Notifications from './Notifications';
 import { useSelector } from 'react-redux';
-import { moneySelector } from '../state/selectors';
+import { moneySelector, experienceSelector } from '../state/selectors';
 import { zIndex, colors } from '../helpers/theme';
 import { useCurrentPageName } from '../helpers/hooks';
 import abbreviate from 'number-abbreviate';
+import Button from './Button';
 
 const RoundTriange = props => (
   <svg
@@ -84,26 +85,77 @@ const Money = props => {
   );
 };
 
+const ExperienceButton = ({ text, value = 0, color = colors.orande }) => {
+  const maxValue = 10 ** `${value}`.length;
+
+  return (
+    <Button h="100%" bg={colors.white} boxShadow="none">
+      <Box marginBottom="2px">
+        <Text w="100%" h="16px" fontSize="14px" textAlign="center">
+          {text}
+        </Text>
+        <Box w="100px" h="14px" position="relative" border="1px solid black">
+          <Box w={`${(value * 100) / maxValue}%`} h="100%" bg={color} />
+          <Text
+            w="100%"
+            h="12px"
+            top="0"
+            lineHeight="12px"
+            fontSize="12px"
+            textAlign="center"
+            position="absolute"
+          >
+            {`${value} / ${maxValue}`}
+          </Text>
+        </Box>
+      </Box>
+    </Button>
+  );
+};
+
 const HeaderBar = () => {
+  const experience = useSelector(experienceSelector);
+
   return (
     <header>
       {/* spacer */}
-      <Box w="100%" h="48px" />
+      <Box w="100%" h="88px" />
 
-      <Box
-        position="fixed"
-        top="0"
-        left="0"
-        w="100%"
-        h="48px"
-        zIndex={zIndex.headerBar}
-        bg={colors.blue}
-        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-      >
-        <Flex h="100%" justifyContent="space-between">
+      <Box position="fixed" top="0" left="0" w="100%" zIndex={zIndex.headerBar}>
+        <Flex
+          w="100%"
+          h="48px"
+          bg={colors.blue}
+          position="relative"
+          justifyContent="space-between"
+        >
           <Money />
           <Navigation />
           <Notifications />
+        </Flex>
+
+        <Flex
+          w="100%"
+          h="40px"
+          bg={colors.white}
+          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+          justifyContent="space-around"
+        >
+          <ExperienceButton
+            text="Business exp"
+            value={experience.business}
+            color={colors.orange}
+          />
+          <ExperienceButton
+            text="Race exp"
+            value={experience.race}
+            color={colors.green}
+          />
+          <ExperienceButton
+            text="Mechanic exp"
+            value={experience.mechanic}
+            color={colors.lightBlue}
+          />
         </Flex>
       </Box>
     </header>

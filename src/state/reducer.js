@@ -46,7 +46,12 @@ export const initialState = {
       track: true,
     },
   },
-  version: 0.2,
+  experience: {
+    business: 0,
+    race: 0,
+    mechanic: 0,
+  },
+  version: 0.3,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -74,6 +79,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
           garagePage: true,
           garage: [...state.pageNotifications.garage, garageCar.id],
         },
+        experience: {
+          ...state.experience,
+          business:
+            state.experience.business +
+            (~~(car.price / 1000) < 1 ? 1 : ~~(car.price / 1000)),
+        },
       };
     }
 
@@ -88,6 +99,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         money: state.money + car.price,
         garageCars: state.garageCars.filter(item => item.id !== car.id),
+        experience: {
+          ...state.experience,
+          business:
+            state.experience.business +
+            (~~(car.price / 1000) < 1 ? 1 : ~~(car.price / 1000)),
+        },
       };
     }
 
@@ -115,6 +132,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
         garageCars: Object.assign([], state.garageCars, {
           [carIndex]: newCar,
         }),
+        experience: {
+          ...state.experience,
+          mechanic: state.experience.mechanic + 1,
+        },
       };
     }
 
@@ -211,6 +232,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
             ...(track.category === 'offroad' &&
               position === 1 && { track: false }),
           },
+        },
+        experience: {
+          ...state.experience,
+          race: state.experience.race + 1,
         },
       };
     }
