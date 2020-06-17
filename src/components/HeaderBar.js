@@ -98,10 +98,16 @@ const ExperienceButton = ({
   experience,
   color = colors.orande,
   onClick,
+  selected,
 }) => {
   return (
-    <Button h="100%" bg={colors.white} boxShadow="none" onClick={onClick}>
-      <Box marginBottom="2px">
+    <Button
+      h="100%"
+      bg={colors.white}
+      boxShadow={selected ? `0 0 0 3px ${colors.purple}` : 'none'}
+      onClick={onClick}
+    >
+      <Box marginBottom="2px" position="relative">
         <Text w="100%" h="16px" fontSize="14px" textAlign="center">
           {text}
         </Text>
@@ -123,6 +129,28 @@ const ExperienceButton = ({
             {`${experience.exp} / ${experience.nextLevel}`}
           </Text>
         </Box>
+        {~~experience.availablePoints > 0 && (
+          <Box
+            top="10px"
+            right="-15px"
+            w="14px"
+            h="14px"
+            borderRadius="50%"
+            position="absolute"
+            bg={colors.darkGray}
+          >
+            <Text
+              w="100%"
+              h="100%"
+              fontSize="12px"
+              lineHeight="14px"
+              textAlign="center"
+              color={colors.white}
+            >
+              {experience.availablePoints}
+            </Text>
+          </Box>
+        )}
       </Box>
     </Button>
   );
@@ -185,18 +213,21 @@ const HeaderBar = () => {
             experience={experienceBusiness}
             color={colors.orange}
             onClick={() => openUpgradeModal('business')}
+            selected={expTypeModal === 'business'}
           />
           <ExperienceButton
             text="Race exp"
             experience={experienceRace}
             color={colors.green}
             onClick={() => openUpgradeModal('race')}
+            selected={expTypeModal === 'race'}
           />
           <ExperienceButton
             text="Mechanic exp"
             experience={experienceMechanic}
             color={colors.lightBlue}
             onClick={() => openUpgradeModal('mechanic')}
+            selected={expTypeModal === 'mechanic'}
           />
         </Flex>
       </Box>

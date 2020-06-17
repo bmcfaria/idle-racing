@@ -1,20 +1,12 @@
 import React from 'react';
 import { Box, Text, Flex } from '@chakra-ui/core';
-import { useLocation, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  raceSelector,
-  garageCarSelector,
-  pastRaceSelector,
-  experienceSelector,
   experienceBusinessSelector,
   experienceRaceSelector,
   experienceMechanicSelector,
 } from '../state/selectors';
-import CardProgressOverlay from './CardProgressOverlay';
-import CardTrackContent from './CardTrackContent';
 import { colors } from '../helpers/theme';
-import hexAlpha from 'hex-alpha';
 import Button from './Button';
 import { buyExperienceBuffAction } from '../state/actions';
 
@@ -104,23 +96,23 @@ const ExperienceUpgrades = ({ expType }) => {
       bg={colors.white}
       alignItems="center"
     >
-      <Flex w="100%" justifyContent="space-around" lineHeight="16px">
+      <Flex w="100%" justifyContent="space-between" lineHeight="16px">
         {expType === 'business' && (
           <>
-            <Text w="48px" textAlign="center">
+            <Text w="48px" marginLeft="-4px" textAlign="center">
               New cars
             </Text>
-            <Text w="48px" textAlign="center">
+            <Text w="48px" marginRight="-4px" textAlign="center">
               Used cars
             </Text>
           </>
         )}
         {expType === 'race' && (
           <>
-            <Text w="48px" textAlign="center">
+            <Text w="48px" marginLeft="-4px" textAlign="center">
               Race price
             </Text>
-            <Text w="48px" textAlign="center">
+            <Text w="48px" marginRight="-4px" textAlign="center">
               Race prizes
             </Text>
           </>
