@@ -90,6 +90,7 @@ const Navigation = ({ icon, iconOnly, ...props }) => {
       h="80px"
       position="fixed"
       bottom="0"
+      zIndex="1"
       background={`linear-gradient(180deg, ${colors.white}00 0%, ${colors.white} 100%)`}
       justifyContent="space-evenly"
       alignItems="center"
