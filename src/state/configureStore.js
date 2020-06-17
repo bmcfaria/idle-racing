@@ -27,6 +27,22 @@ const loadState = () => {
         ...initialState.locked,
         ...state.locked,
       },
+      experience: {
+        ...initialState.experience,
+        ...state.experience,
+        business: {
+          ...initialState.experience.business,
+          ...(state.experience?.business ?? {}),
+        },
+        race: {
+          ...initialState.experience.race,
+          ...(state.experience?.race ?? {}),
+        },
+        mechanic: {
+          ...initialState.experience.mechanic,
+          ...(state.experience?.mechanic ?? {}),
+        },
+      },
     };
   } catch (err) {
     return undefined;

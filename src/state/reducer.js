@@ -11,6 +11,7 @@ import {
   OPEN_GARAGE_TYPE,
   OPEN_GARAGE_CAR_TYPE,
   DISABLE_TUTORIAL_UPGRADE_TYPE,
+  BUY_EXPERIENCE_BUFF_TYPE,
 } from './actions';
 import {
   cars as dealerCars,
@@ -47,9 +48,18 @@ export const initialState = {
     },
   },
   experience: {
-    business: 0,
-    race: 0,
-    mechanic: 0,
+    business: {
+      exp: 0,
+    },
+    race: {
+      exp: 0,
+    },
+    mechanic: {
+      exp: 0,
+      acc: 0,
+      spd: 0,
+      hnd: 0,
+    },
   },
   version: 0.3,
 };
@@ -69,6 +79,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
 
       const garageCar = generateGarageCar(car);
+      const businessExpInc =
+        ~~(car.price / 1000) < 1 ? 1 : ~~(car.price / 1000);
 
       return {
         ...state,
@@ -81,9 +93,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
         },
         experience: {
           ...state.experience,
-          business:
-            state.experience.business +
-            (~~(car.price / 1000) < 1 ? 1 : ~~(car.price / 1000)),
+          business: {
+            ...state.experience.business,
+            exp: state.experience.business.exp + businessExpInc,
+          },
         },
       };
     }
@@ -95,15 +108,19 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
+      const businessExpInc =
+        ~~(car.price / 1000) < 1 ? 1 : ~~(car.price / 1000);
+
       return {
         ...state,
         money: state.money + car.price,
         garageCars: state.garageCars.filter(item => item.id !== car.id),
         experience: {
           ...state.experience,
-          business:
-            state.experience.business +
-            (~~(car.price / 1000) < 1 ? 1 : ~~(car.price / 1000)),
+          business: {
+            ...state.experience.business,
+            exp: state.experience.business.exp + businessExpInc,
+          },
         },
       };
     }
@@ -134,7 +151,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
         }),
         experience: {
           ...state.experience,
-          mechanic: state.experience.mechanic + 1,
+          mechanic: {
+            ...state.experience.mechanic,
+            exp: state.experience.mechanic.exp + 1,
+          },
         },
       };
     }
@@ -235,7 +255,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
         },
         experience: {
           ...state.experience,
-          race: state.experience.race + 1,
+          race: {
+            ...state.experience.race,
+            exp: state.experience.race.exp + 1,
+          },
         },
       };
     }
@@ -319,6 +342,37 @@ const rootReducer = (state = initialState, { type, payload }) => {
           ),
         },
       };
+    }
+
+    case BUY_EXPERIENCE_BUFF_TYPE: {
+      if (
+        payload.type === 'mechanic' &&
+        (payload.subType === 'acc' ||
+          payload.subType === 'spd' ||
+          payload.subType === 'hnd')
+      ) {
+        const { exp, acc, spd, hnd } = state.experience.mechanic;
+        const availablePoints = `${exp}`.length - 1 - acc - spd - hnd;
+
+        const increment =
+          availablePoints > 0 && state.experience.mechanic[payload.subType] < 3
+            ? 1
+            : 0;
+
+        return {
+          ...state,
+          experience: {
+            ...state.experience,
+            mechanic: {
+              ...state.experience.mechanic,
+              [payload.subType]:
+                state.experience.mechanic[payload.subType] + increment,
+            },
+          },
+        };
+      }
+
+      return state;
     }
 
     default: {

@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, PseudoBox } from '@chakra-ui/core';
 import { Flex } from '@chakra-ui/core';
 import { Text } from '@chakra-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import Notifications from './Notifications';
 import { useSelector } from 'react-redux';
-import { moneySelector, experienceSelector } from '../state/selectors';
+import {
+  moneySelector,
+  experienceSelector,
+  experienceMechanicSelector,
+  experienceBusinessSelector,
+  experienceRaceSelector,
+} from '../state/selectors';
 import { zIndex, colors } from '../helpers/theme';
 import { useCurrentPageName } from '../helpers/hooks';
 import abbreviate from 'number-abbreviate';
 import Button from './Button';
+import Modal from './Modal';
+import ExperienceUpgrades from './ExperienceUpgrades';
 
 const RoundTriange = props => (
   <svg
@@ -85,17 +93,24 @@ const Money = props => {
   );
 };
 
-const ExperienceButton = ({ text, value = 0, color = colors.orande }) => {
-  const maxValue = 10 ** `${value}`.length;
-
+const ExperienceButton = ({
+  text,
+  experience,
+  color = colors.orande,
+  onClick,
+}) => {
   return (
-    <Button h="100%" bg={colors.white} boxShadow="none">
+    <Button h="100%" bg={colors.white} boxShadow="none" onClick={onClick}>
       <Box marginBottom="2px">
         <Text w="100%" h="16px" fontSize="14px" textAlign="center">
           {text}
         </Text>
         <Box w="100px" h="14px" position="relative" border="1px solid black">
-          <Box w={`${(value * 100) / maxValue}%`} h="100%" bg={color} />
+          <Box
+            w={`${(experience.exp * 100) / experience.nextLevel}%`}
+            h="100%"
+            bg={color}
+          />
           <Text
             w="100%"
             h="12px"
@@ -105,7 +120,7 @@ const ExperienceButton = ({ text, value = 0, color = colors.orande }) => {
             textAlign="center"
             position="absolute"
           >
-            {`${value} / ${maxValue}`}
+            {`${experience.exp} / ${experience.nextLevel}`}
           </Text>
         </Box>
       </Box>
@@ -114,12 +129,29 @@ const ExperienceButton = ({ text, value = 0, color = colors.orande }) => {
 };
 
 const HeaderBar = () => {
-  const experience = useSelector(experienceSelector);
+  const location = useLocation();
+  const history = useHistory();
+  const experienceBusiness = useSelector(experienceBusinessSelector);
+  const experienceRace = useSelector(experienceRaceSelector);
+  const experienceMechanic = useSelector(experienceMechanicSelector);
+
+  const expTypeModal = location.state?.expType;
+
+  const openUpgradeModal = expType => {
+    history.push({
+      pathname: location.pathname,
+      state: { ...(location.state || {}), expType: expType },
+    });
+  };
 
   return (
     <header>
       {/* spacer */}
       <Box w="100%" h="88px" />
+
+      <Modal isOpen={!!expTypeModal} backOnClose>
+        <ExperienceUpgrades expType={expTypeModal} />
+      </Modal>
 
       <Box position="fixed" top="0" left="0" w="100%" zIndex={zIndex.headerBar}>
         <Flex
@@ -143,18 +175,21 @@ const HeaderBar = () => {
         >
           <ExperienceButton
             text="Business exp"
-            value={experience.business}
+            experience={experienceBusiness}
             color={colors.orange}
+            onClick={() => openUpgradeModal('business')}
           />
           <ExperienceButton
             text="Race exp"
-            value={experience.race}
+            experience={experienceRace}
             color={colors.green}
+            onClick={() => openUpgradeModal('race')}
           />
           <ExperienceButton
             text="Mechanic exp"
-            value={experience.mechanic}
+            experience={experienceMechanic}
             color={colors.lightBlue}
+            onClick={() => openUpgradeModal('mechanic')}
           />
         </Flex>
       </Box>

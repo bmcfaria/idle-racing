@@ -57,3 +57,9 @@ export const openGarageCarAction = carId => ({
   type: OPEN_GARAGE_CAR_TYPE,
   payload: { carId },
 });
+
+export const BUY_EXPERIENCE_BUFF_TYPE = 'BUY_EXPERIENCE_BUFF';
+export const buyExperienceBuffAction = (type, subType) => ({
+  type: BUY_EXPERIENCE_BUFF_TYPE,
+  payload: { type, subType },
+});

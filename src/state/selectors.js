@@ -34,3 +34,29 @@ export const pageNotificationsGarageSelector = state =>
   state.pageNotifications?.garage;
 
 export const experienceSelector = state => state.experience;
+export const experienceBusinessSelector = state => {
+  const { exp } = state.experience.business;
+
+  return {
+    ...state.experience.business,
+    nextLevel: 10 ** `${exp}`.length,
+  };
+};
+export const experienceRaceSelector = state => {
+  const { exp } = state.experience.race;
+
+  return {
+    ...state.experience.race,
+    nextLevel: 10 ** `${exp}`.length,
+  };
+};
+export const experienceMechanicSelector = state => {
+  const { exp, acc, spd, hnd } = state.experience.mechanic;
+  const availablePoints = `${exp}`.length - 1 - acc - spd - hnd;
+
+  return {
+    ...state.experience.mechanic,
+    nextLevel: 10 ** `${exp}`.length,
+    availablePoints,
+  };
+};
