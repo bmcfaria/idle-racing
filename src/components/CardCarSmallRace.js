@@ -157,10 +157,7 @@ const CardCarSmallRace = ({
             attr={car[ATTRIBUTE_TYPES.ACCELERATION].value}
             text="ACC"
           />
-          <CarAttribute
-            attr={car[ATTRIBUTE_TYPES.TOP_SPEED].value}
-            text="TSP"
-          />
+          <CarAttribute attr={car[ATTRIBUTE_TYPES.SPEED].value} text="SPD" />
           <CarAttribute attr={car[ATTRIBUTE_TYPES.HANDLING].value} text="HND" />
         </Flex>
       </Flex>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, PseudoBox } from '@chakra-ui/core';
 import { Flex } from '@chakra-ui/core';
 import { Text } from '@chakra-ui/core';
@@ -7,7 +7,6 @@ import Notifications from './Notifications';
 import { useSelector } from 'react-redux';
 import {
   moneySelector,
-  experienceSelector,
   experienceMechanicSelector,
   experienceBusinessSelector,
   experienceRaceSelector,

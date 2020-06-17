@@ -23,7 +23,7 @@ const RadarChartTrack = styled(({ track, ...props }) => {
   };
 
   const accPoint = pointValue(track?.acc, -1, 1);
-  const tspPoint = pointValue(track?.tsp, 0, -1);
+  const spdPoint = pointValue(track?.spd, 0, -1);
   const hanPoint = pointValue(track?.hnd, 1, 1);
 
   return (
@@ -49,7 +49,7 @@ const RadarChartTrack = styled(({ track, ...props }) => {
           <polygon
             className="inner-triangle"
             points={`
-          ${tspPoint} 
+          ${spdPoint} 
           ${accPoint} 
           ${hanPoint}
           `}
@@ -59,7 +59,7 @@ const RadarChartTrack = styled(({ track, ...props }) => {
           Acc
         </text>
         <text x="50%" y="12" fontSize="12px" fill="white" textAnchor="middle">
-          Tsp
+          Spd
         </text>
         <text x="100%" y="100%" fontSize="12px" fill="white" textAnchor="end">
           Hnd

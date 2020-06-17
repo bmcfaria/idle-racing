@@ -65,7 +65,7 @@ export const initialState = {
       hnd: 0,
     },
   },
-  version: 0.3,
+  version: 0.4,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {

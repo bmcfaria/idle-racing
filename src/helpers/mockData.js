@@ -29,7 +29,7 @@ const generateAttribute = (base, unit, max, basePrice, upgrade) => {
 export const generateCarPrice = car =>
   car.basePrice +
   200 * car[ATTRIBUTE_TYPES.ACCELERATION].upgrade +
-  200 * car[ATTRIBUTE_TYPES.TOP_SPEED].upgrade +
+  200 * car[ATTRIBUTE_TYPES.SPEED].upgrade +
   200 * car[ATTRIBUTE_TYPES.HANDLING].upgrade;
 
 const generateCar = car => ({
@@ -43,10 +43,10 @@ const generateCar = car => ({
     ~~(car.price / 10),
     0
   ),
-  [ATTRIBUTE_TYPES.TOP_SPEED]: generateAttribute(
-    car.tsp,
+  [ATTRIBUTE_TYPES.SPEED]: generateAttribute(
+    car.spd,
     1,
-    car['tsp ups'],
+    car['spd ups'],
     ~~(car.price / 10),
     0
   ),
@@ -71,7 +71,7 @@ export const generateGarageCar = car => ({
   name: car.name,
   type: car.type,
   [ATTRIBUTE_TYPES.ACCELERATION]: car[ATTRIBUTE_TYPES.ACCELERATION],
-  [ATTRIBUTE_TYPES.TOP_SPEED]: car[ATTRIBUTE_TYPES.TOP_SPEED],
+  [ATTRIBUTE_TYPES.SPEED]: car[ATTRIBUTE_TYPES.SPEED],
   [ATTRIBUTE_TYPES.HANDLING]: car[ATTRIBUTE_TYPES.HANDLING],
   basePrice: ~~(car.price * carDevaluation),
   price: ~~(car.price * carDevaluation),
@@ -153,7 +153,7 @@ const generateTrack = track => ({
   prizes: [track['prize 1'], track['prize 2'], track['prize 3']],
   category: track.category,
   [ATTRIBUTE_TYPES.ACCELERATION]: track.acc > 1 ? 1 : track.acc,
-  [ATTRIBUTE_TYPES.TOP_SPEED]: track.tsp > 1 ? 1 : track.tsp,
+  [ATTRIBUTE_TYPES.SPEED]: track.spd > 1 ? 1 : track.spd,
   [ATTRIBUTE_TYPES.HANDLING]: track.hnd > 1 ? 1 : track.hnd,
   max: track.max,
   race: undefined,

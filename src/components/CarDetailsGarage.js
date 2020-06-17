@@ -91,15 +91,14 @@ const CarDetailsGarage = ({ car, ...props }) => {
   const buttonText =
     (confirmationState === 'ACC' &&
       `$${~~car[ATTRIBUTE_TYPES.ACCELERATION].price}`) ||
-    (confirmationState === 'TSP' &&
-      `$${~~car[ATTRIBUTE_TYPES.TOP_SPEED].price}`) ||
+    (confirmationState === 'SPD' && `$${~~car[ATTRIBUTE_TYPES.SPEED].price}`) ||
     (confirmationState === 'HND' &&
       `$${~~car[ATTRIBUTE_TYPES.HANDLING].price}`) ||
     (confirmationState === 'SELL' && `$${~~price}`) ||
     `Sell ($${~~price})`;
 
   const buttonColors = ((confirmationState === 'ACC' ||
-    confirmationState === 'TSP' ||
+    confirmationState === 'SPD' ||
     confirmationState === 'HND') && {
     bg: colors.lightBlue,
     color: 'black',
@@ -109,8 +108,8 @@ const CarDetailsGarage = ({ car, ...props }) => {
     (!confirmationState && garageCars?.length === 1) ||
     (confirmationState === 'ACC' &&
       money < ~~car[ATTRIBUTE_TYPES.ACCELERATION].price) ||
-    (confirmationState === 'TSP' &&
-      money < ~~car[ATTRIBUTE_TYPES.TOP_SPEED].price) ||
+    (confirmationState === 'SPD' &&
+      money < ~~car[ATTRIBUTE_TYPES.SPEED].price) ||
     (confirmationState === 'HND' &&
       money < ~~car[ATTRIBUTE_TYPES.HANDLING].price);
 
@@ -128,8 +127,8 @@ const CarDetailsGarage = ({ car, ...props }) => {
     switch (confirmationState) {
       case 'ACC':
         return upgrade(ATTRIBUTE_TYPES.ACCELERATION);
-      case 'TSP':
-        return upgrade(ATTRIBUTE_TYPES.TOP_SPEED);
+      case 'SPD':
+        return upgrade(ATTRIBUTE_TYPES.SPEED);
       case 'HND':
         return upgrade(ATTRIBUTE_TYPES.HANDLING);
       case 'SELL':
@@ -156,10 +155,10 @@ const CarDetailsGarage = ({ car, ...props }) => {
           onClick={() => setConfirmationState('ACC')}
         />
         <AttributeCircleButton
-          attr={car[ATTRIBUTE_TYPES.TOP_SPEED]}
-          text="TSP"
+          attr={car[ATTRIBUTE_TYPES.SPEED]}
+          text="SPD"
           confirmationState={confirmationState}
-          onClick={() => setConfirmationState('TSP')}
+          onClick={() => setConfirmationState('SPD')}
         />
         <AttributeCircleButton
           attr={car[ATTRIBUTE_TYPES.HANDLING]}

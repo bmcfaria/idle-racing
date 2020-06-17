@@ -172,7 +172,7 @@ const CardCarSmall = ({
               attr={car[ATTRIBUTE_TYPES.ACCELERATION]}
               text="ACC"
             />
-            <AttributeCircle attr={car[ATTRIBUTE_TYPES.TOP_SPEED]} text="TSP" />
+            <AttributeCircle attr={car[ATTRIBUTE_TYPES.SPEED]} text="SPD" />
             <AttributeCircle attr={car[ATTRIBUTE_TYPES.HANDLING]} text="HND" />
           </Flex>
         )}

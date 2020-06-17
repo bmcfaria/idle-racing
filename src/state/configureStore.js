@@ -11,6 +11,12 @@ const loadState = () => {
       return undefined;
     }
     const state = JSON.parse(serializedState);
+
+    if (state.version < 0.4) {
+      return {
+        ...initialState,
+      };
+    }
     // Pre-fill with initial state to prevent errors on old dated states
     return {
       ...initialState,

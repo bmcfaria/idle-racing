@@ -87,10 +87,7 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
               name="ACC"
               value={track[ATTRIBUTE_TYPES.ACCELERATION]}
             />
-            <TrackAttribute
-              name="TSP"
-              value={track[ATTRIBUTE_TYPES.TOP_SPEED]}
-            />
+            <TrackAttribute name="SPD" value={track[ATTRIBUTE_TYPES.SPEED]} />
             <TrackAttribute
               name="HND"
               value={track[ATTRIBUTE_TYPES.HANDLING]}

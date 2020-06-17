@@ -34,11 +34,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
           text="ACC"
           showMax
         />
-        <AttributeCircle
-          attr={car[ATTRIBUTE_TYPES.TOP_SPEED]}
-          text="TSP"
-          showMax
-        />
+        <AttributeCircle attr={car[ATTRIBUTE_TYPES.SPEED]} text="SPD" showMax />
         <AttributeCircle
           attr={car[ATTRIBUTE_TYPES.HANDLING]}
           text="HND"

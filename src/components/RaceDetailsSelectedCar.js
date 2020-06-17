@@ -61,10 +61,10 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
             </Box>
             <Box w="40px">
               <Text textAlign="center" fontSize="12px">
-                TSP
+                SPD
               </Text>
               <Text textAlign="center" fontSize="14px">
-                {car[ATTRIBUTE_TYPES.TOP_SPEED].value}
+                {car[ATTRIBUTE_TYPES.SPEED].value}
               </Text>
             </Box>
             <Box w="40px">

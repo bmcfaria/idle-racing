@@ -8,7 +8,7 @@ export const displayResponsivePanel = condition => [
 
 export const ATTRIBUTE_TYPES = {
   ACCELERATION: 'acc',
-  TOP_SPEED: 'tsp',
+  SPEED: 'spd',
   HANDLING: 'hnd',
 };
 
@@ -16,8 +16,8 @@ const calculateScore = (car, track, withRandom = false) =>
   track[ATTRIBUTE_TYPES.ACCELERATION] *
     (car[ATTRIBUTE_TYPES.ACCELERATION].value ||
       car[ATTRIBUTE_TYPES.ACCELERATION]) +
-  track[ATTRIBUTE_TYPES.TOP_SPEED] *
-    (car[ATTRIBUTE_TYPES.TOP_SPEED].value || car[ATTRIBUTE_TYPES.TOP_SPEED]) +
+  track[ATTRIBUTE_TYPES.SPEED] *
+    (car[ATTRIBUTE_TYPES.SPEED].value || car[ATTRIBUTE_TYPES.SPEED]) +
   track[ATTRIBUTE_TYPES.HANDLING] *
     (car[ATTRIBUTE_TYPES.HANDLING].value || car[ATTRIBUTE_TYPES.HANDLING]) +
   (withRandom ? Math.random() * 0.000001 : 0);
@@ -25,15 +25,15 @@ const calculateScore = (car, track, withRandom = false) =>
 const cloneCar = car => ({
   ...car,
   acc: { ...car.acc },
-  tsp: { ...car.tsp },
+  spd: { ...car.spd },
   hnd: { ...car.hnd },
 });
 
 const attrUpgradeValue = (attr, car, max) => {
   const compAttrs = {
-    acc: ['tsp', 'hnd'],
-    tsp: ['acc', 'hnd'],
-    hnd: ['acc', 'tsp'],
+    acc: ['spd', 'hnd'],
+    spd: ['acc', 'hnd'],
+    hnd: ['acc', 'spd'],
   };
 
   let result = 0;
@@ -85,7 +85,7 @@ const calculateCompetitors = track => {
 
   const competitorsProcessed = competitors.map(car => {
     car.acc.value += attrUpgradeValue('acc', car, track.max);
-    car.tsp.value += attrUpgradeValue('tsp', car, track.max);
+    car.spd.value += attrUpgradeValue('spd', car, track.max);
     car.hnd.value += attrUpgradeValue('hnd', car, track.max);
 
     return car;
@@ -222,7 +222,7 @@ export const doMeetRequirements = (car, requirements, upgradable) => {
   const noUpsBrandType = requirements.reduce((result, requirement) => {
     if (requirement.type === 'no_ups') {
       const noUpgrades =
-        car.acc.upgrade === 0 && car.tsp.upgrade === 0 && car.hnd.upgrade === 0;
+        car.acc.upgrade === 0 && car.spd.upgrade === 0 && car.hnd.upgrade === 0;
       return result && !!noUpgrades;
     }
 

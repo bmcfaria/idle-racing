@@ -10,7 +10,7 @@ const RequirementsListNoUps = () => {
 
   const carWithNoUpgrades = garagesCars.find(
     item =>
-      item.acc.upgrade === 0 && item.tsp.upgrade === 0 && item.hnd.upgrade === 0
+      item.acc.upgrade === 0 && item.spd.upgrade === 0 && item.hnd.upgrade === 0
   );
 
   return (
