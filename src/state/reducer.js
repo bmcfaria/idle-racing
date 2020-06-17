@@ -50,9 +50,13 @@ export const initialState = {
   experience: {
     business: {
       exp: 0,
+      newCars: 0,
+      usedCars: 0,
     },
     race: {
       exp: 0,
+      price: 0,
+      prizes: 0,
     },
     mechanic: {
       exp: 0,
@@ -345,6 +349,56 @@ const rootReducer = (state = initialState, { type, payload }) => {
     }
 
     case BUY_EXPERIENCE_BUFF_TYPE: {
+      if (
+        payload.type === 'business' &&
+        (payload.subType === 'newCars' || payload.subType === 'usedCars')
+      ) {
+        const { exp, newCars, usedCars } = state.experience.business;
+        const availablePoints = `${exp}`.length - 1 - newCars - usedCars;
+
+        const increment =
+          availablePoints > 0 && state.experience.business[payload.subType] < 3
+            ? 1
+            : 0;
+
+        return {
+          ...state,
+          experience: {
+            ...state.experience,
+            business: {
+              ...state.experience.business,
+              [payload.subType]:
+                state.experience.business[payload.subType] + increment,
+            },
+          },
+        };
+      }
+
+      if (
+        payload.type === 'race' &&
+        (payload.subType === 'price' || payload.subType === 'prizes')
+      ) {
+        const { exp, price, prizes } = state.experience.race;
+        const availablePoints = `${exp}`.length - 1 - price - prizes;
+
+        const increment =
+          availablePoints > 0 && state.experience.race[payload.subType] < 3
+            ? 1
+            : 0;
+
+        return {
+          ...state,
+          experience: {
+            ...state.experience,
+            race: {
+              ...state.experience.race,
+              [payload.subType]:
+                state.experience.race[payload.subType] + increment,
+            },
+          },
+        };
+      }
+
       if (
         payload.type === 'mechanic' &&
         (payload.subType === 'acc' ||

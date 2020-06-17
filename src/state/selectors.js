@@ -35,19 +35,23 @@ export const pageNotificationsGarageSelector = state =>
 
 export const experienceSelector = state => state.experience;
 export const experienceBusinessSelector = state => {
-  const { exp } = state.experience.business;
+  const { exp, newCars, usedCars } = state.experience.business;
+  const availablePoints = `${exp}`.length - 1 - newCars - usedCars;
 
   return {
     ...state.experience.business,
     nextLevel: 10 ** `${exp}`.length,
+    availablePoints,
   };
 };
 export const experienceRaceSelector = state => {
-  const { exp } = state.experience.race;
+  const { exp, price, prizes } = state.experience.race;
+  const availablePoints = `${exp}`.length - 1 - price - prizes;
 
   return {
     ...state.experience.race,
     nextLevel: 10 ** `${exp}`.length,
+    availablePoints,
   };
 };
 export const experienceMechanicSelector = state => {

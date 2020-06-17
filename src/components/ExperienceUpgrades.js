@@ -18,7 +18,7 @@ import hexAlpha from 'hex-alpha';
 import Button from './Button';
 import { buyExperienceBuffAction } from '../state/actions';
 
-const ExperienceUpgrade = ({ text, status, onClick, ...props }) => (
+const ExperienceBuff = ({ text, status, onClick, colorBought, ...props }) => (
   <Box w="40px" h="40px" {...props}>
     <Button
       w="40px"
@@ -26,7 +26,7 @@ const ExperienceUpgrade = ({ text, status, onClick, ...props }) => (
       border="1px solid black"
       padding="0"
       bg={
-        (status < 0 && colors.lightBlue) ||
+        (status < 0 && colorBought) ||
         (status > 0 && colors.darkGray) ||
         colors.white
       }
@@ -47,37 +47,48 @@ const ExperienceUpgrade = ({ text, status, onClick, ...props }) => (
   </Box>
 );
 
-const ColumnMechanic = ({ text, experience, buyBuff }) => (
+const ColumnBuffs = ({ text, experience, buyBuff, colorBought }) => (
   <Box>
-    <ExperienceUpgrade text={text} status={0 - experience} onClick={buyBuff} />
-    <ExperienceUpgrade
+    <ExperienceBuff
+      text={text}
+      status={0 - experience}
+      onClick={buyBuff}
+      colorBought={colorBought}
+    />
+    <ExperienceBuff
       text={text}
       marginTop="12px"
       status={1 - experience}
       onClick={buyBuff}
+      colorBought={colorBought}
     />
-    <ExperienceUpgrade
+    <ExperienceBuff
       text={text}
       marginTop="12px"
       status={2 - experience}
       onClick={buyBuff}
+      colorBought={colorBought}
     />
   </Box>
 );
 
 const ExperienceUpgrades = ({ expType }) => {
   const dispatch = useDispatch();
-  const experienceObject = useSelector(experienceSelector);
   const experienceBusiness = useSelector(experienceBusinessSelector);
   const experienceRace = useSelector(experienceRaceSelector);
   const experienceMechanic = useSelector(experienceMechanicSelector);
 
-  console.log(expType);
   const availablePointsObject =
     (expType === 'business' && experienceBusiness) ||
     (expType === 'race' && experienceRace) ||
     (expType === 'mechanic' && experienceMechanic) ||
     {};
+
+  const colorBought =
+    (expType === 'business' && colors.orange) ||
+    (expType === 'race' && colors.green) ||
+    (expType === 'mechanic' && colors.lightBlue) ||
+    'white';
 
   console.log(availablePointsObject);
 
@@ -125,21 +136,56 @@ const ExperienceUpgrades = ({ expType }) => {
         marginTop="16px"
         justifyContent="space-between"
       >
-        <ColumnMechanic
-          text="Acc"
-          experience={experienceMechanic.acc}
-          buyBuff={() => buyBuff('mechanic', 'acc')}
-        />
-        <ColumnMechanic
-          text="Spd"
-          experience={experienceMechanic.spd}
-          buyBuff={() => buyBuff('mechanic', 'spd')}
-        />
-        <ColumnMechanic
-          text="Hnd"
-          experience={experienceMechanic.hnd}
-          buyBuff={() => buyBuff('mechanic', 'hnd')}
-        />
+        {expType === 'business' && (
+          <>
+            <ColumnBuffs
+              colorBought={colorBought}
+              experience={experienceBusiness.newCars}
+              buyBuff={() => buyBuff('business', 'newCars')}
+            />
+            <ColumnBuffs
+              colorBought={colorBought}
+              experience={experienceBusiness.usedCars}
+              buyBuff={() => buyBuff('business', 'usedCars')}
+            />
+          </>
+        )}
+        {expType === 'race' && (
+          <>
+            <ColumnBuffs
+              colorBought={colorBought}
+              experience={experienceRace.price}
+              buyBuff={() => buyBuff('race', 'price')}
+            />
+            <ColumnBuffs
+              colorBought={colorBought}
+              experience={experienceRace.prizes}
+              buyBuff={() => buyBuff('race', 'prizes')}
+            />
+          </>
+        )}
+        {expType === 'mechanic' && (
+          <>
+            <ColumnBuffs
+              colorBought={colorBought}
+              text="Acc"
+              experience={experienceMechanic.acc}
+              buyBuff={() => buyBuff('mechanic', 'acc')}
+            />
+            <ColumnBuffs
+              colorBought={colorBought}
+              text="Spd"
+              experience={experienceMechanic.spd}
+              buyBuff={() => buyBuff('mechanic', 'spd')}
+            />
+            <ColumnBuffs
+              colorBought={colorBought}
+              text="Hnd"
+              experience={experienceMechanic.hnd}
+              buyBuff={() => buyBuff('mechanic', 'hnd')}
+            />
+          </>
+        )}
       </Flex>
       <Text
         w="100%"
