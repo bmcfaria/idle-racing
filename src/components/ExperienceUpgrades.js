@@ -93,9 +93,33 @@ const ExperienceUpgrades = ({ expType }) => {
       bg={colors.white}
       alignItems="center"
     >
-      <Text w="100%" textAlign="center">
-        Discount on upgrades
-      </Text>
+      <Flex w="100%" justifyContent="space-around" lineHeight="16px">
+        {expType === 'business' && (
+          <>
+            <Text w="48px" textAlign="center">
+              New cars
+            </Text>
+            <Text w="48px" textAlign="center">
+              Used cars
+            </Text>
+          </>
+        )}
+        {expType === 'race' && (
+          <>
+            <Text w="48px" textAlign="center">
+              Race price
+            </Text>
+            <Text w="48px" textAlign="center">
+              Race prizes
+            </Text>
+          </>
+        )}
+        {expType === 'mechanic' && (
+          <Text w="100%" textAlign="center">
+            Discount on upgrades
+          </Text>
+        )}
+      </Flex>
       <Flex
         w={`${40 * 3 + 12 * 2}px`}
         marginTop="16px"
