@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { experienceRaceSelector } from '../state/selectors';
+import { buffValue, discountValue } from './utils';
 
 export const useOpenClose = defaultValue => {
   const [open, setOpen] = useState(!!defaultValue);
@@ -61,5 +64,20 @@ export const useDynamicCardContainerWidth = (
 ) => {
   const { width } = useWindowDimensions();
 
-  return Math.floor((width - 2 * 24) / (160 + 16)) * (160 + 16);
+  return (
+    Math.floor((width - 2 * 24) / (cardWidth + cardMargin)) *
+    (cardWidth + cardMargin)
+  );
+};
+
+export const useRacePrizesWithBuff = prizes => {
+  const experience = useSelector(experienceRaceSelector);
+
+  return prizes.map(prize => buffValue(prize, experience.prizes));
+};
+
+export const useRacePriceWithDiscount = price => {
+  const experience = useSelector(experienceRaceSelector);
+
+  return discountValue(price, experience.price);
 };

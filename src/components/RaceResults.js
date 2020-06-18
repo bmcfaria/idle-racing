@@ -9,6 +9,7 @@ import {
 } from '../state/selectors';
 import { colors } from '../helpers/theme';
 import Button from './Button';
+import { useRacePrizesWithBuff } from '../helpers/hooks';
 
 const Row = ({ index, car, playerCarId, prize }) => (
   <Flex
@@ -30,6 +31,7 @@ const RaceResults = ({ pastRace, raceAgain, selectCar, ...props }) => {
   const { id, results, track: trackId } = pastRace;
   const cars = useSelector(dealerCarsSelector);
   const track = useSelector(trackSelector(trackId));
+  const calculatedPrizes = useRacePrizesWithBuff(track.prizes);
   const carsGarage = useSelector(garageCarsSelector);
   const dispatch = useDispatch();
 
@@ -50,7 +52,7 @@ const RaceResults = ({ pastRace, raceAgain, selectCar, ...props }) => {
               carsGarage.find(item => item.id === car.id)
             }
             playerCarId={pastRace.car}
-            prize={`$${~~track.prizes[index]}`}
+            prize={`$${~~calculatedPrizes[index]}`}
           />
         ))}
       </Box>

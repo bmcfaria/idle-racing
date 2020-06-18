@@ -96,8 +96,4 @@ const CardTrack = ({ track }) => {
   );
 };
 
-CardTrack.defaultProps = {
-  prizes: [],
-};
-
 export default CardTrack;

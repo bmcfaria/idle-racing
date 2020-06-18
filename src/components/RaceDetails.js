@@ -17,7 +17,11 @@ import CardTrackContent from './CardTrackContent';
 import Modal from './Modal';
 import { colors } from '../helpers/theme';
 import RaceDetailsSelectCar from './RaceDetailsSelectCar';
-import { useOpenClose, useDynamicCardContainerWidth } from '../helpers/hooks';
+import {
+  useOpenClose,
+  useDynamicCardContainerWidth,
+  useRacePriceWithDiscount,
+} from '../helpers/hooks';
 import RaceDetailsSelectedCar from './RaceDetailsSelectedCar';
 import { doMeetRequirements } from '../helpers/utils';
 import CardCarSmallRace from './CardCarSmallRace';
@@ -136,6 +140,8 @@ const RaceDetails = ({ track: { price, race } }) => {
   const pastRace = useSelector(pastRaceSelector(selectedTrack.lastRace));
   const results = !!pastRace && pastRace.checked === false;
 
+  const calculatedPrice = ~~useRacePriceWithDiscount(price);
+
   useEffect(() => {
     if (results && pastRace) {
       setSelectedCar(cars.find(car => car.id === pastRace.car));
@@ -196,7 +202,7 @@ const RaceDetails = ({ track: { price, race } }) => {
             selectedTrack={selectedTrack}
             carsModalOpen={carsModalOpen}
             money={money}
-            price={price}
+            price={calculatedPrice}
             currentRace={currentRace}
             startRace={startRace}
             results={results}

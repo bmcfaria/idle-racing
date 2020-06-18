@@ -246,3 +246,9 @@ export const doMeetRequirements = (car, requirements, upgradable) => {
 
   return validateAttrRequirements(car, requirements, !noUps && upgradable);
 };
+
+export const buffValue = (value, times, buffPercentage = 0.1) =>
+  value * (1 + buffPercentage * times);
+
+export const discountValue = (value, times, buffPercentage = 0.1) =>
+  value * (1 - buffPercentage * times);

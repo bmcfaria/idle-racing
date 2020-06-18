@@ -23,7 +23,7 @@ import {
   generateRace,
   generatePastRace,
 } from '../helpers/mockData';
-import { raceResults } from '../helpers/utils';
+import { raceResults, buffValue, discountValue } from '../helpers/utils';
 
 export const initialState = {
   garageCars: [],
@@ -191,12 +191,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
       const car = state.garageCars.find(item => item.id === payload.carId);
       const track = state.tracks.find(item => item.id === payload.trackId);
 
+      const calculatedPrice = ~~discountValue(
+        track.price,
+        state.experience.race.price
+      );
+
       if (
         !car ||
         !track ||
         car.race ||
         track.race ||
-        state.money < track.price
+        state.money < calculatedPrice
       ) {
         return state;
       }
@@ -207,7 +212,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       const trackIndex = state.tracks.findIndex(item => item.id === track.id);
       return {
         ...state,
-        money: state.money - track.price,
+        money: state.money - calculatedPrice,
         races: [...state.races, race],
         garageCars: Object.assign([], state.garageCars, {
           [carIndex]: {
@@ -239,7 +244,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       const results = raceResults(car, track);
       const position = results.findIndex(item => item.id === car.id) + 1;
 
-      const earnings = ~~track.prizes[position - 1];
+      const calculatedPrizes = track.prizes.map(prize =>
+        buffValue(prize, state.experience.race.prizes)
+      );
+
+      const earnings = ~~calculatedPrizes[position - 1];
 
       const pastRace = generatePastRace(
         race,

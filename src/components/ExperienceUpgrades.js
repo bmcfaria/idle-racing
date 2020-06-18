@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Flex } from '@chakra-ui/core';
+import { Text, Flex } from '@chakra-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   experienceBusinessSelector,
@@ -7,72 +7,8 @@ import {
   experienceMechanicSelector,
 } from '../state/selectors';
 import { colors } from '../helpers/theme';
-import Button from './Button';
 import { buyExperienceBuffAction } from '../state/actions';
-
-const ExperienceBuff = ({
-  text,
-  valueText = '-10%',
-  status,
-  onClick,
-  colorBought,
-  ...props
-}) => (
-  <Box w="40px" h="40px" {...props}>
-    <Button
-      w="40px"
-      h="40px"
-      border="1px solid black"
-      padding="0"
-      bg={
-        (status < 0 && colorBought) ||
-        (status > 0 && colors.darkGray) ||
-        colors.white
-      }
-      isDisabled={status !== 0}
-      onClick={onClick}
-    >
-      <Box>
-        {text && (
-          <Text h="20px" lineHeight="20px">
-            {text}
-          </Text>
-        )}
-        <Text h="20px" lineHeight="20px">
-          {valueText}
-        </Text>
-      </Box>
-    </Button>
-  </Box>
-);
-
-const ColumnBuffs = ({ text, experience, buyBuff, colorBought, ...props }) => (
-  <Box>
-    <ExperienceBuff
-      text={text}
-      status={0 - experience}
-      onClick={buyBuff}
-      colorBought={colorBought}
-      {...props}
-    />
-    <ExperienceBuff
-      text={text}
-      marginTop="12px"
-      status={1 - experience}
-      onClick={buyBuff}
-      colorBought={colorBought}
-      {...props}
-    />
-    <ExperienceBuff
-      text={text}
-      marginTop="12px"
-      status={2 - experience}
-      onClick={buyBuff}
-      colorBought={colorBought}
-      {...props}
-    />
-  </Box>
-);
+import ExperienceUpgradesColumnBuffs from './ExperienceUpgradesColumnBuffs';
 
 const ExperienceUpgrades = ({ expType }) => {
   const dispatch = useDispatch();
@@ -138,12 +74,12 @@ const ExperienceUpgrades = ({ expType }) => {
       >
         {expType === 'business' && (
           <>
-            <ColumnBuffs
+            <ExperienceUpgradesColumnBuffs
               colorBought={colorBought}
               experience={experienceBusiness.newCars}
               buyBuff={() => buyBuff('business', 'newCars')}
             />
-            <ColumnBuffs
+            <ExperienceUpgradesColumnBuffs
               colorBought={colorBought}
               experience={experienceBusiness.usedCars}
               buyBuff={() => buyBuff('business', 'usedCars')}
@@ -153,33 +89,34 @@ const ExperienceUpgrades = ({ expType }) => {
         )}
         {expType === 'race' && (
           <>
-            <ColumnBuffs
+            <ExperienceUpgradesColumnBuffs
               colorBought={colorBought}
               experience={experienceRace.price}
               buyBuff={() => buyBuff('race', 'price')}
             />
-            <ColumnBuffs
+            <ExperienceUpgradesColumnBuffs
               colorBought={colorBought}
               experience={experienceRace.prizes}
               buyBuff={() => buyBuff('race', 'prizes')}
+              valueText="+10%"
             />
           </>
         )}
         {expType === 'mechanic' && (
           <>
-            <ColumnBuffs
+            <ExperienceUpgradesColumnBuffs
               colorBought={colorBought}
               text="Acc"
               experience={experienceMechanic.acc}
               buyBuff={() => buyBuff('mechanic', 'acc')}
             />
-            <ColumnBuffs
+            <ExperienceUpgradesColumnBuffs
               colorBought={colorBought}
               text="Spd"
               experience={experienceMechanic.spd}
               buyBuff={() => buyBuff('mechanic', 'spd')}
             />
-            <ColumnBuffs
+            <ExperienceUpgradesColumnBuffs
               colorBought={colorBought}
               text="Hnd"
               experience={experienceMechanic.hnd}

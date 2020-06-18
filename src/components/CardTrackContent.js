@@ -7,6 +7,10 @@ import RequirementsList from './RequirementsList';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import abbreviate from 'number-abbreviate';
+import {
+  useRacePrizesWithBuff,
+  useRacePriceWithDiscount,
+} from '../helpers/hooks';
 
 const TrackAttribute = ({ name, value, ...props }) => {
   const color = percentageValue => {
@@ -38,13 +42,15 @@ const TrackPrize = ({ text, prize, ...props }) => (
     <Text textAlign="center" color={colors.darkGray}>
       {text}
     </Text>
-    <Text textAlign="center">${abbreviate(prize, 1)}</Text>
+    <Text textAlign="center">${abbreviate(~~prize, 1)}</Text>
   </Box>
 );
 
 const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
   const { name, prizes, duration, price, requirements } = track;
   const money = useSelector(moneySelector);
+  const calculatedPrizes = useRacePrizesWithBuff(prizes);
+  const calculatedPrice = ~~useRacePriceWithDiscount(price);
 
   return (
     <Flex
@@ -107,9 +113,9 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
         </Text>
 
         <Flex marginTop="4px" justifyContent="center">
-          <TrackPrize text="1st" prize={prizes[0]} />
-          <TrackPrize text="2nd" prize={prizes[1]} />
-          <TrackPrize text="3rd" prize={prizes[2]} />
+          <TrackPrize text="1st" prize={calculatedPrizes[0]} />
+          <TrackPrize text="2nd" prize={calculatedPrizes[1]} />
+          <TrackPrize text="3rd" prize={calculatedPrizes[2]} />
         </Flex>
       </Box>
 
@@ -117,8 +123,13 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
         <Text margin="auto" color="white">
           {duration / 1000}s
         </Text>
-        <Text margin="auto" color={money < price ? 'tomato' : 'white'}>
-          {price === 0 ? 'FREE' : `$${abbreviate(price, 1)}`}
+        <Text
+          margin="auto"
+          color={money < calculatedPrice ? colors.red : colors.white}
+        >
+          {calculatedPrice === 0
+            ? 'FREE'
+            : `$${abbreviate(calculatedPrice, 1)}`}
         </Text>
       </Flex>
     </Flex>
