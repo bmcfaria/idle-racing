@@ -10,7 +10,14 @@ import { colors } from '../helpers/theme';
 import Button from './Button';
 import { buyExperienceBuffAction } from '../state/actions';
 
-const ExperienceBuff = ({ text, status, onClick, colorBought, ...props }) => (
+const ExperienceBuff = ({
+  text,
+  valueText = '-10%',
+  status,
+  onClick,
+  colorBought,
+  ...props
+}) => (
   <Box w="40px" h="40px" {...props}>
     <Button
       w="40px"
@@ -32,20 +39,21 @@ const ExperienceBuff = ({ text, status, onClick, colorBought, ...props }) => (
           </Text>
         )}
         <Text h="20px" lineHeight="20px">
-          -10%
+          {valueText}
         </Text>
       </Box>
     </Button>
   </Box>
 );
 
-const ColumnBuffs = ({ text, experience, buyBuff, colorBought }) => (
+const ColumnBuffs = ({ text, experience, buyBuff, colorBought, ...props }) => (
   <Box>
     <ExperienceBuff
       text={text}
       status={0 - experience}
       onClick={buyBuff}
       colorBought={colorBought}
+      {...props}
     />
     <ExperienceBuff
       text={text}
@@ -53,6 +61,7 @@ const ColumnBuffs = ({ text, experience, buyBuff, colorBought }) => (
       status={1 - experience}
       onClick={buyBuff}
       colorBought={colorBought}
+      {...props}
     />
     <ExperienceBuff
       text={text}
@@ -60,6 +69,7 @@ const ColumnBuffs = ({ text, experience, buyBuff, colorBought }) => (
       status={2 - experience}
       onClick={buyBuff}
       colorBought={colorBought}
+      {...props}
     />
   </Box>
 );
@@ -139,6 +149,7 @@ const ExperienceUpgrades = ({ expType }) => {
               colorBought={colorBought}
               experience={experienceBusiness.usedCars}
               buyBuff={() => buyBuff('business', 'usedCars')}
+              valueText="+10%"
             />
           </>
         )}
