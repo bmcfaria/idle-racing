@@ -13,6 +13,7 @@ import {
   moneySelector,
   garageCarsSelector,
   tutorialUpgradeSelector,
+  experienceMechanicSelector,
 } from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
 import { colors } from '../helpers/theme';
@@ -71,9 +72,20 @@ const AttributeCircleButton = ({
   );
 };
 
+const upgradePriceWithDiscount = (car, type, experienceObject) => {
+  const percentageString =
+    experienceObject[type] > 0 ? ` (-${10 * experienceObject[type]}%)` : '';
+
+  return `$${~~(
+    car[type].price *
+    (1 - 0.1 * experienceObject[type])
+  )}${percentageString}`;
+};
+
 const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, price } = car;
   const money = useSelector(moneySelector);
+  const experienceMechanic = useSelector(experienceMechanicSelector);
   const [confirmationState, setConfirmationState] = useState();
 
   const dispatch = useDispatch();
@@ -90,10 +102,23 @@ const CarDetailsGarage = ({ car, ...props }) => {
 
   const buttonText =
     (confirmationState === 'ACC' &&
-      `$${~~car[ATTRIBUTE_TYPES.ACCELERATION].price}`) ||
-    (confirmationState === 'SPD' && `$${~~car[ATTRIBUTE_TYPES.SPEED].price}`) ||
+      upgradePriceWithDiscount(
+        car,
+        ATTRIBUTE_TYPES.ACCELERATION,
+        experienceMechanic
+      )) ||
+    (confirmationState === 'SPD' &&
+      upgradePriceWithDiscount(
+        car,
+        ATTRIBUTE_TYPES.SPEED,
+        experienceMechanic
+      )) ||
     (confirmationState === 'HND' &&
-      `$${~~car[ATTRIBUTE_TYPES.HANDLING].price}`) ||
+      upgradePriceWithDiscount(
+        car,
+        ATTRIBUTE_TYPES.HANDLING,
+        experienceMechanic
+      )) ||
     (confirmationState === 'SELL' && `$${~~price}`) ||
     `Sell ($${~~price})`;
 

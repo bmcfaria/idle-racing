@@ -92,8 +92,6 @@ const ExperienceUpgrades = ({ expType }) => {
     (expType === 'mechanic' && colors.lightBlue) ||
     'white';
 
-  console.log(availablePointsObject);
-
   const buyBuff = (type, subType) => {
     dispatch(buyExperienceBuffAction(type, subType));
   };

@@ -136,9 +136,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
+      const calculatedPrice = ~~(
+        car[payload.type].price *
+        (1 - 0.1 * state.experience.mechanic[payload.type])
+      );
+
       const attribute = car[payload.type];
 
-      if (!attribute.price || state.money < attribute.price) {
+      if (!calculatedPrice || state.money < calculatedPrice) {
         return state;
       }
 
@@ -149,7 +154,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       const carIndex = state.garageCars.findIndex(item => item.id === car.id);
       return {
         ...state,
-        money: state.money - attribute.price,
+        money: state.money - calculatedPrice,
         garageCars: Object.assign([], state.garageCars, {
           [carIndex]: newCar,
         }),

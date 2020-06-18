@@ -183,7 +183,7 @@ const HeaderBar = () => {
       {/* spacer */}
       <Box w="100%" h="88px" />
 
-      <Modal isOpen={!!expTypeModal} backOnClose>
+      <Modal isOpen={!!expTypeModal} backOnClose zIndex={zIndex.headerBar}>
         <ExperienceUpgrades expType={expTypeModal} />
       </Modal>
 
