@@ -14,6 +14,7 @@ import {
   garageCarsSelector,
   tutorialUpgradeSelector,
   experienceMechanicSelector,
+  experienceBusinessSelector,
 } from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
 import { colors } from '../helpers/theme';
@@ -82,10 +83,14 @@ const upgradePriceWithDiscount = (car, type, experienceObject) => {
   )}${percentageString}`;
 };
 
+const sellPriceWithBuff = (price, experienceObject) =>
+  ~~(price * (1 + 0.1 * experienceObject.usedCars));
+
 const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, price } = car;
   const money = useSelector(moneySelector);
   const experienceMechanic = useSelector(experienceMechanicSelector);
+  const experienceBusiness = useSelector(experienceBusinessSelector);
   const [confirmationState, setConfirmationState] = useState();
 
   const dispatch = useDispatch();
@@ -119,8 +124,9 @@ const CarDetailsGarage = ({ car, ...props }) => {
         ATTRIBUTE_TYPES.HANDLING,
         experienceMechanic
       )) ||
-    (confirmationState === 'SELL' && `$${~~price}`) ||
-    `Sell ($${~~price})`;
+    (confirmationState === 'SELL' &&
+      `$${sellPriceWithBuff(price, experienceBusiness)}`) ||
+    `Sell ($${sellPriceWithBuff(price, experienceBusiness)})`;
 
   const buttonColors = ((confirmationState === 'ACC' ||
     confirmationState === 'SPD' ||

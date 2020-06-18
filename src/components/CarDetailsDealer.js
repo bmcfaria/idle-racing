@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex, Text } from '@chakra-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { buyCarAction } from '../state/actions';
-import { moneySelector } from '../state/selectors';
+import { moneySelector, experienceBusinessSelector } from '../state/selectors';
 import { useHistory } from 'react-router-dom';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
@@ -16,7 +16,10 @@ const CarDetailsDealer = ({ car, ...props }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const money = useSelector(moneySelector);
-  const enoughMoney = money >= price;
+  const experienceBusiness = useSelector(experienceBusinessSelector);
+
+  const calculatedPrice = ~~(price * (1 - 0.1 * experienceBusiness.newCars));
+  const enoughMoney = money >= calculatedPrice;
 
   const buy = () => {
     dispatch(buyCarAction(id));
@@ -47,7 +50,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
         color={colors.darkGray}
         bg={colors.white}
       >
-        {reward ? 'Reward' : `$${price}`}
+        {reward ? 'Reward' : `$${calculatedPrice}`}
       </Button>
     </CarDetailsContainer>
   );

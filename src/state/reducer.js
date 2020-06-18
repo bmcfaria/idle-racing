@@ -79,19 +79,26 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     case BUY_CAR_TYPE: {
       const car = dealerCars.find(item => item.id === payload.carId);
-      const enoughMoney = state.money >= car?.price;
+
+      const calculatedPrice = ~~(
+        car.price *
+        (1 - 0.1 * state.experience.business.newCars)
+      );
+
+      const enoughMoney = state.money >= calculatedPrice;
 
       if (!car || !enoughMoney) {
         return state;
       }
 
       const garageCar = generateGarageCar(car);
+
       const businessExpInc =
-        ~~(car.price / 1000) < 1 ? 1 : ~~(car.price / 1000);
+        ~~(calculatedPrice / 1000) < 1 ? 1 : ~~(calculatedPrice / 1000);
 
       return {
         ...state,
-        money: state.money - car.price,
+        money: state.money - calculatedPrice,
         garageCars: [...state.garageCars, garageCar],
         pageNotifications: {
           ...state.pageNotifications,
@@ -115,12 +122,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
+      const calculatedPrice = ~~(
+        car.price *
+        (1 + 0.1 * state.experience.business.usedCars)
+      );
+
       const businessExpInc =
-        ~~(car.price / 1000) < 1 ? 1 : ~~(car.price / 1000);
+        ~~(calculatedPrice / 1000) < 1 ? 1 : ~~(calculatedPrice / 1000);
 
       return {
         ...state,
-        money: state.money + car.price,
+        money: state.money + calculatedPrice,
         garageCars: state.garageCars.filter(item => item.id !== car.id),
         experience: {
           ...state.experience,
