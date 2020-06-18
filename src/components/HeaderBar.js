@@ -99,6 +99,19 @@ const ExperienceButton = ({
   onClick,
   selected,
 }) => {
+  const percentageToNextLevel =
+    experience.exp < experience.max
+      ? (experience.exp * 100) / experience.nextLevel
+      : 100;
+
+  const valueText =
+    experience.exp < experience.max
+      ? `${abbreviate(experience.exp, 1)} / ${abbreviate(
+          experience.nextLevel,
+          1
+        )}`
+      : `${abbreviate(experience.exp, 1)}`;
+
   return (
     <Button
       h="100%"
@@ -111,11 +124,7 @@ const ExperienceButton = ({
           {text}
         </Text>
         <Box w="100px" h="14px" position="relative" border="1px solid black">
-          <Box
-            w={`${(experience.exp * 100) / experience.nextLevel}%`}
-            h="100%"
-            bg={color}
-          />
+          <Box w={`${percentageToNextLevel}%`} h="100%" bg={color} />
           <Text
             w="100%"
             h="12px"
@@ -125,7 +134,7 @@ const ExperienceButton = ({
             textAlign="center"
             position="absolute"
           >
-            {`${experience.exp} / ${experience.nextLevel}`}
+            {valueText}
           </Text>
         </Box>
         {~~experience.availablePoints > 0 && (

@@ -35,8 +35,9 @@ export const pageNotificationsGarageSelector = state =>
 
 export const experienceSelector = state => state.experience;
 export const experienceBusinessSelector = state => {
-  const { exp, newCars, usedCars } = state.experience.business;
-  const availablePoints = `${exp}`.length - 1 - newCars - usedCars;
+  const { exp, max, newCars, usedCars } = state.experience.business;
+  const level = exp < max ? `${exp}`.length : `${max}`.length;
+  const availablePoints = level - 1 - newCars - usedCars;
 
   return {
     ...state.experience.business,
@@ -45,8 +46,9 @@ export const experienceBusinessSelector = state => {
   };
 };
 export const experienceRaceSelector = state => {
-  const { exp, price, prizes } = state.experience.race;
-  const availablePoints = `${exp}`.length - 1 - price - prizes;
+  const { exp, max, price, prizes } = state.experience.race;
+  const level = exp < max ? `${exp}`.length : `${max}`.length;
+  const availablePoints = level - 1 - price - prizes;
 
   return {
     ...state.experience.race,
@@ -55,8 +57,9 @@ export const experienceRaceSelector = state => {
   };
 };
 export const experienceMechanicSelector = state => {
-  const { exp, acc, spd, hnd } = state.experience.mechanic;
-  const availablePoints = `${exp}`.length - 1 - acc - spd - hnd;
+  const { exp, max, acc, spd, hnd } = state.experience.mechanic;
+  const level = exp < max ? `${exp}`.length : `${max}`.length;
+  const availablePoints = level - 1 - acc - spd - hnd;
 
   return {
     ...state.experience.mechanic,
