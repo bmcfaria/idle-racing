@@ -67,3 +67,5 @@ export const experienceMechanicSelector = state => {
     availablePoints,
   };
 };
+
+export const warningsSelector = state => state.warnings;

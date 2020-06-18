@@ -4,6 +4,8 @@ import throttle from 'lodash/throttle';
 
 const inDev = process.env.NODE_ENV === 'development';
 
+const minimunStoreVersion = 0.4;
+
 const loadState = () => {
   try {
     const serializedState = localStorage.getItem('state');
@@ -12,9 +14,13 @@ const loadState = () => {
     }
     const state = JSON.parse(serializedState);
 
-    if (state.version < 0.4) {
+    if (state.version < minimunStoreVersion) {
       return {
         ...initialState,
+        warnings: {
+          ...initialState.warnings,
+          storeReset: true,
+        },
       };
     }
     // Pre-fill with initial state to prevent errors on old dated states

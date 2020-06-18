@@ -63,3 +63,8 @@ export const buyExperienceBuffAction = (type, subType) => ({
   type: BUY_EXPERIENCE_BUFF_TYPE,
   payload: { type, subType },
 });
+
+export const CLEAR_STORE_RESET_TYPE = 'CLEAR_STORE_RESET';
+export const clearStoreResetAction = {
+  type: CLEAR_STORE_RESET_TYPE,
+};

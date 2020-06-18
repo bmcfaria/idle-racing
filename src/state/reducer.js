@@ -12,6 +12,7 @@ import {
   OPEN_GARAGE_CAR_TYPE,
   DISABLE_TUTORIAL_UPGRADE_TYPE,
   BUY_EXPERIENCE_BUFF_TYPE,
+  CLEAR_STORE_RESET_TYPE,
 } from './actions';
 import {
   cars as dealerCars,
@@ -69,6 +70,9 @@ export const initialState = {
     },
   },
   version: 0.4,
+  warnings: {
+    storeReset: false,
+  },
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -447,6 +451,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
 
       return state;
+    }
+
+    case CLEAR_STORE_RESET_TYPE: {
+      return {
+        ...state,
+        warnings: {
+          ...state.warnings,
+          storeReset: false,
+        },
+      };
     }
 
     default: {

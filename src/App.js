@@ -13,6 +13,7 @@ import configureStore from './state/configureStore';
 import Home from './components/Home';
 import Settings from './components/Settings';
 import { colors } from './helpers/theme';
+import ForcedResetWarning from './components/ForcedResetWarning';
 
 const store = configureStore();
 
@@ -62,6 +63,7 @@ function App() {
               </Switch>
             </Content>
             <Navigation />
+            <ForcedResetWarning />
           </Flex>
         </BrowserRouter>
       </Provider>
