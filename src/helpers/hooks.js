@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { experienceRaceSelector } from '../state/selectors';
+import {
+  experienceRaceSelector,
+  experienceMechanicSelector,
+} from '../state/selectors';
 import { buffValue, discountValue } from './utils';
 
 export const useOpenClose = defaultValue => {
@@ -80,4 +83,10 @@ export const useRacePriceWithDiscount = price => {
   const experience = useSelector(experienceRaceSelector);
 
   return discountValue(price, experience.price);
+};
+
+export const useUpgradePriceWithDiscount = (price, type) => {
+  const experience = useSelector(experienceMechanicSelector);
+
+  return discountValue(price, experience[type]);
 };

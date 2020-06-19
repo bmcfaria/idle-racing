@@ -155,9 +155,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
-      const calculatedPrice = ~~(
-        car[payload.type].price *
-        (1 - 0.1 * state.experience.mechanic[payload.type])
+      const calculatedPrice = ~~discountValue(
+        car[payload.type].price,
+        state.experience.mechanic[payload.type]
       );
 
       const attribute = car[payload.type];

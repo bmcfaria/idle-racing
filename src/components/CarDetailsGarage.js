@@ -13,13 +13,13 @@ import {
   moneySelector,
   garageCarsSelector,
   tutorialUpgradeSelector,
-  experienceMechanicSelector,
   experienceBusinessSelector,
 } from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
 import { colors } from '../helpers/theme';
 import AttributeCircle from './AttributeCircle';
 import CallForAttention from './CallForAttention';
+import { useUpgradePriceWithDiscount } from '../helpers/hooks';
 
 const AttributeCircleButton = ({
   attr,
@@ -73,23 +73,26 @@ const AttributeCircleButton = ({
   );
 };
 
-const upgradePriceWithDiscount = (car, type, experienceObject) => {
-  const percentageString =
-    experienceObject[type] > 0 ? ` (-${10 * experienceObject[type]}%)` : '';
-
-  return `$${~~(
-    car[type].price *
-    (1 - 0.1 * experienceObject[type])
-  )}${percentageString}`;
-};
-
 const sellPriceWithBuff = (price, experienceObject) =>
   ~~(price * (1 + 0.1 * experienceObject.usedCars));
 
 const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, price } = car;
   const money = useSelector(moneySelector);
-  const experienceMechanic = useSelector(experienceMechanicSelector);
+
+  const calculatedPriceAcc = ~~useUpgradePriceWithDiscount(
+    car[ATTRIBUTE_TYPES.ACCELERATION].price,
+    ATTRIBUTE_TYPES.ACCELERATION
+  );
+  const calculatedPriceSpd = ~~useUpgradePriceWithDiscount(
+    car[ATTRIBUTE_TYPES.SPEED].price,
+    ATTRIBUTE_TYPES.SPEED
+  );
+  const calculatedPriceHnd = ~~useUpgradePriceWithDiscount(
+    car[ATTRIBUTE_TYPES.HANDLING].price,
+    ATTRIBUTE_TYPES.HANDLING
+  );
+
   const experienceBusiness = useSelector(experienceBusinessSelector);
   const [confirmationState, setConfirmationState] = useState();
 
@@ -106,24 +109,9 @@ const CarDetailsGarage = ({ car, ...props }) => {
     `Upgrade ${confirmationState}`;
 
   const buttonText =
-    (confirmationState === 'ACC' &&
-      upgradePriceWithDiscount(
-        car,
-        ATTRIBUTE_TYPES.ACCELERATION,
-        experienceMechanic
-      )) ||
-    (confirmationState === 'SPD' &&
-      upgradePriceWithDiscount(
-        car,
-        ATTRIBUTE_TYPES.SPEED,
-        experienceMechanic
-      )) ||
-    (confirmationState === 'HND' &&
-      upgradePriceWithDiscount(
-        car,
-        ATTRIBUTE_TYPES.HANDLING,
-        experienceMechanic
-      )) ||
+    (confirmationState === 'ACC' && calculatedPriceAcc) ||
+    (confirmationState === 'SPD' && calculatedPriceSpd) ||
+    (confirmationState === 'HND' && calculatedPriceHnd) ||
     (confirmationState === 'SELL' &&
       `$${sellPriceWithBuff(price, experienceBusiness)}`) ||
     `Sell ($${sellPriceWithBuff(price, experienceBusiness)})`;
