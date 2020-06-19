@@ -2,13 +2,14 @@ import React from 'react';
 import { Flex, Text } from '@chakra-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { buyCarAction } from '../state/actions';
-import { moneySelector, experienceBusinessSelector } from '../state/selectors';
+import { moneySelector } from '../state/selectors';
 import { useHistory } from 'react-router-dom';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import AttributeCircle from './AttributeCircle';
 import Button from './Button';
 import CarDetailsContainer from './CarDetailsContainer';
+import { useCarPriceWithDiscount } from '../helpers/hooks';
 
 const CarDetailsDealer = ({ car, ...props }) => {
   const { id, name, price, reward } = car;
@@ -16,9 +17,8 @@ const CarDetailsDealer = ({ car, ...props }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const money = useSelector(moneySelector);
-  const experienceBusiness = useSelector(experienceBusinessSelector);
 
-  const calculatedPrice = ~~(price * (1 - 0.1 * experienceBusiness.newCars));
+  const calculatedPrice = ~~useCarPriceWithDiscount(price);
   const enoughMoney = money >= calculatedPrice;
 
   const buy = () => {

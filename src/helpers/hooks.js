@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import {
   experienceRaceSelector,
   experienceMechanicSelector,
+  experienceBusinessSelector,
 } from '../state/selectors';
 import { buffValue, discountValue } from './utils';
 
@@ -71,6 +72,18 @@ export const useDynamicCardContainerWidth = (
     Math.floor((width - 2 * 24) / (cardWidth + cardMargin)) *
     (cardWidth + cardMargin)
   );
+};
+
+export const useCarPriceWithDiscount = price => {
+  const experience = useSelector(experienceBusinessSelector);
+
+  return discountValue(price, experience.newCars);
+};
+
+export const useCarPriceWithBuff = price => {
+  const experience = useSelector(experienceBusinessSelector);
+
+  return buffValue(price, experience.usedCars);
 };
 
 export const useRacePrizesWithBuff = prizes => {

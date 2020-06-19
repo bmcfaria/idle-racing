@@ -13,13 +13,15 @@ import {
   moneySelector,
   garageCarsSelector,
   tutorialUpgradeSelector,
-  experienceBusinessSelector,
 } from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
 import { colors } from '../helpers/theme';
 import AttributeCircle from './AttributeCircle';
 import CallForAttention from './CallForAttention';
-import { useUpgradePriceWithDiscount } from '../helpers/hooks';
+import {
+  useUpgradePriceWithDiscount,
+  useCarPriceWithBuff,
+} from '../helpers/hooks';
 
 const AttributeCircleButton = ({
   attr,
@@ -73,9 +75,6 @@ const AttributeCircleButton = ({
   );
 };
 
-const sellPriceWithBuff = (price, experienceObject) =>
-  ~~(price * (1 + 0.1 * experienceObject.usedCars));
-
 const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, price } = car;
   const money = useSelector(moneySelector);
@@ -93,7 +92,8 @@ const CarDetailsGarage = ({ car, ...props }) => {
     ATTRIBUTE_TYPES.HANDLING
   );
 
-  const experienceBusiness = useSelector(experienceBusinessSelector);
+  const calculatedSellPrice = ~~useCarPriceWithBuff(price);
+
   const [confirmationState, setConfirmationState] = useState();
 
   const dispatch = useDispatch();
@@ -112,9 +112,8 @@ const CarDetailsGarage = ({ car, ...props }) => {
     (confirmationState === 'ACC' && calculatedPriceAcc) ||
     (confirmationState === 'SPD' && calculatedPriceSpd) ||
     (confirmationState === 'HND' && calculatedPriceHnd) ||
-    (confirmationState === 'SELL' &&
-      `$${sellPriceWithBuff(price, experienceBusiness)}`) ||
-    `Sell ($${sellPriceWithBuff(price, experienceBusiness)})`;
+    (confirmationState === 'SELL' && `$${calculatedSellPrice}`) ||
+    `Sell ($${calculatedSellPrice})`;
 
   const buttonColors = ((confirmationState === 'ACC' ||
     confirmationState === 'SPD' ||

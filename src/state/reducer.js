@@ -84,9 +84,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case BUY_CAR_TYPE: {
       const car = dealerCars.find(item => item.id === payload.carId);
 
-      const calculatedPrice = ~~(
-        car.price *
-        (1 - 0.1 * state.experience.business.newCars)
+      const calculatedPrice = ~~discountValue(
+        car.price,
+        state.experience.business.newCars
       );
 
       const enoughMoney = state.money >= calculatedPrice;
@@ -126,9 +126,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
-      const calculatedPrice = ~~(
-        car.price *
-        (1 + 0.1 * state.experience.business.usedCars)
+      const calculatedPrice = ~~buffValue(
+        car.price,
+        state.experience.business.usedCars
       );
 
       const businessExpInc =
