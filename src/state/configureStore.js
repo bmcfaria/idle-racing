@@ -4,7 +4,7 @@ import throttle from 'lodash/throttle';
 
 const inDev = process.env.NODE_ENV === 'development';
 
-const minimunStoreVersion = 0.4;
+const minimunStoreVersion = 0.5;
 
 const loadState = () => {
   try {

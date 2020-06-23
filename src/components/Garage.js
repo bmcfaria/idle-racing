@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   garageCarsSelector,
   pageNotificationsGarageSelector,
+  garageSlotsEmptySelector,
 } from '../state/selectors';
 import CardCarSmall from './CardCarSmall';
 import Modal from './Modal';
@@ -14,10 +15,11 @@ import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { openGarageAction } from '../state/actions';
 import CollapsiblePanel from './CollapsiblePanel';
 import { colors } from '../helpers/theme';
-import Button from './Button';
+import GarageBuySlot from './GarageBuySlot';
 
 const CarsContainer = ({ cars, ...props }) => {
   const pageNotificationsGarage = useSelector(pageNotificationsGarageSelector);
+  const emptySlots = useSelector(garageSlotsEmptySelector);
 
   return (
     <>
@@ -38,6 +40,31 @@ const CarsContainer = ({ cars, ...props }) => {
               />
             </Box>
           ))}
+          {[...Array(emptySlots)].map((_, index) => (
+            <Box marginRight="16px" marginBottom="16px" key={index}>
+              <Flex
+                w="160px"
+                h="180px"
+                borderRadius="16px"
+                bg={colors.lightBlue}
+                fontSize="14px"
+              >
+                <Flex
+                  w="158px"
+                  h="178px"
+                  borderRadius="16px"
+                  bg={colors.white}
+                  flexDirection="column"
+                  margin="auto"
+                >
+                  <Text margin="auto">Empty slot</Text>
+                </Flex>
+              </Flex>
+            </Box>
+          ))}
+          <Box marginRight="16px" marginBottom="16px">
+            <GarageBuySlot />
+          </Box>
         </Flex>
       )}
     </>
@@ -91,36 +118,7 @@ const Garage = () => {
             </ChakraLink>
           </Flex>
         )}
-        <CarsContainer
-          w={`${containerWidth}px`}
-          marginTop="24px"
-          cars={cars.filter(item => item.brand === 'basic')}
-        />
-        <CarsContainer
-          w={`${containerWidth}px`}
-          marginTop="24px"
-          cars={cars.filter(item => item.brand === 'city')}
-        />
-        <CarsContainer
-          w={`${containerWidth}px`}
-          marginTop="24px"
-          cars={cars.filter(item => item.brand === 'offroad')}
-        />
-        <CarsContainer
-          w={`${containerWidth}px`}
-          marginTop="24px"
-          cars={cars.filter(item => item.brand === 'supercar')}
-        />
-        <CarsContainer
-          w={`${containerWidth}px`}
-          marginTop="24px"
-          cars={cars.filter(item => item.brand === 'nascar')}
-        />
-        <CarsContainer
-          w={`${containerWidth}px`}
-          marginTop="24px"
-          cars={cars.filter(item => item.brand === 'f1')}
-        />
+        <CarsContainer w={`${containerWidth}px`} marginTop="24px" cars={cars} />
 
         {/* spacer */}
         <Box minH={['80px', '64px']} />

@@ -13,6 +13,7 @@ import {
   DISABLE_TUTORIAL_UPGRADE_TYPE,
   BUY_EXPERIENCE_BUFF_TYPE,
   CLEAR_STORE_RESET_TYPE,
+  BUY_GARAGE_SLOT_TYPE,
 } from './actions';
 import {
   cars as dealerCars,
@@ -27,6 +28,7 @@ import { raceResults, buffValue, discountValue } from '../helpers/utils';
 
 export const initialState = {
   garageCars: [],
+  garageSlots: 1,
   tracks,
   money: 650,
   notifications: [],
@@ -69,7 +71,7 @@ export const initialState = {
       max: 10 ** (3 * 3),
     },
   },
-  version: 0.4,
+  version: 0.5,
   warnings: {
     storeReset: false,
   },
@@ -91,7 +93,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
       const enoughMoney = state.money >= calculatedPrice;
 
-      if (!car || !enoughMoney) {
+      if (
+        !car ||
+        !enoughMoney ||
+        state.garageCars.length >= state.garageSlots
+      ) {
         return state;
       }
 
@@ -469,6 +475,20 @@ const rootReducer = (state = initialState, { type, payload }) => {
           ...state.warnings,
           storeReset: false,
         },
+      };
+    }
+
+    case BUY_GARAGE_SLOT_TYPE: {
+      const slotPrice = 100 * 10 ** state.garageSlots;
+
+      if (state.money < slotPrice) {
+        return state;
+      }
+
+      return {
+        ...state,
+        money: state.money - slotPrice,
+        garageSlots: state.garageSlots + 1,
       };
     }
 

@@ -68,3 +68,8 @@ export const CLEAR_STORE_RESET_TYPE = 'CLEAR_STORE_RESET';
 export const clearStoreResetAction = {
   type: CLEAR_STORE_RESET_TYPE,
 };
+
+export const BUY_GARAGE_SLOT_TYPE = 'BUY_GARAGE_SLOT';
+export const buyGarageSlotAction = {
+  type: BUY_GARAGE_SLOT_TYPE,
+};

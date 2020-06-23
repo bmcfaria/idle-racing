@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex, Text } from '@chakra-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { buyCarAction } from '../state/actions';
-import { moneySelector } from '../state/selectors';
+import { moneySelector, garageSlotsEmptySelector } from '../state/selectors';
 import { useHistory } from 'react-router-dom';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
@@ -17,6 +17,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const money = useSelector(moneySelector);
+  const emptySlots = useSelector(garageSlotsEmptySelector);
 
   const calculatedPrice = ~~useCarPriceWithDiscount(price);
   const enoughMoney = money >= calculatedPrice;
@@ -46,7 +47,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
       </Flex>
       <Button
         onClick={buy}
-        isDisabled={!enoughMoney || reward}
+        isDisabled={!enoughMoney || reward || emptySlots === 0}
         color={colors.darkGray}
         bg={colors.white}
       >

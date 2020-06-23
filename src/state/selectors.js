@@ -69,3 +69,8 @@ export const experienceMechanicSelector = state => {
 };
 
 export const warningsSelector = state => state.warnings;
+
+export const garageSlotsSelector = state => state.garageSlots;
+export const garageSlotsEmptySelector = state =>
+  state.garageSlots - state.garageCars.length;
+export const garageSlotPriceSelector = state => 100 * 10 ** state.garageSlots;
