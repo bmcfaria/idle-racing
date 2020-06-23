@@ -18,11 +18,17 @@ import {
 import { colors } from '../helpers/theme';
 import getImageCar from '../helpers/imageMappingCars';
 import AttributeCircle from './AttributeCircle';
+import Button from './Button';
 
-const BlinkCard = styled(Box)`
+const BlinkCard = styled(Button)`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   -webkit-tap-highlight-color: transparent;
   animation: ${({ blink }) => (blink ? 'blink 1s ease infinite' : 'none')};
+  padding: 0;
+
+  :hover {
+    animation: none;
+  }
 
   @keyframes blink {
     50% {

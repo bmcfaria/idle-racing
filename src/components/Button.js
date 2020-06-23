@@ -18,7 +18,7 @@ const Button = ({ children, ...props }) => (
       borderColor: 'transparent',
     }}
     style={{
-      '-webkit-tap-highlight-color': 'transparent',
+      WebkitTapHighlightColor: 'transparent',
     }}
     {...props}
   >

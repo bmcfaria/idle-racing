@@ -11,6 +11,7 @@ import CardProgressOverlay from './CardProgressOverlay';
 import CardTrackContent from './CardTrackContent';
 import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
+import Button from './Button';
 
 const CardTrack = ({ track }) => {
   const { id, race } = track;
@@ -40,17 +41,14 @@ const CardTrack = ({ track }) => {
   };
 
   return (
-    <Box
+    <Button
       w="160px"
       h="180px"
       position="relative"
       cursor="pointer"
       borderRadius="16px"
+      padding="0"
       onClick={setSelected}
-      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-      style={{
-        '-webkit-tap-highlight-color': 'transparent',
-      }}
     >
       {location?.state?.track === id && (
         <Box
@@ -95,7 +93,7 @@ const CardTrack = ({ track }) => {
           <Text fontSize="14px">({car ? car.name : '[selled car]'})</Text>
         </Flex>
       )}
-    </Box>
+    </Button>
   );
 };
 

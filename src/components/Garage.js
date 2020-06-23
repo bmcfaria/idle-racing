@@ -14,6 +14,7 @@ import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { openGarageAction } from '../state/actions';
 import CollapsiblePanel from './CollapsiblePanel';
 import { colors } from '../helpers/theme';
+import Button from './Button';
 
 const CarsContainer = ({ cars, ...props }) => {
   const pageNotificationsGarage = useSelector(pageNotificationsGarageSelector);

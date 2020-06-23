@@ -9,9 +9,7 @@ import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
-import { ReactComponent as Triange } from '../assets/icons/triangle.svg';
 import hexAlpha from 'hex-alpha';
-import Button from './Button';
 import CollapsiblePanel from './CollapsiblePanel';
 
 const TracksContainer = ({ tracks, locked, ...props }) => (
