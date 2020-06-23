@@ -9,7 +9,10 @@ import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
+import { ReactComponent as Triange } from '../assets/icons/triangle.svg';
 import hexAlpha from 'hex-alpha';
+import Button from './Button';
+import CollapsiblePanel from './CollapsiblePanel';
 
 const TracksContainer = ({ tracks, locked, ...props }) => (
   <Flex
@@ -46,6 +49,10 @@ const TracksContainer = ({ tracks, locked, ...props }) => (
   </Flex>
 );
 
+const Sponsors = props => (
+  <CollapsiblePanel {...props}>Sponsors (TBD)</CollapsiblePanel>
+);
+
 const Race = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -69,8 +76,11 @@ const Race = () => {
         <RaceDetails track={selectedTrack} />
       </Modal>
 
+      <Sponsors w={`${containerWidth - 16}px`} />
+
       <TracksContainer
         w={`${containerWidth}px`}
+        marginTop="24px"
         tracks={tracks.filter(item => item.category === 'free')}
         locked={locked?.race.free}
       />

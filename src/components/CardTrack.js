@@ -48,6 +48,9 @@ const CardTrack = ({ track }) => {
       borderRadius="16px"
       onClick={setSelected}
       boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+      style={{
+        '-webkit-tap-highlight-color': 'transparent',
+      }}
     >
       {location?.state?.track === id && (
         <Box

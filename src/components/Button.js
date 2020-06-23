@@ -15,7 +15,10 @@ const Button = ({ children, ...props }) => (
       boxShadow: 'none',
     }}
     _active={{
-      borderColor: 'none',
+      borderColor: 'transparent',
+    }}
+    style={{
+      '-webkit-tap-highlight-color': 'transparent',
     }}
     {...props}
   >

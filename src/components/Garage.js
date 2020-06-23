@@ -12,6 +12,8 @@ import { useLocation, Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { openGarageAction } from '../state/actions';
+import CollapsiblePanel from './CollapsiblePanel';
+import { colors } from '../helpers/theme';
 
 const CarsContainer = ({ cars, ...props }) => {
   const pageNotificationsGarage = useSelector(pageNotificationsGarageSelector);
@@ -41,6 +43,17 @@ const CarsContainer = ({ cars, ...props }) => {
   );
 };
 
+const GarageUpgrades = props => (
+  <CollapsiblePanel
+    bg={colors.lightBlue}
+    color="black"
+    border="none"
+    {...props}
+  >
+    Garage Upgrades (TBD)
+  </CollapsiblePanel>
+);
+
 const Garage = () => {
   const location = useLocation();
   const cars = useSelector(garageCarsSelector);
@@ -61,6 +74,8 @@ const Garage = () => {
         {selectedCar && <CarDetailsGarage car={selectedCar} />}
       </Modal>
       <Flex direction="column" minH="50vh">
+        {cars.length > 0 && <GarageUpgrades w={`${containerWidth - 16}px`} />}
+
         {cars.length === 0 && (
           <Flex margin="auto" direction="column">
             <Text fontSize="24px">Your garage is empty</Text>
@@ -77,6 +92,7 @@ const Garage = () => {
         )}
         <CarsContainer
           w={`${containerWidth}px`}
+          marginTop="24px"
           cars={cars.filter(item => item.brand === 'basic')}
         />
         <CarsContainer
