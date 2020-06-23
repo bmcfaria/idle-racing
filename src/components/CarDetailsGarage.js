@@ -109,9 +109,9 @@ const CarDetailsGarage = ({ car, ...props }) => {
     `Upgrade ${confirmationState}`;
 
   const buttonText =
-    (confirmationState === 'ACC' && calculatedPriceAcc) ||
-    (confirmationState === 'SPD' && calculatedPriceSpd) ||
-    (confirmationState === 'HND' && calculatedPriceHnd) ||
+    (confirmationState === 'ACC' && `$${calculatedPriceAcc}`) ||
+    (confirmationState === 'SPD' && `$${calculatedPriceSpd}`) ||
+    (confirmationState === 'HND' && `$${calculatedPriceHnd}`) ||
     (confirmationState === 'SELL' && `$${calculatedSellPrice}`) ||
     `Sell ($${calculatedSellPrice})`;
 
