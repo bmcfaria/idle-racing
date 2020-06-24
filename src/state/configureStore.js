@@ -3,6 +3,7 @@ import rootReducer, { initialState } from './reducer';
 import raceReducer from './reducerRace';
 import garageReducer from './reducerGarage';
 import throttle from 'lodash/throttle';
+import objectAssignDeep from 'object-assign-deep';
 
 const inDev = process.env.NODE_ENV === 'development';
 
@@ -37,38 +38,7 @@ const loadState = () => {
       };
     }
     // Pre-fill with initial state to prevent errors on old dated states
-    return {
-      ...initialState,
-      ...state,
-      pageNotifications: {
-        ...initialState.pageNotifications,
-        ...state.pageNotifications,
-      },
-      tutorial: {
-        ...initialState.tutorial,
-        ...state.tutorial,
-      },
-      locked: {
-        ...initialState.locked,
-        ...state.locked,
-      },
-      experience: {
-        ...initialState.experience,
-        ...state.experience,
-        business: {
-          ...initialState.experience.business,
-          ...(state.experience?.business ?? {}),
-        },
-        race: {
-          ...initialState.experience.race,
-          ...(state.experience?.race ?? {}),
-        },
-        mechanic: {
-          ...initialState.experience.mechanic,
-          ...(state.experience?.mechanic ?? {}),
-        },
-      },
-    };
+    return objectAssignDeep({}, initialState, state);
   } catch (err) {
     return undefined;
   }
