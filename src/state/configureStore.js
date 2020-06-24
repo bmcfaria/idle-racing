@@ -1,10 +1,23 @@
 import { createStore } from 'redux';
 import rootReducer, { initialState } from './reducer';
+import raceReducer from './reducerRace';
+import garageReducer from './reducerGarage';
 import throttle from 'lodash/throttle';
 
 const inDev = process.env.NODE_ENV === 'development';
 
 const minimunStoreVersion = 0.5;
+
+const reduceReducers = (reducers = [], state, action) =>
+  reducers.reduce(
+    (cumulativeState, reducer) => reducer(cumulativeState, action),
+    state
+  );
+
+// The reducers are splitted to reduce the file size but they use the same state object,
+// therefore they're reduced instead of combined
+const combinedReducer = (state, action) =>
+  reduceReducers([rootReducer, raceReducer, garageReducer], state, action);
 
 const loadState = () => {
   try {
@@ -72,7 +85,7 @@ const saveState = state => {
 
 export default function configureStore() {
   const store = createStore(
-    rootReducer,
+    combinedReducer,
     loadState(),
     inDev
       ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
