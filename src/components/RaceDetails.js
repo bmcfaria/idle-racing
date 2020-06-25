@@ -82,6 +82,7 @@ const ActionContent = ({
   price,
   currentRace,
   startRace,
+  startAutoRace,
   results,
   pastRace,
   meetsRequirements,
@@ -106,7 +107,19 @@ const ActionContent = ({
           track={selectedTrack}
           carsModalOpen={carsModalOpen}
         />
-        <Box margin="auto auto 20px">
+        <Flex margin="auto auto 20px">
+          <Button
+            isDisabled={money < price || currentRace || !meetsRequirements}
+            bg={colors.white}
+            color={colors.darkGray}
+            _hover={{
+              bg: colors.blue,
+              color: colors.white,
+            }}
+            onClick={startAutoRace}
+          >
+            Auto
+          </Button>
           <Button
             w="96px"
             isDisabled={money < price || currentRace || !meetsRequirements}
@@ -120,7 +133,7 @@ const ActionContent = ({
           >
             Race
           </Button>
-        </Box>
+        </Flex>
       </>
     )}
   </Flex>
@@ -155,13 +168,21 @@ const RaceDetails = ({ track: { price, race } }) => {
   const meetsRequirements =
     selectedCar && doMeetRequirements(selectedCar, selectedTrack?.requirements);
 
-  const startRace = id => {
+  const startRaceDispatch = (carId, trackId, auto) => {
     if (!meetsRequirements) {
       return;
     }
 
-    dispatch(startRaceAction(selectedCar.id, selectedTrackId));
+    dispatch(startRaceAction(carId, trackId, auto));
     history.goBack();
+  };
+
+  const startRace = () => {
+    startRaceDispatch(selectedCar.id, selectedTrackId);
+  };
+
+  const startAutoRace = () => {
+    startRaceDispatch(selectedCar.id, selectedTrackId, true);
   };
 
   const selectCar = car => {
@@ -205,6 +226,7 @@ const RaceDetails = ({ track: { price, race } }) => {
             price={calculatedPrice}
             currentRace={currentRace}
             startRace={startRace}
+            startAutoRace={startAutoRace}
             results={results}
             pastRace={pastRace}
             meetsRequirements={meetsRequirements}

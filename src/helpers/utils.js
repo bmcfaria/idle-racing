@@ -252,3 +252,8 @@ export const buffValue = (value, times, buffPercentage = 0.1) =>
 
 export const discountValue = (value, times, buffPercentage = 0.1) =>
   value * (1 - buffPercentage * times);
+
+export const expLevel = (exp, max) =>
+  exp < max ? `${~~exp}`.length : `${~~max}`.length;
+
+export const expNextLevel = exp => 10 ** `${~~exp}`.length;

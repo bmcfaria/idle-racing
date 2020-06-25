@@ -90,11 +90,11 @@ const ExperienceButton = ({
 
   const valueText =
     experience.exp < experience.max
-      ? `${abbreviate(experience.exp, 1)} / ${abbreviate(
+      ? `${abbreviate(experience.exp.toFixed(1), 1)} / ${abbreviate(
           experience.nextLevel,
           1
         )}`
-      : `${abbreviate(experience.exp, 1)}`;
+      : `${abbreviate(experience.exp.toFixed(1), 1)}`;
 
   return (
     <Button

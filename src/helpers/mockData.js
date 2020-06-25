@@ -161,13 +161,22 @@ const generateTrack = track => ({
   requirements: parseRequirements(track.requirements),
 });
 
-export const generateRace = (car, track) => ({
+export const generateRace = (car, track, auto) => ({
   id: uuid(),
   car: car.id,
   track: track.id,
   start: new Date().getTime(),
+  startOriginal: new Date().getTime(),
   duration: track.duration,
   name: track.name,
+  auto,
+  resets: 0,
+});
+
+export const resetRace = race => ({
+  ...race,
+  start: new Date().getTime(),
+  resets: ~~race.resets + 1,
 });
 
 export const generatePastRace = (

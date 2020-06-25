@@ -1,4 +1,5 @@
 import { cars as dealerCars } from '../helpers/mockData';
+import { expLevel, expNextLevel } from '../helpers/utils';
 
 // Dealer cars are global and they're not in the state/store
 export const dealerCarsSelector = () => dealerCars;
@@ -36,34 +37,34 @@ export const pageNotificationsGarageSelector = state =>
 export const experienceSelector = state => state.experience;
 export const experienceBusinessSelector = state => {
   const { exp, max, newCars, usedCars } = state.experience.business;
-  const level = exp < max ? `${exp}`.length : `${max}`.length;
+  const level = expLevel(exp, max);
   const availablePoints = level - 1 - newCars - usedCars;
 
   return {
     ...state.experience.business,
-    nextLevel: 10 ** `${exp}`.length,
+    nextLevel: expNextLevel(exp),
     availablePoints,
   };
 };
 export const experienceRaceSelector = state => {
   const { exp, max, price, prizes } = state.experience.race;
-  const level = exp < max ? `${exp}`.length : `${max}`.length;
+  const level = expLevel(exp, max);
   const availablePoints = level - 1 - price - prizes;
 
   return {
     ...state.experience.race,
-    nextLevel: 10 ** `${exp}`.length,
+    nextLevel: expNextLevel(exp),
     availablePoints,
   };
 };
 export const experienceMechanicSelector = state => {
   const { exp, max, acc, spd, hnd } = state.experience.mechanic;
-  const level = exp < max ? `${exp}`.length : `${max}`.length;
+  const level = expLevel(exp, max);
   const availablePoints = level - 1 - acc - spd - hnd;
 
   return {
     ...state.experience.mechanic,
-    nextLevel: 10 ** `${exp}`.length,
+    nextLevel: expNextLevel(exp),
     availablePoints,
   };
 };

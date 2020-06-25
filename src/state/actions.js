@@ -19,9 +19,9 @@ export const upgradeAttributeAction = (type, carId) => ({
   payload: { type, carId },
 });
 export const START_RACE_TYPE = 'START_RACE';
-export const startRaceAction = (carId, trackId) => ({
+export const startRaceAction = (carId, trackId, auto) => ({
   type: START_RACE_TYPE,
-  payload: { carId, trackId },
+  payload: { carId, trackId, auto },
 });
 export const END_RACE_TYPE = 'END_RACE';
 export const endRaceAction = raceId => ({
@@ -73,3 +73,9 @@ export const BUY_GARAGE_SLOT_TYPE = 'BUY_GARAGE_SLOT';
 export const buyGarageSlotAction = {
   type: BUY_GARAGE_SLOT_TYPE,
 };
+
+export const STOP_RACE_TYPE = 'STOP_RACE_SLOT';
+export const stopRaceAction = raceId => ({
+  type: STOP_RACE_TYPE,
+  payload: { raceId },
+});

@@ -67,7 +67,6 @@ export const initialState = {
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case RESET_TYPE: {
-      console.log(initialState);
       return initialState;
     }
 
@@ -136,7 +135,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         (payload.subType === 'newCars' || payload.subType === 'usedCars')
       ) {
         const { exp, newCars, usedCars } = state.experience.business;
-        const availablePoints = `${exp}`.length - 1 - newCars - usedCars;
+        const availablePoints = `${~~exp}`.length - 1 - newCars - usedCars;
 
         const increment =
           availablePoints > 0 && state.experience.business[payload.subType] < 3
@@ -161,7 +160,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         (payload.subType === 'price' || payload.subType === 'prizes')
       ) {
         const { exp, price, prizes } = state.experience.race;
-        const availablePoints = `${exp}`.length - 1 - price - prizes;
+        const availablePoints = `${~~exp}`.length - 1 - price - prizes;
 
         const increment =
           availablePoints > 0 && state.experience.race[payload.subType] < 3
@@ -188,7 +187,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
           payload.subType === 'hnd')
       ) {
         const { exp, acc, spd, hnd } = state.experience.mechanic;
-        const availablePoints = `${exp}`.length - 1 - acc - spd - hnd;
+        const availablePoints = `${~~exp}`.length - 1 - acc - spd - hnd;
 
         const increment =
           availablePoints > 0 && state.experience.mechanic[payload.subType] < 3
