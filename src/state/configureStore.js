@@ -15,7 +15,7 @@ const timestampReducer = state => {
   return {
     ...state,
     timestamp: new Date().getTime(),
-    timelapse: timelapse > 2 ? timelapse : state.timelapse,
+    timelapse: timelapse > 2000 ? timelapse : state.timelapse,
   };
 };
 
