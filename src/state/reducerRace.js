@@ -1,6 +1,6 @@
 import {
   START_RACE_TYPE,
-  END_RACE_TYPE,
+  CHECK_END_RACE_TYPE,
   CLOSE_RESULTS_TYPE,
   STOP_RACE_TYPE,
 } from './actions';
@@ -53,10 +53,11 @@ const reducerRace = (state = {}, { type, payload }) => {
       };
     }
 
-    case END_RACE_TYPE: {
+    case CHECK_END_RACE_TYPE: {
       const race = state.races.find(item => item.id === payload.raceId);
 
-      if (!race) {
+      const timeLeft = race.duration - (new Date().getTime() - race.start);
+      if (!race || timeLeft > 0) {
         return state;
       }
 
@@ -78,9 +79,6 @@ const reducerRace = (state = {}, { type, payload }) => {
       let expEarned = 0;
       if (race.auto) {
         const raceIndex = state.races.findIndex(item => item.id === race.id);
-        // console.log(resettedRace);
-        // console.log(track.duration);
-        // console.log(race.startOriginal);
         const timelapse = new Date().getTime() - race.startOriginal;
         const differenceInRaceResets =
           ~~(timelapse / track.duration) - (race.resets + 1);
@@ -93,7 +91,6 @@ const reducerRace = (state = {}, { type, payload }) => {
           race,
           race.resets + 1 + differenceInRaceResets
         );
-        console.log(differenceInRaceResets, earnings, offlineEarnings);
 
         stateUpdate = {
           races: Object.assign([], state.races, {
@@ -105,7 +102,7 @@ const reducerRace = (state = {}, { type, payload }) => {
               offlineEarnings: {
                 ...state.warnings.offlineEarnings,
                 value: offlineEarnings,
-                timeAway: timelapse,
+                timelapse: state.timelapse,
               },
             },
           }),

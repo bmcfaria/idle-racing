@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -11,13 +11,14 @@ import {
   CircularProgress,
 } from '@chakra-ui/core';
 import { MdFlag } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { notificationsSelector, racesSelector } from '../state/selectors';
 import NotificationsActiveRace from './NotificationsActiveRace';
 import NotificationsPastRace from './NotificationsPastRace';
 import { useOpenClose } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import styled from '@emotion/styled';
+import { checkEndRaceAction } from '../state/actions';
 
 // Workaround to override the circle color without the theme color variants
 const CustomCircularProgress = styled(CircularProgress)`
@@ -30,11 +31,24 @@ const CustomCircularProgress = styled(CircularProgress)`
 `;
 
 const Notifications = () => {
+  const dispatch = useDispatch();
   const [open, onOpen, onClose] = useOpenClose(false);
   const notifications = useSelector(notificationsSelector);
   const races = useSelector(racesSelector);
 
   const isRacing = races?.length > 0;
+
+  useEffect(() => {
+    const countDown = setInterval(() => {
+      races.forEach(race => {
+        dispatch(checkEndRaceAction(race.id));
+      });
+    }, 500);
+
+    return () => {
+      clearInterval(countDown);
+    };
+  }, [dispatch, races]);
 
   return (
     <>

@@ -9,10 +9,15 @@ const inDev = process.env.NODE_ENV === 'development';
 
 const minimunStoreVersion = 0.5;
 
-const timestampReducer = state => ({
-  ...state,
-  timestamp: new Date().getTime(),
-});
+const timestampReducer = state => {
+  const timelapse = new Date().getTime() - state.timestamp;
+
+  return {
+    ...state,
+    timestamp: new Date().getTime(),
+    timelapse: timelapse > 2 ? timelapse : state.timelapse,
+  };
+};
 
 const reduceReducers = (reducers = [], state, action) =>
   reducers.reduce(

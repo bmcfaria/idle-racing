@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CircularProgress, CircularProgressLabel } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
-import { endRaceAction } from '../state/actions';
 import styled from '@emotion/styled';
 import { colors } from '../helpers/theme';
 
@@ -24,11 +23,10 @@ const CardProgressCircle = ({ race, textColor = 'black', ...props }) => {
       const nextValue = race.duration - (new Date().getTime() - race.start);
       if (nextValue <= 0) {
         clearInterval(countDown);
-        dispatch(endRaceAction(race.id));
       }
 
       setValue(nextValue);
-    }, 500);
+    }, 250);
 
     return () => {
       clearInterval(countDown);

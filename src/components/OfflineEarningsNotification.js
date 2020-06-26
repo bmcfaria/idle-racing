@@ -14,6 +14,12 @@ const OfflineEarningsNotification = props => {
   const history = useHistory();
   const showModal = location.state?.offlineEarnings;
 
+  const totalSeconds = offlineEarnings.timelapse / 1000;
+  const days = totalSeconds / (60 * 60 * 24);
+  const hours = (totalSeconds % (60 * 60 * 24)) / (60 * 60);
+  const minutes = ((totalSeconds % (60 * 60 * 24)) % (60 * 60)) / 60;
+  const seconds = ((totalSeconds % (60 * 60 * 24)) % (60 * 60)) % 60;
+
   useEffect(() => {
     if (offlineEarnings.value > 0 && !showModal) {
       history.push({
@@ -47,6 +53,9 @@ const OfflineEarningsNotification = props => {
         </Text>
         <Text textAlign="center" marginTop="16px">
           You've earned ${offlineEarnings.value}
+        </Text>
+        <Text textAlign="center" marginTop="16px">
+          {`Time offline ${~~days}d ${~~hours}h ${~~minutes}m ${~~seconds}s`}
         </Text>
       </Flex>
     </Modal>

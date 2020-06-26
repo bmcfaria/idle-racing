@@ -23,9 +23,9 @@ export const startRaceAction = (carId, trackId, auto) => ({
   type: START_RACE_TYPE,
   payload: { carId, trackId, auto },
 });
-export const END_RACE_TYPE = 'END_RACE';
-export const endRaceAction = raceId => ({
-  type: END_RACE_TYPE,
+export const CHECK_END_RACE_TYPE = 'CHECK_END_RACE';
+export const checkEndRaceAction = raceId => ({
+  type: CHECK_END_RACE_TYPE,
   payload: { raceId },
 });
 export const CLOSE_RESULTS_TYPE = 'CLOSE_RESULTS';
