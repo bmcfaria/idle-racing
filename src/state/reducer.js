@@ -59,13 +59,13 @@ export const initialState = {
       max: 10 ** (3 * 3),
     },
   },
-  version: 0.5,
+  version: 0.6,
   warnings: {
     storeReset: false,
     offlineEarnings: {
       show: true,
       value: 0,
-      timeAway: 0,
+      timelapse: 0,
     },
   },
 };

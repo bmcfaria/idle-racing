@@ -96,16 +96,17 @@ const reducerRace = (state = {}, { type, payload }) => {
           races: Object.assign([], state.races, {
             [raceIndex]: resettedRace,
           }),
-          ...(offlineEarnings > 0 && {
-            warnings: {
-              ...state.warnings,
-              offlineEarnings: {
-                ...state.warnings.offlineEarnings,
-                value: offlineEarnings,
-                timelapse: state.timelapse,
+          ...(offlineEarnings > 0 &&
+            state.timelapse > 10000 && {
+              warnings: {
+                ...state.warnings,
+                offlineEarnings: {
+                  ...state.warnings.offlineEarnings,
+                  value: offlineEarnings,
+                  timelapse: state.timelapse,
+                },
               },
-            },
-          }),
+            }),
         };
 
         expEarned = 0.1;
