@@ -9,6 +9,11 @@ const inDev = process.env.NODE_ENV === 'development';
 
 const minimunStoreVersion = 0.5;
 
+const timestampReducer = state => ({
+  ...state,
+  timestamp: new Date().getTime(),
+});
+
 const reduceReducers = (reducers = [], state, action) =>
   reducers.reduce(
     (cumulativeState, reducer) => reducer(cumulativeState, action),
@@ -18,7 +23,11 @@ const reduceReducers = (reducers = [], state, action) =>
 // The reducers are splitted to reduce the file size but they use the same state object,
 // therefore they're reduced instead of combined
 const combinedReducer = (state, action) =>
-  reduceReducers([rootReducer, raceReducer, garageReducer], state, action);
+  reduceReducers(
+    [rootReducer, raceReducer, garageReducer, timestampReducer],
+    state,
+    action
+  );
 
 const loadState = () => {
   try {

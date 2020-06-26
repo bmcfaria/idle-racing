@@ -173,10 +173,10 @@ export const generateRace = (car, track, auto) => ({
   resets: 0,
 });
 
-export const resetRace = race => ({
+export const resetRace = (race, resets) => ({
   ...race,
   start: new Date().getTime(),
-  resets: ~~race.resets + 1,
+  resets: resets ?? ~~race.resets + 1,
 });
 
 export const generatePastRace = (

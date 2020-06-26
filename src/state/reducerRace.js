@@ -72,16 +72,42 @@ const reducerRace = (state = {}, { type, payload }) => {
         buffValue(prize, state.experience.race.prizes)
       );
 
-      const earnings = ~~calculatedPrizes[position - 1];
+      let earnings = ~~calculatedPrizes[position - 1];
 
       let stateUpdate = {};
       let expEarned = 0;
       if (race.auto) {
         const raceIndex = state.races.findIndex(item => item.id === race.id);
+        // console.log(resettedRace);
+        // console.log(track.duration);
+        // console.log(race.startOriginal);
+        const timelapse = new Date().getTime() - race.startOriginal;
+        const differenceInRaceResets =
+          ~~(timelapse / track.duration) - (race.resets + 1);
+
+        // If differenceInRaceResets > 0 then offline earnings
+        const offlineEarnings = differenceInRaceResets * earnings;
+        earnings += offlineEarnings;
+
+        const resettedRace = resetRace(
+          race,
+          race.resets + 1 + differenceInRaceResets
+        );
+        console.log(differenceInRaceResets, earnings, offlineEarnings);
 
         stateUpdate = {
           races: Object.assign([], state.races, {
-            [raceIndex]: resetRace(race),
+            [raceIndex]: resettedRace,
+          }),
+          ...(offlineEarnings > 0 && {
+            warnings: {
+              ...state.warnings,
+              offlineEarnings: {
+                ...state.warnings.offlineEarnings,
+                value: offlineEarnings,
+                timeAway: timelapse,
+              },
+            },
           }),
         };
 

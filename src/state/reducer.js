@@ -5,6 +5,7 @@ import {
   RESET_TYPE,
   BUY_EXPERIENCE_BUFF_TYPE,
   CLEAR_STORE_RESET_TYPE,
+  CLEAR_OFFLINE_EARNINGS_TYPE,
 } from './actions';
 import {
   cars as dealerCars,
@@ -61,6 +62,11 @@ export const initialState = {
   version: 0.5,
   warnings: {
     storeReset: false,
+    offlineEarnings: {
+      show: true,
+      value: 0,
+      timeAway: 0,
+    },
   },
 };
 
@@ -216,6 +222,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
         warnings: {
           ...state.warnings,
           storeReset: false,
+        },
+      };
+    }
+
+    case CLEAR_OFFLINE_EARNINGS_TYPE: {
+      return {
+        ...state,
+        warnings: {
+          ...state.warnings,
+          offlineEarnings: {
+            ...initialState.warnings.offlineEarnings,
+          },
         },
       };
     }

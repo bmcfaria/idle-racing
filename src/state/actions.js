@@ -79,3 +79,8 @@ export const stopRaceAction = raceId => ({
   type: STOP_RACE_TYPE,
   payload: { raceId },
 });
+
+export const CLEAR_OFFLINE_EARNINGS_TYPE = 'CLEAR_OFFLINE_EARNINGS';
+export const clearOfflineEarningsAction = {
+  type: CLEAR_OFFLINE_EARNINGS_TYPE,
+};

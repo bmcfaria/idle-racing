@@ -70,6 +70,7 @@ export const experienceMechanicSelector = state => {
 };
 
 export const warningsSelector = state => state.warnings;
+export const offlineEarningsSelector = state => state.warnings.offlineEarnings;
 
 export const garageSlotsSelector = state => state.garageSlots;
 export const garageSlotsEmptySelector = state =>

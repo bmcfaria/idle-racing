@@ -14,6 +14,7 @@ import Home from './components/Home';
 import Settings from './components/Settings';
 import { colors } from './helpers/theme';
 import ForcedResetWarning from './components/ForcedResetWarning';
+import OfflineEarningsNotification from './components/OfflineEarningsNotification';
 
 const store = configureStore();
 
@@ -64,6 +65,7 @@ function App() {
             </Content>
             <Navigation />
             <ForcedResetWarning />
+            <OfflineEarningsNotification />
           </Flex>
         </BrowserRouter>
       </Provider>
