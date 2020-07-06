@@ -82,62 +82,80 @@ const ActionContent = ({
   price,
   currentRace,
   startRace,
-  startAutoRace,
   results,
   pastRace,
   meetsRequirements,
   ...props
-}) => (
-  <Flex h="100%" direction="column" {...props}>
-    {results && (
-      <RaceResults
-        pastRace={pastRace}
-        raceAgain={startRace}
-        selectCar={carsModalOpen}
-      />
-    )}
-    {!results && !selectedCar && (
-      <RaceDetailsSelectCar onClick={carsModalOpen} />
-    )}
+}) => {
+  const [auto, setAuto] = useState();
 
-    {!results && selectedCar && (
-      <>
-        <RaceDetailsSelectedCar
-          car={selectedCar}
-          track={selectedTrack}
-          carsModalOpen={carsModalOpen}
+  const toggleAuto = () => {
+    setAuto(!auto);
+  };
+
+  const startRaceWithAuto = () => {
+    startRace(auto);
+  };
+
+  return (
+    <Flex h="100%" direction="column" {...props}>
+      {results && (
+        <RaceResults
+          pastRace={pastRace}
+          raceAgain={startRace}
+          selectCar={carsModalOpen}
         />
-        <Flex margin="auto auto 20px">
-          <Button
-            isDisabled={money < price || currentRace || !meetsRequirements}
-            bg={colors.white}
-            color={colors.darkGray}
-            _hover={{
-              bg: colors.blue,
-              color: colors.white,
-            }}
-            onClick={startAutoRace}
-          >
-            Auto
-          </Button>
-          <Button
-            w="96px"
-            isDisabled={money < price || currentRace || !meetsRequirements}
-            bg={colors.white}
-            color={colors.darkGray}
-            _hover={{
-              bg: colors.blue,
-              color: colors.white,
-            }}
-            onClick={startRace}
-          >
-            Race
-          </Button>
-        </Flex>
-      </>
-    )}
-  </Flex>
-);
+      )}
+      {!results && !selectedCar && (
+        <RaceDetailsSelectCar onClick={carsModalOpen} />
+      )}
+
+      {!results && selectedCar && (
+        <>
+          <RaceDetailsSelectedCar
+            car={selectedCar}
+            track={selectedTrack}
+            carsModalOpen={carsModalOpen}
+          />
+          <Flex margin="auto auto 20px">
+            <Button
+              w="32px"
+              minW="32px"
+              h="32px"
+              padding="0"
+              isDisabled={money < price || currentRace || !meetsRequirements}
+              bg={colors.white}
+              color={colors.darkGray}
+              _hover={{
+                bg: colors.blue,
+                color: colors.white,
+              }}
+              fontSize="12px"
+              whiteSpace={'normal'}
+              onClick={toggleAuto}
+            >
+              Auto {auto ? 'ON' : 'OFF'}
+            </Button>
+            <Button
+              w="96px"
+              marginLeft="12px"
+              isDisabled={money < price || currentRace || !meetsRequirements}
+              bg={colors.white}
+              color={colors.darkGray}
+              _hover={{
+                bg: colors.blue,
+                color: colors.white,
+              }}
+              onClick={startRaceWithAuto}
+            >
+              Race
+            </Button>
+          </Flex>
+        </>
+      )}
+    </Flex>
+  );
+};
 
 const RaceDetails = ({ track: { price, race } }) => {
   const dispatch = useDispatch();
@@ -177,12 +195,8 @@ const RaceDetails = ({ track: { price, race } }) => {
     history.goBack();
   };
 
-  const startRace = () => {
-    startRaceDispatch(selectedCar.id, selectedTrackId);
-  };
-
-  const startAutoRace = () => {
-    startRaceDispatch(selectedCar.id, selectedTrackId, true);
+  const startRace = auto => {
+    startRaceDispatch(selectedCar.id, selectedTrackId, auto);
   };
 
   const selectCar = car => {
@@ -226,7 +240,6 @@ const RaceDetails = ({ track: { price, race } }) => {
             price={calculatedPrice}
             currentRace={currentRace}
             startRace={startRace}
-            startAutoRace={startAutoRace}
             results={results}
             pastRace={pastRace}
             meetsRequirements={meetsRequirements}
