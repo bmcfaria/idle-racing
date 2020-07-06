@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import CardProgressOverlay from './CardProgressOverlay';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,9 +23,14 @@ import {
   useRacePriceWithDiscount,
 } from '../helpers/hooks';
 import RaceDetailsSelectedCar from './RaceDetailsSelectedCar';
-import { doMeetRequirements } from '../helpers/utils';
+import {
+  doMeetRequirements,
+  winProbability,
+  PROBABILITY_GOOD_VALUE,
+} from '../helpers/utils';
 import CardCarSmallRace from './CardCarSmallRace';
 import Button from './Button';
+import { RaceContext } from '../helpers/context';
 
 const CarsContainer = ({ cars, selectCar, ...props }) => {
   const containerWidth = useDynamicCardContainerWidth();
@@ -88,6 +93,9 @@ const ActionContent = ({
   ...props
 }) => {
   const [auto, setAuto] = useState();
+  const { winProbabilityValue } = useContext(RaceContext);
+
+  const goodChances = winProbabilityValue === PROBABILITY_GOOD_VALUE;
 
   const toggleAuto = () => {
     setAuto(!auto);
@@ -123,7 +131,7 @@ const ActionContent = ({
               minW="32px"
               h="32px"
               padding="0"
-              isDisabled={money < price || currentRace || !meetsRequirements}
+              isDisabled={!goodChances}
               bg={colors.white}
               color={colors.darkGray}
               _hover={{
@@ -157,7 +165,8 @@ const ActionContent = ({
   );
 };
 
-const RaceDetails = ({ track: { price, race } }) => {
+const RaceDetails = ({ track, ...props }) => {
+  const { price, race } = track;
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -170,6 +179,9 @@ const RaceDetails = ({ track: { price, race } }) => {
 
   const pastRace = useSelector(pastRaceSelector(selectedTrack.lastRace));
   const results = !!pastRace && pastRace.checked === false;
+
+  const winProbabilityValue =
+    track && selectedCar && winProbability(selectedCar, track);
 
   const calculatedPrice = ~~useRacePriceWithDiscount(price);
 
@@ -196,7 +208,8 @@ const RaceDetails = ({ track: { price, race } }) => {
   };
 
   const startRace = auto => {
-    startRaceDispatch(selectedCar.id, selectedTrackId, auto);
+    // auto === true to prevent event argument if passed directly in onClick
+    startRaceDispatch(selectedCar.id, selectedTrackId, auto === true);
   };
 
   const selectCar = car => {
@@ -205,48 +218,51 @@ const RaceDetails = ({ track: { price, race } }) => {
   };
 
   return (
-    <Box
-      position="relative"
-      w="320px"
-      h="180px"
-      overflowY={['scroll', 'scroll', 'unset']}
-      bg={colors.darkGray}
-      borderRadius="16px"
-    >
-      {currentRace && (
-        <CardProgressOverlay
-          zIndex="1"
-          race={currentRace}
-          borderRadius="16px"
-        />
-      )}
-
-      <Modal isOpen={carsModal} onClose={carsModalClose}>
-        <CarsContainer cars={cars} selectCar={selectCar} />
-      </Modal>
-
-      <Flex direction="row">
-        <CardTrackContent
-          w="50%"
-          track={selectedTrack}
-          borderRadius="16px 0 0 16px"
-        />
-        <Box w="50%" position="relative">
-          <ActionContent
-            selectedCar={selectedCar}
-            selectedTrack={selectedTrack}
-            carsModalOpen={carsModalOpen}
-            money={money}
-            price={calculatedPrice}
-            currentRace={currentRace}
-            startRace={startRace}
-            results={results}
-            pastRace={pastRace}
-            meetsRequirements={meetsRequirements}
+    <RaceContext.Provider value={{ winProbabilityValue }}>
+      <Box
+        position="relative"
+        w="320px"
+        h="180px"
+        overflowY={['scroll', 'scroll', 'unset']}
+        bg={colors.darkGray}
+        borderRadius="16px"
+        {...props}
+      >
+        {currentRace && (
+          <CardProgressOverlay
+            zIndex="1"
+            race={currentRace}
+            borderRadius="16px"
           />
-        </Box>
-      </Flex>
-    </Box>
+        )}
+
+        <Modal isOpen={carsModal} onClose={carsModalClose}>
+          <CarsContainer cars={cars} selectCar={selectCar} />
+        </Modal>
+
+        <Flex direction="row">
+          <CardTrackContent
+            w="50%"
+            track={selectedTrack}
+            borderRadius="16px 0 0 16px"
+          />
+          <Box w="50%" position="relative">
+            <ActionContent
+              selectedCar={selectedCar}
+              selectedTrack={selectedTrack}
+              carsModalOpen={carsModalOpen}
+              money={money}
+              price={calculatedPrice}
+              currentRace={currentRace}
+              startRace={startRace}
+              results={results}
+              pastRace={pastRace}
+              meetsRequirements={meetsRequirements}
+            />
+          </Box>
+        </Flex>
+      </Box>
+    </RaceContext.Provider>
   );
 };
 

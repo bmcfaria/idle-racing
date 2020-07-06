@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Flex, Box, Text } from '@chakra-ui/core';
 import { CardWinningChanceComponent } from './CardWinningChance';
-import { winProbability } from '../helpers/utils';
 import { zIndex } from '../helpers/theme';
 import { MdInfo, MdInfoOutline } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,17 +8,17 @@ import { tutorialWinChanceSelector } from '../state/selectors';
 import { disableTutorialWinChanceAction } from '../state/actions';
 import Button from './Button';
 import CallForAttention from './CallForAttention';
-
-const GOOD_VALUE = 3;
+import { RaceContext } from '../helpers/context';
+import { PROBABILITY_GOOD_VALUE } from '../helpers/utils';
 
 const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
   const [showTip, setShowTip] = useState();
   const [hover, setHover] = useState();
   const dispatch = useDispatch();
   const showTutorial = useSelector(tutorialWinChanceSelector);
-  const winProbabilityValue = track && winProbability(car, track);
+  const { winProbabilityValue } = useContext(RaceContext);
 
-  const goodChances = winProbabilityValue === GOOD_VALUE;
+  const goodChances = winProbabilityValue === PROBABILITY_GOOD_VALUE;
 
   const toggleTip = () => {
     setShowTip(!showTip);
@@ -54,12 +53,14 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
       {showTip && (
         <Flex
           position="absolute"
-          top={`-${(24 + 4) * (GOOD_VALUE - winProbabilityValue) + 16}px`}
+          top={`-${
+            (24 + 4) * (PROBABILITY_GOOD_VALUE - winProbabilityValue) + 16
+          }px`}
           w="100%"
           h={`${
             16 +
-            (GOOD_VALUE + 1) * 24 +
-            GOOD_VALUE * 3 +
+            (PROBABILITY_GOOD_VALUE + 1) * 24 +
+            PROBABILITY_GOOD_VALUE * 3 +
             2 +
             16 +
             (goodChances ? 40 : 90) +
@@ -87,25 +88,27 @@ const RaceDetailsSelectedCarWinningChance = ({ car, track, ...props }) => {
       <Box>
         {showTip && Number.isInteger(winProbabilityValue) && (
           <Box
-            top={`-${4 + (24 + 4) * (GOOD_VALUE - winProbabilityValue)}px`}
+            top={`-${
+              4 + (24 + 4) * (PROBABILITY_GOOD_VALUE - winProbabilityValue)
+            }px`}
             left="8px"
             position="absolute"
             w="calc(100% - 16px)"
             zIndex={zIndex.winChanceTip}
           >
-            {[...Array(GOOD_VALUE - winProbabilityValue).keys()].map(
-              (_, index) => (
-                <CardWinningChanceComponent
-                  key={index + 1}
-                  winProbabilityValue={GOOD_VALUE - index}
-                  borderRadius="16px"
-                  w="100%"
-                  h="24px"
-                  marginTop="4px"
-                  short
-                />
-              )
-            )}
+            {[
+              ...Array(PROBABILITY_GOOD_VALUE - winProbabilityValue).keys(),
+            ].map((_, index) => (
+              <CardWinningChanceComponent
+                key={index + 1}
+                winProbabilityValue={PROBABILITY_GOOD_VALUE - index}
+                borderRadius="16px"
+                w="100%"
+                h="24px"
+                marginTop="4px"
+                short
+              />
+            ))}
           </Box>
         )}
 

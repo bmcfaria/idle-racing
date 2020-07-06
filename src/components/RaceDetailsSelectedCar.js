@@ -7,7 +7,7 @@ import Button from './Button';
 
 const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
   return (
-    <Flex w="100%" h="100%" direction="column">
+    <Flex w="100%" h="100%" direction="column" {...props}>
       <Button
         w="144px"
         h="64px"

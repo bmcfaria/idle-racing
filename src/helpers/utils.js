@@ -257,3 +257,5 @@ export const expLevel = (exp, max) =>
   exp < max ? `${~~exp}`.length : `${~~max}`.length;
 
 export const expNextLevel = exp => 10 ** `${~~exp}`.length;
+
+export const PROBABILITY_GOOD_VALUE = 3;
