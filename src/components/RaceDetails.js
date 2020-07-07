@@ -137,6 +137,7 @@ const ActionContent = ({
               _hover={{
                 bg: colors.blue,
                 color: colors.white,
+                boxShadow: 'none',
               }}
               fontSize="12px"
               whiteSpace={'normal'}
@@ -153,6 +154,7 @@ const ActionContent = ({
               _hover={{
                 bg: colors.blue,
                 color: colors.white,
+                boxShadow: 'none',
               }}
               onClick={startRaceWithAuto}
             >

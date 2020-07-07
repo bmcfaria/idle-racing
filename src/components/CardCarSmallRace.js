@@ -12,6 +12,7 @@ import {
 } from '../helpers/utils';
 import { colors } from '../helpers/theme';
 import getImageCar from '../helpers/imageMappingCars';
+import Button from './Button';
 
 const CarAttribute = ({ text, attr, ...props }) => (
   <Box w="48px" lineHeight="14px" textAlign="center" {...props}>
@@ -71,14 +72,14 @@ const CardCarSmallRace = ({
   };
 
   return (
-    <Box
+    <Button
       w="160px"
       h="136px"
       position="relative"
       onClick={setSelected}
       cursor={meetsRequirements ? 'pointer' : 'unset'}
       borderRadius="16px"
-      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+      padding="0"
       {...props}
     >
       <Box w="100%" h="100px" position="absolute">
@@ -170,7 +171,7 @@ const CardCarSmallRace = ({
           circleSize="72px"
         />
       )}
-    </Box>
+    </Button>
   );
 };
 
