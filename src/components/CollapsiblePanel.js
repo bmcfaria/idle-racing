@@ -1,29 +1,76 @@
-import React from 'react';
-import { Box, Text } from '@chakra-ui/core';
+import React, { useState } from 'react';
+import { Box, Text, Flex } from '@chakra-ui/core';
 import { colors } from '../helpers/theme';
 import { ReactComponent as Triange } from '../assets/icons/triangle.svg';
 import Button from './Button';
 
-const CollapsiblePanel = ({ children, ...props }) => (
-  <Button
-    wrap="wrap"
-    margin="0 auto"
-    boxSizing="content-box"
-    borderRadius="16px"
-    padding="0 16px"
-    border={`1px solid ${colors.lightGray}`}
-    bg={colors.darkGray}
-    color={colors.white}
-    position="relative"
-    minH="32px"
-    alignItems="center"
-    justifyContent="space-between"
-    {...props}
-  >
-    <Box w="16px" h="16px" transform="rotate(180deg)" as={Triange} />
-    <Text>{children}</Text>
-    <Box w="16px" h="16px" transform="rotate(180deg)" as={Triange} />
-  </Button>
-);
+const CollapsiblePanel = ({
+  text,
+  wrap,
+  children,
+  bg = colors.darkGray,
+  color = colors.white,
+  ...props
+}) => {
+  const [open, setOpen] = useState();
+
+  const toggle = () => {
+    setOpen(!open);
+  };
+
+  return (
+    <Flex
+      borderRadius="16px"
+      bg={bg}
+      minH="32px"
+      margin="0 auto"
+      position="relative"
+      direction="column"
+      {...props}
+    >
+      <Button
+        w="100%"
+        wrap="wrap"
+        borderRadius="16px"
+        padding="0 16px"
+        color={color}
+        top="0"
+        left="0"
+        position="absolute"
+        bg={bg}
+        minH="32px"
+        alignItems="center"
+        justifyContent="space-between"
+        onClick={toggle}
+      >
+        <Box
+          w="16px"
+          h="16px"
+          {...(!open && { transform: 'rotate(180deg)' })}
+          as={Triange}
+        />
+        <Text>{text}</Text>
+        <Box
+          w="16px"
+          h="16px"
+          {...(!open && { transform: 'rotate(180deg)' })}
+          as={Triange}
+        />
+      </Button>
+      {open && (
+        <Flex
+          w="calc(100% - 2px)"
+          margin="0 auto 1px "
+          padding="32px 8px 8px 0"
+          borderRadius="16px"
+          bg={colors.white}
+          wrap={wrap}
+        >
+          {children}
+        </Flex>
+      )}
+    </Flex>
+  );
+};
 
 export default CollapsiblePanel;

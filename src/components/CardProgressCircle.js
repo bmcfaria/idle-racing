@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { CircularProgress, CircularProgressLabel } from '@chakra-ui/core';
+import { CircularProgressLabel } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
-import styled from '@emotion/styled';
-import { colors } from '../helpers/theme';
-
-const CustomCircularProgress = styled(CircularProgress)`
-  circle {
-    color: transparent;
-  }
-  circle:nth-of-type(2) {
-    color: ${colors.blue};
-  }
-`;
+import { CustomCircularProgress } from './CustomCircularProgress';
 
 const CardProgressCircle = ({ race, textColor = 'black', ...props }) => {
   const dispatch = useDispatch();

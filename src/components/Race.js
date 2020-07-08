@@ -48,7 +48,7 @@ const TracksContainer = ({ tracks, locked, ...props }) => (
 );
 
 const Sponsors = props => (
-  <CollapsiblePanel {...props}>Sponsors (TBD)</CollapsiblePanel>
+  <CollapsiblePanel text="Sponsors (TBD)" {...props}></CollapsiblePanel>
 );
 
 const Race = () => {

@@ -13,9 +13,9 @@ import { useLocation, Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { openGarageAction } from '../state/actions';
-import CollapsiblePanel from './CollapsiblePanel';
 import { colors } from '../helpers/theme';
 import GarageBuySlot from './GarageBuySlot';
+import { GarageUpgrades } from './GarageUpgrades';
 
 const CarsContainer = ({ cars, ...props }) => {
   const pageNotificationsGarage = useSelector(pageNotificationsGarageSelector);
@@ -70,17 +70,6 @@ const CarsContainer = ({ cars, ...props }) => {
     </>
   );
 };
-
-const GarageUpgrades = props => (
-  <CollapsiblePanel
-    bg={colors.lightBlue}
-    color="black"
-    border="none"
-    {...props}
-  >
-    Garage Upgrades (TBD)
-  </CollapsiblePanel>
-);
 
 const Garage = () => {
   const location = useLocation();
