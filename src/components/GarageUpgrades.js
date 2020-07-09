@@ -80,7 +80,13 @@ const GarageUpgrades = props => {
             }
           </CustomCircularProgress>
           <Flex margin="4px 0 0 8px" alignItems="baseline">
-            <Text fontSize="24px">{points}</Text>
+            <Text
+              minW={`${points}`.length * 16 + 'px'}
+              textAlign="center"
+              fontSize="24px"
+            >
+              {points}
+            </Text>
             <Text fontSize="14px" marginLeft="8px">
               Points
             </Text>
