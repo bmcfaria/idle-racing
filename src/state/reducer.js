@@ -41,6 +41,7 @@ export const initialState = {
   },
   garage: {
     cycleTimestamp: 0,
+    cycleLastSync: 0,
     cycleDuration: 5000,
     points: 0,
     upgradeCenter: 0,
@@ -238,14 +239,20 @@ const rootReducer = (state = initialState, { type, payload }) => {
         0
       );
 
-      // TODO: offline earnings
+      const timelapse =
+        state.garage.cycleLastSync > 0
+          ? new Date().getTime() - state.garage.cycleLastSync
+          : 0;
 
       return {
         ...state,
         garage: {
           ...state.garage,
           cycleTimestamp: new Date().getTime(),
-          points: state.garage.points + mechanics,
+          cycleLastSync: new Date().getTime(),
+          points:
+            state.garage.points +
+            ~~(timelapse / state.garage.cycleDuration) * mechanics,
         },
       };
     }
