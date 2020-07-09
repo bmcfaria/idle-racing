@@ -45,7 +45,7 @@ const GarageUpgrades = props => {
       bg={colors.lightBlue}
       color="black"
       border="none"
-      text="Garage Upgrades (TBD)"
+      text={`Garage Upgrades (${points} points)`}
       isDisabled={mechanics === 0}
       {...props}
     >
