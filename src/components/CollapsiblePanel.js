@@ -16,9 +16,7 @@ const CollapsiblePanel = ({
   const [open, setOpen] = useState();
 
   const toggle = () => {
-    if (!isDisabled) {
-      setOpen(!open);
-    }
+    setOpen(!open);
   };
 
   return (
@@ -44,6 +42,7 @@ const CollapsiblePanel = ({
         minH="32px"
         alignItems="center"
         justifyContent="space-between"
+        isDisabled={isDisabled}
         onClick={toggle}
       >
         <Box
