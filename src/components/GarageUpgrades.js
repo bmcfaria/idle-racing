@@ -4,18 +4,23 @@ import CollapsiblePanel from './CollapsiblePanel';
 import { colors } from '../helpers/theme';
 import Button from './Button';
 import { CustomCircularProgress } from './CustomCircularProgress';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   mechanicsSelector,
   garagePointsSelector,
   garageCycleDurationSelector,
   garageCycleTimestampSelector,
+  garageUpgradesSelector,
 } from '../state/selectors';
+import { buyGarageUpgradeAction } from '../state/actions';
+import garageUpgrades from '../helpers/garageUpgrades';
 
 const GarageUpgrades = props => {
   const [value, setValue] = useState();
+  const dispatch = useDispatch();
   const points = useSelector(garagePointsSelector);
   const mechanics = useSelector(mechanicsSelector);
+  const upgrades = useSelector(garageUpgradesSelector);
   const cycleDuration = useSelector(garageCycleDurationSelector);
   const cycleTimestamp = useSelector(garageCycleTimestampSelector);
   const progress = ((cycleDuration - value) * 100) / cycleDuration;
@@ -39,6 +44,14 @@ const GarageUpgrades = props => {
     };
   }, [cycleDuration, cycleTimestamp, mechanics]);
 
+  const buyUpgradeCenter = () => {
+    dispatch(buyGarageUpgradeAction('upgradeCenter'));
+  };
+
+  const buyExpanse = () => {
+    dispatch(buyGarageUpgradeAction('expanse'));
+  };
+
   return (
     <CollapsiblePanel
       wrap="wrap"
@@ -46,6 +59,7 @@ const GarageUpgrades = props => {
       color="black"
       border="none"
       text={`Garage Upgrades (${points} points)`}
+      textWhenOpen="Garage Upgrades"
       isDisabled={mechanics === 0}
       {...props}
     >
@@ -74,16 +88,34 @@ const GarageUpgrades = props => {
         </Flex>
         <Flex>Mechanics: {mechanics}</Flex>
       </Box>
-      <Button minW="100px" h="64px" margin="8px 0 0 8px" flexDirection="column">
-        <Text>Upgrade</Text>
-        <Text>Center lvl 1</Text>
-        <Text>(5 points)</Text>
-      </Button>
-      <Button minW="100px" h="64px" margin="8px 0 0 8px" flexDirection="column">
-        <Text>Garage</Text>
-        <Text>Expanse</Text>
-        <Text>(25 points)</Text>
-      </Button>
+      {garageUpgrades.upgradeCenter.length > upgrades.upgradeCenter && (
+        <Button
+          minW="100px"
+          h="64px"
+          margin="8px 0 0 8px"
+          flexDirection="column"
+          onClick={buyUpgradeCenter}
+        >
+          <Text>Upgrade</Text>
+          <Text>Center lvl {upgrades.upgradeCenter + 1}</Text>
+          <Text>
+            ({garageUpgrades.upgradeCenter[upgrades.upgradeCenter]} points)
+          </Text>
+        </Button>
+      )}
+      {upgrades.expanse === 0 && (
+        <Button
+          minW="100px"
+          h="64px"
+          margin="8px 0 0 8px"
+          flexDirection="column"
+          onClick={buyExpanse}
+        >
+          <Text>Garage</Text>
+          <Text>Expanse</Text>
+          <Text>({garageUpgrades.expanse[upgrades.expanse]} points)</Text>
+        </Button>
+      )}
     </CollapsiblePanel>
   );
 };

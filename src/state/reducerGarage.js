@@ -5,9 +5,11 @@ import {
   OPEN_GARAGE_CAR_TYPE,
   DISABLE_TUTORIAL_UPGRADE_TYPE,
   BUY_GARAGE_SLOT_TYPE,
+  BUY_GARAGE_UPGRADE_TYPE,
 } from './actions';
 import { upgradeAttribute, generateCarPrice } from '../helpers/mockData';
 import { buffValue, discountValue } from '../helpers/utils';
+import garageUpgrades from '../helpers/garageUpgrades';
 
 const reducerGarage = (state = {}, { type, payload }) => {
   switch (type) {
@@ -53,8 +55,13 @@ const reducerGarage = (state = {}, { type, payload }) => {
       );
 
       const attribute = car[payload.type];
+      const upgradeCenterLvl = state.garage.upgrades.upgradeCenter;
 
-      if (!calculatedPrice || state.money < calculatedPrice) {
+      if (
+        !calculatedPrice ||
+        state.money < calculatedPrice ||
+        attribute.upgrade >= upgradeCenterLvl
+      ) {
         return state;
       }
 
@@ -107,6 +114,33 @@ const reducerGarage = (state = {}, { type, payload }) => {
           garage: state.pageNotifications.garage.filter(
             item => item !== payload.carId
           ),
+        },
+      };
+    }
+
+    case BUY_GARAGE_UPGRADE_TYPE: {
+      const price =
+        garageUpgrades[payload.upgrade]?.[
+          state.garage.upgrades[payload.upgrade]
+        ];
+
+      if (
+        !garageUpgrades[payload.upgrade] ||
+        !price ||
+        state.garage.points < price
+      ) {
+        return state;
+      }
+
+      return {
+        ...state,
+        garage: {
+          ...state.garage,
+          points: state.garage.points - price,
+          upgrades: {
+            ...state.garage.upgrades,
+            [payload.upgrade]: state.garage.upgrades[payload.upgrade] + 1,
+          },
         },
       };
     }

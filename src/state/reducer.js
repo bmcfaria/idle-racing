@@ -44,8 +44,10 @@ export const initialState = {
     cycleLastSync: 0,
     cycleDuration: 5000,
     points: 0,
-    upgradeCenter: 0,
-    garageExpanse: 0,
+    upgrades: {
+      upgradeCenter: 0,
+      expanse: 0,
+    },
   },
   experience: {
     business: {

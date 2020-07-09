@@ -13,6 +13,7 @@ import {
   moneySelector,
   garageCarsSelector,
   tutorialUpgradeSelector,
+  garageUpgradesSelector,
 } from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
 import { colors } from '../helpers/theme';
@@ -78,6 +79,7 @@ const AttributeCircleButton = ({
 const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, price } = car;
   const money = useSelector(moneySelector);
+  const upgrades = useSelector(garageUpgradesSelector);
 
   const calculatedPriceAcc = ~~useUpgradePriceWithDiscount(
     car[ATTRIBUTE_TYPES.ACCELERATION].price,
@@ -107,6 +109,14 @@ const CarDetailsGarage = ({ car, ...props }) => {
     (!confirmationState && name) ||
     (confirmationState === 'SELL' && 'Sell') ||
     `Upgrade ${confirmationState}`;
+
+  const missingUpgradeCenter =
+    (confirmationState === 'ACC' &&
+      car[ATTRIBUTE_TYPES.ACCELERATION].upgrade >= upgrades.upgradeCenter) ||
+    (confirmationState === 'SPD' &&
+      car[ATTRIBUTE_TYPES.SPEED].upgrade >= upgrades.upgradeCenter) ||
+    (confirmationState === 'HND' &&
+      car[ATTRIBUTE_TYPES.HANDLING].upgrade >= upgrades.upgradeCenter);
 
   const buttonText =
     (confirmationState === 'ACC' && `$${calculatedPriceAcc}`) ||
@@ -185,18 +195,26 @@ const CarDetailsGarage = ({ car, ...props }) => {
           onClick={() => setConfirmationState('HND')}
         />
       </Flex>
-      <Flex w="100%" justifyContent="space-evenly">
-        <Button
-          onClick={buttonCallback}
-          minW="72px"
-          h="24px"
-          fontSize="12px"
-          isDisabled={buttonDisable}
-          color={buttonColors.color}
-          bg={buttonColors.bg}
-        >
-          {buttonText}
-        </Button>
+      <Flex w="100%" justifyContent="space-evenly" alignItems="center">
+        {!missingUpgradeCenter && (
+          <Button
+            onClick={buttonCallback}
+            minW="72px"
+            h="24px"
+            fontSize="12px"
+            isDisabled={buttonDisable}
+            color={buttonColors.color}
+            bg={buttonColors.bg}
+          >
+            {buttonText}
+          </Button>
+        )}
+        {missingUpgradeCenter && (
+          <Box minW="72px" textAlign="center">
+            <Text fontSize="14px">Upgrade</Text>
+            <Text fontSize="14px">Center lvl {upgrades.upgradeCenter + 1}</Text>
+          </Box>
+        )}
         {confirmationState && (
           <Button
             onClick={() => setConfirmationState()}

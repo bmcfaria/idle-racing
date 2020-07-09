@@ -1,7 +1,11 @@
 import React from 'react';
-import { Text, Flex } from '@chakra-ui/core';
+import { Text, Flex, Box } from '@chakra-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { garageSlotPriceSelector, moneySelector } from '../state/selectors';
+import {
+  garageSlotPriceSelector,
+  moneySelector,
+  garageUpgradesSelector,
+} from '../state/selectors';
 import { buyGarageSlotAction } from '../state/actions';
 import { colors } from '../helpers/theme';
 import Button from './Button';
@@ -12,6 +16,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 const GarageBuySlot = props => {
   const money = useSelector(moneySelector);
   const slotPrice = useSelector(garageSlotPriceSelector);
+  const { expanse } = useSelector(garageUpgradesSelector);
   const dispatch = useDispatch();
 
   const location = useLocation();
@@ -82,6 +87,7 @@ const GarageBuySlot = props => {
         flexDirection="column"
         justifyContent="space-around"
         onClick={openModal}
+        isDisabled={expanse === 0}
         {...props}
       >
         <Text fontSize="14px">Buy car slot</Text>
@@ -99,7 +105,15 @@ const GarageBuySlot = props => {
             fill="currentColor"
           />
         </svg>
-        <Text fontSize="16px">${abbreviate(slotPrice, 1)}</Text>
+        {expanse === 0 && (
+          <Box>
+            <Text fontSize="16px">Missing</Text>
+            <Text fontSize="16px">Expanse upgrade</Text>
+          </Box>
+        )}
+        {expanse > 0 && (
+          <Text fontSize="16px">${abbreviate(slotPrice, 1)}</Text>
+        )}
       </Button>
     </>
   );

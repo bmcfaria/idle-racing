@@ -6,6 +6,7 @@ import Button from './Button';
 
 const CollapsiblePanel = ({
   text,
+  textWhenOpen,
   wrap,
   children,
   isDisabled,
@@ -51,7 +52,7 @@ const CollapsiblePanel = ({
           {...(!open && { transform: 'rotate(180deg)' })}
           as={Triange}
         />
-        <Text>{text}</Text>
+        <Text>{open && textWhenOpen ? textWhenOpen : text}</Text>
         <Box
           w="16px"
           h="16px"

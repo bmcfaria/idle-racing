@@ -86,3 +86,5 @@ export const mechanicsSelector = state =>
     (sum, track) => sum + ~~track.stats?.raced + ~~track.stats?.won,
     0
   );
+
+export const garageUpgradesSelector = state => state.garage.upgrades;
