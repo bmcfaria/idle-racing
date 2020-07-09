@@ -6,6 +6,7 @@ import {
   BUY_EXPERIENCE_BUFF_TYPE,
   CLEAR_STORE_RESET_TYPE,
   CLEAR_OFFLINE_EARNINGS_TYPE,
+  CHECK_GARAGE_TIMER_TYPE,
 } from './actions';
 import {
   cars as dealerCars,
@@ -38,6 +39,13 @@ export const initialState = {
       track: true,
     },
   },
+  garage: {
+    cycleTimestamp: 0,
+    cycleDuration: 5000,
+    points: 0,
+    upgradeCenter: 0,
+    garageExpanse: 0,
+  },
   experience: {
     business: {
       exp: 0,
@@ -59,7 +67,7 @@ export const initialState = {
       max: 10 ** (3 * 3),
     },
   },
-  version: 0.6,
+  version: 0.7,
   warnings: {
     storeReset: false,
     offlineEarnings: {
@@ -214,6 +222,32 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
 
       return state;
+    }
+
+    case CHECK_GARAGE_TIMER_TYPE: {
+      const timeLeft =
+        state.garage.cycleDuration -
+        (new Date().getTime() - state.garage.cycleTimestamp);
+
+      if (timeLeft > 0) {
+        return state;
+      }
+
+      const mechanics = state.tracks.reduce(
+        (sum, track) => sum + ~~track.stats?.raced + ~~track.stats?.won,
+        0
+      );
+
+      // TODO: offline earnings
+
+      return {
+        ...state,
+        garage: {
+          ...state.garage,
+          cycleTimestamp: new Date().getTime(),
+          points: state.garage.points + mechanics,
+        },
+      };
     }
 
     case CLEAR_STORE_RESET_TYPE: {

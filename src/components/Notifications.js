@@ -18,7 +18,7 @@ import NotificationsPastRace from './NotificationsPastRace';
 import { useOpenClose } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import styled from '@emotion/styled';
-import { checkEndRaceAction } from '../state/actions';
+import { checkEndRaceAction, checkGarageTimerAction } from '../state/actions';
 
 // Workaround to override the circle color without the theme color variants
 const CustomCircularProgress = styled(CircularProgress)`
@@ -43,6 +43,7 @@ const Notifications = () => {
       races.forEach(race => {
         dispatch(checkEndRaceAction(race.id));
       });
+      dispatch(checkGarageTimerAction);
     }, 500);
 
     return () => {

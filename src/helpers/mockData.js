@@ -159,6 +159,10 @@ const generateTrack = track => ({
   race: undefined,
   lastRace: undefined,
   requirements: parseRequirements(track.requirements),
+  stats: {
+    raced: false,
+    won: false,
+  },
 });
 
 export const generateRace = (car, track, auto) => ({

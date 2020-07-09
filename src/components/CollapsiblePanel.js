@@ -8,6 +8,7 @@ const CollapsiblePanel = ({
   text,
   wrap,
   children,
+  isDisabled,
   bg = colors.darkGray,
   color = colors.white,
   ...props
@@ -15,7 +16,9 @@ const CollapsiblePanel = ({
   const [open, setOpen] = useState();
 
   const toggle = () => {
-    setOpen(!open);
+    if (!isDisabled) {
+      setOpen(!open);
+    }
   };
 
   return (

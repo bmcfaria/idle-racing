@@ -15,7 +15,7 @@ import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { openGarageAction } from '../state/actions';
 import { colors } from '../helpers/theme';
 import GarageBuySlot from './GarageBuySlot';
-import { GarageUpgrades } from './GarageUpgrades';
+import GarageUpgrades from './GarageUpgrades';
 
 const CarsContainer = ({ cars, ...props }) => {
   const pageNotificationsGarage = useSelector(pageNotificationsGarageSelector);

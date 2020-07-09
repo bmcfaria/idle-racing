@@ -76,3 +76,13 @@ export const garageSlotsSelector = state => state.garageSlots;
 export const garageSlotsEmptySelector = state =>
   state.garageSlots - state.garageCars.length;
 export const garageSlotPriceSelector = state => 100 * 10 ** state.garageSlots;
+
+export const garageCycleTimestampSelector = state =>
+  state.garage?.cycleTimestamp;
+export const garageCycleDurationSelector = state => state.garage?.cycleDuration;
+export const garagePointsSelector = state => ~~state.garage?.points;
+export const mechanicsSelector = state =>
+  state.tracks.reduce(
+    (sum, track) => sum + ~~track.stats?.raced + ~~track.stats?.won,
+    0
+  );

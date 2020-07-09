@@ -75,6 +75,12 @@ const reducerRace = (state = {}, { type, payload }) => {
 
       let earnings = ~~calculatedPrizes[position - 1];
 
+      const trackStats = {
+        ...(track.stats || {}),
+        raced: true,
+        won: track.stats?.won || position === 1,
+      };
+
       let stateUpdate = {};
       let expEarned = 0;
       if (race.auto) {
@@ -107,6 +113,12 @@ const reducerRace = (state = {}, { type, payload }) => {
                 },
               },
             }),
+          tracks: Object.assign([], state.tracks, {
+            [trackIndex]: {
+              ...track,
+              stats: trackStats,
+            },
+          }),
         };
 
         expEarned = 0.1;
@@ -133,6 +145,7 @@ const reducerRace = (state = {}, { type, payload }) => {
               ...track,
               race: undefined,
               lastRace: pastRace.id,
+              stats: trackStats,
             },
           }),
           notifications: [pastRace, ...state.notifications],
