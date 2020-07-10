@@ -71,6 +71,7 @@ export const initialState = {
     },
   },
   version: 0.701,
+  toasts: [],
   warnings: {
     storeReset: false,
     offlineEarnings: {

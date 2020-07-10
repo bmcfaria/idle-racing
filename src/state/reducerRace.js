@@ -4,7 +4,12 @@ import {
   CLOSE_RESULTS_TYPE,
   STOP_RACE_TYPE,
 } from './actions';
-import { generateRace, generatePastRace, resetRace } from '../helpers/mockData';
+import {
+  generateRace,
+  generatePastRace,
+  resetRace,
+  generateRaceMechanicToast,
+} from '../helpers/mockData';
 import { raceResults, buffValue, discountValue } from '../helpers/utils';
 
 const reducerRace = (state = {}, { type, payload }) => {
@@ -80,6 +85,27 @@ const reducerRace = (state = {}, { type, payload }) => {
         raced: true,
         won: track.stats?.won + ~~(position === 1),
       };
+
+      let toasts = [];
+      if (!track.stats.raced) {
+        toasts.push(
+          generateRaceMechanicToast(track.name, '+1 Mechanic', 'mechanicRace')
+        );
+      }
+      if (track.stats.won === 0 && trackStats.won > 0) {
+        toasts.push(
+          generateRaceMechanicToast(track.name, '+1 Mechanic', 'mechanicWon')
+        );
+      }
+      if (
+        track.stats.won > 0 &&
+        track.stats.won < 100 &&
+        trackStats.won >= 100
+      ) {
+        toasts.push(
+          generateRaceMechanicToast(track.name, '+1 Mechanic', 'mechanic100Win')
+        );
+      }
 
       let stateUpdate = {};
       let expEarned = 0;
@@ -177,6 +203,7 @@ const reducerRace = (state = {}, { type, payload }) => {
           },
         },
         ...stateUpdate,
+        toasts: [...state.toasts, ...toasts],
       };
     }
 

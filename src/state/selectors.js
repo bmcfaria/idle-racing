@@ -88,3 +88,5 @@ export const mechanicsSelector = state =>
   );
 
 export const garageUpgradesSelector = state => state.garage.upgrades;
+
+export const toastsSelector = state => state.toasts;

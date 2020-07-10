@@ -15,6 +15,7 @@ import Settings from './components/Settings';
 import { colors } from './helpers/theme';
 import ForcedResetWarning from './components/ForcedResetWarning';
 import OfflineEarningsNotification from './components/OfflineEarningsNotification';
+import Toasts from './components/Toasts';
 
 const store = configureStore();
 
@@ -64,6 +65,7 @@ function App() {
               </Switch>
             </Content>
             <Navigation />
+            <Toasts />
             <ForcedResetWarning />
             <OfflineEarningsNotification />
           </Flex>

@@ -202,6 +202,19 @@ export const generatePastRace = (
   results,
 });
 
+const toastType = {
+  mechanicRace: 'finish race',
+  mechanicWon: 'won race',
+  mechanic100Win: '100 wins',
+};
+
+export const generateRaceMechanicToast = (name, reward, type) => ({
+  id: uuid(),
+  name,
+  reward,
+  description: toastType[type] || '',
+});
+
 export const cars = [
   ...carsFile.reduce(
     (results, car) =>
