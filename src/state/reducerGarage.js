@@ -146,7 +146,7 @@ const reducerGarage = (state = {}, { type, payload }) => {
     }
 
     case BUY_GARAGE_SLOT_TYPE: {
-      const slotPrice = 100 * 10 ** state.garageSlots;
+      const slotPrice = 250 * 2 ** state.garageSlots;
 
       if (state.money < slotPrice) {
         return state;
