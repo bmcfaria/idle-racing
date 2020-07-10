@@ -132,8 +132,9 @@ const ActionContent = ({
               h="32px"
               padding="0"
               isDisabled={!goodChances}
-              bg={colors.white}
-              color={colors.darkGray}
+              bg={auto ? colors.blue : colors.white}
+              color={auto ? colors.white : colors.darkGray}
+              {...(auto && { boxShadow: 'none' })}
               _hover={{
                 bg: colors.blue,
                 color: colors.white,
