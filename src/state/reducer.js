@@ -70,7 +70,7 @@ export const initialState = {
       max: 10 ** (3 * 3),
     },
   },
-  version: 0.7,
+  version: 0.701,
   warnings: {
     storeReset: false,
     offlineEarnings: {

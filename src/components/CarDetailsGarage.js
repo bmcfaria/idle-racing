@@ -8,12 +8,14 @@ import {
   upgradeAttributeAction,
   openGarageCarAction,
   disableTutorialUpgradeAction,
+  closeResultsAction,
 } from '../state/actions';
 import {
   moneySelector,
   garageCarsSelector,
   tutorialUpgradeSelector,
   garageUpgradesSelector,
+  pastRacesSelector,
 } from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
 import { colors } from '../helpers/theme';
@@ -80,6 +82,7 @@ const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, price } = car;
   const money = useSelector(moneySelector);
   const upgrades = useSelector(garageUpgradesSelector);
+  const pastRaces = useSelector(pastRacesSelector);
 
   const calculatedPriceAcc = ~~useUpgradePriceWithDiscount(
     car[ATTRIBUTE_TYPES.ACCELERATION].price,
@@ -143,6 +146,12 @@ const CarDetailsGarage = ({ car, ...props }) => {
 
   const upgrade = type => {
     dispatch(upgradeAttributeAction(type, id));
+
+    const pastRace = [...pastRaces].reverse().find(race => race.car === id);
+    if (pastRace) {
+      dispatch(closeResultsAction(pastRace.id));
+    }
+
     setConfirmationState();
   };
 
