@@ -78,7 +78,7 @@ const reducerRace = (state = {}, { type, payload }) => {
       const trackStats = {
         ...(track.stats || {}),
         raced: true,
-        won: track.stats?.won || position === 1,
+        won: track.stats?.won + ~~(position === 1),
       };
 
       let stateUpdate = {};

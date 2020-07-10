@@ -244,11 +244,7 @@ const RaceDetails = ({ track, ...props }) => {
         </Modal>
 
         <Flex direction="row">
-          <CardTrackContent
-            w="50%"
-            track={selectedTrack}
-            borderRadius="16px 0 0 16px"
-          />
+          <CardTrackContent w="50%" track={selectedTrack} borderRadius="16px" />
           <Box w="50%" position="relative">
             <ActionContent
               selectedCar={selectedCar}

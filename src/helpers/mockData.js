@@ -161,7 +161,7 @@ const generateTrack = track => ({
   requirements: parseRequirements(track.requirements),
   stats: {
     raced: false,
-    won: false,
+    won: 0,
   },
 });
 

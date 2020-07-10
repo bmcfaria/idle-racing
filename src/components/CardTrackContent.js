@@ -52,12 +52,24 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
   const calculatedPrizes = useRacePrizesWithBuff(prizes);
   const calculatedPrice = ~~useRacePriceWithDiscount(price);
 
+  const bgColor =
+    (track.stats.won > 100 && colors.lightBlue) ||
+    (track.stats.won > 0 && colors.green) ||
+    (track.stats.raced && colors.orange) ||
+    colors.darkGray;
+
+  const color =
+    (track.stats.won > 100 && 'black') ||
+    (track.stats.won > 0 && 'black') ||
+    (track.stats.raced && 'black') ||
+    colors.white;
+
   return (
     <Flex
       w="100%"
       h="100%"
       direction="column"
-      bg={colors.darkGray}
+      bg={bgColor}
       borderRadius="16px"
       {...props}
     >
@@ -120,12 +132,12 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
       </Box>
 
       <Flex w="100%" h="20px" fontSize="12px">
-        <Text margin="auto" color="white">
+        <Text margin="auto" color={color}>
           {duration / 1000}s
         </Text>
         <Text
           margin="auto"
-          color={money < calculatedPrice ? colors.red : colors.white}
+          color={money < calculatedPrice ? colors.red : color}
         >
           {calculatedPrice === 0
             ? 'FREE'
