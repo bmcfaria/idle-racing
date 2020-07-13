@@ -1,5 +1,5 @@
 import { cars as dealerCars } from '../helpers/mockData';
-import { expLevel, expNextLevel } from '../helpers/utils';
+import { expLevel, expNextLevel, totalMechanics } from '../helpers/utils';
 
 // Dealer cars are global and they're not in the state/store
 export const dealerCarsSelector = () => dealerCars;
@@ -81,11 +81,7 @@ export const garageCycleTimestampSelector = state =>
   state.garage?.cycleTimestamp;
 export const garageCycleDurationSelector = state => state.garage?.cycleDuration;
 export const garagePointsSelector = state => ~~state.garage?.points;
-export const mechanicsSelector = state =>
-  state.tracks.reduce(
-    (sum, track) => sum + ~~track.stats?.raced + ~~track.stats?.won,
-    0
-  );
+export const mechanicsSelector = state => totalMechanics(state.tracks);
 
 export const garageUpgradesSelector = state => state.garage.upgrades;
 

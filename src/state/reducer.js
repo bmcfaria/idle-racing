@@ -14,7 +14,7 @@ import {
   tracks,
   generateGarageCar,
 } from '../helpers/mockData';
-import { discountValue } from '../helpers/utils';
+import { discountValue, totalMechanics } from '../helpers/utils';
 
 export const initialState = {
   garageCars: [],
@@ -238,10 +238,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
-      const mechanics = state.tracks.reduce(
-        (sum, track) => sum + ~~track.stats?.raced + ~~track.stats?.won,
-        0
-      );
+      const mechanics = totalMechanics(state.tracks);
 
       const timelapse =
         state.garage.cycleLastSync > 0

@@ -265,3 +265,13 @@ export const TOAST_TYPES = {
   MECHANIC_WON: 'MECHANIC_WON',
   MECHANIC_100_WIN: 'MECHANIC_100_WIN',
 };
+
+export const totalMechanics = tracks =>
+  tracks.reduce(
+    (sum, track) =>
+      sum +
+      ~~track.stats?.raced +
+      ~~(track.stats?.won > 0) +
+      ~~(track.stats?.won >= 100),
+    0
+  );
