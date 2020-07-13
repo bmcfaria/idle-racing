@@ -77,12 +77,6 @@ export const garageSlotsEmptySelector = state =>
   state.garageSlots - state.garageCars.length;
 export const garageSlotPriceSelector = state => 250 * 2 ** state.garageSlots;
 
-export const garageCycleTimestampSelector = state =>
-  state.garage?.cycleTimestamp;
-export const garageCycleDurationSelector = state => state.garage?.cycleDuration;
-export const garagePointsSelector = state => ~~state.garage?.points;
 export const mechanicsSelector = state => totalMechanics(state.tracks);
-
-export const garageUpgradesSelector = state => state.garage.upgrades;
 
 export const toastsSelector = state => state.toasts;

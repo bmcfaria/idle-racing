@@ -85,17 +85,6 @@ export const clearOfflineEarningsAction = {
   type: CLEAR_OFFLINE_EARNINGS_TYPE,
 };
 
-export const BUY_GARAGE_UPGRADE_TYPE = 'BUY_GARAGE_UPGRADE';
-export const buyGarageUpgradeAction = upgrade => ({
-  type: BUY_GARAGE_UPGRADE_TYPE,
-  payload: { upgrade },
-});
-
-export const CHECK_GARAGE_TIMER_TYPE = 'CHECK_GARAGE_TIMER';
-export const checkGarageTimerAction = {
-  type: CHECK_GARAGE_TIMER_TYPE,
-};
-
 export const DISMISS_TOAST_TYPE = 'DISMISS_TOAST';
 export const dismissToastAction = id => ({
   type: DISMISS_TOAST_TYPE,

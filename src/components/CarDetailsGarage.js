@@ -14,8 +14,8 @@ import {
   moneySelector,
   garageCarsSelector,
   tutorialUpgradeSelector,
-  garageUpgradesSelector,
   pastRacesSelector,
+  mechanicsSelector,
 } from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
 import { colors } from '../helpers/theme';
@@ -25,6 +25,7 @@ import {
   useUpgradePriceWithDiscount,
   useCarPriceWithBuff,
 } from '../helpers/hooks';
+import { upgradeCenter } from '../helpers/garageUpgrades';
 
 const AttributeCircleButton = ({
   attr,
@@ -81,7 +82,7 @@ const AttributeCircleButton = ({
 const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, price } = car;
   const money = useSelector(moneySelector);
-  const upgrades = useSelector(garageUpgradesSelector);
+  const mechanics = useSelector(mechanicsSelector);
   const pastRaces = useSelector(pastRacesSelector);
 
   const calculatedPriceAcc = ~~useUpgradePriceWithDiscount(
@@ -121,15 +122,16 @@ const CarDetailsGarage = ({ car, ...props }) => {
   const baseUpgradeHnd =
     car[ATTRIBUTE_TYPES.HANDLING].upgrade + car[ATTRIBUTE_TYPES.HANDLING].base;
 
+  const upgradeCenterValue = upgradeCenter[mechanics] ?? 100;
   const missingUpgradeCenter =
     (confirmationState === 'ACC' &&
-      baseUpgradeAcc > upgrades.upgradeCenter &&
+      baseUpgradeAcc > upgradeCenterValue &&
       baseUpgradeAcc) ||
     (confirmationState === 'SPD' &&
-      baseUpgradeSpd > upgrades.upgradeCenter &&
+      baseUpgradeSpd > upgradeCenterValue &&
       baseUpgradeSpd) ||
     (confirmationState === 'HND' &&
-      baseUpgradeHnd > upgrades.upgradeCenter &&
+      baseUpgradeHnd > upgradeCenterValue &&
       baseUpgradeHnd);
 
   const buttonText =

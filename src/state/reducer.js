@@ -6,7 +6,6 @@ import {
   BUY_EXPERIENCE_BUFF_TYPE,
   CLEAR_STORE_RESET_TYPE,
   CLEAR_OFFLINE_EARNINGS_TYPE,
-  CHECK_GARAGE_TIMER_TYPE,
   DISMISS_TOAST_TYPE,
 } from './actions';
 import {
@@ -14,7 +13,7 @@ import {
   tracks,
   generateGarageCar,
 } from '../helpers/mockData';
-import { discountValue, totalMechanics } from '../helpers/utils';
+import { discountValue } from '../helpers/utils';
 
 export const initialState = {
   garageCars: [],
@@ -38,16 +37,6 @@ export const initialState = {
       city: true,
       offroad: true,
       track: true,
-    },
-  },
-  garage: {
-    cycleTimestamp: 0,
-    cycleLastSync: 0,
-    cycleDuration: 5000,
-    points: 0,
-    upgrades: {
-      upgradeCenter: 0,
-      expanse: 0,
     },
   },
   experience: {
@@ -227,35 +216,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
 
       return state;
-    }
-
-    case CHECK_GARAGE_TIMER_TYPE: {
-      const timeLeft =
-        state.garage.cycleDuration -
-        (new Date().getTime() - state.garage.cycleTimestamp);
-
-      if (timeLeft > 0) {
-        return state;
-      }
-
-      const mechanics = totalMechanics(state.tracks);
-
-      const timelapse =
-        state.garage.cycleLastSync > 0
-          ? new Date().getTime() - state.garage.cycleLastSync
-          : 0;
-
-      return {
-        ...state,
-        garage: {
-          ...state.garage,
-          cycleTimestamp: new Date().getTime(),
-          cycleLastSync: new Date().getTime(),
-          points:
-            state.garage.points +
-            ~~(timelapse / state.garage.cycleDuration) * mechanics,
-        },
-      };
     }
 
     case CLEAR_STORE_RESET_TYPE: {

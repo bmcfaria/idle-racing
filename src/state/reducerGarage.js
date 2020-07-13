@@ -5,11 +5,10 @@ import {
   OPEN_GARAGE_CAR_TYPE,
   DISABLE_TUTORIAL_UPGRADE_TYPE,
   BUY_GARAGE_SLOT_TYPE,
-  BUY_GARAGE_UPGRADE_TYPE,
 } from './actions';
 import { upgradeAttribute, generateCarPrice } from '../helpers/mockData';
-import { buffValue, discountValue } from '../helpers/utils';
-import garageUpgrades from '../helpers/garageUpgrades';
+import { buffValue, discountValue, totalMechanics } from '../helpers/utils';
+import { upgradeCenter } from '../helpers/garageUpgrades';
 
 const reducerGarage = (state = {}, { type, payload }) => {
   switch (type) {
@@ -55,12 +54,13 @@ const reducerGarage = (state = {}, { type, payload }) => {
       );
 
       const attribute = car[payload.type];
-      const upgradeCenterLvl = state.garage.upgrades.upgradeCenter;
+      const mechanics = totalMechanics(state.tracks);
+      const upgradeCenterValue = upgradeCenter[mechanics] ?? 100;
 
       if (
         !calculatedPrice ||
         state.money < calculatedPrice ||
-        attribute.upgrade + attribute.base > upgradeCenterLvl
+        attribute.upgrade + attribute.base > upgradeCenterValue
       ) {
         return state;
       }
@@ -118,37 +118,12 @@ const reducerGarage = (state = {}, { type, payload }) => {
       };
     }
 
-    case BUY_GARAGE_UPGRADE_TYPE: {
-      const price =
-        garageUpgrades[payload.upgrade]?.[
-          state.garage.upgrades[payload.upgrade]
-        ];
-
-      if (
-        !garageUpgrades[payload.upgrade] ||
-        !price ||
-        state.garage.points < price
-      ) {
-        return state;
-      }
-
-      return {
-        ...state,
-        garage: {
-          ...state.garage,
-          points: state.garage.points - price,
-          upgrades: {
-            ...state.garage.upgrades,
-            [payload.upgrade]: state.garage.upgrades[payload.upgrade] + 1,
-          },
-        },
-      };
-    }
-
     case BUY_GARAGE_SLOT_TYPE: {
       const slotPrice = 250 * 2 ** state.garageSlots;
 
-      if (state.money < slotPrice) {
+      const mechanics = totalMechanics(state.tracks);
+
+      if (state.money < slotPrice || mechanics < 2) {
         return state;
       }
 
