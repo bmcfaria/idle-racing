@@ -40,6 +40,11 @@ const RaceResults = ({ pastRace, raceAgain, selectCar, ...props }) => {
     selectCar();
   };
 
+  const raceAgainClick = () => {
+    dispatch(closeResultsAction(id));
+    raceAgain();
+  };
+
   return (
     <Flex direction="column" w="100%" h="100%" {...props}>
       <Box margin="8px 12px 0">
@@ -67,7 +72,7 @@ const RaceResults = ({ pastRace, raceAgain, selectCar, ...props }) => {
             bg: colors.blue,
             color: colors.white,
           }}
-          onClick={raceAgain}
+          onClick={raceAgainClick}
         >
           <svg
             width="16"

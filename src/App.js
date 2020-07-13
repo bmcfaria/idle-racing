@@ -16,6 +16,7 @@ import { colors } from './helpers/theme';
 import ForcedResetWarning from './components/ForcedResetWarning';
 import OfflineEarningsNotification from './components/OfflineEarningsNotification';
 import Toasts from './components/Toasts';
+import StopRaceModal from './components/StopRaceModal';
 
 const store = configureStore();
 
@@ -65,6 +66,7 @@ function App() {
               </Switch>
             </Content>
             <Navigation />
+            <StopRaceModal />
             <Toasts />
             <ForcedResetWarning />
             <OfflineEarningsNotification />
