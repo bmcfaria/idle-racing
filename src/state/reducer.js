@@ -60,7 +60,7 @@ export const initialState = {
       max: 10 ** (3 * 3),
     },
   },
-  version: 0.701,
+  version: 0.702,
   toasts: [],
   warnings: {
     storeReset: false,
