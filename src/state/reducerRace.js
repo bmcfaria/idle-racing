@@ -10,7 +10,12 @@ import {
   resetRace,
   generateRaceMechanicToast,
 } from '../helpers/mockData';
-import { raceResults, buffValue, discountValue } from '../helpers/utils';
+import {
+  raceResults,
+  buffValue,
+  discountValue,
+  TOAST_TYPES,
+} from '../helpers/utils';
 
 const reducerRace = (state = {}, { type, payload }) => {
   switch (type) {
@@ -89,12 +94,12 @@ const reducerRace = (state = {}, { type, payload }) => {
       let toasts = [];
       if (!track.stats.raced) {
         toasts.push(
-          generateRaceMechanicToast(track.name, '+1 Mechanic', 'mechanicRace')
+          generateRaceMechanicToast(track.name, TOAST_TYPES.MECHANIC_RACE)
         );
       }
       if (track.stats.won === 0 && trackStats.won > 0) {
         toasts.push(
-          generateRaceMechanicToast(track.name, '+1 Mechanic', 'mechanicWon')
+          generateRaceMechanicToast(track.name, TOAST_TYPES.MECHANIC_WON)
         );
       }
       if (
@@ -103,7 +108,7 @@ const reducerRace = (state = {}, { type, payload }) => {
         trackStats.won >= 100
       ) {
         toasts.push(
-          generateRaceMechanicToast(track.name, '+1 Mechanic', 'mechanic100Win')
+          generateRaceMechanicToast(track.name, TOAST_TYPES.MECHANIC_100_WIN)
         );
       }
 

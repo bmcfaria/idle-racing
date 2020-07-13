@@ -7,6 +7,7 @@ import {
   CLEAR_STORE_RESET_TYPE,
   CLEAR_OFFLINE_EARNINGS_TYPE,
   CHECK_GARAGE_TIMER_TYPE,
+  DISMISS_TOAST_TYPE,
 } from './actions';
 import {
   cars as dealerCars,
@@ -279,6 +280,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
             ...initialState.warnings.offlineEarnings,
           },
         },
+      };
+    }
+
+    case DISMISS_TOAST_TYPE: {
+      return {
+        ...state,
+        toasts: state.toasts.filter(item => item.id !== payload.toastId),
       };
     }
 

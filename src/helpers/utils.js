@@ -259,3 +259,9 @@ export const expLevel = (exp, max) =>
 export const expNextLevel = exp => 10 ** `${~~exp}`.length;
 
 export const PROBABILITY_GOOD_VALUE = 3;
+
+export const TOAST_TYPES = {
+  MECHANIC_RACE: 'MECHANIC_RACE',
+  MECHANIC_WON: 'MECHANIC_WON',
+  MECHANIC_100_WIN: 'MECHANIC_100_WIN',
+};

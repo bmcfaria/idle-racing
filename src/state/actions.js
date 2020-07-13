@@ -95,3 +95,9 @@ export const CHECK_GARAGE_TIMER_TYPE = 'CHECK_GARAGE_TIMER';
 export const checkGarageTimerAction = {
   type: CHECK_GARAGE_TIMER_TYPE,
 };
+
+export const DISMISS_TOAST_TYPE = 'DISMISS_TOAST';
+export const dismissToastAction = id => ({
+  type: DISMISS_TOAST_TYPE,
+  payload: { toastId: id },
+});
