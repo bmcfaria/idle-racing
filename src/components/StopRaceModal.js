@@ -34,7 +34,7 @@ const StopRaceModal = props => {
         {...props}
       >
         <Text textAlign="center" fontSize="16px">
-          Stop auto race
+          {race?.auto ? 'Stop auto race' : 'Stop race'}
         </Text>
         <Flex marginTop="16px">
           <Button
