@@ -208,7 +208,7 @@ const reducerRace = (state = {}, { type, payload }) => {
           },
         },
         ...stateUpdate,
-        toasts: [...state.toasts, ...toasts],
+        ...(toasts.length > 0 && { toasts: [...state.toasts, ...toasts] }),
       };
     }
 
