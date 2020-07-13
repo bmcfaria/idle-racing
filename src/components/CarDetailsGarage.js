@@ -113,13 +113,24 @@ const CarDetailsGarage = ({ car, ...props }) => {
     (confirmationState === 'SELL' && 'Sell') ||
     `Upgrade ${confirmationState}`;
 
+  const baseUpgradeAcc =
+    car[ATTRIBUTE_TYPES.ACCELERATION].upgrade +
+    car[ATTRIBUTE_TYPES.ACCELERATION].base;
+  const baseUpgradeSpd =
+    car[ATTRIBUTE_TYPES.SPEED].upgrade + car[ATTRIBUTE_TYPES.SPEED].base;
+  const baseUpgradeHnd =
+    car[ATTRIBUTE_TYPES.HANDLING].upgrade + car[ATTRIBUTE_TYPES.HANDLING].base;
+
   const missingUpgradeCenter =
     (confirmationState === 'ACC' &&
-      car[ATTRIBUTE_TYPES.ACCELERATION].upgrade >= upgrades.upgradeCenter) ||
+      baseUpgradeAcc > upgrades.upgradeCenter &&
+      baseUpgradeAcc) ||
     (confirmationState === 'SPD' &&
-      car[ATTRIBUTE_TYPES.SPEED].upgrade >= upgrades.upgradeCenter) ||
+      baseUpgradeSpd > upgrades.upgradeCenter &&
+      baseUpgradeSpd) ||
     (confirmationState === 'HND' &&
-      car[ATTRIBUTE_TYPES.HANDLING].upgrade >= upgrades.upgradeCenter);
+      baseUpgradeHnd > upgrades.upgradeCenter &&
+      baseUpgradeHnd);
 
   const buttonText =
     (confirmationState === 'ACC' && `$${calculatedPriceAcc}`) ||
@@ -221,7 +232,7 @@ const CarDetailsGarage = ({ car, ...props }) => {
         {missingUpgradeCenter && (
           <Box minW="72px" textAlign="center">
             <Text fontSize="14px">Upgrade</Text>
-            <Text fontSize="14px">Center lvl {upgrades.upgradeCenter + 1}</Text>
+            <Text fontSize="14px">Center lvl {missingUpgradeCenter}</Text>
           </Box>
         )}
         {confirmationState && (

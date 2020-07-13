@@ -60,7 +60,7 @@ const reducerGarage = (state = {}, { type, payload }) => {
       if (
         !calculatedPrice ||
         state.money < calculatedPrice ||
-        attribute.upgrade >= upgradeCenterLvl
+        attribute.upgrade + attribute.base > upgradeCenterLvl
       ) {
         return state;
       }
