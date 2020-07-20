@@ -16,6 +16,7 @@ import { openGarageAction } from '../state/actions';
 import { colors } from '../helpers/theme';
 import GarageBuySlot from './GarageBuySlot';
 import GarageUpgrades from './GarageUpgrades';
+import { BottomSpacer } from './BottomSpacer';
 
 const CarsContainer = ({ cars, ...props }) => {
   const pageNotificationsGarage = useSelector(pageNotificationsGarageSelector);
@@ -109,8 +110,7 @@ const Garage = () => {
         )}
         <CarsContainer w={`${containerWidth}px`} marginTop="24px" cars={cars} />
 
-        {/* spacer */}
-        <Box minH={['80px', '64px']} />
+        <BottomSpacer />
       </Flex>
     </Box>
   );

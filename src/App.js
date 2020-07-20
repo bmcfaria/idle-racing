@@ -17,6 +17,7 @@ import ForcedResetWarning from './components/ForcedResetWarning';
 import OfflineEarningsNotification from './components/OfflineEarningsNotification';
 import Toasts from './components/Toasts';
 import StopRaceModal from './components/StopRaceModal';
+import Brand from './components/Brand';
 
 const store = configureStore();
 
@@ -53,6 +54,9 @@ function App() {
                 </Route>
                 <Route path="/race">
                   <Race />
+                </Route>
+                <Route path="/dealer/:brand">
+                  <Brand />
                 </Route>
                 <Route path="/dealer">
                   <Dealer />

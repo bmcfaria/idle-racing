@@ -11,6 +11,7 @@ import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
 import CollapsiblePanel from './CollapsiblePanel';
+import { BottomSpacer } from './BottomSpacer';
 
 const TracksContainer = ({ tracks, locked, ...props }) => (
   <Flex
@@ -101,8 +102,7 @@ const Race = () => {
         locked={locked?.race.track}
       />
 
-      {/* spacer */}
-      <Box minH={['80px', '64px']} />
+      <BottomSpacer />
     </Box>
   );
 };

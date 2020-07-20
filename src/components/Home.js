@@ -2,19 +2,9 @@ import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { useSelector } from 'react-redux';
 import { garageCarsSelector } from '../state/selectors';
-import styled from '@emotion/styled';
-import { cardsContainerWidthPaddingStyles } from '../helpers/theme';
 import { Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
-
-const CarsContainer = styled(Flex)`
-  box-sizing: content-box;
-  overflow-y: auto;
-  padding-top: 28px;
-  flex-wrap: wrap;
-
-  ${cardsContainerWidthPaddingStyles}
-`;
+import { BottomSpacer } from './BottomSpacer';
 
 const Home = () => {
   const cars = useSelector(garageCarsSelector);
@@ -40,7 +30,7 @@ const Home = () => {
             </ChakraLink>
           </Flex>
         )}
-        <CarsContainer />
+        <BottomSpacer />
       </Flex>
     </Box>
   );
