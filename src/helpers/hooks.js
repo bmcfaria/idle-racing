@@ -7,6 +7,7 @@ import {
   experienceBusinessSelector,
 } from '../state/selectors';
 import { buffValue, discountValue } from './utils';
+import { capitalize } from 'lodash';
 
 export const useOpenClose = defaultValue => {
   const [open, setOpen] = useState(!!defaultValue);
@@ -22,8 +23,9 @@ export const useOpenClose = defaultValue => {
   return [open, onOpen, onClose];
 };
 
-export const useCurrentPageName = () => {
+export const useCurrentPage = () => {
   const matchGarage = useRouteMatch('/garage');
+  const matchDealerBrand = useRouteMatch('/dealer/:brand');
   const matchDealer = useRouteMatch('/dealer');
   const matchRace = useRouteMatch('/race');
   const matchSettings = useRouteMatch('/settings');
@@ -31,10 +33,15 @@ export const useCurrentPageName = () => {
   let selectedPage;
   selectedPage = matchGarage ? 'Garage' : selectedPage;
   selectedPage = matchDealer ? 'Dealer' : selectedPage;
+  selectedPage = matchDealerBrand
+    ? '/' + capitalize(matchDealerBrand?.params?.brand)
+    : selectedPage;
   selectedPage = matchRace ? 'Race' : selectedPage;
   selectedPage = matchSettings ? 'Settings' : selectedPage;
 
-  return selectedPage;
+  const backPage = matchDealerBrand ? '/dealer' : '/';
+
+  return { name: selectedPage, back: backPage };
 };
 
 const getWindowDimensions = () => {

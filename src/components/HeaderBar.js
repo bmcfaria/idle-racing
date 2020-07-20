@@ -12,7 +12,7 @@ import {
   experienceRaceSelector,
 } from '../state/selectors';
 import { zIndex, colors } from '../helpers/theme';
-import { useCurrentPageName } from '../helpers/hooks';
+import { useCurrentPage } from '../helpers/hooks';
 import abbreviate from 'number-abbreviate';
 import Button from './Button';
 import Modal from './Modal';
@@ -37,7 +37,7 @@ const TriangleArrowButton = props => (
 );
 
 const Navigation = () => {
-  const currentPage = useCurrentPageName();
+  const currentPage = useCurrentPage();
 
   if (!currentPage) {
     return <Box />;
@@ -45,9 +45,9 @@ const Navigation = () => {
 
   return (
     <Flex h="100%" padding="0 8px" alignItems="center">
-      <TriangleArrowButton as={Link} to="/" />
+      <TriangleArrowButton as={Link} to={currentPage.back} />
       <Text marginLeft="8px" fontSize="24px" color={colors.white}>
-        {currentPage}
+        {currentPage.name}
       </Text>
     </Flex>
   );
