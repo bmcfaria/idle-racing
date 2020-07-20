@@ -4,17 +4,12 @@ import { useLocation, useHistory } from 'react-router-dom';
 import CardProgressOverlay from './CardProgressOverlay';
 import {
   raceSelector,
-  tracksSelector,
   garageCarsSelector,
+  moneySelector,
 } from '../state/selectors';
 import { useSelector } from 'react-redux';
-import CardWinningChance from './CardWinningChance';
 import styled from '@emotion/styled';
-import {
-  doMeetRequirements,
-  capitalize,
-  ATTRIBUTE_TYPES,
-} from '../helpers/utils';
+import { capitalize, ATTRIBUTE_TYPES } from '../helpers/utils';
 import { colors } from '../helpers/theme';
 import getImageCar from '../helpers/imageMappingCars';
 import AttributeCircle from './AttributeCircle';
@@ -58,7 +53,6 @@ const CardCarSmall = ({
   car,
   stripped,
   onClick,
-  showPrice,
   garage,
   notification,
   ...props
@@ -66,18 +60,11 @@ const CardCarSmall = ({
   const { id, race } = car;
   const location = useLocation();
   const history = useHistory();
-  const tracks = useSelector(tracksSelector);
   const garageCars = useSelector(garageCarsSelector);
-  const selectedTrackId = location?.state?.track;
-  const selectedTrack = tracks.find(item => item.id === selectedTrackId);
+  const money = useSelector(moneySelector);
   const [bought, setBought] = useState();
 
   const currentRace = useSelector(raceSelector(race));
-
-  const meetsRequirements = doMeetRequirements(
-    car,
-    selectedTrack?.requirements
-  );
 
   useEffect(() => {
     const currentTime = new Date().getTime();
@@ -95,8 +82,6 @@ const CardCarSmall = ({
   // To improve mobile navigation,
   // this way the back button will un-select instead off showing the previous selected
   const setSelected = () => {
-    if (!meetsRequirements) return;
-
     if (onClick) {
       onClick(car);
 
@@ -123,47 +108,36 @@ const CardCarSmall = ({
   return (
     <BlinkCard
       w="160px"
-      h={garage ? '180px' : '124px'}
+      h={garage ? '180px' : '148px'}
       position="relative"
       onClick={setSelected}
-      cursor={meetsRequirements ? 'pointer' : 'unset'}
+      cursor="pointer"
       borderRadius="16px"
       blink={garage && notification}
+      bg={colors.darkGray}
       {...props}
     >
-      <Box w="100%" h="100px" position="absolute">
-        {!meetsRequirements && (
-          <Flex
-            position="absolute"
-            w="100%"
-            h="100%"
-            bg="blackAlpha.800"
-            flexDirection="column"
-            borderRadius="16px"
-          >
-            <Text
-              fontSize="24px"
-              textAlign="center"
-              margin="auto"
-              color="white"
-            >
-              Don't meet the requirements
-            </Text>
-          </Flex>
-        )}
-      </Box>
-      {selectedTrack && (
-        <CardWinningChance
-          car={car}
-          track={selectedTrack}
-          meetsRequirements={meetsRequirements}
+      {!garage && (
+        <Text
+          fontSize="14px"
+          lineHeight="24px"
+          textAlign="center"
           w="100%"
-          h="124px"
-          borderRadius="16px"
-          border="1px solid black"
-        />
+          marginTop="auto"
+          color={money < car.price ? colors.red : colors.white}
+        >
+          ${car.price}
+        </Text>
       )}
-      <Flex w="100%" h="100%" direction="column" borderRadius="16px" bg={color}>
+      <Flex
+        w="100%"
+        h={garage ? '100%' : '124px'}
+        direction="column"
+        borderRadius="16px"
+        bg={color}
+        position="absolute"
+        top="0"
+      >
         <Text
           fontSize="14px"
           lineHeight="24px"
