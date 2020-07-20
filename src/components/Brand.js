@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex } from '@chakra-ui/core';
+import { Box, Flex, Text } from '@chakra-ui/core';
 import { useLocation, useParams } from 'react-router-dom';
 import CarDetailsDealer from './CarDetailsDealer';
 import { useSelector } from 'react-redux';
@@ -28,7 +28,10 @@ const CarsContainer = ({ cars, ...props }) => (
 const Brand = () => {
   const location = useLocation();
   const { brand } = useParams();
-  const cars = useSelector(dealerCarsSelector);
+  const cars = useSelector(dealerCarsSelector).filter(
+    item => item.brand === brand
+  );
+
   const containerWidth = useDynamicCardContainerWidth();
 
   const selected = location?.state?.car;
@@ -41,10 +44,13 @@ const Brand = () => {
         {selectedCar && <CarDetailsDealer car={selectedCar} />}
       </Modal>
 
-      <CarsContainer
-        w={`${containerWidth}px`}
-        cars={cars.filter(item => item.brand === brand)}
-      />
+      {cars.length === 0 && (
+        <Text marginTop="16px" textAlign="center" fontSize="24px">
+          This brand doesn't exist
+        </Text>
+      )}
+
+      <CarsContainer w={`${containerWidth}px`} cars={cars} />
 
       <BottomSpacer />
     </Box>
