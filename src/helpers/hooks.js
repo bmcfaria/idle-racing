@@ -27,6 +27,7 @@ export const useCurrentPage = () => {
   const matchGarage = useRouteMatch('/garage');
   const matchDealerBrand = useRouteMatch('/dealer/:brand');
   const matchDealer = useRouteMatch('/dealer');
+  const matchRaceEvent = useRouteMatch('/race/:event');
   const matchRace = useRouteMatch('/race');
   const matchSettings = useRouteMatch('/settings');
 
@@ -37,9 +38,13 @@ export const useCurrentPage = () => {
     ? '/' + capitalize(matchDealerBrand?.params?.brand)
     : selectedPage;
   selectedPage = matchRace ? 'Race' : selectedPage;
+  selectedPage = matchRaceEvent
+    ? '/' + capitalize(matchRaceEvent?.params?.event)
+    : selectedPage;
   selectedPage = matchSettings ? 'Settings' : selectedPage;
 
-  const backPage = matchDealerBrand ? '/dealer' : '/';
+  const backPage =
+    (matchDealerBrand && '/dealer') || (matchRaceEvent && '/race') || '/';
 
   return { name: selectedPage, back: backPage };
 };

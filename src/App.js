@@ -18,6 +18,7 @@ import OfflineEarningsNotification from './components/OfflineEarningsNotificatio
 import Toasts from './components/Toasts';
 import StopRaceModal from './components/StopRaceModal';
 import Brand from './components/Brand';
+import RaceEvent from './components/RaceEvent';
 
 const store = configureStore();
 
@@ -51,6 +52,9 @@ function App() {
               <Switch>
                 <Route path="/garage">
                   <Garage />
+                </Route>
+                <Route path="/race/:event">
+                  <RaceEvent />
                 </Route>
                 <Route path="/race">
                   <Race />

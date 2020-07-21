@@ -37,7 +37,7 @@ const GarageUpgrades = props => {
             alignItems="center"
             key={index}
           >
-            <Text>{item}</Text>
+            <Text w="100%">{item}</Text>
           </Flex>
         ))}
     </CollapsiblePanel>

@@ -3,20 +3,12 @@ import { Box, Flex } from '@chakra-ui/core';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { BottomSpacer } from './BottomSpacer';
 import CardDealer from './CardDealer';
+import { useSelector } from 'react-redux';
+import { dealerBrandsSelector } from '../state/selectors';
 
 const Dealer = props => {
+  const brands = useSelector(dealerBrandsSelector);
   const containerDealersWidth = useDynamicCardContainerWidth(320);
-
-  const brands = [
-    { type: 'basic', name: 'basic' },
-    { type: 'city', name: 'city' },
-    { type: 'offroad', name: 'offroad' },
-    { type: 'supercar', name: 'supercar' },
-    { type: 'nascar', name: 'nascar' },
-    { type: 'f1', name: 'f1' },
-    { type: 'racer', name: 'racer' },
-    { type: 'heavy', name: 'heavy' },
-  ];
 
   return (
     <Box {...props}>

@@ -1,107 +1,38 @@
 import React from 'react';
-import { Box, Flex, Text } from '@chakra-ui/core';
-import { useLocation, useHistory } from 'react-router-dom';
-import CardTrack from './CardTrack';
-import RaceDetails from './RaceDetails';
-import { useSelector, useDispatch } from 'react-redux';
-import { tracksSelector, lockedSelector } from '../state/selectors';
-import Modal from './Modal';
-import { closeResultsAction } from '../state/actions';
+import { Box, Flex } from '@chakra-ui/core';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
-import { colors } from '../helpers/theme';
-import hexAlpha from 'hex-alpha';
 import CollapsiblePanel from './CollapsiblePanel';
 import { BottomSpacer } from './BottomSpacer';
-
-const TracksContainer = ({ tracks, locked, ...props }) => (
-  <Flex
-    wrap="wrap"
-    margin="0 auto"
-    paddingTop="16px"
-    paddingLeft="16px"
-    boxSizing="content-box"
-    borderRadius="16px"
-    border={`1px solid ${colors.lightGray}`}
-    position="relative"
-    {...props}
-  >
-    {tracks.map(track => (
-      <Box marginRight="16px" marginBottom="16px" key={track.id}>
-        <CardTrack track={track} />
-      </Box>
-    ))}
-    {locked && (
-      <Flex
-        w="100%"
-        h="100%"
-        top="-0"
-        left="-0"
-        position="absolute"
-        borderRadius="16px"
-        bg={hexAlpha(colors.lightGray, 0.98)}
-      >
-        <Text fontSize="24px" textAlign="center" margin="auto">
-          Win a race in the previous section to unlock this one
-        </Text>
-      </Flex>
-    )}
-  </Flex>
-);
+import CardRaceEvent from './CardRaceEvent';
+import { useSelector } from 'react-redux';
+import { raceEventsSelector } from '../state/selectors';
 
 const Sponsors = props => (
   <CollapsiblePanel text="Sponsors (TBD)" {...props}></CollapsiblePanel>
 );
 
-const Race = () => {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const history = useHistory();
-  const tracks = useSelector(tracksSelector);
-  const locked = useSelector(lockedSelector);
-  const containerWidth = useDynamicCardContainerWidth();
-
-  const selectedTrackId = location?.state?.track;
-  const selectedTrack = tracks.find(item => item.id === selectedTrackId);
-
-  const onClose = () => {
-    const track = tracks.find(element => element.id === location?.state.track);
-    dispatch(closeResultsAction(track?.lastRace));
-    history.goBack();
-  };
+const Race = props => {
+  const events = useSelector(raceEventsSelector);
+  const containerWidth = useDynamicCardContainerWidth(320);
 
   return (
-    <Box paddingBottom="64px">
-      <Modal isOpen={!!selectedTrack} onClose={onClose}>
-        <RaceDetails track={selectedTrack} />
-      </Modal>
-
+    <Box {...props}>
       <Sponsors w={`${containerWidth - 16}px`} />
 
-      <TracksContainer
-        w={`${containerWidth}px`}
+      <Flex
+        wrap="wrap"
+        margin="0 auto"
+        paddingLeft={`${containerWidth > 0 ? 16 : 0}px`}
+        boxSizing="content-box"
+        w={`${containerWidth || 320}px`}
         marginTop="24px"
-        tracks={tracks.filter(item => item.category === 'free')}
-        locked={locked?.race.free}
-      />
-      <TracksContainer
-        w={`${containerWidth}px`}
-        marginTop="24px"
-        tracks={tracks.filter(item => item.category === 'city')}
-        locked={locked?.race.city}
-      />
-      <TracksContainer
-        w={`${containerWidth}px`}
-        marginTop="24px"
-        tracks={tracks.filter(item => item.category === 'offroad')}
-        locked={locked?.race.offroad}
-      />
-      <TracksContainer
-        w={`${containerWidth}px`}
-        marginTop="24px"
-        tracks={tracks.filter(item => item.category === 'track')}
-        locked={locked?.race.track}
-      />
-
+      >
+        {events.map((event, index) => (
+          <Box marginRight="16px" marginBottom="16px" key={index}>
+            <CardRaceEvent eventType={event.type} eventName={event.name} />
+          </Box>
+        ))}
+      </Flex>
       <BottomSpacer />
     </Box>
   );

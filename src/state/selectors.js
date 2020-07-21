@@ -21,6 +21,9 @@ export const racesSelector = state => state.races;
 export const raceSelector = raceId => state =>
   state.races.find(item => item.id === raceId);
 
+export const raceByTrackSelector = trackId => state =>
+  state.races.find(item => item.track === trackId);
+
 export const pastRacesSelector = state => state.pastRaces;
 export const pastRaceSelector = pastRaceId => state =>
   state.pastRaces.find(item => item.id === pastRaceId);
@@ -80,3 +83,21 @@ export const garageSlotPriceSelector = state => 250 * 2 ** state.garageSlots;
 export const mechanicsSelector = state => totalMechanics(state.tracks);
 
 export const toastsSelector = state => state.toasts;
+
+export const dealerBrandsSelector = () => [
+  { type: 'basic', name: 'basic' },
+  { type: 'city', name: 'city' },
+  { type: 'offroad', name: 'offroad' },
+  { type: 'supercar', name: 'supercar' },
+  { type: 'nascar', name: 'nascar' },
+  { type: 'f1', name: 'f1' },
+  { type: 'racer', name: 'racer' },
+  { type: 'heavy', name: 'heavy' },
+];
+
+export const raceEventsSelector = () => [
+  { type: 'free', name: 'free' },
+  { type: 'city', name: 'city' },
+  { type: 'offroad', name: 'offroad' },
+  { type: 'track', name: 'track' },
+];
