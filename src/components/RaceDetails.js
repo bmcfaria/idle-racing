@@ -126,7 +126,8 @@ const ActionContent = ({
             carsModalOpen={carsModalOpen}
           />
           <Flex margin="auto auto 20px">
-            <Button
+            {/* TODO: Testing races without auto */}
+            {/* <Button
               w="32px"
               minW="32px"
               h="32px"
@@ -145,10 +146,10 @@ const ActionContent = ({
               onClick={toggleAuto}
             >
               Auto {auto ? 'ON' : 'OFF'}
-            </Button>
+            </Button> */}
             <Button
               w="96px"
-              marginLeft="12px"
+              // marginLeft="12px"
               isDisabled={money < price || currentRace || !meetsRequirements}
               bg={colors.white}
               color={colors.darkGray}
