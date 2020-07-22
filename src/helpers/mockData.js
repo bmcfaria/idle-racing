@@ -2,6 +2,7 @@ import uuid from 'uuid-random';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import carsFile from '../assets/lists/cars.json';
 import tracksFile from '../assets/lists/tracks.json';
+import raceSponsorsFile from '../assets/lists/raceSponsors.json';
 
 // To help on manual object creation
 window.uuid = uuid;
@@ -224,4 +225,8 @@ export const tracks = [
         : results,
     []
   ),
+];
+
+export const raceSponsors = [
+  ...raceSponsorsFile.filter(sponsor => sponsor?.event.length > 0),
 ];

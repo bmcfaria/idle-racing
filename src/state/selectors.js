@@ -1,5 +1,6 @@
-import { cars as dealerCars } from '../helpers/mockData';
+import { cars as dealerCars, raceSponsors } from '../helpers/mockData';
 import { expLevel, expNextLevel, totalMechanics } from '../helpers/utils';
+import { capitalize } from 'lodash';
 
 // Dealer cars are global and they're not in the state/store
 export const dealerCarsSelector = () => dealerCars;
@@ -101,3 +102,33 @@ export const raceEventsSelector = () => [
   { type: 'offroad', name: 'offroad' },
   { type: 'track', name: 'track' },
 ];
+
+export const raceSponsorsSelector = event => state =>
+  raceSponsors
+    .filter(sponsor => sponsor.event === event)
+    .map(sponsor => {
+      const track = state.tracks.find(item => item.id === sponsor.track);
+      const car = dealerCars.find(item => item.id === sponsor.car);
+
+      const timeText = sponsor.times > 1 ? 'times' : 'time';
+      const raceText = sponsor.times > 1 ? 'races' : 'race';
+
+      const text = `
+      ${capitalize(sponsor.type)} ${sponsor.times} ${
+        sponsor.type === 'race' ? timeText : raceText
+      }
+      `;
+
+      return {
+        active: !!state.sponsors[sponsor.id],
+        text,
+        track,
+        car,
+      };
+    });
+
+export const raceSponsorsActiveSelector = state => state.sponsors;
+
+export const raceSponsorsActiveCountSelector = event => state =>
+  Object.values(state.sponsors).filter(sponsor => sponsor.event === event)
+    .length;

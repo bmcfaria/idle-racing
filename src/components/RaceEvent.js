@@ -4,7 +4,11 @@ import { useLocation, useHistory, useParams } from 'react-router-dom';
 import CardTrack from './CardTrack';
 import RaceDetails from './RaceDetails';
 import { useSelector, useDispatch } from 'react-redux';
-import { tracksSelector, lockedSelector } from '../state/selectors';
+import {
+  tracksSelector,
+  lockedSelector,
+  raceSponsorsSelector,
+} from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
@@ -48,9 +52,78 @@ const TracksContainer = ({ tracks, locked, ...props }) => (
   </Flex>
 );
 
-const Sponsors = props => (
-  <CollapsiblePanel text="Sponsors (TBD)" {...props}></CollapsiblePanel>
+const SponsorReward = ({
+  text = 'Some text',
+  track,
+  car,
+  active,
+  ...props
+}) => (
+  <Box
+    borderRadius="16px"
+    border={`1px solid ${active ? colors.darkGray : colors.lightGray}`}
+    {...props}
+  >
+    <Flex w="160px" h="32px" borderRadius="16px" margin="-1px 0 0 -1px">
+      <Box
+        w="32px"
+        h="32px"
+        borderRadius="16px"
+        {...(active && { bg: colors.darkGray })}
+      >
+        <Text
+          w="100%"
+          h="100%"
+          textAlign="center"
+          lineHeight="32px"
+          fontSize="32px"
+          color={active ? colors.white : colors.darkGray}
+        >
+          $
+        </Text>
+      </Box>
+      <Text
+        h="100%"
+        flexGrow="1"
+        textAlign="center"
+        lineHeight="32px"
+        margin="-1px 0 0 -1px"
+      >
+        {text}
+      </Text>
+    </Flex>
+    {track && (
+      <Text textAlign="center" fontSize="14px">
+        on "{track}"
+      </Text>
+    )}
+    {car && (
+      <Text textAlign="center" fontSize="14px">
+        with "{car}"
+      </Text>
+    )}
+  </Box>
 );
+
+const Sponsors = ({ event, ...props }) => {
+  const sponsors = useSelector(raceSponsorsSelector(event));
+  console.log(sponsors);
+
+  return (
+    <CollapsiblePanel wrap="wrap" text="Sponsors" {...props}>
+      {sponsors.map((sponsor, index) => (
+        <SponsorReward
+          margin="16px 0 0 8px"
+          text={sponsor.text}
+          active={sponsor.active}
+          track={sponsor.track?.name}
+          car={sponsor.car?.name}
+          key={index}
+        />
+      ))}
+    </CollapsiblePanel>
+  );
+};
 
 const RaceEvent = () => {
   const dispatch = useDispatch();
@@ -78,7 +151,7 @@ const RaceEvent = () => {
         <RaceDetails track={selectedTrack} />
       </Modal>
 
-      <Sponsors w={`${containerWidth - 16}px`} />
+      <Sponsors w={`${containerWidth - 16}px`} event={event} />
 
       <TracksContainer
         w={`${containerWidth}px`}

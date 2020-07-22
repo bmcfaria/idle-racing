@@ -9,6 +9,7 @@ import {
   generatePastRace,
   resetRace,
   generateRaceMechanicToast,
+  raceSponsors,
 } from '../helpers/mockData';
 import {
   raceResults,
@@ -16,6 +17,7 @@ import {
   discountValue,
   TOAST_TYPES,
 } from '../helpers/utils';
+import { evaluateSponsors } from '../helpers/sponsors';
 
 const reducerRace = (state = {}, { type, payload }) => {
   switch (type) {
@@ -111,6 +113,17 @@ const reducerRace = (state = {}, { type, payload }) => {
           generateRaceMechanicToast(track.name, TOAST_TYPES.MECHANIC_100_WIN)
         );
       }
+
+      // TODO: is it the best place to do it?
+      // TODO: should show toast when unlocking a new sponsor
+      const sponsors = evaluateSponsors(
+        track,
+        car,
+        position,
+        state.tracks,
+        state.pastRaces,
+        state.sponsors
+      );
 
       let stateUpdate = {};
       let expEarned = 0;
@@ -209,6 +222,12 @@ const reducerRace = (state = {}, { type, payload }) => {
         },
         ...stateUpdate,
         ...(toasts.length > 0 && { toasts: [...state.toasts, ...toasts] }),
+        ...(Object.keys(sponsors).length > 0 && {
+          sponsors: {
+            ...state.sponsors,
+            ...sponsors,
+          },
+        }),
       };
     }
 

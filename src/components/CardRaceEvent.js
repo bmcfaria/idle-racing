@@ -1,7 +1,11 @@
 import React from 'react';
 import { Box, Flex } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
-import { tracksSelector, raceByTrackSelector } from '../state/selectors';
+import {
+  tracksSelector,
+  raceByTrackSelector,
+  raceSponsorsActiveCountSelector,
+} from '../state/selectors';
 import { useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
 import getImageTrack from '../helpers/imageMappingTracks';
@@ -58,6 +62,9 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const location = useLocation();
   const history = useHistory();
   const tracks = useSelector(tracksSelector);
+  const activeSponsors = useSelector(
+    raceSponsorsActiveCountSelector(eventType)
+  );
 
   const eventRaces = tracks
     .filter(item => item.category === eventType)
@@ -76,7 +83,9 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
     <CardBig
       onClick={onClick}
       primaryText={eventName}
-      secondaryText={'Sponsor: $0 / second'}
+      secondaryText={`Sponsor: $${activeSponsors * 5}${
+        activeSponsors > 0 ? '/ 5s' : ''
+      }`}
       theme={{ primaryBg: colors.darkGray, primaryColor: colors.white }}
       {...props}
     >
