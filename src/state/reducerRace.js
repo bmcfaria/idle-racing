@@ -9,7 +9,6 @@ import {
   generatePastRace,
   resetRace,
   generateRaceMechanicToast,
-  raceSponsors,
 } from '../helpers/mockData';
 import {
   raceResults,

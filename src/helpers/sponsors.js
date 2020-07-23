@@ -1,5 +1,13 @@
 import { raceSponsors } from './mockData';
 
+const raceOrWinValidation = (type, position) =>
+  type === 'win' ? position === 1 : true;
+
+const trackValidation = (eventTrack, trackId) =>
+  eventTrack === trackId || !eventTrack;
+
+const carValidation = (eventCar, carId) => eventCar === carId || !eventCar;
+
 export const evaluateSponsors = (
   track,
   car,
@@ -17,26 +25,35 @@ export const evaluateSponsors = (
     []
   );
   const sponsorsResult = filteredSponsors.reduce((result, sponsor) => {
-    if (sponsor.type === 'win') {
-      const pastRacesWins = pastRaces.reduce(
-        (acumulator, pastRace) =>
-          eventTrackIds.includes(pastRace.track) && pastRace.position === 1
-            ? acumulator + 1
-            : acumulator,
-        0
-      );
-      console.log(pastRacesWins, eventTrackIds);
-      if (pastRacesWins + ~~(position === 1) >= sponsor.times) {
-        return !sponsors[sponsor.id]
-          ? {
-              ...result,
-              [sponsor.id]: {
-                event: track.category,
-                timestamp: new Date().getTime(),
-              },
-            }
-          : result;
-      }
+    const pastRacesEvent = pastRaces.reduce(
+      (acumulator, pastRace) =>
+        eventTrackIds.includes(pastRace.track) &&
+        trackValidation(sponsor.track, pastRace.track) &&
+        carValidation(sponsor.car, pastRace.dealerCar) &&
+        raceOrWinValidation(sponsor.type, pastRace.position)
+          ? acumulator + 1
+          : acumulator,
+      0
+    );
+
+    if (
+      pastRacesEvent +
+        ~~(
+          trackValidation(sponsor.track, track.id) &&
+          carValidation(sponsor.car, car.dealerCar) &&
+          raceOrWinValidation(sponsor.type, position)
+        ) >=
+      sponsor.times
+    ) {
+      return !sponsors[sponsor.id]
+        ? {
+            ...result,
+            [sponsor.id]: {
+              event: track.category,
+              timestamp: new Date().getTime(),
+            },
+          }
+        : result;
     }
     return result;
   }, {});

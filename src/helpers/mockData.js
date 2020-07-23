@@ -195,6 +195,7 @@ export const generatePastRace = (
   id: uuid(),
   race: race.id,
   car: car.id,
+  dealerCar: car.dealerCar,
   track: track.id,
   time: new Date().getTime(),
   checked: false,
