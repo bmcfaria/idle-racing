@@ -16,6 +16,7 @@ import {
 import { discountValue } from '../helpers/utils';
 
 export const initialState = {
+  autoRace: false,
   garageCars: [],
   garageSlots: 1,
   tracks,
@@ -61,7 +62,7 @@ export const initialState = {
     },
   },
   sponsors: {},
-  version: 0.703,
+  version: 0.704,
   toasts: [],
   warnings: {
     storeReset: false,

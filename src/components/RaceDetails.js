@@ -12,6 +12,7 @@ import {
   tracksSelector,
   moneySelector,
   pastRaceSelector,
+  autoRaceEnabledSelector,
 } from '../state/selectors';
 import CardTrackContent from './CardTrackContent';
 import Modal from './Modal';
@@ -92,6 +93,8 @@ const ActionContent = ({
   meetsRequirements,
   ...props
 }) => {
+  const autoEnabled = useSelector(autoRaceEnabledSelector);
+
   const [auto, setAuto] = useState();
   const { winProbabilityValue } = useContext(RaceContext);
 
@@ -126,30 +129,31 @@ const ActionContent = ({
             carsModalOpen={carsModalOpen}
           />
           <Flex margin="auto auto 20px">
-            {/* TODO: Testing races without auto */}
-            {/* <Button
-              w="32px"
-              minW="32px"
-              h="32px"
-              padding="0"
-              isDisabled={!goodChances}
-              bg={auto ? colors.blue : colors.white}
-              color={auto ? colors.white : colors.darkGray}
-              {...(auto && { boxShadow: 'none' })}
-              _hover={{
-                bg: colors.blue,
-                color: colors.white,
-                boxShadow: 'none',
-              }}
-              fontSize="12px"
-              whiteSpace={'normal'}
-              onClick={toggleAuto}
-            >
-              Auto {auto ? 'ON' : 'OFF'}
-            </Button> */}
+            {autoEnabled && (
+              <Button
+                w="32px"
+                minW="32px"
+                h="32px"
+                padding="0"
+                isDisabled={!goodChances}
+                bg={auto ? colors.blue : colors.white}
+                color={auto ? colors.white : colors.darkGray}
+                {...(auto && { boxShadow: 'none' })}
+                _hover={{
+                  bg: colors.blue,
+                  color: colors.white,
+                  boxShadow: 'none',
+                }}
+                fontSize="12px"
+                whiteSpace={'normal'}
+                onClick={toggleAuto}
+              >
+                Auto {auto ? 'ON' : 'OFF'}
+              </Button>
+            )}
             <Button
               w="96px"
-              // marginLeft="12px"
+              {...(autoEnabled && { marginLeft: '12px' })}
               isDisabled={money < price || currentRace || !meetsRequirements}
               bg={colors.white}
               color={colors.darkGray}
