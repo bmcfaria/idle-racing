@@ -90,3 +90,8 @@ export const dismissToastAction = id => ({
   type: DISMISS_TOAST_TYPE,
   payload: { toastId: id },
 });
+
+export const CHECK_SPONSORS_TYPE = 'CHECK_SPONSORS';
+export const checkSponsorsAction = {
+  type: CHECK_SPONSORS_TYPE,
+};

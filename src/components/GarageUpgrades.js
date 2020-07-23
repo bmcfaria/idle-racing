@@ -9,7 +9,15 @@ import garageUpgrades from '../helpers/garageUpgrades';
 const GarageUpgrades = props => {
   const mechanics = useSelector(mechanicsSelector);
 
-  const next = garageUpgrades[mechanics].next;
+  let upgradeIndex = mechanics;
+  if (!garageUpgrades[upgradeIndex]) {
+    upgradeIndex = Object.keys(garageUpgrades).reduce(
+      (previous, current) => (current < mechanics ? current : previous),
+      0
+    );
+  }
+
+  const next = garageUpgrades[upgradeIndex].next;
   const modules = garageUpgrades[next]?.modules;
 
   return (

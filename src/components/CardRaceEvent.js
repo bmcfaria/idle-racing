@@ -84,7 +84,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
       onClick={onClick}
       primaryText={eventName}
       secondaryText={`Sponsor: $${activeSponsors * 5}${
-        activeSponsors > 0 ? '/ 5s' : ''
+        activeSponsors > 0 ? ' / 5s' : ''
       }`}
       theme={{ primaryBg: colors.darkGray, primaryColor: colors.white }}
       {...props}

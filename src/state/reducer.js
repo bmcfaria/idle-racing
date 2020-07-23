@@ -61,7 +61,10 @@ export const initialState = {
       max: 10 ** (3 * 3),
     },
   },
-  sponsors: {},
+  sponsors: {
+    active: {},
+    timestamp: null,
+  },
   version: 0.704,
   toasts: [],
   warnings: {

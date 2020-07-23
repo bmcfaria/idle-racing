@@ -120,17 +120,18 @@ export const raceSponsorsSelector = event => state =>
       `;
 
       return {
-        active: !!state.sponsors[sponsor.id],
+        active: !!state.sponsors.active[sponsor.id],
         text,
         track,
         car,
       };
     });
 
-export const raceSponsorsActiveSelector = state => state.sponsors;
+export const raceSponsorsActiveSelector = state => state.sponsors.active;
 
 export const raceSponsorsActiveCountSelector = event => state =>
-  Object.values(state.sponsors).filter(sponsor => sponsor.event === event)
-    .length;
+  Object.values(state.sponsors.active).filter(
+    sponsor => sponsor.event === event
+  ).length;
 
 export const autoRaceEnabledSelector = state => state.autoRace;

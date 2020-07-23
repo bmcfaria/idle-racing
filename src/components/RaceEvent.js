@@ -8,6 +8,7 @@ import {
   tracksSelector,
   lockedSelector,
   raceSponsorsSelector,
+  raceSponsorsActiveCountSelector,
 } from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
@@ -107,10 +108,16 @@ const SponsorReward = ({
 
 const Sponsors = ({ event, ...props }) => {
   const sponsors = useSelector(raceSponsorsSelector(event));
-  console.log(sponsors);
+  const activeSponsors = useSelector(raceSponsorsActiveCountSelector(event));
 
   return (
-    <CollapsiblePanel wrap="wrap" text="Sponsors" {...props}>
+    <CollapsiblePanel
+      wrap="wrap"
+      text={`Sponsors ($${activeSponsors * 5}${
+        activeSponsors > 0 ? ' / 5s' : ''
+      })`}
+      {...props}
+    >
       {sponsors.map((sponsor, index) => (
         <SponsorReward
           margin="16px 0 0 8px"

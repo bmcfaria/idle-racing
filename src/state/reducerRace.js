@@ -3,6 +3,7 @@ import {
   CHECK_END_RACE_TYPE,
   CLOSE_RESULTS_TYPE,
   STOP_RACE_TYPE,
+  CHECK_SPONSORS_TYPE,
 } from './actions';
 import {
   generateRace,
@@ -121,7 +122,7 @@ const reducerRace = (state = {}, { type, payload }) => {
         position,
         state.tracks,
         state.pastRaces,
-        state.sponsors
+        state.sponsors.active
       );
 
       let stateUpdate = {};
@@ -224,7 +225,13 @@ const reducerRace = (state = {}, { type, payload }) => {
         ...(Object.keys(sponsors).length > 0 && {
           sponsors: {
             ...state.sponsors,
-            ...sponsors,
+            active: {
+              ...state.sponsors.active,
+              ...sponsors,
+            },
+            ...(!state.sponsors.timestamp && {
+              timestamp: new Date().getTime(),
+            }),
           },
         }),
       };
@@ -293,6 +300,28 @@ const reducerRace = (state = {}, { type, payload }) => {
             lastRace: undefined,
           },
         }),
+      };
+    }
+
+    case CHECK_SPONSORS_TYPE: {
+      const activeSponsors = Object.keys(state.sponsors.active).length;
+
+      if (
+        activeSponsors === 0 ||
+        new Date().getTime() - state.sponsors.timestamp < 5000
+      ) {
+        return state;
+      }
+
+      const moneyEarned = 5 * activeSponsors;
+
+      return {
+        ...state,
+        money: state.money + moneyEarned,
+        sponsors: {
+          ...state.sponsors,
+          timestamp: new Date().getTime(),
+        },
       };
     }
 
