@@ -314,7 +314,9 @@ const reducerRace = (state = {}, { type, payload }) => {
         return state;
       }
 
-      const moneyEarned = 1 * activeSponsors;
+      const cycles = ~~((currentTime - state.sponsors.timestamp) / 1000);
+
+      const moneyEarned = activeSponsors * cycles;
 
       return {
         ...state,
@@ -323,6 +325,16 @@ const reducerRace = (state = {}, { type, payload }) => {
           ...state.sponsors,
           timestamp: currentTime,
         },
+        ...(cycles > 10 && {
+          warnings: {
+            ...state.warnings,
+            offlineEarnings: {
+              ...state.warnings.offlineEarnings,
+              value: moneyEarned,
+              timelapse: state.timelapse,
+            },
+          },
+        }),
       };
     }
 
