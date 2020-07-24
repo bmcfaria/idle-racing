@@ -6,6 +6,7 @@ import { colors } from '../helpers/theme';
 
 const SelectCarContainer = styled(Flex)`
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 const RaceDetailsSelectCar = ({ onClick, ...props }) => {
