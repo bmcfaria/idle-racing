@@ -10,6 +10,7 @@ import {
   experienceMechanicSelector,
   experienceBusinessSelector,
   experienceRaceSelector,
+  passiveIncomeSelector,
 } from '../state/selectors';
 import { zIndex, colors } from '../helpers/theme';
 import { useCurrentPage } from '../helpers/hooks';
@@ -55,6 +56,7 @@ const Navigation = () => {
 
 const Money = props => {
   const money = useSelector(moneySelector);
+  const passiveIncome = useSelector(passiveIncomeSelector);
 
   return (
     <Flex
@@ -72,6 +74,11 @@ const Money = props => {
       <Text fontSize="24px" color={colors.white}>
         {abbreviate(money, 1)}
       </Text>
+      {passiveIncome > 0 && (
+        <Text fontSize="16px" marginLeft="4px" color={colors.white}>
+          {`(+${passiveIncome} /s)`}
+        </Text>
+      )}
     </Flex>
   );
 };

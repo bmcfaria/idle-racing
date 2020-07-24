@@ -83,7 +83,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
 
   const secondaryText =
     (locked && 'Locked') ||
-    (activeSponsors > 0 && `Sponsor: $${activeSponsors * 5} / 5s`) ||
+    (activeSponsors > 0 && `Sponsor: $${activeSponsors} /s`) ||
     'No sponsors';
 
   const isPreviousUnlocked = index =>

@@ -305,22 +305,23 @@ const reducerRace = (state = {}, { type, payload }) => {
 
     case CHECK_SPONSORS_TYPE: {
       const activeSponsors = Object.keys(state.sponsors.active).length;
+      const currentTime = new Date().getTime();
 
       if (
         activeSponsors === 0 ||
-        new Date().getTime() - state.sponsors.timestamp < 5000
+        currentTime - state.sponsors.timestamp < 1000
       ) {
         return state;
       }
 
-      const moneyEarned = 5 * activeSponsors;
+      const moneyEarned = 1 * activeSponsors;
 
       return {
         ...state,
         money: state.money + moneyEarned,
         sponsors: {
           ...state.sponsors,
-          timestamp: new Date().getTime(),
+          timestamp: currentTime,
         },
       };
     }

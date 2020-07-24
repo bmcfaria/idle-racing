@@ -135,3 +135,6 @@ export const raceSponsorsActiveCountSelector = event => state =>
   ).length;
 
 export const autoRaceEnabledSelector = state => state.autoRace;
+
+export const passiveIncomeSelector = state =>
+  Object.keys(state.sponsors.active).length;

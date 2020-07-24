@@ -121,9 +121,7 @@ const Sponsors = ({ event, ...props }) => {
   return (
     <CollapsiblePanel
       wrap="wrap"
-      text={`Sponsors ($${activeSponsors * 5}${
-        activeSponsors > 0 ? ' / 5s' : ''
-      })`}
+      text={'Sponsors' + (activeSponsors > 0 ? ` ($${activeSponsors} /s)` : '')}
       {...props}
     >
       {sponsors.map((sponsor, index) => (
