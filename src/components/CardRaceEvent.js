@@ -1,10 +1,11 @@
 import React from 'react';
-import { Box, Flex } from '@chakra-ui/core';
+import { Box, Flex, Text } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import {
   tracksSelector,
   raceByTrackSelector,
   raceSponsorsActiveCountSelector,
+  lockedSelector,
 } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
@@ -12,7 +13,7 @@ import getImageTrack from '../helpers/imageMappingTracks';
 import CardBig from './CardBig';
 import CardProgressOverlay from './CardProgressOverlay';
 
-const TrackItem = ({ track, ...props }) => {
+const TrackItem = ({ track, active = true, ...props }) => {
   const race = useSelector(raceByTrackSelector(track.id));
 
   const raced = track?.stats?.raced;
@@ -26,7 +27,7 @@ const TrackItem = ({ track, ...props }) => {
           w="100%"
           h="100%"
           padding="4px"
-          color={colors.darkGray}
+          color={active ? colors.darkGray : colors.lightGray}
           as={getImageTrack(track)}
         />
         <CardProgressOverlay circleSize="40px" race={race} />
@@ -65,6 +66,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const activeSponsors = useSelector(
     raceSponsorsActiveCountSelector(eventType)
   );
+  const locked = useSelector(lockedSelector)?.race[eventType];
 
   const eventRaces = tracks
     .filter(item => item.category === eventType)
@@ -79,24 +81,39 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
     history.push(location.pathname + '/' + eventType);
   };
 
+  const secondaryText =
+    (locked && 'Locked') ||
+    (activeSponsors > 0 && `Sponsor: $${activeSponsors * 5} / 5s`) ||
+    'No sponsors';
+
+  const isPreviousUnlocked = index =>
+    index === 0 || eventRaces[index - 1]?.stats?.won > 0;
+
   return (
     <CardBig
       onClick={onClick}
       primaryText={eventName}
-      secondaryText={`Sponsor: $${activeSponsors * 5}${
-        activeSponsors > 0 ? ' / 5s' : ''
-      }`}
+      secondaryText={secondaryText}
       theme={{ primaryBg: colors.darkGray, primaryColor: colors.white }}
+      position="relative"
       {...props}
     >
-      {eventRaces.map(track => (
+      {eventRaces.map((track, index) => (
         <TrackItem
           w={`${100 / columns}%`}
           h={`${~~(100 / divider)}%`}
           key={track.id}
           track={track}
+          active={!locked && isPreviousUnlocked(index)}
         />
       ))}
+      {locked && (
+        <Flex w="100%" h="120px" left="0" top="0" position="absolute">
+          <Text w="100%" margin="auto 0" fontSize="24px" whiteSpace="pre-wrap">
+            Win a race in the previous section to unlock this one
+          </Text>
+        </Flex>
+      )}
     </CardBig>
   );
 };

@@ -18,40 +18,48 @@ import hexAlpha from 'hex-alpha';
 import CollapsiblePanel from './CollapsiblePanel';
 import { BottomSpacer } from './BottomSpacer';
 
-const TracksContainer = ({ tracks, locked, ...props }) => (
-  <Flex
-    wrap="wrap"
-    margin="0 auto"
-    paddingTop="16px"
-    paddingLeft="16px"
-    boxSizing="content-box"
-    borderRadius="16px"
-    border={`1px solid ${colors.lightGray}`}
-    position="relative"
-    {...props}
-  >
-    {tracks.map(track => (
-      <Box marginRight="16px" marginBottom="16px" key={track.id}>
-        <CardTrack track={track} />
-      </Box>
-    ))}
-    {locked && (
-      <Flex
-        w="100%"
-        h="100%"
-        top="-0"
-        left="-0"
-        position="absolute"
-        borderRadius="16px"
-        bg={hexAlpha(colors.lightGray, 0.98)}
-      >
-        <Text fontSize="24px" textAlign="center" margin="auto">
-          Win a race in the previous section to unlock this one
-        </Text>
-      </Flex>
-    )}
-  </Flex>
-);
+const TracksContainer = ({ tracks, locked, ...props }) => {
+  const isPreviousUnlocked = index =>
+    index === 0 || tracks[index - 1]?.stats?.won > 0;
+
+  return (
+    <Flex
+      wrap="wrap"
+      margin="0 auto"
+      paddingTop="16px"
+      paddingLeft="16px"
+      boxSizing="content-box"
+      borderRadius="16px"
+      border={`1px solid ${colors.lightGray}`}
+      position="relative"
+      {...props}
+    >
+      {tracks.map((track, index) => (
+        <Box marginRight="16px" marginBottom="16px" key={track.id}>
+          <CardTrack
+            track={track}
+            locked={!locked && !isPreviousUnlocked(index)}
+          />
+        </Box>
+      ))}
+      {locked && (
+        <Flex
+          w="100%"
+          h="100%"
+          top="-0"
+          left="-0"
+          position="absolute"
+          borderRadius="16px"
+          bg={hexAlpha(colors.lightGray, 0.98)}
+        >
+          <Text fontSize="24px" textAlign="center" margin="auto">
+            Win a race in the previous section to unlock this one
+          </Text>
+        </Flex>
+      )}
+    </Flex>
+  );
+};
 
 const SponsorReward = ({
   text = 'Some text',

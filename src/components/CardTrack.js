@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Flex } from '@chakra-ui/core';
+import { Text, Flex } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -13,7 +13,7 @@ import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
 import Button from './Button';
 
-const CardTrack = ({ track }) => {
+const CardTrack = ({ track, locked }) => {
   const { id, race } = track;
   const location = useLocation();
   const history = useHistory();
@@ -25,6 +25,7 @@ const CardTrack = ({ track }) => {
   // To improve mobile navigation,
   // this way the back button will un-select instead off showing the previous selected
   const setSelected = () => {
+    if (locked) return;
     if (currentRace) return;
 
     if (location?.state?.track) {
@@ -50,14 +51,20 @@ const CardTrack = ({ track }) => {
       padding="0"
       onClick={setSelected}
     >
-      {location?.state?.track === id && (
-        <Box
+      {locked && (
+        <Flex
           position="absolute"
+          zIndex="1"
           w="100%"
           h="100%"
-          bg="#B2F5EA77"
+          bg={hexAlpha(colors.white, 0.98)}
           borderRadius="16px"
-        />
+          padding="0 8px"
+        >
+          <Text w="100%" margin="auto 0" fontSize="24px" whiteSpace="pre-wrap">
+            Win previous race to unlock
+          </Text>
+        </Flex>
       )}
       {currentRace && (
         <CardProgressOverlay
