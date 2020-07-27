@@ -114,7 +114,6 @@ const reducerRace = (state = {}, { type, payload }) => {
         );
       }
 
-      // TODO: is it the best place to do it?
       // TODO: should show toast when unlocking a new sponsor
       const sponsors = evaluateSponsors(
         track,
@@ -127,11 +126,14 @@ const reducerRace = (state = {}, { type, payload }) => {
 
       let stateUpdate = {};
       let expEarned = 0;
+
       if (race.auto) {
         const raceIndex = state.races.findIndex(item => item.id === race.id);
         const timelapse = new Date().getTime() - race.startOriginal;
         const differenceInRaceResets =
           ~~(timelapse / track.duration) - (race.resets + 1);
+
+        // TODO: apply maxTime for auto offline earnings
 
         // If differenceInRaceResets > 0 then offline earnings
         const offlineEarnings = differenceInRaceResets * earnings;
@@ -314,7 +316,13 @@ const reducerRace = (state = {}, { type, payload }) => {
         return state;
       }
 
-      const cycles = ~~((currentTime - state.sponsors.timestamp) / 1000);
+      const timelapse = currentTime - state.sponsors.timestamp;
+
+      const cycles = ~~(
+        (timelapse < state.warnings.offlineEarnings.maxTime
+          ? timelapse
+          : state.warnings.offlineEarnings.maxTime) / 1000
+      );
 
       const moneyEarned = activeSponsors * cycles;
 

@@ -73,6 +73,7 @@ export const initialState = {
       show: true,
       value: 0,
       timelapse: 0,
+      maxTime: 2 * 60 * 60 * 1000,
     },
   },
 };
