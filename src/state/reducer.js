@@ -65,7 +65,8 @@ export const initialState = {
     active: {},
     timestamp: null,
   },
-  version: 0.704,
+  boughtCars: {},
+  version: 0.705,
   toasts: [],
   warnings: {
     storeReset: false,
@@ -110,6 +111,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         money: state.money - calculatedPrice,
+        boughtCars: {
+          ...state.boughtCars,
+          [car.id]: ~~state.boughtCars[car.id] + 1,
+        },
         garageCars: [...state.garageCars, garageCar],
         pageNotifications: {
           ...state.pageNotifications,

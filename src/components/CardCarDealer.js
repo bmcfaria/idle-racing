@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Flex } from '@chakra-ui/core';
-import { garageCarsSelector, moneySelector } from '../state/selectors';
+import {
+  garageCarsSelector,
+  moneySelector,
+  boughtCarsSelector,
+} from '../state/selectors';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { colors } from '../helpers/theme';
@@ -21,7 +25,9 @@ const BoughtAnimation = styled(Flex)`
 `;
 
 const CardCarDealer = ({ car, ...props }) => {
+  const { id } = car;
   const garageCars = useSelector(garageCarsSelector);
+  const boughtCars = useSelector(boughtCarsSelector);
   const money = useSelector(moneySelector);
   const [bought, setBought] = useState();
 
@@ -43,7 +49,7 @@ const CardCarDealer = ({ car, ...props }) => {
       w="160px"
       h="148px"
       bg={colors.darkGray}
-      infoBgColor={colors.orange}
+      infoBgColor={boughtCars[id] ? colors.orange : colors.lightGray}
       infoH="124px"
       car={car}
       {...props}
