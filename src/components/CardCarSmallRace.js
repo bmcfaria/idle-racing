@@ -46,7 +46,7 @@ const CardCarSmallRace = ({
   );
 
   // To improve mobile navigation,
-  // this way the back button will un-select instead off showing the previous selected
+  // this way the back button will un-select
   const setSelected = () => {
     if (!meetsRequirements) return;
 

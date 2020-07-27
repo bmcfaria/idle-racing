@@ -23,7 +23,7 @@ const CardTrack = ({ track, locked }) => {
   const car = useSelector(garageCarSelector(currentRace?.car || pastRace?.car));
 
   // To improve mobile navigation,
-  // this way the back button will un-select instead off showing the previous selected
+  // this way the back button will un-select
   const setSelected = () => {
     if (locked) return;
     if (currentRace) return;

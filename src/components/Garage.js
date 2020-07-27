@@ -7,7 +7,7 @@ import {
   pageNotificationsGarageSelector,
   garageSlotsEmptySelector,
 } from '../state/selectors';
-import CardCarSmall from './CardCarSmall';
+import CardCarGarage from './CardCarGarage';
 import Modal from './Modal';
 import { useLocation, Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
@@ -34,7 +34,7 @@ const CarsContainer = ({ cars, ...props }) => {
         >
           {cars.map(car => (
             <Box marginRight="16px" marginBottom="16px" key={car.id}>
-              <CardCarSmall
+              <CardCarGarage
                 car={car}
                 garage
                 notification={pageNotificationsGarage?.includes(car.id)}

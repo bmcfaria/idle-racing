@@ -1,13 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Box, Text, Flex, Image } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
-import CardProgressOverlay from './CardProgressOverlay';
-import {
-  raceSelector,
-  garageCarsSelector,
-  moneySelector,
-} from '../state/selectors';
-import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { capitalize, ATTRIBUTE_TYPES } from '../helpers/utils';
 import { colors } from '../helpers/theme';
@@ -35,60 +28,29 @@ const BlinkCard = styled(Button)`
   }
 `;
 
-const BoughtAnimation = styled(Flex)`
-  animation: fadeOut ease 1.5s;
-  opacity: 0;
-
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-`;
-
 const CardCarSmall = ({
   car,
   stripped,
   onClick,
-  garage,
   notification,
+  showAttributes,
+  infoBgColor = colors.lightGray,
+  infoH,
+  children,
   ...props
 }) => {
-  const { id, race } = car;
+  const { id } = car;
   const location = useLocation();
   const history = useHistory();
-  const garageCars = useSelector(garageCarsSelector);
-  const money = useSelector(moneySelector);
-  const [bought, setBought] = useState();
-
-  const currentRace = useSelector(raceSelector(race));
-
-  useEffect(() => {
-    const currentTime = new Date().getTime();
-
-    garageCars.forEach(element => {
-      if (
-        element.dealerCar === car.id &&
-        currentTime - element.timestamp <= 1000
-      ) {
-        setBought(true);
-      }
-    });
-  }, [garageCars, car.id, car.timestamp]);
 
   // To improve mobile navigation,
-  // this way the back button will un-select instead off showing the previous selected
+  // this way the back button will un-select
   const setSelected = () => {
     if (onClick) {
       onClick(car);
 
       return;
     }
-
-    if (currentRace) return;
 
     if (location?.state?.car) {
       history.replace({
@@ -103,38 +65,24 @@ const CardCarSmall = ({
     }
   };
 
-  const color = garage ? colors.lightBlue : colors.orange;
-
   return (
     <BlinkCard
       w="160px"
-      h={garage ? '180px' : '148px'}
       position="relative"
       onClick={setSelected}
       cursor="pointer"
       borderRadius="16px"
-      blink={garage && notification}
+      blink={notification}
       bg={colors.darkGray}
       {...props}
     >
-      {!garage && (
-        <Text
-          fontSize="14px"
-          lineHeight="24px"
-          textAlign="center"
-          w="100%"
-          marginTop="auto"
-          color={money < car.price ? colors.red : colors.white}
-        >
-          ${car.price}
-        </Text>
-      )}
+      {children}
       <Flex
         w="100%"
-        h={garage ? '100%' : '124px'}
+        h={infoH || '100%'}
         direction="column"
         borderRadius="16px"
-        bg={color}
+        bg={infoBgColor}
         position="absolute"
         top="0"
       >
@@ -147,7 +95,7 @@ const CardCarSmall = ({
         >
           {car.name}
         </Text>
-        {garage && (
+        {showAttributes && (
           <Flex justifyContent="space-evenly">
             <AttributeCircle
               attr={car[ATTRIBUTE_TYPES.ACCELERATION]}
@@ -174,7 +122,7 @@ const CardCarSmall = ({
           h="100px"
           alt="car"
           borderRadius="16px"
-          border={`1px solid ${color}`}
+          border={`1px solid ${infoBgColor}`}
           objectFit="contain"
           bg={colors.white}
           src={getImageCar(car)}
@@ -186,29 +134,6 @@ const CardCarSmall = ({
           {car.type}
         </Text>
       </Box>
-      {bought && (
-        <BoughtAnimation
-          position="absolute"
-          top="0"
-          left="0"
-          w="100%"
-          h="100%"
-          bg={colors.green}
-          borderRadius="16px"
-        >
-          <Text fontSize="24px" margin="auto">
-            Bought
-          </Text>
-        </BoughtAnimation>
-      )}
-      {currentRace && (
-        <CardProgressOverlay
-          race={currentRace}
-          car={car}
-          label
-          borderRadius="16px"
-        />
-      )}
     </BlinkCard>
   );
 };
