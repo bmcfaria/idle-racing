@@ -13,9 +13,10 @@ const CollapsiblePanel = ({
   bg = colors.darkGray,
   color = colors.white,
   padding = '32px 8px 8px 0',
+  open: defaultOpen,
   ...props
 }) => {
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState(defaultOpen);
 
   const toggle = () => {
     setOpen(!open);
@@ -63,16 +64,17 @@ const CollapsiblePanel = ({
         />
       </Button>
       {open && (
-        <Flex
+        <Box
           w="calc(100% - 2px)"
           margin="0 auto 1px "
           padding={padding}
           borderRadius="16px"
           bg={colors.white}
-          wrap={wrap}
+          display="grid"
+          gridTemplateColumns="repeat( auto-fit, minmax(160px, 1fr) )"
         >
           {children}
-        </Flex>
+        </Box>
       )}
     </Flex>
   );
