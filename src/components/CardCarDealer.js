@@ -60,9 +60,9 @@ const CardCarDealer = ({ car, ...props }) => {
         textAlign="center"
         w="100%"
         marginTop="auto"
-        color={money < car.price ? colors.red : colors.white}
+        color={money < car.price && !car.reward ? colors.red : colors.white}
       >
-        ${car.price}
+        {car.reward ? 'Reward' : `$${car.price}`}
       </Text>
       {bought && (
         <BoughtAnimation
