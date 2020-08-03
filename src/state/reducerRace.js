@@ -336,11 +336,13 @@ const reducerRace = (state = {}, { type, payload }) => {
         ...(cycles > 10 && {
           warnings: {
             ...state.warnings,
-            offlineEarnings: {
-              ...state.warnings.offlineEarnings,
-              value: moneyEarned,
-              timelapse: state.timelapse,
-            },
+            ...(state.timelapse > 10000 && {
+              offlineEarnings: {
+                ...state.warnings.offlineEarnings,
+                value: moneyEarned,
+                timelapse: state.timelapse,
+              },
+            }),
           },
         }),
       };
