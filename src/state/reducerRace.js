@@ -333,18 +333,17 @@ const reducerRace = (state = {}, { type, payload }) => {
           ...state.sponsors,
           timestamp: currentTime,
         },
-        ...(cycles > 10 && {
-          warnings: {
-            ...state.warnings,
-            ...(state.timelapse > 10000 && {
+        ...(cycles > 10 &&
+          state.timelapse > 30000 && {
+            warnings: {
+              ...state.warnings,
               offlineEarnings: {
                 ...state.warnings.offlineEarnings,
                 value: moneyEarned,
                 timelapse: state.timelapse,
               },
-            }),
-          },
-        }),
+            },
+          }),
       };
     }
 
