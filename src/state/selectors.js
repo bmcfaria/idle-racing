@@ -1,6 +1,5 @@
 import { cars as dealerCars, raceSponsors } from '../helpers/mockData';
-import { expLevel, expNextLevel, totalMechanics } from '../helpers/utils';
-import { capitalize } from 'lodash';
+import { expLevel, expNextLevel, sponsorEntryText } from '../helpers/utils';
 
 // Dealer cars are global and they're not in the state/store
 export const dealerCarsSelector = () => dealerCars;
@@ -81,7 +80,10 @@ export const garageSlotsEmptySelector = state =>
   state.garageSlots - state.garageCars.length;
 export const garageSlotPriceSelector = state => 250 * 2 ** state.garageSlots;
 
-export const mechanicsSelector = state => totalMechanics(state.tracks);
+export const mechanicsSelector = state =>
+  Object.values(state.sponsors.active).filter(
+    sponsor => sponsor.reward === 'mechanic'
+  ).length;
 
 export const toastsSelector = state => state.toasts;
 
@@ -110,20 +112,12 @@ export const raceSponsorsSelector = event => state =>
       const track = state.tracks.find(item => item.id === sponsor.track);
       const car = dealerCars.find(item => item.id === sponsor.car);
 
-      const timeText = sponsor.times > 1 ? 'times' : 'time';
-      const raceText = sponsor.times > 1 ? 'races' : 'race';
-
-      const text = `
-      ${capitalize(sponsor.type)} ${sponsor.times} ${
-        sponsor.type === 'race' ? timeText : raceText
-      }
-      `;
-
       return {
         active: !!state.sponsors.active[sponsor.id],
-        text,
+        text: sponsorEntryText(sponsor),
         track,
         car,
+        reward: sponsor.reward,
       };
     });
 
@@ -131,12 +125,14 @@ export const raceSponsorsActiveSelector = state => state.sponsors.active;
 
 export const raceSponsorsActiveCountSelector = event => state =>
   Object.values(state.sponsors.active).filter(
-    sponsor => sponsor.event === event
+    sponsor => sponsor.event === event && sponsor.reward === 'money'
   ).length;
 
 export const autoRaceEnabledSelector = state => state.autoRace;
 
 export const passiveIncomeSelector = state =>
-  Object.keys(state.sponsors.active).length;
+  Object.values(state.sponsors.active).filter(
+    sponsor => sponsor.reward === 'money'
+  ).length;
 
 export const boughtCarsSelector = state => state.boughtCars;

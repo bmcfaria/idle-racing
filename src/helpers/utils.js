@@ -167,7 +167,7 @@ export const raceResults = (car, track) => {
   return results;
 };
 
-export const capitalize = str =>
+export const capitalize = (str = '') =>
   str.charAt(0).toUpperCase() + str.toLowerCase().slice(1);
 
 export const validateAttrRequirements = (car, requirements, upgradable) => {
@@ -261,17 +261,18 @@ export const expNextLevel = exp => 10 ** `${~~exp}`.length;
 export const PROBABILITY_GOOD_VALUE = 3;
 
 export const TOAST_TYPES = {
-  MECHANIC_RACE: 'MECHANIC_RACE',
-  MECHANIC_WON: 'MECHANIC_WON',
-  MECHANIC_100_WIN: 'MECHANIC_100_WIN',
+  SPONSOR: 'SPONSOR',
+  MECHANIC: 'MECHANIC',
 };
 
-export const totalMechanics = tracks =>
-  tracks.reduce(
-    (sum, track) =>
-      sum +
-      ~~track.stats?.raced +
-      ~~(track.stats?.won > 0) +
-      ~~(track.stats?.won >= 100),
-    0
-  );
+export const sponsorEntryText = sponsor => {
+  const timeText = sponsor.times > 1 ? 'times' : 'time';
+  const raceText = sponsor.times > 1 ? 'races' : 'race';
+
+  const text = `
+        ${capitalize(sponsor.type)} ${sponsor.times} ${
+    sponsor.type === 'race' ? timeText : raceText
+  }
+        `;
+  return text;
+};

@@ -7,7 +7,7 @@ import {
   BUY_GARAGE_SLOT_TYPE,
 } from './actions';
 import { upgradeAttribute, generateCarPrice } from '../helpers/mockData';
-import { buffValue, discountValue, totalMechanics } from '../helpers/utils';
+import { buffValue, discountValue } from '../helpers/utils';
 import { upgradeCenter } from '../helpers/garageUpgrades';
 
 const reducerGarage = (state = {}, { type, payload }) => {
@@ -54,7 +54,9 @@ const reducerGarage = (state = {}, { type, payload }) => {
       );
 
       const attribute = car[payload.type];
-      const mechanics = totalMechanics(state.tracks);
+      const mechanics = Object.values(state.sponsors.active).filter(
+        sponsor => sponsor.reward === 'mechanic'
+      ).length;
       const upgradeCenterValue = upgradeCenter[mechanics] ?? 100;
 
       if (
@@ -121,7 +123,9 @@ const reducerGarage = (state = {}, { type, payload }) => {
     case BUY_GARAGE_SLOT_TYPE: {
       const slotPrice = 250 * 2 ** state.garageSlots;
 
-      const mechanics = totalMechanics(state.tracks);
+      const mechanics = Object.values(state.sponsors.active).filter(
+        sponsor => sponsor.reward === 'mechanic'
+      ).length;
 
       if (state.money < slotPrice || mechanics < 2) {
         return state;

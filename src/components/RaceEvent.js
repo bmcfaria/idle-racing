@@ -17,6 +17,7 @@ import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
 import CollapsiblePanel from './CollapsiblePanel';
 import { BottomSpacer } from './BottomSpacer';
+import { ReactComponent as MechanicIcon } from '../assets/icons/mechanic.svg';
 
 const TracksContainer = ({ tracks, locked, ...props }) => {
   const isPreviousUnlocked = index =>
@@ -66,6 +67,7 @@ const SponsorReward = ({
   track,
   car,
   active,
+  reward,
   ...props
 }) => (
   <Box
@@ -74,23 +76,26 @@ const SponsorReward = ({
     {...props}
   >
     <Flex w="160px" h="32px" borderRadius="16px" margin="-1px 0 0 -1px">
-      <Box
+      <Flex
         w="32px"
         h="32px"
         borderRadius="16px"
+        color={active ? colors.white : colors.darkGray}
         {...(active && { bg: colors.darkGray })}
       >
-        <Text
-          w="100%"
-          h="100%"
-          textAlign="center"
-          lineHeight="32px"
-          fontSize="32px"
-          color={active ? colors.white : colors.darkGray}
-        >
-          $
-        </Text>
-      </Box>
+        {reward !== 'mechanic' && (
+          <Text
+            w="100%"
+            h="100%"
+            textAlign="center"
+            lineHeight="32px"
+            fontSize="32px"
+          >
+            $
+          </Text>
+        )}
+        {reward === 'mechanic' && <Box margin="auto" as={MechanicIcon} />}
+      </Flex>
       <Text
         h="100%"
         flexGrow="1"
@@ -132,6 +137,7 @@ const Sponsors = ({ event, ...props }) => {
           active={sponsor.active}
           track={sponsor.track?.name}
           car={sponsor.car?.name}
+          reward={sponsor.reward}
           key={index}
         />
       ))}

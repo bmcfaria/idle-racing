@@ -50,6 +50,7 @@ export const evaluateSponsors = (
             ...result,
             [sponsor.id]: {
               event: track.category,
+              reward: sponsor.reward ?? 'money',
               timestamp: new Date().getTime(),
             },
           }

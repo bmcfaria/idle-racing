@@ -66,6 +66,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const activeSponsors = useSelector(
     raceSponsorsActiveCountSelector(eventType)
   );
+
   const locked = useSelector(lockedSelector)?.race[eventType];
 
   const eventRaces = tracks

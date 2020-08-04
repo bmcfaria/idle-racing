@@ -204,9 +204,10 @@ export const generatePastRace = (
   results,
 });
 
-export const generateRaceMechanicToast = (name, type) => ({
+export const generateSponsorToast = (title, subtitle, type) => ({
   id: uuid(),
-  name,
+  title,
+  subtitle,
   type,
 });
 

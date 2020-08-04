@@ -9,28 +9,20 @@ import { dismissToastAction } from '../state/actions';
 import Button from './Button';
 
 const toastTypeReward = {
-  [TOAST_TYPES.MECHANIC_RACE]: '+1 Mechanic',
-  [TOAST_TYPES.MECHANIC_WON]: '+1 Mechanic',
-  [TOAST_TYPES.MECHANIC_100_WIN]: '+1 Mechanic',
-};
-
-const toastTypeDescription = {
-  [TOAST_TYPES.MECHANIC_RACE]: 'finish race',
-  [TOAST_TYPES.MECHANIC_WON]: 'won race',
-  [TOAST_TYPES.MECHANIC_100_WIN]: '100 wins',
+  [TOAST_TYPES.SPONSOR]: '+1 Sponsor',
+  [TOAST_TYPES.MECHANIC]: '+1 Mechanic',
 };
 
 const toastTypeColor = {
-  [TOAST_TYPES.MECHANIC_RACE]: colors.orange,
-  [TOAST_TYPES.MECHANIC_WON]: colors.green,
-  [TOAST_TYPES.MECHANIC_100_WIN]: colors.lightBlue,
+  [TOAST_TYPES.SPONSOR]: colors.green,
+  [TOAST_TYPES.MECHANIC]: colors.lightBlue,
 };
 
 const Toast = ({
   id,
-  name,
+  title,
   reward,
-  description,
+  subtitle,
   color,
   dismissToast,
   onClose,
@@ -53,10 +45,10 @@ const Toast = ({
       flexDirection="column"
       onClick={onClick}
     >
-      <Text textAlign="center">{name}</Text>
+      <Text textAlign="center">{title}</Text>
       <Flex w="100%" justifyContent="space-between" padding="0 4px">
         <Text>{reward}</Text>
-        <Text>({description})</Text>
+        <Text>({subtitle})</Text>
       </Flex>
     </Button>
   );
@@ -72,16 +64,16 @@ const Toasts = props => {
       dispatch(dismissToastAction(id));
     };
 
-    toasts.forEach(({ id, name, type }) => {
+    toasts.forEach(({ id, title, subtitle, type }) => {
       toast({
         duration: null,
         position: 'top-right',
         render: ({ onClose }) => (
           <Toast
             id={id}
-            name={name}
+            title={title}
+            subtitle={subtitle}
             reward={toastTypeReward[type]}
-            description={toastTypeDescription[type]}
             color={toastTypeColor[type]}
             dismissToast={dismissToast}
             onClose={onClose}

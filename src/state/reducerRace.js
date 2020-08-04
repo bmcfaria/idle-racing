@@ -9,13 +9,15 @@ import {
   generateRace,
   generatePastRace,
   resetRace,
-  generateRaceMechanicToast,
+  generateSponsorToast,
+  raceSponsors,
 } from '../helpers/mockData';
 import {
   raceResults,
   buffValue,
   discountValue,
   TOAST_TYPES,
+  sponsorEntryText,
 } from '../helpers/utils';
 import { evaluateSponsors } from '../helpers/sponsors';
 
@@ -93,28 +95,6 @@ const reducerRace = (state = {}, { type, payload }) => {
         won: track.stats?.won + ~~(position === 1),
       };
 
-      let toasts = [];
-      if (!track.stats.raced) {
-        toasts.push(
-          generateRaceMechanicToast(track.name, TOAST_TYPES.MECHANIC_RACE)
-        );
-      }
-      if (track.stats.won === 0 && trackStats.won > 0) {
-        toasts.push(
-          generateRaceMechanicToast(track.name, TOAST_TYPES.MECHANIC_WON)
-        );
-      }
-      if (
-        track.stats.won > 0 &&
-        track.stats.won < 100 &&
-        trackStats.won >= 100
-      ) {
-        toasts.push(
-          generateRaceMechanicToast(track.name, TOAST_TYPES.MECHANIC_100_WIN)
-        );
-      }
-
-      // TODO: should show toast when unlocking a new sponsor
       const sponsors = evaluateSponsors(
         track,
         car,
@@ -123,6 +103,17 @@ const reducerRace = (state = {}, { type, payload }) => {
         state.pastRaces,
         state.sponsors.active
       );
+
+      const toasts = Object.keys(sponsors).map(key => {
+        const sponsor = raceSponsors.find(item => item.id === key);
+        return generateSponsorToast(
+          track.name,
+          sponsorEntryText(sponsor),
+          sponsor.reward === 'mechanic'
+            ? TOAST_TYPES.MECHANIC
+            : TOAST_TYPES.SPONSOR
+        );
+      });
 
       let stateUpdate = {};
       let expEarned = 0;
@@ -306,11 +297,13 @@ const reducerRace = (state = {}, { type, payload }) => {
     }
 
     case CHECK_SPONSORS_TYPE: {
-      const activeSponsors = Object.keys(state.sponsors.active).length;
+      const activeMoneySponsors = Object.values(state.sponsors.active).filter(
+        sponsor => sponsor.reward === 'money'
+      ).length;
       const currentTime = new Date().getTime();
 
       if (
-        activeSponsors === 0 ||
+        activeMoneySponsors === 0 ||
         currentTime - state.sponsors.timestamp < 1000
       ) {
         return state;
@@ -324,7 +317,7 @@ const reducerRace = (state = {}, { type, payload }) => {
           : state.warnings.offlineEarnings.maxTime) / 1000
       );
 
-      const moneyEarned = activeSponsors * cycles;
+      const moneyEarned = activeMoneySponsors * cycles;
 
       return {
         ...state,

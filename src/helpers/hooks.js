@@ -6,8 +6,7 @@ import {
   experienceMechanicSelector,
   experienceBusinessSelector,
 } from '../state/selectors';
-import { buffValue, discountValue } from './utils';
-import { capitalize } from 'lodash';
+import { buffValue, discountValue, capitalize } from './utils';
 
 export const useOpenClose = defaultValue => {
   const [open, setOpen] = useState(!!defaultValue);

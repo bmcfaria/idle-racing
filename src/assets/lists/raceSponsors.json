@@ -2,34 +2,110 @@
   {
     "event": "free",
     "type": "race",
-    "times": 3,
+    "times": 1,
     "track": "",
     "car": "",
-    "id": "050e666e-8026-4dee-9505-8482d2b31f98"
-  },
-  {
-    "event": "free",
-    "type": "race",
-    "times": 2,
-    "track": "54d3522d-22c2-4c95-b9d1-68c7d6853b90",
-    "car": "",
-    "id": "c2e2ad7e-8a0b-4274-ba49-a50bac5c2ecb"
-  },
-  {
-    "event": "free",
-    "type": "win",
-    "times": 3,
-    "track": "",
-    "car": "",
-    "id": "0b04e03a-4bb6-40b7-afd5-3fa2b2a666f3"
+    "id": "72e47abf-e1a2-45d5-b4cc-91832679a748",
+    "reward": "mechanic"
   },
   {
     "event": "free",
     "type": "win",
     "times": 1,
     "track": "",
-    "car": "3aaa1fcb-2763-48cf-bd90-c46ada09774f",
-    "id": "1d03d32c-8a65-4828-803b-b44b5ad92780"
+    "car": "",
+    "id": "649b075a-a514-41ee-b987-32e9e3d6897d",
+    "reward": "mechanic"
+  },
+  {
+    "event": "free",
+    "type": "win",
+    "times": 1,
+    "track": "c92fb1c7-2902-426c-b479-90d29c933e12",
+    "car": "",
+    "id": "eb118a1d-a5f9-4a57-be10-d20ad770841d",
+    "reward": "money"
+  },
+  {
+    "event": "free",
+    "type": "win",
+    "times": 1,
+    "track": "54d3522d-22c2-4c95-b9d1-68c7d6853b90",
+    "car": "",
+    "id": "f23bf641-17b3-4b75-a6c7-ca113442e0bb",
+    "reward": "money"
+  },
+  {
+    "event": "free",
+    "type": "win",
+    "times": 1,
+    "track": "8ecb7e5d-e6bb-464f-89b9-9839e58bc7a1",
+    "car": "",
+    "id": "eaa25de6-b99f-4749-99dc-9dedf9551151",
+    "reward": "money"
+  },
+  {
+    "event": "free",
+    "type": "win",
+    "times": 1,
+    "track": "b300263e-a7f5-4c24-a7f9-6bcd6e8e624f",
+    "car": "",
+    "id": "faf4f87f-b554-4445-8160-f5bc39f20fe9",
+    "reward": "money"
+  },
+  {
+    "event": "free",
+    "type": "race",
+    "times": 3,
+    "track": "",
+    "car": "",
+    "id": "050e666e-8026-4dee-9505-8482d2b31f98",
+    "reward": "money"
+  },
+  {
+    "event": "free",
+    "type": "race",
+    "times": 5,
+    "track": "c92fb1c7-2902-426c-b479-90d29c933e12",
+    "car": "",
+    "id": "c2e2ad7e-8a0b-4274-ba49-a50bac5c2ecb",
+    "reward": "money"
+  },
+  {
+    "event": "free",
+    "type": "win",
+    "times": 1,
+    "track": "54d3522d-22c2-4c95-b9d1-68c7d6853b90",
+    "car": "dc3c7bc6-956a-49b2-a2f3-0a592ce8dfc2",
+    "id": "0b04e03a-4bb6-40b7-afd5-3fa2b2a666f3",
+    "reward": "money"
+  },
+  {
+    "event": "free",
+    "type": "win",
+    "times": 5,
+    "track": "54d3522d-22c2-4c95-b9d1-68c7d6853b90",
+    "car": "",
+    "id": "4bd7c6b6-1986-4a69-b399-69aad0436e07",
+    "reward": "money"
+  },
+  {
+    "event": "free",
+    "type": "win",
+    "times": 5,
+    "track": "8ecb7e5d-e6bb-464f-89b9-9839e58bc7a1",
+    "car": "",
+    "id": "e00ab09a-9406-4159-9a19-731bd9bc317d",
+    "reward": "money"
+  },
+  {
+    "event": "free",
+    "type": "win",
+    "times": 5,
+    "track": "b300263e-a7f5-4c24-a7f9-6bcd6e8e624f",
+    "car": "",
+    "id": "fe119438-af2d-421d-9d53-c454f638f001",
+    "reward": "money"
   },
   {
     "event": "",
@@ -37,7 +113,71 @@
     "times": "",
     "track": "",
     "car": "",
-    "id": ""
+    "id": "",
+    "reward": ""
+  },
+  {
+    "event": "",
+    "type": "",
+    "times": "",
+    "track": "",
+    "car": "",
+    "id": "",
+    "reward": ""
+  },
+  {
+    "event": "",
+    "type": "",
+    "times": "",
+    "track": "",
+    "car": "",
+    "id": "",
+    "reward": ""
+  },
+  {
+    "event": "",
+    "type": "",
+    "times": "",
+    "track": "",
+    "car": "",
+    "id": "",
+    "reward": ""
+  },
+  {
+    "event": "",
+    "type": "",
+    "times": "",
+    "track": "",
+    "car": "",
+    "id": "",
+    "reward": ""
+  },
+  {
+    "event": "",
+    "type": "",
+    "times": "",
+    "track": "",
+    "car": "",
+    "id": "",
+    "reward": ""
+  },
+  {
+    "event": "",
+    "type": "",
+    "times": "",
+    "track": "",
+    "car": "",
+    "id": "",
+    "reward": ""
+  },
+  {
+    "event": "",
+    "type": "",
+    "times": "",
+    "track": "",
+    "car": "",
+    "id": "",
+    "reward": ""
   },
   {
     "event": "city",
@@ -45,7 +185,8 @@
     "times": 3,
     "track": "",
     "car": "",
-    "id": "26514012-6ffd-4cbf-8725-f0357baa6582"
+    "id": "26514012-6ffd-4cbf-8725-f0357baa6582",
+    "reward": ""
   },
   {
     "event": "city",
@@ -53,7 +194,8 @@
     "times": 3,
     "track": "",
     "car": "",
-    "id": "95f81300-8713-4301-b356-d79ff47b2c23"
+    "id": "95f81300-8713-4301-b356-d79ff47b2c23",
+    "reward": ""
   },
   {
     "event": "",
@@ -61,7 +203,8 @@
     "times": "",
     "track": "",
     "car": "",
-    "id": ""
+    "id": "",
+    "reward": ""
   },
   {
     "event": "offroad",
@@ -69,7 +212,8 @@
     "times": 3,
     "track": "",
     "car": "",
-    "id": "ef813720-de05-4ed6-8710-46180884f6a1"
+    "id": "ef813720-de05-4ed6-8710-46180884f6a1",
+    "reward": ""
   },
   {
     "event": "offroad",
@@ -77,7 +221,8 @@
     "times": 3,
     "track": "",
     "car": "",
-    "id": "330bc746-b693-4863-bbf5-ff87a49678cc"
+    "id": "330bc746-b693-4863-bbf5-ff87a49678cc",
+    "reward": ""
   },
   {
     "event": "",
@@ -85,7 +230,8 @@
     "times": "",
     "track": "",
     "car": "",
-    "id": ""
+    "id": "",
+    "reward": ""
   },
   {
     "event": "track",
@@ -93,7 +239,8 @@
     "times": 3,
     "track": "",
     "car": "",
-    "id": "f3904cf7-502b-405f-8ca1-d0f7db680363"
+    "id": "f3904cf7-502b-405f-8ca1-d0f7db680363",
+    "reward": ""
   },
   {
     "event": "track",
@@ -101,6 +248,7 @@
     "times": 3,
     "track": "",
     "car": "",
-    "id": "8aabb154-db15-4185-88fe-11ca8be23ff9"
+    "id": "8aabb154-db15-4185-88fe-11ca8be23ff9",
+    "reward": ""
   }
 ]
