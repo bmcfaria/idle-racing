@@ -244,7 +244,7 @@ const RaceDetails = ({ track, ...props }) => {
           />
         )}
 
-        <Modal isOpen={carsModal} onClose={carsModalClose}>
+        <Modal isOpen={carsModal} onClose={carsModalClose} bg="none">
           <CarsContainer cars={cars} selectCar={selectCar} />
         </Modal>
 
