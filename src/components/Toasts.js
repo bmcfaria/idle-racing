@@ -24,13 +24,12 @@ const Toast = ({
   reward,
   subtitle,
   color,
-  dismissToast,
+  removeFromStore,
   onClose,
 }) => {
-  const onClick = () => {
-    dismissToast(id);
-    onClose();
-  };
+  useEffect(() => {
+    removeFromStore(id);
+  });
 
   return (
     <Button
@@ -43,7 +42,7 @@ const Toast = ({
       bg={color}
       fontSize="12px"
       flexDirection="column"
-      onClick={onClick}
+      onClick={onClose}
     >
       <Text textAlign="center">{title}</Text>
       <Flex w="100%" justifyContent="space-between" padding="0 4px">
@@ -75,7 +74,7 @@ const Toasts = props => {
             subtitle={subtitle}
             reward={toastTypeReward[type]}
             color={toastTypeColor[type]}
-            dismissToast={dismissToast}
+            removeFromStore={dismissToast}
             onClose={onClose}
           />
         ),

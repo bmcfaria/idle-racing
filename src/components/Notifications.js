@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   notificationsSelector,
   racesSelector,
-  raceSponsorsActiveSelector,
+  passiveIncomeSelector,
 } from '../state/selectors';
 import NotificationsActiveRace from './NotificationsActiveRace';
 import NotificationsPastRace from './NotificationsPastRace';
@@ -39,7 +39,7 @@ const Notifications = () => {
   const [open, onOpen, onClose] = useOpenClose(false);
   const notifications = useSelector(notificationsSelector);
   const races = useSelector(racesSelector);
-  const sponsors = useSelector(raceSponsorsActiveSelector);
+  const sponsorsPassiveIncome = useSelector(passiveIncomeSelector);
 
   const isRacing = races?.length > 0;
 
@@ -49,7 +49,7 @@ const Notifications = () => {
         dispatch(checkEndRaceAction(race.id));
       });
 
-      if (Object.keys(sponsors).length > 0) {
+      if (sponsorsPassiveIncome > 0) {
         dispatch(checkSponsorsAction);
       }
     }, 500);
@@ -57,7 +57,7 @@ const Notifications = () => {
     return () => {
       clearInterval(countDown);
     };
-  }, [dispatch, races, sponsors]);
+  }, [dispatch, races, sponsorsPassiveIncome]);
 
   return (
     <>
