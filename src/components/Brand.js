@@ -8,6 +8,9 @@ import Modal from './Modal';
 import CardCarDealer from './CardCarDealer';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { BottomSpacer } from './BottomSpacer';
+import { colors } from '../helpers/theme';
+import { capitalize } from '../helpers/utils';
+import { brandSponsors } from '../helpers/sponsors';
 
 const CarsContainer = ({ cars, ...props }) => (
   <Flex
@@ -38,6 +41,8 @@ const Brand = () => {
 
   const selectedCar = cars.find(item => item.id === selected);
 
+  const brandSponsor = ~~brandSponsors[brand];
+
   return (
     <Box>
       <Modal isOpen={!!selectedCar} backOnClose>
@@ -50,7 +55,23 @@ const Brand = () => {
         </Text>
       )}
 
-      <CarsContainer w={`${containerWidth}px`} cars={cars} />
+      {brandSponsor > 0 && (
+        <Flex
+          w={`${containerWidth - 16}px`}
+          minH="32px"
+          borderRadius="16px"
+          marginLeft="16px"
+          border="1px solid black"
+          bg={colors.lightGray}
+        >
+          <Text margin="auto" textAlign="center">
+            Acquire all "{capitalize(brand)}" cars to unlock brand sponsor (
+            {`0/${cars.length} cars`})
+          </Text>
+        </Flex>
+      )}
+
+      <CarsContainer w={`${containerWidth}px`} marginTop="24px" cars={cars} />
 
       <BottomSpacer />
     </Box>

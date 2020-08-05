@@ -5,6 +5,7 @@ import { dealerCarsSelector } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import getImageCar from '../helpers/imageMappingCars';
 import CardBig from './CardBig';
+import { capitalize } from '../helpers/utils';
 
 const CardDealer = ({ brandType, brandName, ...props }) => {
   const location = useLocation();
@@ -25,7 +26,7 @@ const CardDealer = ({ brandType, brandName, ...props }) => {
   return (
     <CardBig
       onClick={onClick}
-      primaryText={brandName}
+      primaryText={capitalize(brandName)}
       secondaryText={'Sponsor: $0 / second'}
       {...props}
     >

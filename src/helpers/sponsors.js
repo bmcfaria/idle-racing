@@ -61,3 +61,13 @@ export const evaluateSponsors = (
 
   return sponsorsResult;
 };
+
+export const brandSponsors = {
+  city: 100,
+  offroad: 100,
+  supercar: 1000,
+  nascar: 10000,
+  f1: 10000,
+  racer: 10000,
+  heavy: 10000,
+};

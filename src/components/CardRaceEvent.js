@@ -12,6 +12,7 @@ import { colors } from '../helpers/theme';
 import getImageTrack from '../helpers/imageMappingTracks';
 import CardBig from './CardBig';
 import CardProgressOverlay from './CardProgressOverlay';
+import { capitalize } from '../helpers/utils';
 
 const TrackItem = ({ track, active = true, ...props }) => {
   const race = useSelector(raceByTrackSelector(track.id));
@@ -93,7 +94,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   return (
     <CardBig
       onClick={onClick}
-      primaryText={eventName}
+      primaryText={capitalize(eventName)}
       secondaryText={secondaryText}
       theme={{ primaryBg: colors.darkGray, primaryColor: colors.white }}
       position="relative"
