@@ -1,4 +1,5 @@
 import { cars } from './mockData';
+import seedrandom from 'seedrandom';
 
 export const displayResponsivePanel = condition => [
   condition ? 'none' : 'flex',
@@ -64,7 +65,7 @@ const attrUpgradeValue = (attr, car, max) => {
   return result;
 };
 
-const calculateCompetitors = track => {
+const calculateCompetitors = (track, withRandom = false) => {
   const requirements = track.requirements;
 
   const compatibleCars = cars.reduce(
@@ -75,8 +76,9 @@ const calculateCompetitors = track => {
     []
   );
 
+  const rng = seedrandom(withRandom ? undefined : track.id);
   const competitors = [...Array(8)].map(() =>
-    cloneCar(compatibleCars[~~(Math.random() * compatibleCars.length)])
+    cloneCar(compatibleCars[~~(rng() * compatibleCars.length)])
   );
 
   if (requirements.find(req => req.type === 'no_ups')) {
@@ -94,9 +96,9 @@ const calculateCompetitors = track => {
   return competitorsProcessed;
 };
 
-const getCompetitors = track =>
+const getCompetitors = (track, withRandom = false) =>
   // competitors.filter(item => item['track id'] === track.id);
-  calculateCompetitors(track);
+  calculateCompetitors(track, withRandom);
 
 export const winProbability = (car, track) => {
   const carScoreObject = {
@@ -149,7 +151,7 @@ export const raceResults = (car, track) => {
     score: calculateScore(car, track, true),
   };
 
-  const results = getCompetitors(track).reduce(
+  const results = getCompetitors(track, true).reduce(
     (result, competitor) => [
       ...result,
       {
