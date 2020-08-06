@@ -27,11 +27,9 @@ const TracksContainer = ({ tracks, locked, ...props }) => {
     <Flex
       wrap="wrap"
       margin="0 auto"
-      paddingTop="16px"
-      paddingLeft="16px"
       boxSizing="content-box"
       borderRadius="16px"
-      border={`1px solid ${colors.lightGray}`}
+      paddingLeft="16px"
       position="relative"
       {...props}
     >
