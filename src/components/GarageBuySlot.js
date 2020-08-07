@@ -3,8 +3,8 @@ import { Text, Flex, Box } from '@chakra-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   garageSlotPriceSelector,
-  moneySelector,
   mechanicsSelector,
+  enoughMoneySelector,
 } from '../state/selectors';
 import { buyGarageSlotAction } from '../state/actions';
 import { colors } from '../helpers/theme';
@@ -14,8 +14,9 @@ import Modal from './Modal';
 import { useLocation, useHistory } from 'react-router-dom';
 
 const GarageBuySlot = props => {
-  const money = useSelector(moneySelector);
   const slotPrice = useSelector(garageSlotPriceSelector);
+  const enoughMoney = useSelector(enoughMoneySelector(slotPrice));
+
   const mechanics = useSelector(mechanicsSelector);
   const dispatch = useDispatch();
 
@@ -55,7 +56,7 @@ const GarageBuySlot = props => {
           </Text>
           <Flex marginTop="16px">
             <Button
-              isDisabled={money < slotPrice}
+              isDisabled={!enoughMoney}
               onClick={buySlot}
               minW="72px"
               h="24px"

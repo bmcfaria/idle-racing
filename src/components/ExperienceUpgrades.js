@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Flex } from '@chakra-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   experienceBusinessSelector,
   experienceRaceSelector,
@@ -12,9 +12,15 @@ import ExperienceUpgradesColumnBuffs from './ExperienceUpgradesColumnBuffs';
 
 const ExperienceUpgrades = ({ expType }) => {
   const dispatch = useDispatch();
-  const experienceBusiness = useSelector(experienceBusinessSelector);
-  const experienceRace = useSelector(experienceRaceSelector);
-  const experienceMechanic = useSelector(experienceMechanicSelector);
+  const experienceBusiness = useSelector(
+    experienceBusinessSelector,
+    shallowEqual
+  );
+  const experienceRace = useSelector(experienceRaceSelector, shallowEqual);
+  const experienceMechanic = useSelector(
+    experienceMechanicSelector,
+    shallowEqual
+  );
 
   const availablePointsObject =
     (expType === 'business' && experienceBusiness) ||

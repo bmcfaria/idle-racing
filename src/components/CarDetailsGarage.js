@@ -11,11 +11,11 @@ import {
   closeResultsAction,
 } from '../state/actions';
 import {
-  moneySelector,
   garageCarsSelector,
   tutorialUpgradeSelector,
   pastRacesSelector,
   mechanicsSelector,
+  enoughMoneySelector,
 } from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
 import { colors } from '../helpers/theme';
@@ -81,7 +81,6 @@ const AttributeCircleButton = ({
 
 const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, price } = car;
-  const money = useSelector(moneySelector);
   const mechanics = useSelector(mechanicsSelector);
   const pastRaces = useSelector(pastRacesSelector);
 
@@ -148,14 +147,21 @@ const CarDetailsGarage = ({ car, ...props }) => {
     color: 'black',
   }) || { bg: colors.darkGray, color: colors.white };
 
+  const enoughMoneyAcceleration = useSelector(
+    enoughMoneySelector(~~car[ATTRIBUTE_TYPES.ACCELERATION].price)
+  );
+  const enoughMoneySpeed = useSelector(
+    enoughMoneySelector(~~car[ATTRIBUTE_TYPES.SPEED].price)
+  );
+  const enoughMoneyHandling = useSelector(
+    enoughMoneySelector(~~car[ATTRIBUTE_TYPES.HANDLING].price)
+  );
+
   const buttonDisable =
     (!confirmationState && garageCars?.length === 1) ||
-    (confirmationState === 'ACC' &&
-      money < ~~car[ATTRIBUTE_TYPES.ACCELERATION].price) ||
-    (confirmationState === 'SPD' &&
-      money < ~~car[ATTRIBUTE_TYPES.SPEED].price) ||
-    (confirmationState === 'HND' &&
-      money < ~~car[ATTRIBUTE_TYPES.HANDLING].price);
+    (confirmationState === 'ACC' && !enoughMoneyAcceleration) ||
+    (confirmationState === 'SPD' && !enoughMoneySpeed) ||
+    (confirmationState === 'HND' && !enoughMoneyHandling);
 
   const upgrade = type => {
     dispatch(upgradeAttributeAction(type, id));

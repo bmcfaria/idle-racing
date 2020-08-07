@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import {
   experienceRaceSelector,
   experienceMechanicSelector,
@@ -86,31 +86,31 @@ export const useDynamicCardContainerWidth = (
 };
 
 export const useCarPriceWithDiscount = price => {
-  const experience = useSelector(experienceBusinessSelector);
+  const experience = useSelector(experienceBusinessSelector, shallowEqual);
 
   return discountValue(price, experience.newCars);
 };
 
 export const useCarPriceWithBuff = price => {
-  const experience = useSelector(experienceBusinessSelector);
+  const experience = useSelector(experienceBusinessSelector, shallowEqual);
 
   return buffValue(price, experience.usedCars);
 };
 
 export const useRacePrizesWithBuff = prizes => {
-  const experience = useSelector(experienceRaceSelector);
+  const experience = useSelector(experienceRaceSelector, shallowEqual);
 
   return prizes.map(prize => buffValue(prize, experience.prizes));
 };
 
 export const useRacePriceWithDiscount = price => {
-  const experience = useSelector(experienceRaceSelector);
+  const experience = useSelector(experienceRaceSelector, shallowEqual);
 
   return discountValue(price, experience.price);
 };
 
 export const useUpgradePriceWithDiscount = (price, type) => {
-  const experience = useSelector(experienceMechanicSelector);
+  const experience = useSelector(experienceMechanicSelector, shallowEqual);
 
   return discountValue(price, experience[type]);
 };

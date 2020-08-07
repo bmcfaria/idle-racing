@@ -2,7 +2,10 @@ import React from 'react';
 import { Flex, Text } from '@chakra-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { buyCarAction } from '../state/actions';
-import { moneySelector, garageSlotsEmptySelector } from '../state/selectors';
+import {
+  garageSlotsEmptySelector,
+  enoughMoneySelector,
+} from '../state/selectors';
 import { useHistory } from 'react-router-dom';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
@@ -16,11 +19,10 @@ const CarDetailsDealer = ({ car, ...props }) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const money = useSelector(moneySelector);
   const emptySlots = useSelector(garageSlotsEmptySelector);
 
   const calculatedPrice = ~~useCarPriceWithDiscount(price);
-  const enoughMoney = money >= calculatedPrice;
+  const enoughMoney = useSelector(enoughMoneySelector(calculatedPrice));
 
   const buy = () => {
     dispatch(buyCarAction(id));

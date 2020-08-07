@@ -15,6 +15,7 @@ export const trackSelector = trackId => state =>
   state.tracks.find(item => item.id === trackId);
 
 export const moneySelector = state => state.money;
+export const enoughMoneySelector = price => state => state.money >= price;
 export const notificationsSelector = state => state.notifications;
 
 export const racesSelector = state => state.races;

@@ -23,14 +23,7 @@ const CarAttribute = ({ text, attr, ...props }) => (
   </Box>
 );
 
-const CardCarSmallRace = ({
-  car,
-  stripped,
-  onClick,
-  showPrice,
-  garage,
-  ...props
-}) => {
+const CardCarSmallRace = ({ car, onClick, ...props }) => {
   const { id, race } = car;
   const location = useLocation();
   const history = useHistory();

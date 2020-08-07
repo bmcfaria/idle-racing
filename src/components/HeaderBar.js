@@ -4,7 +4,7 @@ import { Flex } from '@chakra-ui/core';
 import { Text } from '@chakra-ui/core';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import Notifications from './Notifications';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import {
   moneySelector,
   experienceMechanicSelector,
@@ -158,9 +158,15 @@ const ExperienceButton = ({
 const HeaderBar = () => {
   const location = useLocation();
   const history = useHistory();
-  const experienceBusiness = useSelector(experienceBusinessSelector);
-  const experienceRace = useSelector(experienceRaceSelector);
-  const experienceMechanic = useSelector(experienceMechanicSelector);
+  const experienceBusiness = useSelector(
+    experienceBusinessSelector,
+    shallowEqual
+  );
+  const experienceRace = useSelector(experienceRaceSelector, shallowEqual);
+  const experienceMechanic = useSelector(
+    experienceMechanicSelector,
+    shallowEqual
+  );
 
   const expTypeModal = location.state?.expType;
 

@@ -10,9 +10,9 @@ import {
   raceSelector,
   garageCarsSelector,
   tracksSelector,
-  moneySelector,
   pastRaceSelector,
   autoRaceEnabledSelector,
+  enoughMoneySelector,
 } from '../state/selectors';
 import CardTrackContent from './CardTrackContent';
 import Modal from './Modal';
@@ -84,8 +84,7 @@ const ActionContent = ({
   selectedCar,
   selectedTrack,
   carsModalOpen,
-  money,
-  price,
+  enoughMoney,
   currentRace,
   startRace,
   results,
@@ -154,7 +153,7 @@ const ActionContent = ({
             <Button
               w="96px"
               {...(autoEnabled && { marginLeft: '12px' })}
-              isDisabled={money < price || currentRace || !meetsRequirements}
+              isDisabled={!enoughMoney || currentRace || !meetsRequirements}
               bg={colors.white}
               color={colors.darkGray}
               _hover={{
@@ -178,11 +177,14 @@ const RaceDetails = ({ track, ...props }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-  const money = useSelector(moneySelector);
   const cars = useSelector(garageCarsSelector);
   const tracks = useSelector(tracksSelector);
   const selectedTrackId = location?.state?.track;
   const selectedTrack = tracks.find(item => item.id === selectedTrackId);
+
+  const calculatedPrice = ~~useRacePriceWithDiscount(price);
+  const enoughMoney = useSelector(enoughMoneySelector(calculatedPrice));
+
   const [selectedCar, setSelectedCar] = useState();
 
   const pastRace = useSelector(pastRaceSelector(selectedTrack.lastRace));
@@ -190,8 +192,6 @@ const RaceDetails = ({ track, ...props }) => {
 
   const winProbabilityValue =
     track && selectedCar && winProbability(selectedCar, track);
-
-  const calculatedPrice = ~~useRacePriceWithDiscount(price);
 
   useEffect(() => {
     if (results && pastRace) {
@@ -255,8 +255,7 @@ const RaceDetails = ({ track, ...props }) => {
               selectedCar={selectedCar}
               selectedTrack={selectedTrack}
               carsModalOpen={carsModalOpen}
-              money={money}
-              price={calculatedPrice}
+              enoughMoney={enoughMoney}
               currentRace={currentRace}
               startRace={startRace}
               results={results}
