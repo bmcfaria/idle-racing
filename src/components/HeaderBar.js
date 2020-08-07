@@ -4,16 +4,15 @@ import { Flex } from '@chakra-ui/core';
 import { Text } from '@chakra-ui/core';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import Notifications from './Notifications';
-import { useSelector, shallowEqual } from 'react-redux';
-import {
-  moneySelector,
-  experienceMechanicSelector,
-  experienceBusinessSelector,
-  experienceRaceSelector,
-  passiveIncomeSelector,
-} from '../state/selectors';
+import { useSelector } from 'react-redux';
+import { moneySelector, passiveIncomeSelector } from '../state/selectors';
 import { zIndex, colors } from '../helpers/theme';
-import { useCurrentPage } from '../helpers/hooks';
+import {
+  useCurrentPage,
+  useExperienceBusiness,
+  useExperienceRace,
+  useExperienceMechanic,
+} from '../helpers/hooks';
 import abbreviate from 'number-abbreviate';
 import Button from './Button';
 import Modal from './Modal';
@@ -158,15 +157,9 @@ const ExperienceButton = ({
 const HeaderBar = () => {
   const location = useLocation();
   const history = useHistory();
-  const experienceBusiness = useSelector(
-    experienceBusinessSelector,
-    shallowEqual
-  );
-  const experienceRace = useSelector(experienceRaceSelector, shallowEqual);
-  const experienceMechanic = useSelector(
-    experienceMechanicSelector,
-    shallowEqual
-  );
+  const experienceBusiness = useExperienceBusiness();
+  const experienceRace = useExperienceRace();
+  const experienceMechanic = useExperienceMechanic();
 
   const expTypeModal = location.state?.expType;
 

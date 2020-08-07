@@ -1,26 +1,20 @@
 import React from 'react';
 import { Text, Flex } from '@chakra-ui/core';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import {
-  experienceBusinessSelector,
-  experienceRaceSelector,
-  experienceMechanicSelector,
-} from '../state/selectors';
+import { useDispatch } from 'react-redux';
 import { colors } from '../helpers/theme';
 import { buyExperienceBuffAction } from '../state/actions';
 import ExperienceUpgradesColumnBuffs from './ExperienceUpgradesColumnBuffs';
+import {
+  useExperienceBusiness,
+  useExperienceRace,
+  useExperienceMechanic,
+} from '../helpers/hooks';
 
 const ExperienceUpgrades = ({ expType }) => {
   const dispatch = useDispatch();
-  const experienceBusiness = useSelector(
-    experienceBusinessSelector,
-    shallowEqual
-  );
-  const experienceRace = useSelector(experienceRaceSelector, shallowEqual);
-  const experienceMechanic = useSelector(
-    experienceMechanicSelector,
-    shallowEqual
-  );
+  const experienceBusiness = useExperienceBusiness();
+  const experienceRace = useExperienceRace();
+  const experienceMechanic = useExperienceMechanic();
 
   const availablePointsObject =
     (expType === 'business' && experienceBusiness) ||

@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { experienceSelector } from '../state/selectors';
 import {
-  experienceRaceSelector,
-  experienceMechanicSelector,
-  experienceBusinessSelector,
-} from '../state/selectors';
-import { buffValue, discountValue, capitalize } from './utils';
+  buffValue,
+  discountValue,
+  capitalize,
+  expLevel,
+  expNextLevel,
+} from './utils';
 
 export const useOpenClose = defaultValue => {
   const [open, setOpen] = useState(!!defaultValue);
@@ -85,32 +87,69 @@ export const useDynamicCardContainerWidth = (
   );
 };
 
+export const useExperienceBusiness = () => {
+  const experience = useSelector(experienceSelector);
+  const { exp, max, newCars, usedCars } = experience.business;
+  const level = expLevel(exp, max);
+  const availablePoints = level - 1 - newCars - usedCars;
+
+  return {
+    ...experience.business,
+    nextLevel: expNextLevel(exp),
+    availablePoints,
+  };
+};
+export const useExperienceRace = () => {
+  const experience = useSelector(experienceSelector);
+  const { exp, max, price, prizes } = experience.race;
+  const level = expLevel(exp, max);
+  const availablePoints = level - 1 - price - prizes;
+
+  return {
+    ...experience.race,
+    nextLevel: expNextLevel(exp),
+    availablePoints,
+  };
+};
+export const useExperienceMechanic = () => {
+  const experience = useSelector(experienceSelector);
+  const { exp, max, acc, spd, hnd } = experience.mechanic;
+  const level = expLevel(exp, max);
+  const availablePoints = level - 1 - acc - spd - hnd;
+
+  return {
+    ...experience.mechanic,
+    nextLevel: expNextLevel(exp),
+    availablePoints,
+  };
+};
+
 export const useCarPriceWithDiscount = price => {
-  const experience = useSelector(experienceBusinessSelector, shallowEqual);
+  const experience = useExperienceBusiness();
 
   return discountValue(price, experience.newCars);
 };
 
 export const useCarPriceWithBuff = price => {
-  const experience = useSelector(experienceBusinessSelector, shallowEqual);
+  const experience = useExperienceBusiness();
 
   return buffValue(price, experience.usedCars);
 };
 
 export const useRacePrizesWithBuff = prizes => {
-  const experience = useSelector(experienceRaceSelector, shallowEqual);
+  const experience = useExperienceRace();
 
   return prizes.map(prize => buffValue(prize, experience.prizes));
 };
 
 export const useRacePriceWithDiscount = price => {
-  const experience = useSelector(experienceRaceSelector, shallowEqual);
+  const experience = useExperienceRace();
 
   return discountValue(price, experience.price);
 };
 
 export const useUpgradePriceWithDiscount = (price, type) => {
-  const experience = useSelector(experienceMechanicSelector, shallowEqual);
+  const experience = useExperienceMechanic();
 
   return discountValue(price, experience[type]);
 };
