@@ -6,7 +6,7 @@ import {
   DISABLE_TUTORIAL_UPGRADE_TYPE,
   BUY_GARAGE_SLOT_TYPE,
 } from './actions';
-import { upgradeAttribute, generateCarPrice } from '../helpers/mockData';
+import { upgradeAttribute, generateCarPrice } from '../helpers/data';
 import { buffValue, discountValue } from '../helpers/utils';
 import { upgradeCenter } from '../helpers/garageUpgrades';
 

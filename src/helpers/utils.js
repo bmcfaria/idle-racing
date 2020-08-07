@@ -1,4 +1,4 @@
-import { cars } from './mockData';
+import { cars } from './data';
 import seedrandom from 'seedrandom';
 
 export const displayResponsivePanel = condition => [

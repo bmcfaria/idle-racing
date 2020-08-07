@@ -8,11 +8,7 @@ import {
   CLEAR_OFFLINE_EARNINGS_TYPE,
   DISMISS_TOAST_TYPE,
 } from './actions';
-import {
-  cars as dealerCars,
-  tracks,
-  generateGarageCar,
-} from '../helpers/mockData';
+import { cars as dealerCars, tracks, generateGarageCar } from '../helpers/data';
 import { discountValue } from '../helpers/utils';
 
 export const initialState = {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import getImageTrack from '../helpers/imageMappingTracks';
 import { useSelector } from 'react-redux';
-import { moneySelector } from '../state/selectors';
+import { enoughMoneySelector } from '../state/selectors';
 import RequirementsList from './RequirementsList';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
@@ -48,9 +48,9 @@ const TrackPrize = ({ text, prize, ...props }) => (
 
 const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
   const { name, prizes, duration, price, requirements } = track;
-  const money = useSelector(moneySelector);
-  const calculatedPrizes = useRacePrizesWithBuff(prizes);
   const calculatedPrice = ~~useRacePriceWithDiscount(price);
+  const enoughMoney = useSelector(enoughMoneySelector(calculatedPrice));
+  const calculatedPrizes = useRacePrizesWithBuff(prizes);
 
   const bgColor =
     (track.stats.won > 100 && colors.lightBlue) ||
@@ -135,10 +135,7 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
         <Text margin="auto" color={color}>
           {duration / 1000}s
         </Text>
-        <Text
-          margin="auto"
-          color={money < calculatedPrice ? colors.red : color}
-        >
+        <Text margin="auto" color={!enoughMoney ? colors.red : color}>
           {calculatedPrice === 0
             ? 'FREE'
             : `$${abbreviate(calculatedPrice, 1)}`}

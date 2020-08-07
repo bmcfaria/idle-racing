@@ -1,5 +1,10 @@
-import { cars as dealerCars, raceSponsors } from '../helpers/mockData';
-import { expLevel, expNextLevel, sponsorEntryText } from '../helpers/utils';
+import {
+  cars as dealerCars,
+  raceSponsors,
+  dealerBrands,
+  raceEvents,
+} from '../helpers/data';
+import { expLevel, expNextLevel } from '../helpers/utils';
 
 // Dealer cars are global and they're not in the state/store
 export const dealerCarsSelector = () => dealerCars;
@@ -88,39 +93,11 @@ export const mechanicsSelector = state =>
 
 export const toastsSelector = state => state.toasts;
 
-export const dealerBrandsSelector = () => [
-  { type: 'basic', name: 'basic' },
-  { type: 'city', name: 'city' },
-  { type: 'offroad', name: 'offroad' },
-  { type: 'supercar', name: 'supercar' },
-  { type: 'nascar', name: 'nascar' },
-  { type: 'f1', name: 'f1' },
-  { type: 'racer', name: 'racer' },
-  { type: 'heavy', name: 'heavy' },
-];
+export const dealerBrandsSelector = () => dealerBrands;
 
-export const raceEventsSelector = () => [
-  { type: 'free', name: 'free' },
-  { type: 'city', name: 'city' },
-  { type: 'offroad', name: 'offroad' },
-  { type: 'track', name: 'track' },
-];
+export const raceEventsSelector = () => raceEvents;
 
-export const raceSponsorsSelector = event => state =>
-  raceSponsors
-    .filter(sponsor => sponsor.event === event)
-    .map(sponsor => {
-      const track = state.tracks.find(item => item.id === sponsor.track);
-      const car = dealerCars.find(item => item.id === sponsor.car);
-
-      return {
-        active: !!state.sponsors.active[sponsor.id],
-        text: sponsorEntryText(sponsor),
-        track,
-        car,
-        reward: sponsor.reward,
-      };
-    });
+export const raceSponsorsSelector = () => raceSponsors;
 
 export const raceSponsorsActiveSelector = state => state.sponsors.active;
 

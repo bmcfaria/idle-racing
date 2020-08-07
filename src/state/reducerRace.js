@@ -11,7 +11,7 @@ import {
   resetRace,
   generateSponsorToast,
   raceSponsors,
-} from '../helpers/mockData';
+} from '../helpers/data';
 import {
   raceResults,
   buffValue,

@@ -1,4 +1,4 @@
-import { raceSponsors } from './mockData';
+import { raceSponsors } from './data';
 
 const raceOrWinValidation = (type, position) =>
   type === 'win' ? position === 1 : true;

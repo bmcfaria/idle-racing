@@ -1,5 +1,5 @@
 import uuid from 'uuid-random';
-import { ATTRIBUTE_TYPES } from '../helpers/utils';
+import { ATTRIBUTE_TYPES } from './utils';
 import carsFile from '../assets/lists/cars.json';
 import tracksFile from '../assets/lists/tracks.json';
 import raceSponsorsFile from '../assets/lists/raceSponsors.json';
@@ -231,4 +231,22 @@ export const tracks = [
 
 export const raceSponsors = [
   ...raceSponsorsFile.filter(sponsor => sponsor?.event.length > 0),
+];
+
+export const dealerBrands = [
+  { type: 'basic', name: 'basic' },
+  { type: 'city', name: 'city' },
+  { type: 'offroad', name: 'offroad' },
+  { type: 'supercar', name: 'supercar' },
+  { type: 'nascar', name: 'nascar' },
+  { type: 'f1', name: 'f1' },
+  { type: 'racer', name: 'racer' },
+  { type: 'heavy', name: 'heavy' },
+];
+
+export const raceEvents = [
+  { type: 'free', name: 'free' },
+  { type: 'city', name: 'city' },
+  { type: 'offroad', name: 'offroad' },
+  { type: 'track', name: 'track' },
 ];
