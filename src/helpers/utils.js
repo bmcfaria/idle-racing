@@ -265,6 +265,9 @@ export const PROBABILITY_GOOD_VALUE = 3;
 export const TOAST_TYPES = {
   SPONSOR: 'SPONSOR',
   MECHANIC: 'MECHANIC',
+  RACE_WON: 'RACE_WON',
+  RACE_TOP_3: 'RACE_TOP_3',
+  RACE_LOST: 'RACE_LOST',
 };
 
 export const sponsorEntryText = sponsor => {

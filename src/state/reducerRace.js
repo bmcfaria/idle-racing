@@ -9,7 +9,7 @@ import {
   generateRace,
   generatePastRace,
   resetRace,
-  generateSponsorToast,
+  generateToast,
   raceSponsors,
 } from '../helpers/data';
 import {
@@ -104,9 +104,9 @@ const reducerRace = (state = {}, { type, payload }) => {
         state.sponsors.active
       );
 
-      const toasts = Object.keys(sponsors).map(key => {
+      const sponsorToasts = Object.keys(sponsors).map(key => {
         const sponsor = raceSponsors.find(item => item.id === key);
-        return generateSponsorToast(
+        return generateToast(
           track.name,
           sponsorEntryText(sponsor),
           sponsor.reward === 'mechanic'
@@ -114,6 +114,21 @@ const reducerRace = (state = {}, { type, payload }) => {
             : TOAST_TYPES.SPONSOR
         );
       });
+
+      // Append won race toast if race won
+      const toasts = [
+        ...sponsorToasts,
+        generateToast(
+          track.name,
+          car.name,
+          position <= 3
+            ? position === 1
+              ? TOAST_TYPES.RACE_WON
+              : TOAST_TYPES.RACE_TOP_3
+            : TOAST_TYPES.RACE_LOST,
+          { position }
+        ),
+      ];
 
       let stateUpdate = {};
       let expEarned = 0;

@@ -204,11 +204,12 @@ export const generatePastRace = (
   results,
 });
 
-export const generateSponsorToast = (title, subtitle, type) => ({
+export const generateToast = (title, subtitle, type, extra = {}) => ({
   id: uuid(),
   title,
   subtitle,
   type,
+  extra,
 });
 
 export const cars = [

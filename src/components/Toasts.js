@@ -8,14 +8,21 @@ import { TOAST_TYPES } from '../helpers/utils';
 import { dismissToastAction } from '../state/actions';
 import Button from './Button';
 
-const toastTypeReward = {
-  [TOAST_TYPES.SPONSOR]: '+1 Sponsor',
-  [TOAST_TYPES.MECHANIC]: '+1 Mechanic',
-};
+const toastTypeReward = (type, extra) =>
+  ({
+    [TOAST_TYPES.SPONSOR]: '+1 Sponsor',
+    [TOAST_TYPES.MECHANIC]: '+1 Mechanic',
+    [TOAST_TYPES.RACE_WON]: 'Won',
+    [TOAST_TYPES.RACE_TOP_3]: `Pos: ${extra.position}`,
+    [TOAST_TYPES.RACE_LOST]: 'Lost',
+  }[type]);
 
 const toastTypeColor = {
   [TOAST_TYPES.SPONSOR]: colors.green,
   [TOAST_TYPES.MECHANIC]: colors.lightBlue,
+  [TOAST_TYPES.RACE_WON]: colors.green,
+  [TOAST_TYPES.RACE_TOP_3]: colors.yellow,
+  [TOAST_TYPES.RACE_LOST]: colors.red,
 };
 
 const Toast = ({
@@ -53,7 +60,7 @@ const Toast = ({
   );
 };
 
-const Toasts = props => {
+const Toasts = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const toasts = useSelector(toastsSelector);
@@ -63,16 +70,16 @@ const Toasts = props => {
       dispatch(dismissToastAction(id));
     };
 
-    toasts.forEach(({ id, title, subtitle, type }) => {
+    toasts.forEach(({ id, title, subtitle, type, extra }) => {
       toast({
-        duration: null,
+        duration: 5000,
         position: 'top-right',
         render: ({ onClose }) => (
           <Toast
             id={id}
             title={title}
             subtitle={subtitle}
-            reward={toastTypeReward[type]}
+            reward={toastTypeReward(type, extra)}
             color={toastTypeColor[type]}
             removeFromStore={dismissToast}
             onClose={onClose}
