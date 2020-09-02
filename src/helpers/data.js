@@ -67,7 +67,7 @@ const generateCar = car => ({
 
 const carDevaluation = 0.5;
 
-export const generateGarageCar = car => ({
+export const generateGarageCar = (car, reward = false) => ({
   id: uuid(),
   name: car.name,
   type: car.type,
@@ -80,6 +80,7 @@ export const generateGarageCar = car => ({
   brand: car.brand,
   race: undefined,
   timestamp: new Date().getTime(),
+  reward,
 });
 
 export const upgradeAttribute = attribute => {
@@ -219,6 +220,7 @@ export const cars = [
     []
   ),
 ];
+window.cars = cars;
 
 export const tracks = [
   ...tracksFile.reduce(

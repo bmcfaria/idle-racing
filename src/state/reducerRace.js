@@ -11,6 +11,8 @@ import {
   resetRace,
   generateToast,
   raceSponsors,
+  cars,
+  generateGarageCar,
 } from '../helpers/data';
 import {
   raceResults,
@@ -86,6 +88,12 @@ const reducerRace = (state = {}, { type, payload }) => {
       const calculatedPrizes = track.prizes.map(prize =>
         buffValue(prize, state.experience.race.prizes)
       );
+
+      const earnedCar =
+        isNaN(track.prizes[position - 1]) &&
+        cars.find(({ id }) => id === track.prizes[position - 1]);
+
+      const garageCar = earnedCar && generateGarageCar(earnedCar, true);
 
       let earnings = ~~calculatedPrizes[position - 1];
 
@@ -184,14 +192,16 @@ const reducerRace = (state = {}, { type, payload }) => {
           results
         );
 
+        const garageCars = Object.assign([], state.garageCars, {
+          [carIndex]: {
+            ...car,
+            race: undefined,
+          },
+        });
+
         stateUpdate = {
           races: state.races.filter(item => item.id !== race.id),
-          garageCars: Object.assign([], state.garageCars, {
-            [carIndex]: {
-              ...car,
-              race: undefined,
-            },
-          }),
+          garageCars: garageCar ? [...garageCars, garageCar] : garageCars,
           tracks: Object.assign([], state.tracks, {
             [trackIndex]: {
               ...track,
@@ -240,6 +250,13 @@ const reducerRace = (state = {}, { type, payload }) => {
             ...(!state.sponsors.timestamp && {
               timestamp: new Date().getTime(),
             }),
+          },
+        }),
+        ...(garageCar && {
+          pageNotifications: {
+            ...state.pageNotifications,
+            garagePage: true,
+            garage: [...state.pageNotifications.garage, garageCar.id],
           },
         }),
       };

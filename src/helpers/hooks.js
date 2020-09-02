@@ -139,7 +139,9 @@ export const useCarPriceWithBuff = price => {
 export const useRacePrizesWithBuff = prizes => {
   const experience = useExperienceRace();
 
-  return prizes.map(prize => buffValue(prize, experience.prizes));
+  return prizes.map(prize =>
+    isNaN(prize) ? prize : buffValue(prize, experience.prizes)
+  );
 };
 
 export const useRacePriceWithDiscount = price => {

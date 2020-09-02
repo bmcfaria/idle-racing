@@ -6,7 +6,7 @@ import { colors } from '../helpers/theme';
 import CardCarSmall from './CardCarSmall';
 
 const CardCarGarage = ({ car, showAttributes, ...props }) => {
-  const { race } = car;
+  const { race, reward } = car;
 
   const currentRace = useSelector(raceSelector(race));
 
@@ -19,7 +19,7 @@ const CardCarGarage = ({ car, showAttributes, ...props }) => {
       w="160px"
       h="180px"
       bg={colors.darkGray}
-      infoBgColor={colors.lightBlue}
+      infoBgColor={reward ? colors.green : colors.lightBlue}
       showAttributes
       car={car}
       onClick={currentRace ? onClickPrevent : undefined}

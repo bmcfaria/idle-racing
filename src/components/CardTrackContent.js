@@ -11,6 +11,7 @@ import {
   useRacePrizesWithBuff,
   useRacePriceWithDiscount,
 } from '../helpers/hooks';
+import { cars } from '../helpers/data';
 
 const TrackAttribute = ({ name, value, ...props }) => {
   const color = percentageValue => {
@@ -37,14 +38,28 @@ const TrackAttribute = ({ name, value, ...props }) => {
   );
 };
 
-const TrackPrize = ({ text, prize, ...props }) => (
-  <Box w="48px" fontSize="12px" lineHeight="14px" {...props}>
-    <Text textAlign="center" color={colors.darkGray}>
-      {text}
-    </Text>
-    <Text textAlign="center">${abbreviate(~~prize, 1)}</Text>
-  </Box>
-);
+const TrackPrize = ({ text, prize, ...props }) => {
+  const car = isNaN(prize) && cars.find(({ id }) => id === prize);
+
+  return (
+    <Box w="48px" fontSize="12px" lineHeight="14px" {...props}>
+      <Text textAlign="center" color={colors.darkGray}>
+        {text}
+      </Text>
+      {car && (
+        <Text
+          textAlign="center"
+          maxW="48px"
+          overflow="hidden"
+          textOverflow="ellipsis"
+        >
+          {car.name}
+        </Text>
+      )}
+      {!car && <Text textAlign="center">${abbreviate(~~prize, 1)}</Text>}
+    </Box>
+  );
+};
 
 const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
   const { name, prizes, duration, price, requirements } = track;

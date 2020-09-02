@@ -49,8 +49,8 @@ const TracksContainer = ({ tracks, locked, ...props }) => {
         <Flex
           w="100%"
           h="100%"
-          top="-0"
-          left="-0"
+          top="0"
+          left="0"
           position="absolute"
           borderRadius="16px"
           bg={hexAlpha(colors.lightGray, 0.98)}

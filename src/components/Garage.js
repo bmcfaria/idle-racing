@@ -20,7 +20,11 @@ import { BottomSpacer } from './BottomSpacer';
 
 const CarsContainer = ({ cars, ...props }) => {
   const pageNotificationsGarage = useSelector(pageNotificationsGarageSelector);
-  const emptySlots = useSelector(garageSlotsEmptySelector);
+  const rewardCars = useSelector(garageCarsSelector).reduce(
+    (acumulator, { reward }) => acumulator + ~~reward,
+    0
+  );
+  const emptySlots = useSelector(garageSlotsEmptySelector) + rewardCars;
 
   return (
     <>
@@ -36,7 +40,6 @@ const CarsContainer = ({ cars, ...props }) => {
             <Box marginRight="16px" marginBottom="16px" key={car.id}>
               <CardCarGarage
                 car={car}
-                garage
                 notification={pageNotificationsGarage?.includes(car.id)}
               />
             </Box>
