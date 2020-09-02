@@ -63,10 +63,11 @@ export const evaluateSponsors = (
 };
 
 export const brandSponsors = {
+  compact: 10,
   city: 100,
-  offroad: 100,
-  supercar: 1000,
-  nascar: 10000,
+  family: 100,
+  offroad: 1000,
+  supercar: 10000,
   f1: 10000,
   racer: 10000,
   heavy: 10000,

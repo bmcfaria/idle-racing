@@ -237,11 +237,11 @@ export const raceSponsors = [
 ];
 
 export const dealerBrands = [
-  { type: 'basic', name: 'basic' },
+  { type: 'compact', name: 'compact' },
   { type: 'city', name: 'city' },
+  { type: 'family', name: 'family' },
   { type: 'offroad', name: 'offroad' },
   { type: 'supercar', name: 'supercar' },
-  { type: 'nascar', name: 'nascar' },
   { type: 'f1', name: 'f1' },
   { type: 'racer', name: 'racer' },
   { type: 'heavy', name: 'heavy' },
