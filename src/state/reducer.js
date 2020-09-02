@@ -62,7 +62,7 @@ export const initialState = {
     timestamp: null,
   },
   boughtCars: {},
-  version: 0.705,
+  version: 0.706,
   toasts: [],
   warnings: {
     storeReset: false,

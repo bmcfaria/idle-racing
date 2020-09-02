@@ -7,7 +7,7 @@ import objectAssignDeep from 'object-assign-deep';
 
 const inDev = process.env.NODE_ENV === 'development';
 
-const minimunStoreVersion = 0.704;
+const minimunStoreVersion = 0.706;
 
 const timestampReducer = state => {
   const timelapse = new Date().getTime() - state.timestamp;
