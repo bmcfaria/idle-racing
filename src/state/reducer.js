@@ -13,6 +13,7 @@ import { discountValue } from '../helpers/utils';
 
 export const initialState = {
   autoRace: false,
+  lockedRaceEvents: false,
   garageCars: [],
   garageSlots: 1,
   tracksStats: {},

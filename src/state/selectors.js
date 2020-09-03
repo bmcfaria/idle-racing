@@ -85,3 +85,5 @@ export const passiveIncomeSelector = state =>
   ).length;
 
 export const boughtCarsSelector = state => state.boughtCars;
+
+export const lockedRaceEventsSelector = state => state.lockedRaceEvents;

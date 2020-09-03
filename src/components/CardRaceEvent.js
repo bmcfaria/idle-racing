@@ -8,6 +8,7 @@ import {
   lockedSelector,
   trackStatsSelector,
   tracksStatsSelector,
+  lockedRaceEventsSelector,
 } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
@@ -72,7 +73,9 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
     raceSponsorsActiveCountSelector(eventType)
   );
 
-  const locked = useSelector(lockedSelector)?.race[eventType];
+  const lockedRaceEvents = useSelector(lockedRaceEventsSelector);
+  const locked =
+    useSelector(lockedSelector)?.race[eventType] && lockedRaceEvents;
 
   const eventRaces = tracks
     .filter(item => item.category === eventType)

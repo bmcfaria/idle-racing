@@ -13,6 +13,7 @@ import {
   dealerCarSelector,
   raceSponsorsActiveSelector,
   tracksStatsSelector,
+  lockedRaceEventsSelector,
 } from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
@@ -156,6 +157,7 @@ const RaceEvent = () => {
   const tracks = useSelector(tracksSelector).filter(
     item => item.category === event
   );
+  const lockedRaceEvents = useSelector(lockedRaceEventsSelector);
   const locked = useSelector(lockedSelector);
   const containerWidth = useDynamicCardContainerWidth();
 
@@ -180,7 +182,7 @@ const RaceEvent = () => {
         w={`${containerWidth}px`}
         marginTop="24px"
         tracks={tracks}
-        locked={locked?.race[event]}
+        locked={lockedRaceEvents && locked?.race[event]}
       />
 
       <BottomSpacer />
