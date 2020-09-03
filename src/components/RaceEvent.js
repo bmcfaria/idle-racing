@@ -12,6 +12,7 @@ import {
   trackSelector,
   dealerCarSelector,
   raceSponsorsActiveSelector,
+  tracksStatsSelector,
 } from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
@@ -24,8 +25,10 @@ import { ReactComponent as MechanicIcon } from '../assets/icons/mechanic.svg';
 import { sponsorEntryText } from '../helpers/utils';
 
 const TracksContainer = ({ tracks, locked, ...props }) => {
+  const tracksStats = useSelector(tracksStatsSelector);
+
   const isPreviousUnlocked = index =>
-    index === 0 || tracks[index - 1]?.stats?.won > 0;
+    index === 0 || tracksStats[tracks[index - 1]?.id]?.won > 0;
 
   return (
     <Flex
@@ -168,7 +171,7 @@ const RaceEvent = () => {
   return (
     <Box paddingBottom="64px">
       <Modal isOpen={!!selectedTrack} onClose={onClose}>
-        <RaceDetails track={selectedTrack} />
+        <RaceDetails />
       </Modal>
 
       <Sponsors w={`${containerWidth - 16}px`} event={event} />

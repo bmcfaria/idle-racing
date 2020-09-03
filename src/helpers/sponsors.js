@@ -1,4 +1,4 @@
-import { raceSponsors } from './data';
+import { raceSponsors, tracks } from './data';
 
 const raceOrWinValidation = (type, position) =>
   type === 'win' ? position === 1 : true;
@@ -8,14 +8,7 @@ const trackValidation = (eventTrack, trackId) =>
 
 const carValidation = (eventCar, carId) => eventCar === carId || !eventCar;
 
-export const evaluateSponsors = (
-  track,
-  car,
-  position,
-  tracks,
-  pastRaces,
-  sponsors
-) => {
+export const evaluateSponsors = (track, car, position, pastRaces, sponsors) => {
   const filteredSponsors = raceSponsors.filter(
     sponsor => sponsor.event === track.category
   );

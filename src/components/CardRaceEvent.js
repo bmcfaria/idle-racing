@@ -6,6 +6,8 @@ import {
   raceByTrackSelector,
   raceSponsorsActiveCountSelector,
   lockedSelector,
+  trackStatsSelector,
+  tracksStatsSelector,
 } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
@@ -16,10 +18,11 @@ import { capitalize } from '../helpers/utils';
 
 const TrackItem = ({ track, active = true, ...props }) => {
   const race = useSelector(raceByTrackSelector(track.id));
+  const trackStats = useSelector(trackStatsSelector(track.id));
 
-  const raced = track?.stats?.raced;
-  const won = track?.stats?.won > 0;
-  const won100 = track?.stats?.won >= 100;
+  const raced = trackStats?.raced;
+  const won = trackStats?.won > 0;
+  const won100 = trackStats?.won >= 100;
 
   return (
     <Flex {...props}>
@@ -64,6 +67,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const location = useLocation();
   const history = useHistory();
   const tracks = useSelector(tracksSelector);
+  const tracksStats = useSelector(tracksStatsSelector);
   const activeSponsors = useSelector(
     raceSponsorsActiveCountSelector(eventType)
   );
@@ -89,7 +93,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
     'No sponsors';
 
   const isPreviousUnlocked = index =>
-    index === 0 || eventRaces[index - 1]?.stats?.won > 0;
+    index === 0 || tracksStats[eventRaces[index - 1]?.id]?.won > 0;
 
   return (
     <CardBig

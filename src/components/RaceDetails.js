@@ -13,6 +13,7 @@ import {
   pastRaceSelector,
   autoRaceEnabledSelector,
   enoughMoneySelector,
+  trackStatsSelector,
 } from '../state/selectors';
 import CardTrackContent from './CardTrackContent';
 import Modal from './Modal';
@@ -172,8 +173,7 @@ const ActionContent = ({
   );
 };
 
-const RaceDetails = ({ track, ...props }) => {
-  const { price, race } = track;
+const RaceDetails = props => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -182,16 +182,17 @@ const RaceDetails = ({ track, ...props }) => {
   const selectedTrackId = location?.state?.track;
   const selectedTrack = tracks.find(item => item.id === selectedTrackId);
 
-  const calculatedPrice = ~~useRacePriceWithDiscount(price);
+  const calculatedPrice = ~~useRacePriceWithDiscount(selectedTrack.price);
   const enoughMoney = useSelector(enoughMoneySelector(calculatedPrice));
 
   const [selectedCar, setSelectedCar] = useState();
 
-  const pastRace = useSelector(pastRaceSelector(selectedTrack.lastRace));
+  const trackStats = useSelector(trackStatsSelector(selectedTrackId));
+  const pastRace = useSelector(pastRaceSelector(trackStats.lastRace));
   const results = !!pastRace && pastRace.checked === false;
 
   const winProbabilityValue =
-    track && selectedCar && winProbability(selectedCar, track);
+    selectedTrack && selectedCar && winProbability(selectedCar, selectedTrack);
 
   useEffect(() => {
     if (results && pastRace) {
@@ -199,7 +200,7 @@ const RaceDetails = ({ track, ...props }) => {
     }
   }, [results, pastRace, cars]);
 
-  const currentRace = useSelector(raceSelector(race));
+  const currentRace = useSelector(raceSelector(trackStats.race));
 
   const [carsModal, carsModalOpen, carsModalClose] = useOpenClose();
 

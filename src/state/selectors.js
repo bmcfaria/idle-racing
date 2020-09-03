@@ -3,6 +3,7 @@ import {
   raceSponsors,
   dealerBrands,
   raceEvents,
+  tracks,
 } from '../helpers/data';
 
 // Dealer cars are global and they're not in the state/store
@@ -14,9 +15,13 @@ export const garageCarsSelector = state => state.garageCars;
 export const garageCarSelector = carId => state =>
   state.garageCars.find(item => item.id === carId);
 
-export const tracksSelector = state => state.tracks;
-export const trackSelector = trackId => state =>
-  state.tracks.find(item => item.id === trackId);
+export const tracksSelector = () => tracks;
+export const trackSelector = trackId => () =>
+  tracks.find(item => item.id === trackId);
+
+export const tracksStatsSelector = state => state.tracksStats;
+export const trackStatsSelector = trackId => state =>
+  state.tracksStats[trackId] || {};
 
 export const moneySelector = state => state.money;
 export const enoughMoneySelector = price => state => state.money >= price;

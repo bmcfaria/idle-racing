@@ -13,6 +13,7 @@ import {
   raceSponsors,
   cars,
   generateGarageCar,
+  tracks,
 } from '../helpers/data';
 import {
   raceResults,
@@ -27,7 +28,7 @@ const reducerRace = (state = {}, { type, payload }) => {
   switch (type) {
     case START_RACE_TYPE: {
       const car = state.garageCars.find(item => item.id === payload.carId);
-      const track = state.tracks.find(item => item.id === payload.trackId);
+      const track = tracks.find(item => item.id === payload.trackId);
 
       const calculatedPrice = ~~discountValue(
         track.price,
@@ -40,7 +41,7 @@ const reducerRace = (state = {}, { type, payload }) => {
         !car ||
         !track ||
         car.race ||
-        track.race ||
+        state.tracksStats[track.id]?.race ||
         state.money < calculatedPrice
       ) {
         return state;
@@ -49,7 +50,6 @@ const reducerRace = (state = {}, { type, payload }) => {
       const race = generateRace(car, track, payload.auto);
 
       const carIndex = state.garageCars.findIndex(item => item.id === car.id);
-      const trackIndex = state.tracks.findIndex(item => item.id === track.id);
       return {
         ...state,
         money: state.money - calculatedPrice,
@@ -60,9 +60,9 @@ const reducerRace = (state = {}, { type, payload }) => {
             race: race.id,
           },
         }),
-        tracks: Object.assign([], state.tracks, {
-          [trackIndex]: {
-            ...track,
+        tracksStats: Object.assign({}, state.tracksStats, {
+          [track.id]: {
+            ...(state.tracksStats[track.id] || {}),
             race: race.id,
           },
         }),
@@ -78,9 +78,8 @@ const reducerRace = (state = {}, { type, payload }) => {
       }
 
       const car = state.garageCars.find(item => item.id === race.car);
-      const track = state.tracks.find(item => item.id === race.track);
+      const track = tracks.find(item => item.id === race.track);
       const carIndex = state.garageCars.findIndex(item => item.id === car.id);
-      const trackIndex = state.tracks.findIndex(item => item.id === track.id);
 
       const results = raceResults(car, track);
       const position = results.findIndex(item => item.id === car.id) + 1;
@@ -98,16 +97,15 @@ const reducerRace = (state = {}, { type, payload }) => {
       let earnings = ~~calculatedPrizes[position - 1];
 
       const trackStats = {
-        ...(track.stats || {}),
+        ...(state.tracksStats[track.id] || {}),
         raced: true,
-        won: track.stats?.won + ~~(position === 1),
+        won: ~~state.tracksStats[track.id]?.won + ~~(position === 1),
       };
 
       const sponsors = evaluateSponsors(
         track,
         car,
         position,
-        state.tracks,
         state.pastRaces,
         state.sponsors.active
       );
@@ -173,10 +171,9 @@ const reducerRace = (state = {}, { type, payload }) => {
                 },
               },
             }),
-          tracks: Object.assign([], state.tracks, {
-            [trackIndex]: {
-              ...track,
-              stats: trackStats,
+          tracksStats: Object.assign({}, state.tracksStats, {
+            [track.id]: {
+              ...trackStats,
             },
           }),
         };
@@ -202,12 +199,11 @@ const reducerRace = (state = {}, { type, payload }) => {
         stateUpdate = {
           races: state.races.filter(item => item.id !== race.id),
           garageCars: garageCar ? [...garageCars, garageCar] : garageCars,
-          tracks: Object.assign([], state.tracks, {
-            [trackIndex]: {
-              ...track,
+          tracksStats: Object.assign({}, state.tracksStats, {
+            [track.id]: {
+              ...trackStats,
               race: undefined,
               lastRace: pastRace.id,
-              stats: trackStats,
             },
           }),
           notifications: [pastRace, ...state.notifications],
@@ -270,9 +266,8 @@ const reducerRace = (state = {}, { type, payload }) => {
       }
 
       const car = state.garageCars.find(item => item.id === race.car);
-      const track = state.tracks.find(item => item.id === race.track);
+      const track = tracks.find(item => item.id === race.track);
       const carIndex = state.garageCars.findIndex(item => item.id === car.id);
-      const trackIndex = state.tracks.findIndex(item => item.id === track.id);
 
       return {
         ...state,
@@ -283,13 +278,13 @@ const reducerRace = (state = {}, { type, payload }) => {
             race: undefined,
           },
         }),
-        tracks: Object.assign([], state.tracks, {
-          [trackIndex]: {
-            ...track,
+        tracksStats: Object.assign({}, state.tracksStats, {
+          [track.id]: {
+            ...(state.tracksStats[track.id] || {}),
             race: undefined,
-            // lastRace: pastRace.id,
           },
         }),
+        // TODO: cancel race history?
         // TODO: auto race history
         // notifications: [pastRace, ...state.notifications],
         // pastRaces: [pastRace, ...state.pastRaces],
@@ -304,8 +299,7 @@ const reducerRace = (state = {}, { type, payload }) => {
       if (!pastRace) {
         return state;
       }
-      const track = state.tracks.find(item => item.id === pastRace.track);
-      const trackIndex = state.tracks.findIndex(item => item.id === track.id);
+      const track = tracks.find(item => item.id === pastRace.track);
 
       const pastRaceIndex = state.pastRaces.findIndex(
         item => item.id === payload.pastRaceId
@@ -319,9 +313,9 @@ const reducerRace = (state = {}, { type, payload }) => {
             checked: true,
           },
         }),
-        tracks: Object.assign([], state.tracks, {
-          [trackIndex]: {
-            ...track,
+        tracksStats: Object.assign({}, state.tracksStats, {
+          [track.id]: {
+            ...(state.tracksStats[track.id] || {}),
             lastRace: undefined,
           },
         }),

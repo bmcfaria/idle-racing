@@ -6,6 +6,7 @@ import {
   raceSelector,
   garageCarSelector,
   pastRaceSelector,
+  trackStatsSelector,
 } from '../state/selectors';
 import CardProgressOverlay from './CardProgressOverlay';
 import CardTrackContent from './CardTrackContent';
@@ -14,12 +15,13 @@ import hexAlpha from 'hex-alpha';
 import Button from './Button';
 
 const CardTrack = ({ track, locked }) => {
-  const { id, race } = track;
+  const { id } = track;
   const location = useLocation();
   const history = useHistory();
 
-  const currentRace = useSelector(raceSelector(race));
-  const pastRace = useSelector(pastRaceSelector(track.lastRace));
+  const trackStats = useSelector(trackStatsSelector(track.id));
+  const currentRace = useSelector(raceSelector(trackStats.race));
+  const pastRace = useSelector(pastRaceSelector(trackStats.lastRace));
   const car = useSelector(garageCarSelector(currentRace?.car || pastRace?.car));
 
   // To improve mobile navigation,
@@ -80,7 +82,7 @@ const CardTrack = ({ track, locked }) => {
         borderRadius="16px"
         imageBorderRadius="16px 16px 0 0"
       />
-      {track.lastRace && (
+      {trackStats.lastRace && (
         <Flex
           w="100%"
           h="100%"

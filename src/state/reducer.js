@@ -8,14 +8,14 @@ import {
   CLEAR_OFFLINE_EARNINGS_TYPE,
   DISMISS_TOAST_TYPE,
 } from './actions';
-import { cars as dealerCars, tracks, generateGarageCar } from '../helpers/data';
+import { cars as dealerCars, generateGarageCar } from '../helpers/data';
 import { discountValue } from '../helpers/utils';
 
 export const initialState = {
   autoRace: false,
   garageCars: [],
   garageSlots: 1,
-  tracks,
+  tracksStats: {},
   money: 650,
   notifications: [],
   pageNotifications: {
@@ -62,7 +62,7 @@ export const initialState = {
     timestamp: null,
   },
   boughtCars: {},
-  version: 0.706,
+  version: 0.707,
   toasts: [],
   warnings: {
     storeReset: false,
