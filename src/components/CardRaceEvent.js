@@ -7,7 +7,6 @@ import {
   raceSponsorsActiveCountSelector,
   lockedSelector,
   trackStatsSelector,
-  tracksStatsSelector,
   lockedRaceEventsSelector,
 } from '../state/selectors';
 import { useSelector } from 'react-redux';
@@ -16,6 +15,7 @@ import getImageTrack from '../helpers/imageMappingTracks';
 import CardBig from './CardBig';
 import CardProgressOverlay from './CardProgressOverlay';
 import { capitalize } from '../helpers/utils';
+import { usePreviousUnlockedTrackChecker } from '../helpers/hooks';
 
 const TrackItem = ({ track, active = true, ...props }) => {
   const race = useSelector(raceByTrackSelector(track.id));
@@ -68,18 +68,19 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const location = useLocation();
   const history = useHistory();
   const tracks = useSelector(tracksSelector);
-  const tracksStats = useSelector(tracksStatsSelector);
   const activeSponsors = useSelector(
     raceSponsorsActiveCountSelector(eventType)
   );
 
   const lockedRaceEvents = useSelector(lockedRaceEventsSelector);
   const locked =
-    useSelector(lockedSelector)?.race[eventType] && lockedRaceEvents;
+    useSelector(lockedSelector)?.race[eventType] !== false && lockedRaceEvents;
 
   const eventRaces = tracks
     .filter(item => item.category === eventType)
     .slice(0, 9);
+
+  const isPreviousUnlocked = usePreviousUnlockedTrackChecker(eventRaces);
 
   const divider = ~~((eventRaces.length - 1) / 3 + 1);
 
@@ -94,9 +95,6 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
     (locked && 'Locked') ||
     (activeSponsors > 0 && `Sponsor: $${activeSponsors} /s`) ||
     'No sponsors';
-
-  const isPreviousUnlocked = index =>
-    index === 0 || tracksStats[eventRaces[index - 1]?.id]?.won > 0;
 
   return (
     <CardBig

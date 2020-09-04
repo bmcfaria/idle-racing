@@ -749,7 +749,7 @@
   },
   {
     "name": "Acceleration day",
-    "category": "track day",
+    "category": "track-day",
     "price": 2400,
     "duration": 120,
     "requirements": "[attr_acc_gt_10]",
@@ -766,7 +766,7 @@
   },
   {
     "name": "Speed day",
-    "category": "track day",
+    "category": "track-day",
     "price": 2400,
     "duration": 120,
     "requirements": "[attr_spd_gt_10]",
@@ -783,7 +783,7 @@
   },
   {
     "name": "Handling day",
-    "category": "track day",
+    "category": "track-day",
     "price": 2400,
     "duration": 120,
     "requirements": "[attr_hnd_gt_10]",
@@ -800,7 +800,7 @@
   },
   {
     "name": "All-round day",
-    "category": "track day",
+    "category": "track-day",
     "price": 8100,
     "duration": 360,
     "requirements": "[attr_acc_gt_10,attr_spd_gt_10,attr_hnd_gt_10]",
@@ -834,7 +834,7 @@
   },
   {
     "name": "Acceleration racing",
-    "category": "beginner racing",
+    "category": "beginner-racing",
     "price": 7500,
     "duration": 300,
     "requirements": "[attr_acc_lt_11]",
@@ -851,7 +851,7 @@
   },
   {
     "name": "Speed racing",
-    "category": "beginner racing",
+    "category": "beginner-racing",
     "price": 7500,
     "duration": 300,
     "requirements": "[attr_spd_lt_11]",
@@ -868,7 +868,7 @@
   },
   {
     "name": "Handling racing",
-    "category": "beginner racing",
+    "category": "beginner-racing",
     "price": 7500,
     "duration": 300,
     "requirements": "[attr_hnd_lt_11]",
@@ -885,7 +885,7 @@
   },
   {
     "name": "All-round racing",
-    "category": "beginner racing",
+    "category": "beginner-racing",
     "price": 24750,
     "duration": 900,
     "requirements": "[attr_acc_lt_11,attr_spd_lt_11,attr_hnd_lt_11]",
@@ -919,7 +919,7 @@
   },
   {
     "name": "touring",
-    "category": "pro racing",
+    "category": "pro-racing",
     "price": 18000,
     "duration": 600,
     "requirements": "[brand_city,brand_family,brand_supercar]",
@@ -936,7 +936,7 @@
   },
   {
     "name": "racing",
-    "category": "pro racing",
+    "category": "pro-racing",
     "price": 19500,
     "duration": 600,
     "requirements": "[brand_racer]",
@@ -953,10 +953,10 @@
   },
   {
     "name": "nascar",
-    "category": "pro racing",
+    "category": "pro-racing",
     "price": 21000,
     "duration": 600,
-    "requirements": "[car_6101ac8d-d31a-422e-81ca-d3b331af9367]",
+    "requirements": "[car_2e926f09-bd0b-40d4-bba1-8cc5044ff4a7]",
     "acc": 0.5,
     "spd": 1,
     "hnd": 0.5,
@@ -970,7 +970,7 @@
   },
   {
     "name": "f1",
-    "category": "pro racing",
+    "category": "pro-racing",
     "price": 67500,
     "duration": 1800,
     "requirements": "[brand_f1]",
@@ -1004,7 +1004,7 @@
   },
   {
     "name": "Starter",
-    "category": "formula world",
+    "category": "formula-world",
     "price": 2100,
     "duration": 60,
     "requirements": "[brand_f1]",
@@ -1021,7 +1021,7 @@
   },
   {
     "name": "Serious",
-    "category": "formula world",
+    "category": "formula-world",
     "price": 4500,
     "duration": 120,
     "requirements": "[brand_f1]",
@@ -1038,7 +1038,7 @@
   },
   {
     "name": "Pro",
-    "category": "formula world",
+    "category": "formula-world",
     "price": 24000,
     "duration": 600,
     "requirements": "[brand_f1]",
@@ -1055,7 +1055,7 @@
   },
   {
     "name": "Special",
-    "category": "formula world",
+    "category": "formula-world",
     "price": 153000,
     "duration": 3600,
     "requirements": "[brand_f1]",

@@ -12,12 +12,14 @@ import {
   trackSelector,
   dealerCarSelector,
   raceSponsorsActiveSelector,
-  tracksStatsSelector,
   lockedRaceEventsSelector,
 } from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
-import { useDynamicCardContainerWidth } from '../helpers/hooks';
+import {
+  useDynamicCardContainerWidth,
+  usePreviousUnlockedTrackChecker,
+} from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
 import CollapsiblePanel from './CollapsiblePanel';
@@ -26,10 +28,7 @@ import { ReactComponent as MechanicIcon } from '../assets/icons/mechanic.svg';
 import { sponsorEntryText } from '../helpers/utils';
 
 const TracksContainer = ({ tracks, locked, ...props }) => {
-  const tracksStats = useSelector(tracksStatsSelector);
-
-  const isPreviousUnlocked = index =>
-    index === 0 || tracksStats[tracks[index - 1]?.id]?.won > 0;
+  const isPreviousUnlocked = usePreviousUnlockedTrackChecker(tracks);
 
   return (
     <Flex
@@ -182,7 +181,7 @@ const RaceEvent = () => {
         w={`${containerWidth}px`}
         marginTop="24px"
         tracks={tracks}
-        locked={lockedRaceEvents && locked?.race[event]}
+        locked={lockedRaceEvents && locked?.race[event] !== false}
       />
 
       <BottomSpacer />

@@ -1,6 +1,6 @@
 [
   {
-    "event": "free",
+    "event": "all",
     "type": "race",
     "times": 1,
     "track": "",
@@ -9,7 +9,7 @@
     "reward": "mechanic"
   },
   {
-    "event": "free",
+    "event": "all",
     "type": "win",
     "times": 1,
     "track": "",
@@ -19,236 +19,11 @@
   },
   {
     "event": "free",
-    "type": "win",
-    "times": 1,
-    "track": "c92fb1c7-2902-426c-b479-90d29c933e12",
-    "car": "",
-    "id": "eb118a1d-a5f9-4a57-be10-d20ad770841d",
-    "reward": "money"
-  },
-  {
-    "event": "free",
-    "type": "win",
-    "times": 1,
-    "track": "54d3522d-22c2-4c95-b9d1-68c7d6853b90",
-    "car": "",
-    "id": "f23bf641-17b3-4b75-a6c7-ca113442e0bb",
-    "reward": "money"
-  },
-  {
-    "event": "free",
-    "type": "win",
-    "times": 1,
-    "track": "8ecb7e5d-e6bb-464f-89b9-9839e58bc7a1",
-    "car": "",
-    "id": "eaa25de6-b99f-4749-99dc-9dedf9551151",
-    "reward": "money"
-  },
-  {
-    "event": "free",
-    "type": "win",
-    "times": 1,
-    "track": "b300263e-a7f5-4c24-a7f9-6bcd6e8e624f",
-    "car": "",
-    "id": "faf4f87f-b554-4445-8160-f5bc39f20fe9",
-    "reward": "money"
-  },
-  {
-    "event": "",
-    "type": "",
-    "times": "",
-    "track": "",
-    "car": "",
-    "id": "",
-    "reward": ""
-  },
-  {
-    "event": "",
-    "type": "",
-    "times": "",
-    "track": "",
-    "car": "",
-    "id": "",
-    "reward": ""
-  },
-  {
-    "event": "city",
-    "type": "race",
-    "times": 1,
-    "track": "",
-    "car": "",
-    "id": "b6760e2a-9e83-464b-8b37-3d071de3ac7c",
-    "reward": "mechanic"
-  },
-  {
-    "event": "city",
-    "type": "win",
-    "times": 1,
-    "track": "",
-    "car": "",
-    "id": "238eb6bd-4596-40c6-9ace-c63ad037e36a",
-    "reward": "mechanic"
-  },
-  {
-    "event": "city",
-    "type": "win",
-    "times": 1,
-    "track": "cd1e3e65-9e95-44d5-bbeb-75b910648594",
-    "car": "",
-    "id": "77986f38-9cf7-494c-839d-d77b861b519b",
-    "reward": ""
-  },
-  {
-    "event": "city",
-    "type": "win",
-    "times": 1,
-    "track": "2d7dc095-5b32-42bf-bde7-4b2673879e28",
-    "car": "",
-    "id": "5957346b-d28a-45d6-84c8-7104091d19ac",
-    "reward": ""
-  },
-  {
-    "event": "city",
-    "type": "win",
-    "times": 1,
-    "track": "7a24bdbd-2397-459d-b9e8-2697ee217084",
-    "car": "",
-    "id": "347bf400-8b45-40f7-86b0-ea7631509029",
-    "reward": ""
-  },
-  {
-    "event": "city",
-    "type": "win",
-    "times": 1,
-    "track": "9d624db2-e0b8-441f-a6a7-5ec0b6b8287d",
-    "car": "",
-    "id": "95a782b6-8628-40be-9b5a-39fc9a0a74dc",
-    "reward": ""
-  },
-  {
-    "event": "city",
-    "type": "win",
-    "times": 1,
-    "track": "fedebe4a-6eab-4cfe-aa27-bd6afe3f19c5",
-    "car": "",
-    "id": "00c0f8da-4c37-49e0-8d1d-67d998415c71",
-    "reward": ""
-  },
-  {
-    "event": "",
-    "type": "",
-    "times": "",
-    "track": "",
-    "car": "",
-    "id": "",
-    "reward": ""
-  },
-  {
-    "event": "",
-    "type": "",
-    "times": "",
-    "track": "",
-    "car": "",
-    "id": "",
-    "reward": ""
-  },
-  {
-    "event": "",
-    "type": "",
-    "times": "",
-    "track": "",
-    "car": "",
-    "id": "",
-    "reward": ""
-  },
-  {
-    "event": "",
-    "type": "",
-    "times": "",
-    "track": "",
-    "car": "",
-    "id": "",
-    "reward": ""
-  },
-  {
-    "event": "",
-    "type": "",
-    "times": "",
-    "track": "",
-    "car": "",
-    "id": "",
-    "reward": ""
-  },
-  {
-    "event": "city",
     "type": "race",
     "times": 3,
     "track": "",
     "car": "",
-    "id": "26514012-6ffd-4cbf-8725-f0357baa6582",
-    "reward": ""
-  },
-  {
-    "event": "city",
-    "type": "win",
-    "times": 3,
-    "track": "",
-    "car": "",
-    "id": "95f81300-8713-4301-b356-d79ff47b2c23",
-    "reward": ""
-  },
-  {
-    "event": "",
-    "type": "",
-    "times": "",
-    "track": "",
-    "car": "",
-    "id": "",
-    "reward": ""
-  },
-  {
-    "event": "offroad",
-    "type": "race",
-    "times": 3,
-    "track": "",
-    "car": "",
-    "id": "ef813720-de05-4ed6-8710-46180884f6a1",
-    "reward": ""
-  },
-  {
-    "event": "offroad",
-    "type": "win",
-    "times": 3,
-    "track": "",
-    "car": "",
-    "id": "330bc746-b693-4863-bbf5-ff87a49678cc",
-    "reward": ""
-  },
-  {
-    "event": "",
-    "type": "",
-    "times": "",
-    "track": "",
-    "car": "",
-    "id": "",
-    "reward": ""
-  },
-  {
-    "event": "track",
-    "type": "race",
-    "times": 3,
-    "track": "",
-    "car": "",
-    "id": "f3904cf7-502b-405f-8ca1-d0f7db680363",
-    "reward": ""
-  },
-  {
-    "event": "track",
-    "type": "win",
-    "times": 3,
-    "track": "",
-    "car": "",
-    "id": "8aabb154-db15-4185-88fe-11ca8be23ff9",
-    "reward": ""
+    "id": "d3886ab5-5eeb-4294-b721-98b6f16f0784",
+    "reward": "money"
   }
 ]

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { experienceSelector } from '../state/selectors';
+import { experienceSelector, tracksStatsSelector } from '../state/selectors';
 import {
   buffValue,
   discountValue,
@@ -9,6 +9,7 @@ import {
   expLevel,
   expNextLevel,
 } from './utils';
+import { raceEvents } from './data';
 
 export const useOpenClose = defaultValue => {
   const [open, setOpen] = useState(!!defaultValue);
@@ -154,4 +155,19 @@ export const useUpgradePriceWithDiscount = (price, type) => {
   const experience = useExperienceMechanic();
 
   return discountValue(price, experience[type]);
+};
+
+export const usePreviousUnlockedTrackChecker = tracks => {
+  const tracksStats = useSelector(tracksStatsSelector);
+
+  const isPreviousUnlocked = index => {
+    return (
+      raceEvents.find(({ type }) => type === tracks[index]?.category)
+        ?.unlocked ||
+      index === 0 ||
+      tracksStats[tracks[index - 1]?.id]?.won > 0
+    );
+  };
+
+  return isPreviousUnlocked;
 };

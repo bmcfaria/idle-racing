@@ -7,6 +7,29 @@ import raceSponsorsFile from '../assets/lists/raceSponsors.json';
 // To help on manual object creation
 window.uuid = uuid;
 
+export const dealerBrands = [
+  { type: 'compact', name: 'compact' },
+  { type: 'city', name: 'city' },
+  { type: 'family', name: 'family' },
+  { type: 'offroad', name: 'offroad' },
+  { type: 'supercar', name: 'supercar' },
+  { type: 'f1', name: 'f1' },
+  { type: 'racer', name: 'racer' },
+  { type: 'heavy', name: 'heavy' },
+];
+
+export const raceEvents = [
+  { type: 'free', name: 'free' },
+  { type: 'city', name: 'city' },
+  { type: 'offroad', name: 'offroad' },
+  { type: 'track', name: 'track' },
+  { type: 'track-day', name: 'track day' },
+  { type: 'beginner-racing', name: 'beginner racing' },
+  { type: 'pro-racing', name: 'pro racing' },
+  { type: 'formula-world', name: 'formula world' },
+  { type: 'endurance', name: 'endurance', unlocked: true },
+];
+
 const generateAttribute = (base, unit, max, basePrice, upgrade) => {
   const value = base + unit * upgrade;
   const nextValue = base + unit * (upgrade + 1);
@@ -208,6 +231,42 @@ export const generateToast = (title, subtitle, type, extra = {}) => ({
   extra,
 });
 
+const generateSponsors = () => {
+  const sponsors = raceEvents.reduce((result, raceEvent) => {
+    const eventTracksSponsors = tracks
+      .filter(track => track.category === raceEvent.type)
+      .map(track => ({
+        event: raceEvent.type,
+        type: 'win',
+        times: 1,
+        reward: 'money',
+        track: track.id,
+        id: `${track.id}_sponsor`,
+      }));
+
+    return [...result, ...eventTracksSponsors];
+  }, []);
+
+  const allSponsors = raceEvents.reduce((result, raceEvent) => {
+    const transformAllSponsors = raceSponsorsFile
+      .filter(sponsor => sponsor?.event === 'all')
+      .map(sponsor => ({
+        ...sponsor,
+        event: raceEvent.type,
+        id: `${sponsor.id}_${raceEvent.type}`,
+      }));
+    return [...result, ...transformAllSponsors];
+  }, []);
+
+  return [
+    ...allSponsors,
+    ...raceSponsorsFile.filter(
+      sponsor => sponsor?.event.length > 0 && sponsor.event !== 'all'
+    ),
+    ...sponsors,
+  ];
+};
+
 export const cars = [
   ...carsFile.reduce(
     (results, car) =>
@@ -227,29 +286,4 @@ export const tracks = [
   ),
 ];
 
-export const raceSponsors = [
-  ...raceSponsorsFile.filter(sponsor => sponsor?.event.length > 0),
-];
-
-export const dealerBrands = [
-  { type: 'compact', name: 'compact' },
-  { type: 'city', name: 'city' },
-  { type: 'family', name: 'family' },
-  { type: 'offroad', name: 'offroad' },
-  { type: 'supercar', name: 'supercar' },
-  { type: 'f1', name: 'f1' },
-  { type: 'racer', name: 'racer' },
-  { type: 'heavy', name: 'heavy' },
-];
-
-export const raceEvents = [
-  { type: 'free', name: 'free' },
-  { type: 'city', name: 'city' },
-  { type: 'offroad', name: 'offroad' },
-  { type: 'track', name: 'track' },
-  { type: 'track day', name: 'track day' },
-  { type: 'beginner racing', name: 'beginner racing' },
-  { type: 'pro racing', name: 'pro racing' },
-  { type: 'formula world', name: 'formula world' },
-  { type: 'endurance', name: 'endurance' },
-];
+export const raceSponsors = generateSponsors();

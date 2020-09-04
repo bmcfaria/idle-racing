@@ -31,10 +31,8 @@ export const initialState = {
   },
   locked: {
     race: {
+      // all true by default
       free: false,
-      city: true,
-      offroad: true,
-      track: true,
     },
   },
   experience: {
@@ -63,7 +61,7 @@ export const initialState = {
     timestamp: null,
   },
   boughtCars: {},
-  version: 0.707,
+  version: 0.708,
   toasts: [],
   warnings: {
     storeReset: false,
