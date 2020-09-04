@@ -24,53 +24,53 @@ import { ReactComponent as Nascar } from '../assets/tracks/nascar.svg';
 
 export const trackImages = {
   // Free race
-  'c92fb1c7-2902-426c-b479-90d29c933e12': Track1,
+  track1: Track1,
   // Free race no ups
-  '54d3522d-22c2-4c95-b9d1-68c7d6853b90': Track2,
+  track2: Track2,
   // Free special
-  '8ecb7e5d-e6bb-464f-89b9-9839e58bc7a1': Track3,
+  track3: Track3,
   // Free special no ups
-  'b300263e-a7f5-4c24-a7f9-6bcd6e8e624f': Track4,
+  track4: Track4,
 
   // City basic
-  'cd1e3e65-9e95-44d5-bbeb-75b910648594': Track5,
+  track5: Track5,
   // Small cars
-  '2d7dc095-5b32-42bf-bde7-4b2673879e28': Track6,
+  track6: Track6,
   // Family friendly
-  '7a24bdbd-2397-459d-b9e8-2697ee217084': Track7,
+  track7: Track7,
   // City special
-  '9d624db2-e0b8-441f-a6a7-5ec0b6b8287d': Track8,
+  track8: Track8,
   // City special no ups
-  'fedebe4a-6eab-4cfe-aa27-bd6afe3f19c5': Track9,
+  track9: Track9,
 
   // Offroad casual
-  '9b67ac96-1094-4362-af3f-5855dae643a2': Offroad1,
+  offroad1: Offroad1,
   // Hill madness
-  '19065c6a-d554-45c5-bee6-2d14ed1169a3': Offroad2,
+  offroad2: Offroad2,
   // Muddy fest
-  'c57480e9-2537-412b-a625-3146965b8a91': Offroad3,
+  offroad3: Offroad3,
   // Rural beauty
-  'e700533e-6a7b-42d2-a173-a2c2f3a532f8': Offroad4,
+  offroad4: Offroad4,
 
   // Casual circuit
-  'e2e204ce-e5c5-4991-9d43-1669db9cde81': Track10,
+  track10: Track10,
   // Track basic
-  'dedff876-77ac-4e95-9255-4b212dab8d28': Track11,
+  track11: Track11,
   // Track acceleration
-  'fb1f9b60-926c-4b01-a6d6-543c0a305d05': Track12,
+  track12: Track12,
   // Track speed
-  'db660a8f-2ece-4b07-a2eb-44201a552142': Track13,
+  track13: Track13,
   // Track heavy
-  '7829b35a-e75d-453c-9b1e-aec7555377cc': Track14,
+  track14: Track14,
 
   // F1 party
-  '44122eb8-de92-4dc6-abc9-65ae7b56445d': Track3,
+  // 'track3': Track3,
   // F1 serious
-  'dc1f9ad6-94ad-46fb-9672-43cec931888e': F1Serious,
+  f1_serious: F1Serious,
   // 24h
-  '91e8c4e3-bdcf-4634-909f-7f910aade85f': LeMans,
+  le_mans: LeMans,
   // Nascar
-  '6101ac8d-d31a-422e-81ca-d3b331af9367': Nascar,
+  nascar: Nascar,
 };
 
-export default item => trackImages[item.id];
+export default item => trackImages[item.image];

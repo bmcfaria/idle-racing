@@ -158,13 +158,8 @@ const generateTrack = track => ({
   [ATTRIBUTE_TYPES.SPEED]: track.spd > 1 ? 1 : track.spd,
   [ATTRIBUTE_TYPES.HANDLING]: track.hnd > 1 ? 1 : track.hnd,
   max: track.max,
-  race: undefined,
-  lastRace: undefined,
   requirements: parseRequirements(track.requirements),
-  stats: {
-    raced: false,
-    won: 0,
-  },
+  image: track.image,
 });
 
 export const generateRace = (car, track, auto) => ({
@@ -252,4 +247,9 @@ export const raceEvents = [
   { type: 'city', name: 'city' },
   { type: 'offroad', name: 'offroad' },
   { type: 'track', name: 'track' },
+  { type: 'track day', name: 'track day' },
+  { type: 'beginner racing', name: 'beginner racing' },
+  { type: 'pro racing', name: 'pro racing' },
+  { type: 'formula world', name: 'formula world' },
+  { type: 'endurance', name: 'endurance' },
 ];
