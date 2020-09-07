@@ -69,15 +69,15 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
   const calculatedPrizes = useRacePrizesWithBuff(prizes);
 
   const bgColor =
-    (trackStats.won > 100 && colors.lightBlue) ||
-    (trackStats.won > 0 && colors.green) ||
-    (trackStats.raced && colors.orange) ||
+    (trackStats?.won > 100 && colors.lightBlue) ||
+    (trackStats?.won > 0 && colors.green) ||
+    (trackStats?.raced && colors.orange) ||
     colors.darkGray;
 
   const color =
-    (trackStats.won > 100 && 'black') ||
-    (trackStats.won > 0 && 'black') ||
-    (trackStats.raced && 'black') ||
+    (trackStats?.won > 100 && 'black') ||
+    (trackStats?.won > 0 && 'black') ||
+    (trackStats?.raced && 'black') ||
     colors.white;
 
   return (

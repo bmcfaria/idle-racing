@@ -20,8 +20,8 @@ const CardTrack = ({ track, locked }) => {
   const history = useHistory();
 
   const trackStats = useSelector(trackStatsSelector(track.id));
-  const currentRace = useSelector(raceSelector(trackStats.race));
-  const pastRace = useSelector(pastRaceSelector(trackStats.lastRace));
+  const currentRace = useSelector(raceSelector(trackStats?.race));
+  const pastRace = useSelector(pastRaceSelector(trackStats?.lastRace));
   const car = useSelector(garageCarSelector(currentRace?.car || pastRace?.car));
 
   // To improve mobile navigation,
@@ -82,7 +82,7 @@ const CardTrack = ({ track, locked }) => {
         borderRadius="16px"
         imageBorderRadius="16px 16px 0 0"
       />
-      {trackStats.lastRace && (
+      {trackStats?.lastRace && (
         <Flex
           w="100%"
           h="100%"

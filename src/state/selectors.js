@@ -21,7 +21,7 @@ export const trackSelector = trackId => () =>
 
 export const tracksStatsSelector = state => state.tracksStats;
 export const trackStatsSelector = trackId => state =>
-  state.tracksStats[trackId] || {};
+  state.tracksStats[trackId];
 
 export const moneySelector = state => state.money;
 export const enoughMoneySelector = price => state => state.money >= price;

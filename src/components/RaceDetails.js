@@ -188,7 +188,7 @@ const RaceDetails = props => {
   const [selectedCar, setSelectedCar] = useState();
 
   const trackStats = useSelector(trackStatsSelector(selectedTrackId));
-  const pastRace = useSelector(pastRaceSelector(trackStats.lastRace));
+  const pastRace = useSelector(pastRaceSelector(trackStats?.lastRace));
   const results = !!pastRace && pastRace.checked === false;
 
   const winProbabilityValue =
@@ -200,7 +200,7 @@ const RaceDetails = props => {
     }
   }, [results, pastRace, cars]);
 
-  const currentRace = useSelector(raceSelector(trackStats.race));
+  const currentRace = useSelector(raceSelector(trackStats?.race));
 
   const [carsModal, carsModalOpen, carsModalClose] = useOpenClose();
 
