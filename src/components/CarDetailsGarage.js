@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Flex, Text, Box } from '@chakra-ui/core';
 import Button from './Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { ATTRIBUTE_TYPES } from '../helpers/utils';
+import { ATTRIBUTE_TYPES, formatMoney } from '../helpers/utils';
 import {
   sellCarAction,
   upgradeAttributeAction,
@@ -137,8 +137,8 @@ const CarDetailsGarage = ({ car, ...props }) => {
     (confirmationState === 'ACC' && `$${calculatedPriceAcc}`) ||
     (confirmationState === 'SPD' && `$${calculatedPriceSpd}`) ||
     (confirmationState === 'HND' && `$${calculatedPriceHnd}`) ||
-    (confirmationState === 'SELL' && `$${calculatedSellPrice}`) ||
-    `Sell ($${calculatedSellPrice})`;
+    (confirmationState === 'SELL' && `$${formatMoney(calculatedSellPrice)}`) ||
+    `Sell ($${formatMoney(calculatedSellPrice)})`;
 
   const buttonColors = ((confirmationState === 'ACC' ||
     confirmationState === 'SPD' ||

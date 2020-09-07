@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { colors } from '../helpers/theme';
 import CardCarSmall from './CardCarSmall';
+import { formatMoney } from '../helpers/utils';
 
 const BoughtAnimation = styled(Flex)`
   animation: fadeOut ease 1.5s;
@@ -62,7 +63,7 @@ const CardCarDealer = ({ car, ...props }) => {
         marginTop="auto"
         color={!enoughMoney && !car.reward ? colors.red : colors.white}
       >
-        {car.reward ? 'Reward' : `$${car.price}`}
+        {car.reward ? 'Reward' : `$${formatMoney(car.price)}`}
       </Text>
       {bought && (
         <BoughtAnimation
