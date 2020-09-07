@@ -13,6 +13,7 @@ import {
   dealerCarSelector,
   raceSponsorsActiveSelector,
   lockedRaceEventsSelector,
+  trackStatsSelector,
 } from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
@@ -163,9 +164,10 @@ const RaceEvent = () => {
   const selectedTrackId = location?.state?.track;
   const selectedTrack = tracks.find(item => item.id === selectedTrackId);
 
+  const trackStats = useSelector(trackStatsSelector(selectedTrackId));
+
   const onClose = () => {
-    const track = tracks.find(element => element.id === location?.state.track);
-    dispatch(closeResultsAction(track?.lastRace));
+    dispatch(closeResultsAction(trackStats?.lastRace));
     history.goBack();
   };
 
