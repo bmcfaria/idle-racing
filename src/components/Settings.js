@@ -51,7 +51,7 @@ const Settings = () => {
           <Button
             marginTop="8px"
             bg={colors.red}
-            onClick={() => resetDev({ money: 9999999999999999999 })}
+            onClick={() => resetDev({ money: 9999999999999 })}
           >
             Reset
           </Button>
