@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { enoughMoneySelector, trackStatsSelector } from '../state/selectors';
 import RequirementsList from './RequirementsList';
 import { colors } from '../helpers/theme';
-import { ATTRIBUTE_TYPES } from '../helpers/utils';
+import { ATTRIBUTE_TYPES, formatDuration } from '../helpers/utils';
 import abbreviate from 'number-abbreviate';
 import {
   useRacePrizesWithBuff,
@@ -149,7 +149,7 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
 
       <Flex w="100%" h="20px" fontSize="12px">
         <Text margin="auto" color={color}>
-          {duration / 1000}s
+          {formatDuration(duration)}
         </Text>
         <Text margin="auto" color={!enoughMoney ? colors.red : color}>
           {calculatedPrice === 0

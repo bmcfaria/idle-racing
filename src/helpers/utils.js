@@ -284,3 +284,10 @@ export const sponsorEntryText = sponsor => {
         `;
   return text;
 };
+
+export const formatDuration = (duration, decimals = 0) =>
+  duration / 1000 / 60 / 60 >= 1
+    ? `${(duration / 1000 / 60 / 60).toFixed(decimals)}h`
+    : duration / 1000 / 60 >= 1
+    ? `${(duration / 1000 / 60).toFixed(decimals)}m`
+    : `${(duration / 1000).toFixed(decimals)}s`;

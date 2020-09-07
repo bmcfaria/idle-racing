@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CircularProgressLabel } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
 import { CustomCircularProgress } from './CustomCircularProgress';
+import { formatDuration } from '../helpers/utils';
 
 const CardProgressCircle = ({ race, textColor = 'black', ...props }) => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const CardProgressCircle = ({ race, textColor = 'black', ...props }) => {
     >
       {
         <CircularProgressLabel color={textColor}>
-          {Math.round(value / 1000)}s
+          {formatDuration(value, value / 1000 / 60 > 1 ? 1 : 0)}
         </CircularProgressLabel>
       }
     </CustomCircularProgress>
