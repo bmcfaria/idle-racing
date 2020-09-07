@@ -4,7 +4,6 @@ import { useLocation, useHistory } from 'react-router-dom';
 import {
   tracksSelector,
   raceByTrackSelector,
-  raceSponsorsActiveCountSelector,
   lockedSelector,
   trackStatsSelector,
   lockedRaceEventsSelector,
@@ -15,7 +14,10 @@ import getImageTrack from '../helpers/imageMappingTracks';
 import CardBig from './CardBig';
 import CardProgressOverlay from './CardProgressOverlay';
 import { capitalize } from '../helpers/utils';
-import { usePreviousUnlockedTrackChecker } from '../helpers/hooks';
+import {
+  usePreviousUnlockedTrackChecker,
+  usePassiveIncome,
+} from '../helpers/hooks';
 
 const TrackItem = ({ track, active = true, ...props }) => {
   const race = useSelector(raceByTrackSelector(track.id));
@@ -68,9 +70,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const location = useLocation();
   const history = useHistory();
   const tracks = useSelector(tracksSelector);
-  const activeSponsors = useSelector(
-    raceSponsorsActiveCountSelector(eventType)
-  );
+  const eventPassiveIncome = usePassiveIncome(eventType);
 
   const lockedRaceEvents = useSelector(lockedRaceEventsSelector);
   const locked =
@@ -93,7 +93,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
 
   const secondaryText =
     (locked && 'Locked') ||
-    (activeSponsors > 0 && `Sponsor: $${activeSponsors} /s`) ||
+    (eventPassiveIncome > 0 && `Sponsor: $${eventPassiveIncome} /s`) ||
     'No sponsors';
 
   return (

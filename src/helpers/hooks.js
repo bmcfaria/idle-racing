@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { experienceSelector, tracksStatsSelector } from '../state/selectors';
+import {
+  experienceSelector,
+  tracksStatsSelector,
+  raceSponsorsActiveSelector,
+} from '../state/selectors';
 import {
   buffValue,
   discountValue,
   capitalize,
   expLevel,
   expNextLevel,
+  moneySponsorsCount,
 } from './utils';
 import { raceEvents } from './data';
 
@@ -170,4 +175,18 @@ export const usePreviousUnlockedTrackChecker = tracks => {
   };
 
   return isPreviousUnlocked;
+};
+
+export const usePassiveIncome = event => {
+  const sponsors = useSelector(raceSponsorsActiveSelector);
+
+  return moneySponsorsCount(sponsors, event);
+};
+
+export const useMechanicsCount = () => {
+  const sponsors = useSelector(raceSponsorsActiveSelector);
+
+  return Object.values(sponsors).filter(
+    sponsor => sponsor.reward === 'mechanic'
+  ).length;
 };

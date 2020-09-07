@@ -291,3 +291,8 @@ export const formatDuration = (duration, decimals = 0) =>
     : duration / 1000 / 60 >= 1
     ? `${(duration / 1000 / 60).toFixed(decimals)}m`
     : `${(duration / 1000).toFixed(decimals)}s`;
+
+export const moneySponsorsCount = (sponsors, event) =>
+  Object.values(sponsors).filter(
+    sponsor => (sponsor.event === event || !event) && sponsor.reward === 'money'
+  ).length;

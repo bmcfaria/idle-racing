@@ -57,11 +57,6 @@ export const garageSlotsEmptySelector = state =>
   state.garageSlots - state.garageCars.length;
 export const garageSlotPriceSelector = state => 250 * 2 ** state.garageSlots;
 
-export const mechanicsSelector = state =>
-  Object.values(state.sponsors.active).filter(
-    sponsor => sponsor.reward === 'mechanic'
-  ).length;
-
 export const toastsSelector = state => state.toasts;
 
 export const dealerBrandsSelector = () => dealerBrands;
@@ -72,17 +67,7 @@ export const raceSponsorsSelector = () => raceSponsors;
 
 export const raceSponsorsActiveSelector = state => state.sponsors.active;
 
-export const raceSponsorsActiveCountSelector = event => state =>
-  Object.values(state.sponsors.active).filter(
-    sponsor => sponsor.event === event && sponsor.reward === 'money'
-  ).length;
-
 export const autoRaceEnabledSelector = state => state.autoRace;
-
-export const passiveIncomeSelector = state =>
-  Object.values(state.sponsors.active).filter(
-    sponsor => sponsor.reward === 'money'
-  ).length;
 
 export const boughtCarsSelector = state => state.boughtCars;
 

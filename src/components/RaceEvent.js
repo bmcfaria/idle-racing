@@ -8,7 +8,6 @@ import {
   tracksSelector,
   lockedSelector,
   raceSponsorsSelector,
-  raceSponsorsActiveCountSelector,
   trackSelector,
   dealerCarSelector,
   raceSponsorsActiveSelector,
@@ -20,6 +19,7 @@ import { closeResultsAction } from '../state/actions';
 import {
   useDynamicCardContainerWidth,
   usePreviousUnlockedTrackChecker,
+  usePassiveIncome,
 } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
@@ -133,12 +133,15 @@ const Sponsors = ({ event, ...props }) => {
     sponsor => sponsor.event === event
   );
 
-  const activeSponsors = useSelector(raceSponsorsActiveCountSelector(event));
+  const eventPassiveIncome = usePassiveIncome(event);
 
   return (
     <CollapsiblePanel
       wrap="wrap"
-      text={'Sponsors' + (activeSponsors > 0 ? ` ($${activeSponsors} /s)` : '')}
+      text={
+        'Sponsors' +
+        (eventPassiveIncome > 0 ? ` ($${eventPassiveIncome} /s)` : '')
+      }
       open
       {...props}
     >

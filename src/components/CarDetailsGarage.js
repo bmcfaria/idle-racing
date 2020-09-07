@@ -14,7 +14,6 @@ import {
   garageCarsSelector,
   tutorialUpgradeSelector,
   pastRacesSelector,
-  mechanicsSelector,
   enoughMoneySelector,
 } from '../state/selectors';
 import CarDetailsContainer from './CarDetailsContainer';
@@ -24,6 +23,7 @@ import CallForAttention from './CallForAttention';
 import {
   useUpgradePriceWithDiscount,
   useCarPriceWithBuff,
+  useMechanicsCount,
 } from '../helpers/hooks';
 import { upgradeCenter } from '../helpers/garageUpgrades';
 
@@ -81,7 +81,7 @@ const AttributeCircleButton = ({
 
 const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, price } = car;
-  const mechanics = useSelector(mechanicsSelector);
+  const mechanics = useMechanicsCount();
   const pastRaces = useSelector(pastRacesSelector);
 
   const calculatedPriceAcc = ~~useUpgradePriceWithDiscount(

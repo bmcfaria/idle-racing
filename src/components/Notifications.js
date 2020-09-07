@@ -12,14 +12,10 @@ import {
 } from '@chakra-ui/core';
 import { MdFlag } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  notificationsSelector,
-  racesSelector,
-  passiveIncomeSelector,
-} from '../state/selectors';
+import { notificationsSelector, racesSelector } from '../state/selectors';
 import NotificationsActiveRace from './NotificationsActiveRace';
 import NotificationsPastRace from './NotificationsPastRace';
-import { useOpenClose } from '../helpers/hooks';
+import { useOpenClose, usePassiveIncome } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import styled from '@emotion/styled';
 import { checkEndRaceAction, checkSponsorsAction } from '../state/actions';
@@ -39,7 +35,7 @@ const Notifications = () => {
   const [open, onOpen, onClose] = useOpenClose(false);
   const notifications = useSelector(notificationsSelector);
   const races = useSelector(racesSelector);
-  const sponsorsPassiveIncome = useSelector(passiveIncomeSelector);
+  const sponsorsPassiveIncome = usePassiveIncome();
 
   const isRacing = races?.length > 0;
 

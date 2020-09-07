@@ -5,13 +5,14 @@ import { Text } from '@chakra-ui/core';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import Notifications from './Notifications';
 import { useSelector } from 'react-redux';
-import { moneySelector, passiveIncomeSelector } from '../state/selectors';
+import { moneySelector } from '../state/selectors';
 import { zIndex, colors } from '../helpers/theme';
 import {
   useCurrentPage,
   useExperienceBusiness,
   useExperienceRace,
   useExperienceMechanic,
+  usePassiveIncome,
 } from '../helpers/hooks';
 import abbreviate from 'number-abbreviate';
 import Button from './Button';
@@ -55,7 +56,7 @@ const Navigation = () => {
 
 const Money = props => {
   const money = useSelector(moneySelector);
-  const passiveIncome = useSelector(passiveIncomeSelector);
+  const passiveIncome = usePassiveIncome();
 
   return (
     <Flex

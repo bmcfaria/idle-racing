@@ -2,12 +2,11 @@ import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import CollapsiblePanel from './CollapsiblePanel';
 import { colors } from '../helpers/theme';
-import { useSelector } from 'react-redux';
-import { mechanicsSelector } from '../state/selectors';
 import garageUpgrades from '../helpers/garageUpgrades';
+import { useMechanicsCount } from '../helpers/hooks';
 
 const GarageUpgrades = props => {
-  const mechanics = useSelector(mechanicsSelector);
+  const mechanics = useMechanicsCount();
 
   let upgradeIndex = mechanics;
   if (!garageUpgrades[upgradeIndex]) {

@@ -21,6 +21,7 @@ import {
   discountValue,
   TOAST_TYPES,
   sponsorEntryText,
+  moneySponsorsCount,
 } from '../helpers/utils';
 import { evaluateSponsors } from '../helpers/sponsors';
 
@@ -213,6 +214,15 @@ const reducerRace = (state = {}, { type, payload }) => {
         expEarned = 1;
       }
 
+      // Initialize active sponsors timestamp if necessary
+      const activeMoneySponsors = moneySponsorsCount(sponsors);
+      const sponsorsTimestamp =
+        !state.sponsors.timestamp && activeMoneySponsors > 0
+          ? new Date().getTime()
+          : state.sponsors.timestamp;
+
+      console.log('Race ends', activeMoneySponsors, sponsorsTimestamp);
+
       return {
         ...state,
         money: state.money + earnings,
@@ -243,9 +253,7 @@ const reducerRace = (state = {}, { type, payload }) => {
               ...state.sponsors.active,
               ...sponsors,
             },
-            ...(!state.sponsors.timestamp && {
-              timestamp: new Date().getTime(),
-            }),
+            timestamp: sponsorsTimestamp,
           },
         }),
         ...(garageCar && {
@@ -323,9 +331,7 @@ const reducerRace = (state = {}, { type, payload }) => {
     }
 
     case CHECK_SPONSORS_TYPE: {
-      const activeMoneySponsors = Object.values(state.sponsors.active).filter(
-        sponsor => sponsor.reward === 'money'
-      ).length;
+      const activeMoneySponsors = moneySponsorsCount(state.sponsors.active);
       const currentTime = new Date().getTime();
 
       if (
