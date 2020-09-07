@@ -5,8 +5,7 @@ import { useSelector } from 'react-redux';
 import { enoughMoneySelector, trackStatsSelector } from '../state/selectors';
 import RequirementsList from './RequirementsList';
 import { colors } from '../helpers/theme';
-import { ATTRIBUTE_TYPES, formatDuration } from '../helpers/utils';
-import abbreviate from 'number-abbreviate';
+import { ATTRIBUTE_TYPES, formatDuration, formatMoney } from '../helpers/utils';
 import {
   useRacePrizesWithBuff,
   useRacePriceWithDiscount,
@@ -56,7 +55,7 @@ const TrackPrize = ({ text, prize, ...props }) => {
           {car.name}
         </Text>
       )}
-      {!car && <Text textAlign="center">${abbreviate(~~prize, 1)}</Text>}
+      {!car && <Text textAlign="center">${formatMoney(~~prize)}</Text>}
     </Box>
   );
 };
@@ -152,9 +151,7 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
           {formatDuration(duration)}
         </Text>
         <Text margin="auto" color={!enoughMoney ? colors.red : color}>
-          {calculatedPrice === 0
-            ? 'FREE'
-            : `$${abbreviate(calculatedPrice, 1)}`}
+          {calculatedPrice === 0 ? 'FREE' : `$${formatMoney(calculatedPrice)}`}
         </Text>
       </Flex>
     </Flex>

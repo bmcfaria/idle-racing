@@ -1,5 +1,6 @@
 import { cars } from './data';
 import seedrandom from 'seedrandom';
+import numbro from 'numbro';
 
 export const displayResponsivePanel = condition => [
   condition ? 'none' : 'flex',
@@ -291,6 +292,14 @@ export const formatDuration = (duration, decimals = 0) =>
     : duration / 1000 / 60 >= 1
     ? `${(duration / 1000 / 60).toFixed(decimals)}m`
     : `${(duration / 1000).toFixed(decimals)}s`;
+
+export const formatMoney = value =>
+  numbro(value).format({
+    average: true,
+    optionalMantissa: true,
+    mantissa: 1,
+    roundingFunction: Math.floor,
+  });
 
 export const moneySponsorsCount = (sponsors, event) =>
   Object.values(sponsors).filter(

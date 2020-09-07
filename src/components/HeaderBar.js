@@ -14,11 +14,11 @@ import {
   useExperienceMechanic,
   usePassiveIncome,
 } from '../helpers/hooks';
-import abbreviate from 'number-abbreviate';
 import Button from './Button';
 import Modal from './Modal';
 import ExperienceUpgrades from './ExperienceUpgrades';
 import { ReactComponent as Triange } from '../assets/icons/triangle.svg';
+import { formatMoney } from '../helpers/utils';
 
 const TriangleArrowButton = props => (
   <PseudoBox
@@ -72,7 +72,7 @@ const Money = props => {
         $
       </Text>
       <Text fontSize="24px" color={colors.white}>
-        {abbreviate(money, 1)}
+        {formatMoney(money)}
       </Text>
       {passiveIncome > 0 && (
         <Text fontSize="16px" marginLeft="4px" color={colors.white}>
@@ -97,11 +97,8 @@ const ExperienceButton = ({
 
   const valueText =
     experience.exp < experience.max
-      ? `${abbreviate(experience.exp.toFixed(1), 1)} / ${abbreviate(
-          experience.nextLevel,
-          1
-        )}`
-      : `${abbreviate(experience.exp.toFixed(1), 1)}`;
+      ? `${formatMoney(experience.exp)} / ${formatMoney(experience.nextLevel)}`
+      : `${formatMoney(experience.exp)}`;
 
   return (
     <Button

@@ -8,10 +8,10 @@ import {
 import { buyGarageSlotAction } from '../state/actions';
 import { colors } from '../helpers/theme';
 import Button from './Button';
-import abbreviate from 'number-abbreviate';
 import Modal from './Modal';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useMechanicsCount } from '../helpers/hooks';
+import { formatMoney } from '../helpers/utils';
 
 const GarageBuySlot = props => {
   const slotPrice = useSelector(garageSlotPriceSelector);
@@ -63,7 +63,7 @@ const GarageBuySlot = props => {
               fontSize="12px"
               bg={colors.lightBlue}
             >
-              ${abbreviate(slotPrice, 1)}
+              ${formatMoney(slotPrice)}
             </Button>
             <Button
               onClick={onClose}
@@ -113,7 +113,7 @@ const GarageBuySlot = props => {
           </Box>
         )}
         {mechanics >= 2 && (
-          <Text fontSize="16px">${abbreviate(slotPrice, 1)}</Text>
+          <Text fontSize="16px">${formatMoney(slotPrice)}</Text>
         )}
       </Button>
     </>
