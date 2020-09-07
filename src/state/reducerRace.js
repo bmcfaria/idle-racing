@@ -221,8 +221,6 @@ const reducerRace = (state = {}, { type, payload }) => {
           ? new Date().getTime()
           : state.sponsors.timestamp;
 
-      console.log('Race ends', activeMoneySponsors, sponsorsTimestamp);
-
       return {
         ...state,
         money: state.money + earnings,
