@@ -3,6 +3,12 @@ export const resetAction = {
   type: RESET_TYPE,
 };
 
+export const RESET_DEV_TYPE = 'RESET_DEV';
+export const resetDevAction = state => ({
+  type: RESET_DEV_TYPE,
+  payload: { state },
+});
+
 export const BUY_CAR_TYPE = 'BUY_CAR';
 export const buyCarAction = carId => ({
   type: BUY_CAR_TYPE,

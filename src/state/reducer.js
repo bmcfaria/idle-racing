@@ -7,9 +7,11 @@ import {
   CLEAR_STORE_RESET_TYPE,
   CLEAR_OFFLINE_EARNINGS_TYPE,
   DISMISS_TOAST_TYPE,
+  RESET_DEV_TYPE,
 } from './actions';
 import { cars as dealerCars, generateGarageCar } from '../helpers/data';
 import { discountValue } from '../helpers/utils';
+import objectAssignDeep from 'object-assign-deep';
 
 export const initialState = {
   autoRace: false,
@@ -78,6 +80,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case RESET_TYPE: {
       return initialState;
+    }
+
+    case RESET_DEV_TYPE: {
+      return objectAssignDeep({}, initialState, payload.state || {});
     }
 
     case BUY_CAR_TYPE: {
