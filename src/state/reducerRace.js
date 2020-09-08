@@ -8,7 +8,6 @@ import {
 import {
   generateRace,
   generatePastRace,
-  resetRace,
   generateToast,
   raceSponsors,
   cars,
@@ -140,79 +139,37 @@ const reducerRace = (state = {}, { type, payload }) => {
       let stateUpdate = {};
       let expEarned = 0;
 
-      if (race.auto) {
-        const raceIndex = state.races.findIndex(item => item.id === race.id);
-        const timelapse = new Date().getTime() - race.startOriginal;
-        const differenceInRaceResets =
-          ~~(timelapse / track.duration) - (race.resets + 1);
+      const pastRace = generatePastRace(
+        race,
+        car,
+        track,
+        earnings,
+        position,
+        results
+      );
 
-        // TODO: apply maxTime for auto offline earnings
+      const garageCars = Object.assign([], state.garageCars, {
+        [carIndex]: {
+          ...car,
+          race: undefined,
+        },
+      });
 
-        // If differenceInRaceResets > 0 then offline earnings
-        const offlineEarnings = differenceInRaceResets * earnings;
-        earnings += offlineEarnings;
-
-        const resettedRace = resetRace(
-          race,
-          race.resets + 1 + differenceInRaceResets
-        );
-
-        stateUpdate = {
-          races: Object.assign([], state.races, {
-            [raceIndex]: resettedRace,
-          }),
-          ...(offlineEarnings > 0 &&
-            state.timelapse > 10000 && {
-              warnings: {
-                ...state.warnings,
-                offlineEarnings: {
-                  ...state.warnings.offlineEarnings,
-                  value: offlineEarnings,
-                  timelapse: state.timelapse,
-                },
-              },
-            }),
-          tracksStats: Object.assign({}, state.tracksStats, {
-            [track.id]: {
-              ...trackStats,
-            },
-          }),
-        };
-
-        expEarned = 0.1;
-      } else {
-        const pastRace = generatePastRace(
-          race,
-          car,
-          track,
-          earnings,
-          position,
-          results
-        );
-
-        const garageCars = Object.assign([], state.garageCars, {
-          [carIndex]: {
-            ...car,
+      stateUpdate = {
+        races: state.races.filter(item => item.id !== race.id),
+        garageCars: garageCar ? [...garageCars, garageCar] : garageCars,
+        tracksStats: Object.assign({}, state.tracksStats, {
+          [track.id]: {
+            ...trackStats,
             race: undefined,
+            lastRace: pastRace.id,
           },
-        });
+        }),
+        notifications: [pastRace, ...state.notifications],
+        pastRaces: [pastRace, ...state.pastRaces],
+      };
 
-        stateUpdate = {
-          races: state.races.filter(item => item.id !== race.id),
-          garageCars: garageCar ? [...garageCars, garageCar] : garageCars,
-          tracksStats: Object.assign({}, state.tracksStats, {
-            [track.id]: {
-              ...trackStats,
-              race: undefined,
-              lastRace: pastRace.id,
-            },
-          }),
-          notifications: [pastRace, ...state.notifications],
-          pastRaces: [pastRace, ...state.pastRaces],
-        };
-
-        expEarned = 1;
-      }
+      expEarned = 1;
 
       // Initialize active sponsors timestamp if necessary
       const activeMoneySponsors = moneySponsorsCount(sponsors);
