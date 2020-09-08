@@ -69,7 +69,7 @@ export const initialState = {
     storeReset: false,
     offlineEarnings: {
       show: true,
-      value: 0,
+      sponsorsValue: 0,
       timelapse: 0,
       maxTime: 2 * 60 * 60 * 1000,
     },

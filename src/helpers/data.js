@@ -216,7 +216,7 @@ export const generatePastRace = (
   car: car.id,
   dealerCar: car.dealerCar,
   track: track.id,
-  time: new Date().getTime(),
+  timestamp: new Date().getTime(),
   checked: false,
   reward,
   position,
