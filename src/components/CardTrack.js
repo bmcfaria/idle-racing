@@ -75,6 +75,7 @@ const CardTrack = ({ track, locked }) => {
           race={currentRace}
           label
           car={car}
+          showSeconds
         />
       )}
       <CardTrackContent

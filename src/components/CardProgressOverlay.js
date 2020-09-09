@@ -10,6 +10,7 @@ const CardProgressOverlay = ({
   label,
   car,
   circleSize = '116px',
+  showSeconds,
   ...props
 }) => {
   const location = useLocation();
@@ -51,6 +52,7 @@ const CardProgressOverlay = ({
         race={race}
         size={circleSize}
         textColor={colors.darkGray}
+        showSeconds={showSeconds}
       />
       {car && (
         <Text textAlign="center" color={colors.darkGray} fontSize="14px">

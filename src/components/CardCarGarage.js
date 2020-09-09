@@ -32,6 +32,7 @@ const CardCarGarage = ({ car, showAttributes, ...props }) => {
           label
           borderRadius="16px"
           zIndex="1"
+          showSeconds
         />
       )}
     </CardCarSmall>

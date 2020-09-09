@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { CircularProgressLabel } from '@chakra-ui/core';
+import { CircularProgressLabel, Box, Text } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
 import { CustomCircularProgress } from './CustomCircularProgress';
 import { formatDuration } from '../helpers/utils';
 
-const CardProgressCircle = ({ race, textColor = 'black', ...props }) => {
+const CardProgressCircle = ({
+  race,
+  textColor = 'black',
+  showSeconds,
+  ...props
+}) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(race.duration);
   const progress = ((race.duration - value) * 100) / race.duration;
@@ -38,7 +43,12 @@ const CardProgressCircle = ({ race, textColor = 'black', ...props }) => {
     >
       {
         <CircularProgressLabel color={textColor}>
-          {formatDuration(value, value / 1000 / 60 > 1 ? 1 : 0)}
+          <Box>
+            <Text>{formatDuration(value)}</Text>
+            {showSeconds && value > 60 * 1000 && (
+              <Text fontSize="16px">({~~(value / 1000)}s)</Text>
+            )}
+          </Box>
         </CircularProgressLabel>
       }
     </CustomCircularProgress>
