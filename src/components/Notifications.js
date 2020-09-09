@@ -41,13 +41,13 @@ const Notifications = () => {
 
   useEffect(() => {
     const countDown = setInterval(() => {
-      races.forEach(race => {
-        dispatch(checkEndRaceAction(race.id));
-      });
-
       if (sponsorsPassiveIncome > 0) {
         dispatch(checkSponsorsAction);
       }
+
+      races.forEach(race => {
+        dispatch(checkEndRaceAction(race.id));
+      });
     }, 500);
 
     return () => {
