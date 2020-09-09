@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Flex, Text, Box } from '@chakra-ui/core';
+import { Flex, Text, Box, CircularProgress } from '@chakra-ui/core';
 import { colors, zIndex } from '../helpers/theme';
 import Modal from './Modal';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,6 +7,7 @@ import {
   offlineEarningsSelector,
   raceSponsorsActiveSelector,
   pastRacesSelector,
+  racesSelector,
 } from '../state/selectors';
 import { useLocation, useHistory } from 'react-router-dom';
 import { clearOfflineEarningsAction } from '../state/actions';
@@ -89,9 +90,11 @@ const OfflineEarningsNotification = props => {
   const dispatch = useDispatch();
   const offlineEarnings = useSelector(offlineEarningsSelector);
   const sponsors = useSelector(raceSponsorsActiveSelector);
+  const races = useSelector(racesSelector);
   const pastRaces = useSelector(pastRacesSelector);
   const location = useLocation();
   const history = useHistory();
+
   const showModal = location.state?.offlineEarnings;
 
   const totalSeconds = offlineEarnings.timelapse / 1000;
@@ -231,29 +234,67 @@ const OfflineEarningsNotification = props => {
           bg={colors.orange}
         />
 
-        <Box w="100%" h="2px" marginTop="4px" bg={colors.darkGray} />
-
-        {offlineRaces.length > 0 && (
-          <Flex w="100%" alignItems="flex-end">
-            <Text fontSize="14px" marginLeft="20px" color={colors.darkGray}>
-              Name
-            </Text>
-            <Text flexGrow="1" textAlign="center">
-              Races
-            </Text>
-            <Text fontSize="14px" marginRight="20px" color={colors.darkGray}>
-              Pos
-            </Text>
-          </Flex>
+        {/* If there's no offline (finished) races but there are active races, 
+            then no need to show this section */}
+        {!(offlineRaces.length === 0 && races.length > 0) && (
+          <>
+            <Box w="100%" h="2px" marginTop="4px" bg={colors.darkGray} />
+            {offlineRaces.length > 0 && (
+              <Flex w="100%" alignItems="flex-end">
+                <Text fontSize="14px" marginLeft="20px" color={colors.darkGray}>
+                  Name
+                </Text>
+                <Text flexGrow="1" textAlign="center">
+                  Races
+                </Text>
+                <Text
+                  fontSize="14px"
+                  marginRight="20px"
+                  color={colors.darkGray}
+                >
+                  Pos
+                </Text>
+              </Flex>
+            )}
+            {offlineRaces.length === 0 && (
+              <Text textAlign="center">No races</Text>
+            )}
+            {offlineRaces.map((race, index) => (
+              <RaceRow
+                race={race}
+                {...(index % 2 === 1 && { bg: colors.lightGray })}
+                key={race.id}
+              />
+            ))}
+          </>
         )}
-        {offlineRaces.length === 0 && <Text textAlign="center">No races</Text>}
-        {offlineRaces.map((race, index) => (
-          <RaceRow
-            race={race}
-            {...(index % 2 === 1 && { bg: colors.lightGray })}
-            key={race.id}
-          />
-        ))}
+
+        {races.length > 0 && (
+          <>
+            <Box w="100%" h="2px" marginTop="4px" bg={colors.darkGray} />
+            <Flex alignItems="center">
+              <CircularProgress
+                w="14px"
+                h="14px"
+                marginRight="4px"
+                isIndeterminate
+                capIsRound
+                color={colors.darkGray}
+              />
+              <Text flexGrow="1" textAlign="center">
+                {`${races.length} active race${races.length > 1 ? 's' : ''}`}
+              </Text>
+              <CircularProgress
+                w="14px"
+                h="14px"
+                marginLeft="4px"
+                isIndeterminate
+                capIsRound
+                color={colors.darkGray}
+              />
+            </Flex>
+          </>
+        )}
       </Flex>
     </Modal>
   );
