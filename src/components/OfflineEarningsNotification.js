@@ -276,7 +276,8 @@ const OfflineEarningsNotification = props => {
               <CircularProgress
                 w="14px"
                 h="14px"
-                marginRight="4px"
+                marginLeft="1px"
+                marginRight="5px"
                 isIndeterminate
                 capIsRound
                 color={colors.darkGray}
@@ -287,7 +288,8 @@ const OfflineEarningsNotification = props => {
               <CircularProgress
                 w="14px"
                 h="14px"
-                marginLeft="4px"
+                marginLeft="5px"
+                marginRight="1px"
                 isIndeterminate
                 capIsRound
                 color={colors.darkGray}
