@@ -24,7 +24,7 @@ const Row = ({ index, car, playerCarId, prize }) => (
       {index + 1}
     </Text>
     <Text marginLeft="2px">- {car ? car.name : '[selled car]'}</Text>
-    <Text marginLeft="auto">{formatMoney(prize)}</Text>
+    <Text marginLeft="auto">${formatMoney(prize)}</Text>
   </Flex>
 );
 
