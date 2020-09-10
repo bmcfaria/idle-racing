@@ -7,6 +7,7 @@ import {
   lockedSelector,
   trackStatsSelector,
   lockedRaceEventsSelector,
+  tracksStatsSelector,
 } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
@@ -70,15 +71,15 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const location = useLocation();
   const history = useHistory();
   const tracks = useSelector(tracksSelector);
+  const tracksStats = useSelector(tracksStatsSelector);
   const eventPassiveIncome = usePassiveIncome(eventType);
 
   const lockedRaceEvents = useSelector(lockedRaceEventsSelector);
   const locked =
     useSelector(lockedSelector)?.race[eventType] !== false && lockedRaceEvents;
 
-  const eventRaces = tracks
-    .filter(item => item.category === eventType)
-    .slice(0, 9);
+  const eventRacesAll = tracks.filter(item => item.category === eventType);
+  const eventRaces = eventRacesAll.slice(0, 9);
 
   const isPreviousUnlocked = usePreviousUnlockedTrackChecker(eventRaces);
 
@@ -94,14 +95,36 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const secondaryText =
     (locked && 'Locked') ||
     (eventPassiveIncome > 0 && `Sponsor: $${eventPassiveIncome} /s`) ||
-    'No sponsors';
+    '(No sponsors)';
+
+  const tracksStatsState = eventRacesAll.reduce(
+    (result, track) => ({
+      everRaced: result.everRaced || !!tracksStats[track.id]?.raced,
+      race: result.race && !!tracksStats[track.id]?.raced,
+      won: result.won && tracksStats[track.id]?.won > 0,
+      won100: result.won100 && tracksStats[track.id]?.won >= 100,
+    }),
+    { everRaced: false, race: true, won: true, won100: true }
+  );
+
+  const secondaryColor =
+    (tracksStatsState.won100 && colors.lightBlue) ||
+    (tracksStatsState.won && colors.green) ||
+    (tracksStatsState.race && colors.orange) ||
+    colors.lightGray;
 
   return (
     <CardBig
       onClick={onClick}
       primaryText={capitalize(eventName)}
       secondaryText={secondaryText}
-      theme={{ primaryBg: colors.darkGray, primaryColor: colors.white }}
+      theme={{
+        primaryBg: tracksStatsState.everRaced
+          ? colors.darkGray
+          : colors.lightGray,
+        secondaryBg: secondaryColor,
+        primaryColor: tracksStatsState.everRaced ? colors.white : 'black',
+      }}
       position="relative"
       {...props}
     >

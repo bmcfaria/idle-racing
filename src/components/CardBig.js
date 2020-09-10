@@ -8,7 +8,11 @@ const CardBig = ({
   onClick,
   primaryText,
   secondaryText,
-  theme = { primaryBg: colors.orange, primaryColor: 'black' },
+  theme = {
+    primaryBg: colors.orange,
+    secondaryBg: colors.lightGray,
+    primaryColor: 'black',
+  },
   ...props
 }) => (
   <Button
@@ -25,7 +29,7 @@ const CardBig = ({
     <Flex
       w="318px"
       marginTop="1px"
-      bg={colors.lightGray}
+      bg={theme.secondaryBg}
       borderRadius="16px"
       direction="column"
       alignItems="center"
