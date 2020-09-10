@@ -100,17 +100,17 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const tracksStatsState = eventRacesAll.reduce(
     (result, track) => ({
       everRaced: result.everRaced || !!tracksStats[track.id]?.raced,
-      race: result.race && !!tracksStats[track.id]?.raced,
+      raced: result.raced && !!tracksStats[track.id]?.raced,
       won: result.won && tracksStats[track.id]?.won > 0,
       won100: result.won100 && tracksStats[track.id]?.won >= 100,
     }),
-    { everRaced: false, race: true, won: true, won100: true }
+    { everRaced: false, raced: true, won: true, won100: true }
   );
 
   const secondaryColor =
     (tracksStatsState.won100 && colors.lightBlue) ||
     (tracksStatsState.won && colors.green) ||
-    (tracksStatsState.race && colors.orange) ||
+    (tracksStatsState.raced && colors.orange) ||
     colors.lightGray;
 
   return (

@@ -98,7 +98,7 @@ const reducerRace = (state = {}, { type, payload }) => {
 
       const trackStats = {
         ...(state.tracksStats[track.id] || {}),
-        raced: true,
+        raced: ~~state.tracksStats[track.id]?.raced + 1,
         won: ~~state.tracksStats[track.id]?.won + ~~(position === 1),
       };
 
