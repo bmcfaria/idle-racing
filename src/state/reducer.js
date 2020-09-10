@@ -68,7 +68,6 @@ export const initialState = {
   warnings: {
     storeReset: false,
     offlineEarnings: {
-      show: true,
       sponsorsValue: 0,
       timelapse: 0,
       maxTime: 2 * 60 * 60 * 1000,

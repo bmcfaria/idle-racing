@@ -319,7 +319,7 @@ const reducerRace = (state = {}, { type, payload }) => {
             offlineEarnings: {
               ...state.warnings.offlineEarnings,
               sponsorsValue: moneyEarned,
-              timelapse: state.timelapse,
+              timelapse,
             },
           },
         }),
