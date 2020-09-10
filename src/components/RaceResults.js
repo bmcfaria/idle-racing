@@ -10,6 +10,7 @@ import {
 import { colors } from '../helpers/theme';
 import Button from './Button';
 import { useRacePrizesWithBuff } from '../helpers/hooks';
+import { formatMoney } from '../helpers/utils';
 
 const Row = ({ index, car, playerCarId, prize }) => (
   <Flex
@@ -23,7 +24,7 @@ const Row = ({ index, car, playerCarId, prize }) => (
       {index + 1}
     </Text>
     <Text marginLeft="2px">- {car ? car.name : '[selled car]'}</Text>
-    <Text marginLeft="auto">{prize}</Text>
+    <Text marginLeft="auto">{formatMoney(prize)}</Text>
   </Flex>
 );
 
