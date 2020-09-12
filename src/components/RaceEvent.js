@@ -78,7 +78,7 @@ const SponsorReward = ({ sponsor, ...props }) => {
   return (
     <Flex
       borderRadius="16px"
-      w="160px"
+      minW="160px"
       h="48px"
       {...(!active && {
         bg: colors.lightGray,
@@ -201,15 +201,11 @@ const Sponsors = ({ event, ...props }) => {
       secondaryLine={sponsors.map(sponsor => (
         <SponsorRewardIcon sponsor={sponsor} key={sponsor.id} />
       ))}
-      padding="64px 8px 8px 0"
+      padding="8px 0 4px 0"
       {...props}
     >
       {sponsors.map(sponsor => (
-        <SponsorReward
-          margin="16px 0 0 8px"
-          sponsor={sponsor}
-          key={sponsor.id}
-        />
+        <SponsorReward margin="4px 4px" sponsor={sponsor} key={sponsor.id} />
       ))}
     </CollapsiblePanel>
   );

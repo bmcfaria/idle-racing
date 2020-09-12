@@ -13,7 +13,7 @@ const CollapsiblePanel = ({
   isDisabled,
   bg = colors.darkGray,
   color = colors.white,
-  padding = '32px 8px 8px 0',
+  padding = '8px 0 8px 0',
   open: defaultOpen,
   ...props
 }) => {
@@ -26,7 +26,8 @@ const CollapsiblePanel = ({
   return (
     <Flex
       borderRadius="16px"
-      bg={bg}
+      bg={colors.white}
+      border={`1px solid ${colors.darkGray}`}
       minH={secondaryLine ? '64px' : '32px'}
       margin="0 auto"
       position="relative"
@@ -35,14 +36,12 @@ const CollapsiblePanel = ({
       {...props}
     >
       <Button
-        w="100%"
+        w="calc(100% + 2px)"
         wrap="wrap"
         borderRadius="16px"
         padding="0 16px"
         color={color}
-        top="0"
-        left="0"
-        position="absolute"
+        margin="-1px"
         bg={bg}
         minH={secondaryLine ? '64px' : '32px'}
         alignItems="center"
@@ -71,11 +70,8 @@ const CollapsiblePanel = ({
       </Button>
       {open && (
         <Box
-          w="calc(100% - 2px)"
-          margin="0 auto 1px "
           padding={padding}
           borderRadius="16px"
-          bg={colors.white}
           display="grid"
           gridTemplateColumns="repeat( auto-fit, minmax(160px, 1fr) )"
         >
