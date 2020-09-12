@@ -76,55 +76,111 @@ const SponsorReward = ({ sponsor, ...props }) => {
   const text = sponsorEntryText(sponsor);
 
   return (
-    <Box
+    <Flex
       borderRadius="16px"
-      border={`1px solid ${active ? colors.darkGray : colors.lightGray}`}
+      w="160px"
+      h="48px"
+      {...(!active && {
+        bg: colors.lightGray,
+      })}
+      border={`1px solid ${colors.darkGray}`}
       {...props}
     >
-      <Flex w="160px" h="32px" borderRadius="16px" margin="-1px 0 0 -1px">
-        <Flex
-          w="32px"
-          h="32px"
-          borderRadius="16px"
-          color={active ? colors.white : colors.darkGray}
-          {...(active && { bg: colors.darkGray })}
-        >
-          {sponsor.reward !== 'mechanic' && (
-            <Text
-              w="100%"
-              h="100%"
-              textAlign="center"
-              lineHeight="32px"
-              fontSize="32px"
-            >
-              $
-            </Text>
-          )}
-          {sponsor.reward === 'mechanic' && (
-            <Box margin="auto" as={MechanicIcon} />
-          )}
-        </Flex>
+      <Flex
+        w="40px"
+        h="48px"
+        {...(active && {
+          bg: colors.darkGray,
+        })}
+        borderRadius="16px 0 0 16px"
+        margin="-1px 0 0 -1px"
+      >
+        <SponsorRewardIcon
+          sponsor={sponsor}
+          margin="auto"
+          offlineColor={colors.darkGray}
+          offlineBorderColor={colors.lightGray}
+        />
+      </Flex>
+      <Flex
+        maxW="119px"
+        flexGrow="1"
+        direction="column"
+        justifyContent="space-around"
+        color={active ? 'black' : colors.darkGray}
+      >
         <Text
-          h="100%"
-          flexGrow="1"
           textAlign="center"
-          lineHeight="32px"
-          margin="-1px 0 0 -1px"
+          fontSize="16px"
+          lineHeight="16px"
+          whiteSpace="nowrap"
+          overflow="hidden"
+          textOverflow="ellipsis"
         >
           {text}
         </Text>
+        {track && (
+          <Text
+            textAlign="center"
+            fontSize="14px"
+            lineHeight="14px"
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+          >
+            "{track?.name}"
+          </Text>
+        )}
+        {car && (
+          <Text
+            textAlign="center"
+            fontSize="14px"
+            lineHeight="14px"
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+          >
+            "{car?.name}"
+          </Text>
+        )}
       </Flex>
-      {track && (
-        <Text textAlign="center" fontSize="14px">
-          on "{track?.name}"
+    </Flex>
+  );
+};
+
+const SponsorRewardIcon = ({
+  sponsor,
+  offlineColor = colors.white,
+  offlineBorderColor = colors.white,
+  ...props
+}) => {
+  const active = !!useSelector(raceSponsorsActiveSelector)?.[sponsor.id];
+  return (
+    <Flex
+      w="24px"
+      h="24px"
+      borderRadius="12px"
+      margin="0 2px"
+      color={active ? colors.darkGray : offlineColor}
+      {...(active && { bg: colors.white })}
+      {...(!active && { border: `1px solid ${offlineBorderColor}` })}
+      {...props}
+    >
+      {sponsor.reward !== 'mechanic' && (
+        <Text
+          w="100%"
+          h="100%"
+          textAlign="center"
+          lineHeight="22px"
+          fontSize="22px"
+        >
+          $
         </Text>
       )}
-      {car && (
-        <Text textAlign="center" fontSize="14px">
-          with "{car?.name}"
-        </Text>
+      {sponsor.reward === 'mechanic' && (
+        <Box maxW="16px" maxH="16px" margin="auto" as={MechanicIcon} />
       )}
-    </Box>
+    </Flex>
   );
 };
 
@@ -142,11 +198,18 @@ const Sponsors = ({ event, ...props }) => {
         'Sponsors' +
         (eventPassiveIncome > 0 ? ` ($${eventPassiveIncome} /s)` : '')
       }
-      open
+      secondaryLine={sponsors.map(sponsor => (
+        <SponsorRewardIcon sponsor={sponsor} key={sponsor.id} />
+      ))}
+      padding="64px 8px 8px 0"
       {...props}
     >
-      {sponsors.map((sponsor, index) => (
-        <SponsorReward margin="16px 0 0 8px" sponsor={sponsor} key={index} />
+      {sponsors.map(sponsor => (
+        <SponsorReward
+          margin="16px 0 0 8px"
+          sponsor={sponsor}
+          key={sponsor.id}
+        />
       ))}
     </CollapsiblePanel>
   );

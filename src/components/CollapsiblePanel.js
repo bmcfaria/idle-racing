@@ -9,6 +9,7 @@ const CollapsiblePanel = ({
   textWhenOpen,
   wrap,
   children,
+  secondaryLine,
   isDisabled,
   bg = colors.darkGray,
   color = colors.white,
@@ -26,7 +27,7 @@ const CollapsiblePanel = ({
     <Flex
       borderRadius="16px"
       bg={bg}
-      minH="32px"
+      minH={secondaryLine ? '64px' : '32px'}
       margin="0 auto"
       position="relative"
       direction="column"
@@ -43,22 +44,27 @@ const CollapsiblePanel = ({
         left="0"
         position="absolute"
         bg={bg}
-        minH="32px"
+        minH={secondaryLine ? '64px' : '32px'}
         alignItems="center"
         justifyContent="space-between"
         isDisabled={isDisabled}
         onClick={toggle}
       >
         <Box
-          w="16px"
-          h="16px"
+          w={secondaryLine ? '24px' : '16px'}
+          h={secondaryLine ? '24px' : '16px'}
           {...(!open && { transform: 'rotate(180deg)' })}
           as={Triange}
         />
-        <Text>{open && textWhenOpen ? textWhenOpen : text}</Text>
+        <Box>
+          <Text minH="32px" lineHeight="32px">
+            {open && textWhenOpen ? textWhenOpen : text}
+          </Text>
+          {secondaryLine && <Flex minH="32px">{secondaryLine}</Flex>}
+        </Box>
         <Box
-          w="16px"
-          h="16px"
+          w={secondaryLine ? '24px' : '16px'}
+          h={secondaryLine ? '24px' : '16px'}
           {...(!open && { transform: 'rotate(180deg)' })}
           as={Triange}
         />
