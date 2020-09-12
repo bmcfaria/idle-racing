@@ -20,6 +20,7 @@ import {
   useDynamicCardContainerWidth,
   usePreviousUnlockedTrackChecker,
   usePassiveIncome,
+  useEventTracksStatsState,
 } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
@@ -68,7 +69,7 @@ const TracksContainer = ({ tracks, locked, ...props }) => {
   );
 };
 
-const SponsorReward = ({ sponsor, ...props }) => {
+const SponsorReward = ({ sponsor, activeBg = colors.darkGray, ...props }) => {
   const track = useSelector(trackSelector(sponsor.track));
   const car = useSelector(dealerCarSelector(sponsor.car));
   const active = !!useSelector(raceSponsorsActiveSelector)?.[sponsor.id];
@@ -90,7 +91,7 @@ const SponsorReward = ({ sponsor, ...props }) => {
         w="40px"
         h="48px"
         {...(active && {
-          bg: colors.darkGray,
+          bg: activeBg,
         })}
         borderRadius="16px 0 0 16px"
         margin="-1px 0 0 -1px"
@@ -98,8 +99,8 @@ const SponsorReward = ({ sponsor, ...props }) => {
         <SponsorRewardIcon
           sponsor={sponsor}
           margin="auto"
-          offlineColor={colors.darkGray}
-          offlineBorderColor={colors.lightGray}
+          nonActiveColor={colors.darkGray}
+          nonActiveBorderColor={colors.lightGray}
         />
       </Flex>
       <Flex
@@ -150,8 +151,10 @@ const SponsorReward = ({ sponsor, ...props }) => {
 
 const SponsorRewardIcon = ({
   sponsor,
-  offlineColor = colors.white,
-  offlineBorderColor = colors.white,
+  color = colors.darkGray,
+  activeBg = colors.white,
+  nonActiveColor = colors.white,
+  nonActiveBorderColor = colors.white,
   ...props
 }) => {
   const active = !!useSelector(raceSponsorsActiveSelector)?.[sponsor.id];
@@ -161,9 +164,9 @@ const SponsorRewardIcon = ({
       h="24px"
       borderRadius="12px"
       margin="0 2px"
-      color={active ? colors.darkGray : offlineColor}
-      {...(active && { bg: colors.white })}
-      {...(!active && { border: `1px solid ${offlineBorderColor}` })}
+      color={active ? color : nonActiveColor}
+      {...(active && { bg: activeBg })}
+      {...(!active && { border: `1px solid ${nonActiveBorderColor}` })}
       {...props}
     >
       {sponsor.reward !== 'mechanic' && (
@@ -188,6 +191,21 @@ const Sponsors = ({ event, ...props }) => {
   const sponsors = useSelector(raceSponsorsSelector).filter(
     sponsor => sponsor.event === event
   );
+  const tracksStatsState = useEventTracksStatsState(event);
+
+  const bgColor =
+    (tracksStatsState.won100 && colors.lightBlue) ||
+    (tracksStatsState.won && colors.green) ||
+    (tracksStatsState.raced && colors.orange) ||
+    (tracksStatsState.everRaced && colors.darkGray) ||
+    colors.lightGray;
+
+  const color =
+    (tracksStatsState.won100 && colors.darkGray) ||
+    (tracksStatsState.won && colors.darkGray) ||
+    (tracksStatsState.raced && colors.darkGray) ||
+    (tracksStatsState.everRaced && colors.white) ||
+    colors.darkGray;
 
   const eventPassiveIncome = usePassiveIncome(event);
 
@@ -199,9 +217,18 @@ const Sponsors = ({ event, ...props }) => {
         (eventPassiveIncome > 0 ? ` ($${eventPassiveIncome} /s)` : '')
       }
       secondaryLine={sponsors.map(sponsor => (
-        <SponsorRewardIcon sponsor={sponsor} key={sponsor.id} />
+        <SponsorRewardIcon
+          sponsor={sponsor}
+          color={bgColor}
+          activeBg={color}
+          nonActiveColor={color}
+          nonActiveBorderColor={color}
+          key={sponsor.id}
+        />
       ))}
       padding="8px 0 4px 0"
+      bg={bgColor}
+      color={color}
       {...props}
     >
       {sponsors.map(sponsor => (

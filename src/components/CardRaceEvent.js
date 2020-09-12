@@ -7,7 +7,6 @@ import {
   lockedSelector,
   trackStatsSelector,
   lockedRaceEventsSelector,
-  tracksStatsSelector,
 } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
@@ -18,6 +17,7 @@ import { capitalize } from '../helpers/utils';
 import {
   usePreviousUnlockedTrackChecker,
   usePassiveIncome,
+  useEventTracksStatsState,
 } from '../helpers/hooks';
 
 const TrackItem = ({ track, active = true, ...props }) => {
@@ -71,15 +71,16 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const location = useLocation();
   const history = useHistory();
   const tracks = useSelector(tracksSelector);
-  const tracksStats = useSelector(tracksStatsSelector);
+  const tracksStatsState = useEventTracksStatsState(eventType);
   const eventPassiveIncome = usePassiveIncome(eventType);
 
   const lockedRaceEvents = useSelector(lockedRaceEventsSelector);
   const locked =
     useSelector(lockedSelector)?.race[eventType] !== false && lockedRaceEvents;
 
-  const eventRacesAll = tracks.filter(item => item.category === eventType);
-  const eventRaces = eventRacesAll.slice(0, 9);
+  const eventRaces = tracks
+    .filter(item => item.category === eventType)
+    .slice(0, 9);
 
   const isPreviousUnlocked = usePreviousUnlockedTrackChecker(eventRaces);
 
@@ -96,16 +97,6 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
     (locked && 'Locked') ||
     (eventPassiveIncome > 0 && `Sponsor: $${eventPassiveIncome} /s`) ||
     '(No sponsors)';
-
-  const tracksStatsState = eventRacesAll.reduce(
-    (result, track) => ({
-      everRaced: result.everRaced || !!tracksStats[track.id]?.raced,
-      raced: result.raced && !!tracksStats[track.id]?.raced,
-      won: result.won && tracksStats[track.id]?.won > 0,
-      won100: result.won100 && tracksStats[track.id]?.won >= 100,
-    }),
-    { everRaced: false, raced: true, won: true, won100: true }
-  );
 
   const secondaryColor =
     (tracksStatsState.won100 && colors.lightBlue) ||

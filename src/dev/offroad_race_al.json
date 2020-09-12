@@ -1,0 +1,993 @@
+{
+  "autoRace": false,
+  "lockedRaceEvents": false,
+  "garageCars": [
+    {
+      "id": "3269da45-65b9-4472-8e8a-32b937519ab1",
+      "name": "Basic",
+      "type": "fwd",
+      "acc": {
+        "base": 1,
+        "unit": 1,
+        "max": 2,
+        "basePrice": 50,
+        "value": 2,
+        "upgrade": 1,
+        "upgradeValue": 3,
+        "price": 83,
+        "priceRaw": 83
+      },
+      "spd": {
+        "base": 1,
+        "unit": 1,
+        "max": 2,
+        "basePrice": 50,
+        "value": 2,
+        "upgrade": 1,
+        "upgradeValue": 3,
+        "price": 83,
+        "priceRaw": 83
+      },
+      "hnd": {
+        "base": 1,
+        "unit": 1,
+        "max": 2,
+        "basePrice": 50,
+        "value": 2,
+        "upgrade": 1,
+        "upgradeValue": 3,
+        "price": 83,
+        "priceRaw": 83
+      },
+      "basePrice": 250,
+      "price": 850,
+      "dealerCar": "bfd0a683-708e-4055-8914-6fe4521b140a",
+      "brand": "compact",
+      "timestamp": 1599937507139,
+      "reward": false
+    },
+    {
+      "id": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+      "name": "Offroad king",
+      "type": "4x4",
+      "acc": {
+        "base": 7,
+        "unit": 1,
+        "max": 4,
+        "basePrice": 690,
+        "value": 7,
+        "upgrade": 0,
+        "upgradeValue": 8,
+        "price": 1034,
+        "priceRaw": 1034
+      },
+      "spd": {
+        "base": 5,
+        "unit": 1,
+        "max": 2,
+        "basePrice": 690,
+        "value": 6,
+        "upgrade": 1,
+        "upgradeValue": 7,
+        "price": 1308,
+        "priceRaw": 1308
+      },
+      "hnd": {
+        "base": 7,
+        "unit": 1,
+        "max": 4,
+        "basePrice": 690,
+        "value": 7,
+        "upgrade": 0,
+        "upgradeValue": 8,
+        "price": 1034,
+        "priceRaw": 1034
+      },
+      "basePrice": 3450,
+      "price": 3650,
+      "dealerCar": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+      "brand": "offroad",
+      "timestamp": 1599938561761,
+      "reward": false
+    }
+  ],
+  "garageSlots": 2,
+  "tracksStats": {
+    "c92fb1c7-2902-426c-b479-90d29c933e12": {
+      "raced": 2,
+      "won": 1,
+      "lastRace": "591cd47e-ae91-4ff1-9038-3105b455f317"
+    },
+    "9b67ac96-1094-4362-af3f-5855dae643a2": { "raced": 1, "won": 1 },
+    "19065c6a-d554-45c5-bee6-2d14ed1169a3": { "raced": 1, "won": 1 },
+    "c57480e9-2537-412b-a625-3146965b8a91": { "raced": 2, "won": 1 },
+    "e700533e-6a7b-42d2-a173-a2c2f3a532f8": { "raced": 1, "won": 0 }
+  },
+  "money": 10000008063,
+  "notifications": [
+    {
+      "id": "f8f44486-625b-4f8f-b56d-7bd35901f0d6",
+      "race": "c6356d86-c374-42d5-991b-85f68c7c31f5",
+      "car": "3269da45-65b9-4472-8e8a-32b937519ab1",
+      "dealerCar": "bfd0a683-708e-4055-8914-6fe4521b140a",
+      "track": "e700533e-6a7b-42d2-a173-a2c2f3a532f8",
+      "timestamp": 1599939217970,
+      "checked": false,
+      "reward": 0,
+      "position": 9,
+      "results": [
+        {
+          "id": "4f387d8b-3cf0-4983-b349-74c8210ca1ac",
+          "name": "EV cleandirt",
+          "score": 15.600000798932228
+        },
+        {
+          "id": "237d635f-68b3-479a-9643-1848ea7b3485",
+          "name": "EV supercar",
+          "score": 15.00000009399891
+        },
+        {
+          "id": "d22301f8-fe6a-4e61-822c-43fa053c6a6b",
+          "name": "Super muscle",
+          "score": 12.600000615688652
+        },
+        {
+          "id": "c8065d5e-f5da-4fcf-ac86-86ed08ec1527",
+          "name": "Truck speed",
+          "score": 12.3000005726073
+        },
+        {
+          "id": "c8065d5e-f5da-4fcf-ac86-86ed08ec1527",
+          "name": "Truck speed",
+          "score": 12.300000261058404
+        },
+        {
+          "id": "c8065d5e-f5da-4fcf-ac86-86ed08ec1527",
+          "name": "Truck speed",
+          "score": 12.300000045401436
+        },
+        {
+          "id": "88e4396b-d676-459c-be43-da7f56debc04",
+          "name": "Pickup monster",
+          "score": 11.100000442405959
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 6.600000280340298
+        },
+        {
+          "id": "3269da45-65b9-4472-8e8a-32b937519ab1",
+          "name": "Basic",
+          "score": 4.800000605526109
+        }
+      ]
+    },
+    {
+      "id": "0fd15f14-ac73-4785-b641-9a57b79da8ce",
+      "race": "36265bd9-ccc8-4075-a7b9-0facddd32236",
+      "car": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+      "dealerCar": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+      "track": "c57480e9-2537-412b-a625-3146965b8a91",
+      "timestamp": 1599939087050,
+      "checked": false,
+      "reward": 11250,
+      "position": 1,
+      "results": [
+        {
+          "id": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+          "name": "Offroad king",
+          "score": 12.500000988754675
+        },
+        {
+          "id": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+          "name": "Offroad king",
+          "score": 11.500000731397611
+        },
+        {
+          "id": "c395ddd3-4d03-4e66-904c-895683e93416",
+          "name": "Offroad mud",
+          "score": 9.800000681223064
+        },
+        {
+          "id": "dc3c7bc6-956a-49b2-a2f3-0a592ce8dfc2",
+          "name": "EV cityboy",
+          "score": 8.90000057466748
+        },
+        {
+          "id": "88e4396b-d676-459c-be43-da7f56debc04",
+          "name": "Pickup monster",
+          "score": 8.900000248546844
+        },
+        {
+          "id": "89de376a-9648-458b-a259-952b87b622dc",
+          "name": "Offroad dirt",
+          "score": 7.2000006052098415
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 7.200000158005885
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 6.100000366750115
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 5.300000683491752
+        }
+      ]
+    },
+    {
+      "id": "3e124d2c-66db-47e3-a248-d0800e6d8fd0",
+      "race": "b994e19f-3095-4255-a0c7-b85709c0acdb",
+      "car": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+      "dealerCar": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+      "track": "c57480e9-2537-412b-a625-3146965b8a91",
+      "timestamp": 1599938978612,
+      "checked": false,
+      "reward": 5625,
+      "position": 2,
+      "results": [
+        {
+          "id": "237d635f-68b3-479a-9643-1848ea7b3485",
+          "name": "EV supercar",
+          "score": 13.200000369312106
+        },
+        {
+          "id": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+          "name": "Offroad king",
+          "score": 12.400000956421701
+        },
+        {
+          "id": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+          "name": "Offroad king",
+          "score": 10.600000150514562
+        },
+        {
+          "id": "c395ddd3-4d03-4e66-904c-895683e93416",
+          "name": "Offroad mud",
+          "score": 9.800000851119847
+        },
+        {
+          "id": "cc7b7f79-a0e2-45de-9924-26d49588be83",
+          "name": "Super round",
+          "score": 9.100000719562637
+        },
+        {
+          "id": "cc7b7f79-a0e2-45de-9924-26d49588be83",
+          "name": "Super round",
+          "score": 8.90000011168432
+        },
+        {
+          "id": "cc7b7f79-a0e2-45de-9924-26d49588be83",
+          "name": "Super round",
+          "score": 8.200000020618257
+        },
+        {
+          "id": "89de376a-9648-458b-a259-952b87b622dc",
+          "name": "Offroad dirt",
+          "score": 7.100000348967008
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 6.300000613914636
+        }
+      ]
+    },
+    {
+      "id": "6ed77f9b-5b4e-4125-bfeb-209814fa8a3b",
+      "race": "f457d9cb-2715-4f39-b82e-5161c0260a22",
+      "car": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+      "dealerCar": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+      "track": "19065c6a-d554-45c5-bee6-2d14ed1169a3",
+      "timestamp": 1599938780318,
+      "checked": false,
+      "reward": 6000,
+      "position": 1,
+      "results": [
+        {
+          "id": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+          "name": "Offroad king",
+          "score": 13.400000089624898
+        },
+        {
+          "id": "dc3c7bc6-956a-49b2-a2f3-0a592ce8dfc2",
+          "name": "EV cityboy",
+          "score": 11.000000076430094
+        },
+        {
+          "id": "dc3c7bc6-956a-49b2-a2f3-0a592ce8dfc2",
+          "name": "EV cityboy",
+          "score": 10.700000394855332
+        },
+        {
+          "id": "c395ddd3-4d03-4e66-904c-895683e93416",
+          "name": "Offroad mud",
+          "score": 10.500000948522697
+        },
+        {
+          "id": "c395ddd3-4d03-4e66-904c-895683e93416",
+          "name": "Offroad mud",
+          "score": 9.600000643136744
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 8.000000206838074
+        },
+        {
+          "id": "89de376a-9648-458b-a259-952b87b622dc",
+          "name": "Offroad dirt",
+          "score": 7.7000006818744335
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 7.700000518429605
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 7.100000058749271
+        }
+      ]
+    },
+    {
+      "id": "e152741e-66b3-4984-b286-05fa11710dcd",
+      "race": "9668fefb-6848-462c-ad42-63e3b53c0c6a",
+      "car": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+      "dealerCar": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+      "track": "9b67ac96-1094-4362-af3f-5855dae643a2",
+      "timestamp": 1599938596755,
+      "checked": false,
+      "reward": 2250,
+      "position": 1,
+      "results": [
+        {
+          "id": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+          "name": "Offroad king",
+          "score": 11.100000097081516
+        },
+        {
+          "id": "c8065d5e-f5da-4fcf-ac86-86ed08ec1527",
+          "name": "Truck speed",
+          "score": 8.900000187976012
+        },
+        {
+          "id": "c395ddd3-4d03-4e66-904c-895683e93416",
+          "name": "Offroad mud",
+          "score": 8.100000733749194
+        },
+        {
+          "id": "89de376a-9648-458b-a259-952b87b622dc",
+          "name": "Offroad dirt",
+          "score": 6.800000744598244
+        },
+        {
+          "id": "89de376a-9648-458b-a259-952b87b622dc",
+          "name": "Offroad dirt",
+          "score": 6.800000564259875
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 5.400000577324005
+        },
+        {
+          "id": "61a059e3-b499-4d3e-b1f9-98e7f0a8eefb",
+          "name": "Van hippie",
+          "score": 4.700000899336553
+        },
+        {
+          "id": "61a059e3-b499-4d3e-b1f9-98e7f0a8eefb",
+          "name": "Van hippie",
+          "score": 4.700000816665529
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 2.800000947467162
+        }
+      ]
+    },
+    {
+      "id": "591cd47e-ae91-4ff1-9038-3105b455f317",
+      "race": "18ccdfc9-446c-4e8f-bd18-2dbc88002a91",
+      "car": "3269da45-65b9-4472-8e8a-32b937519ab1",
+      "dealerCar": "bfd0a683-708e-4055-8914-6fe4521b140a",
+      "track": "c92fb1c7-2902-426c-b479-90d29c933e12",
+      "timestamp": 1599938536010,
+      "checked": false,
+      "reward": 50,
+      "position": 1,
+      "results": [
+        {
+          "id": "3269da45-65b9-4472-8e8a-32b937519ab1",
+          "name": "Basic",
+          "score": 3.0000008529830127
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.500000949656755
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.5000008533356506
+        },
+        {
+          "id": "b69a0ab5-5583-408c-9534-058a1b12fcb1",
+          "name": "City Compact",
+          "score": 2.5000008288122033
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.50000054179002
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.5000003391106644
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 2.0000007849198487
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 2.0000004054073
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 1.5000009408176758
+        }
+      ]
+    },
+    {
+      "id": "90fd180a-bf95-4b75-a6fd-c76f6260dd67",
+      "race": "ac6228d2-d438-4793-aa5b-3572bfe078ae",
+      "car": "3269da45-65b9-4472-8e8a-32b937519ab1",
+      "dealerCar": "bfd0a683-708e-4055-8914-6fe4521b140a",
+      "track": "c92fb1c7-2902-426c-b479-90d29c933e12",
+      "timestamp": 1599937515737,
+      "checked": false,
+      "reward": 0,
+      "position": 8,
+      "results": [
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.500000954179999
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.5000008802094085
+        },
+        {
+          "id": "b69a0ab5-5583-408c-9534-058a1b12fcb1",
+          "name": "City Compact",
+          "score": 2.5000007448940544
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.5000004091633095
+        },
+        {
+          "id": "b69a0ab5-5583-408c-9534-058a1b12fcb1",
+          "name": "City Compact",
+          "score": 2.5000003961641433
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 2.0000004999302545
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 2.0000002657865976
+        },
+        {
+          "id": "3269da45-65b9-4472-8e8a-32b937519ab1",
+          "name": "Basic",
+          "score": 1.5000007701299047
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 1.5000001933414613
+        }
+      ]
+    }
+  ],
+  "pageNotifications": { "garagePage": false, "garage": [] },
+  "races": [],
+  "pastRaces": [
+    {
+      "id": "f8f44486-625b-4f8f-b56d-7bd35901f0d6",
+      "race": "c6356d86-c374-42d5-991b-85f68c7c31f5",
+      "car": "3269da45-65b9-4472-8e8a-32b937519ab1",
+      "dealerCar": "bfd0a683-708e-4055-8914-6fe4521b140a",
+      "track": "e700533e-6a7b-42d2-a173-a2c2f3a532f8",
+      "timestamp": 1599939217970,
+      "checked": true,
+      "reward": 0,
+      "position": 9,
+      "results": [
+        {
+          "id": "4f387d8b-3cf0-4983-b349-74c8210ca1ac",
+          "name": "EV cleandirt",
+          "score": 15.600000798932228
+        },
+        {
+          "id": "237d635f-68b3-479a-9643-1848ea7b3485",
+          "name": "EV supercar",
+          "score": 15.00000009399891
+        },
+        {
+          "id": "d22301f8-fe6a-4e61-822c-43fa053c6a6b",
+          "name": "Super muscle",
+          "score": 12.600000615688652
+        },
+        {
+          "id": "c8065d5e-f5da-4fcf-ac86-86ed08ec1527",
+          "name": "Truck speed",
+          "score": 12.3000005726073
+        },
+        {
+          "id": "c8065d5e-f5da-4fcf-ac86-86ed08ec1527",
+          "name": "Truck speed",
+          "score": 12.300000261058404
+        },
+        {
+          "id": "c8065d5e-f5da-4fcf-ac86-86ed08ec1527",
+          "name": "Truck speed",
+          "score": 12.300000045401436
+        },
+        {
+          "id": "88e4396b-d676-459c-be43-da7f56debc04",
+          "name": "Pickup monster",
+          "score": 11.100000442405959
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 6.600000280340298
+        },
+        {
+          "id": "3269da45-65b9-4472-8e8a-32b937519ab1",
+          "name": "Basic",
+          "score": 4.800000605526109
+        }
+      ]
+    },
+    {
+      "id": "0fd15f14-ac73-4785-b641-9a57b79da8ce",
+      "race": "36265bd9-ccc8-4075-a7b9-0facddd32236",
+      "car": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+      "dealerCar": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+      "track": "c57480e9-2537-412b-a625-3146965b8a91",
+      "timestamp": 1599939087050,
+      "checked": true,
+      "reward": 11250,
+      "position": 1,
+      "results": [
+        {
+          "id": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+          "name": "Offroad king",
+          "score": 12.500000988754675
+        },
+        {
+          "id": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+          "name": "Offroad king",
+          "score": 11.500000731397611
+        },
+        {
+          "id": "c395ddd3-4d03-4e66-904c-895683e93416",
+          "name": "Offroad mud",
+          "score": 9.800000681223064
+        },
+        {
+          "id": "dc3c7bc6-956a-49b2-a2f3-0a592ce8dfc2",
+          "name": "EV cityboy",
+          "score": 8.90000057466748
+        },
+        {
+          "id": "88e4396b-d676-459c-be43-da7f56debc04",
+          "name": "Pickup monster",
+          "score": 8.900000248546844
+        },
+        {
+          "id": "89de376a-9648-458b-a259-952b87b622dc",
+          "name": "Offroad dirt",
+          "score": 7.2000006052098415
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 7.200000158005885
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 6.100000366750115
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 5.300000683491752
+        }
+      ]
+    },
+    {
+      "id": "3e124d2c-66db-47e3-a248-d0800e6d8fd0",
+      "race": "b994e19f-3095-4255-a0c7-b85709c0acdb",
+      "car": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+      "dealerCar": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+      "track": "c57480e9-2537-412b-a625-3146965b8a91",
+      "timestamp": 1599938978612,
+      "checked": true,
+      "reward": 5625,
+      "position": 2,
+      "results": [
+        {
+          "id": "237d635f-68b3-479a-9643-1848ea7b3485",
+          "name": "EV supercar",
+          "score": 13.200000369312106
+        },
+        {
+          "id": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+          "name": "Offroad king",
+          "score": 12.400000956421701
+        },
+        {
+          "id": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+          "name": "Offroad king",
+          "score": 10.600000150514562
+        },
+        {
+          "id": "c395ddd3-4d03-4e66-904c-895683e93416",
+          "name": "Offroad mud",
+          "score": 9.800000851119847
+        },
+        {
+          "id": "cc7b7f79-a0e2-45de-9924-26d49588be83",
+          "name": "Super round",
+          "score": 9.100000719562637
+        },
+        {
+          "id": "cc7b7f79-a0e2-45de-9924-26d49588be83",
+          "name": "Super round",
+          "score": 8.90000011168432
+        },
+        {
+          "id": "cc7b7f79-a0e2-45de-9924-26d49588be83",
+          "name": "Super round",
+          "score": 8.200000020618257
+        },
+        {
+          "id": "89de376a-9648-458b-a259-952b87b622dc",
+          "name": "Offroad dirt",
+          "score": 7.100000348967008
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 6.300000613914636
+        }
+      ]
+    },
+    {
+      "id": "6ed77f9b-5b4e-4125-bfeb-209814fa8a3b",
+      "race": "f457d9cb-2715-4f39-b82e-5161c0260a22",
+      "car": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+      "dealerCar": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+      "track": "19065c6a-d554-45c5-bee6-2d14ed1169a3",
+      "timestamp": 1599938780318,
+      "checked": true,
+      "reward": 6000,
+      "position": 1,
+      "results": [
+        {
+          "id": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+          "name": "Offroad king",
+          "score": 13.400000089624898
+        },
+        {
+          "id": "dc3c7bc6-956a-49b2-a2f3-0a592ce8dfc2",
+          "name": "EV cityboy",
+          "score": 11.000000076430094
+        },
+        {
+          "id": "dc3c7bc6-956a-49b2-a2f3-0a592ce8dfc2",
+          "name": "EV cityboy",
+          "score": 10.700000394855332
+        },
+        {
+          "id": "c395ddd3-4d03-4e66-904c-895683e93416",
+          "name": "Offroad mud",
+          "score": 10.500000948522697
+        },
+        {
+          "id": "c395ddd3-4d03-4e66-904c-895683e93416",
+          "name": "Offroad mud",
+          "score": 9.600000643136744
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 8.000000206838074
+        },
+        {
+          "id": "89de376a-9648-458b-a259-952b87b622dc",
+          "name": "Offroad dirt",
+          "score": 7.7000006818744335
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 7.700000518429605
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 7.100000058749271
+        }
+      ]
+    },
+    {
+      "id": "e152741e-66b3-4984-b286-05fa11710dcd",
+      "race": "9668fefb-6848-462c-ad42-63e3b53c0c6a",
+      "car": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+      "dealerCar": "c3d09522-9842-4593-ac12-1a46ca4268a6",
+      "track": "9b67ac96-1094-4362-af3f-5855dae643a2",
+      "timestamp": 1599938596755,
+      "checked": true,
+      "reward": 2250,
+      "position": 1,
+      "results": [
+        {
+          "id": "6dd6763e-302b-4d68-b470-47b65beeb36d",
+          "name": "Offroad king",
+          "score": 11.100000097081516
+        },
+        {
+          "id": "c8065d5e-f5da-4fcf-ac86-86ed08ec1527",
+          "name": "Truck speed",
+          "score": 8.900000187976012
+        },
+        {
+          "id": "c395ddd3-4d03-4e66-904c-895683e93416",
+          "name": "Offroad mud",
+          "score": 8.100000733749194
+        },
+        {
+          "id": "89de376a-9648-458b-a259-952b87b622dc",
+          "name": "Offroad dirt",
+          "score": 6.800000744598244
+        },
+        {
+          "id": "89de376a-9648-458b-a259-952b87b622dc",
+          "name": "Offroad dirt",
+          "score": 6.800000564259875
+        },
+        {
+          "id": "ae7f795c-ea0e-4ea8-9d8d-b6da011235cb",
+          "name": "City SUV",
+          "score": 5.400000577324005
+        },
+        {
+          "id": "61a059e3-b499-4d3e-b1f9-98e7f0a8eefb",
+          "name": "Van hippie",
+          "score": 4.700000899336553
+        },
+        {
+          "id": "61a059e3-b499-4d3e-b1f9-98e7f0a8eefb",
+          "name": "Van hippie",
+          "score": 4.700000816665529
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 2.800000947467162
+        }
+      ]
+    },
+    {
+      "id": "591cd47e-ae91-4ff1-9038-3105b455f317",
+      "race": "18ccdfc9-446c-4e8f-bd18-2dbc88002a91",
+      "car": "3269da45-65b9-4472-8e8a-32b937519ab1",
+      "dealerCar": "bfd0a683-708e-4055-8914-6fe4521b140a",
+      "track": "c92fb1c7-2902-426c-b479-90d29c933e12",
+      "timestamp": 1599938536010,
+      "checked": false,
+      "reward": 50,
+      "position": 1,
+      "results": [
+        {
+          "id": "3269da45-65b9-4472-8e8a-32b937519ab1",
+          "name": "Basic",
+          "score": 3.0000008529830127
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.500000949656755
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.5000008533356506
+        },
+        {
+          "id": "b69a0ab5-5583-408c-9534-058a1b12fcb1",
+          "name": "City Compact",
+          "score": 2.5000008288122033
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.50000054179002
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.5000003391106644
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 2.0000007849198487
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 2.0000004054073
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 1.5000009408176758
+        }
+      ]
+    },
+    {
+      "id": "90fd180a-bf95-4b75-a6fd-c76f6260dd67",
+      "race": "ac6228d2-d438-4793-aa5b-3572bfe078ae",
+      "car": "3269da45-65b9-4472-8e8a-32b937519ab1",
+      "dealerCar": "bfd0a683-708e-4055-8914-6fe4521b140a",
+      "track": "c92fb1c7-2902-426c-b479-90d29c933e12",
+      "timestamp": 1599937515737,
+      "checked": true,
+      "reward": 0,
+      "position": 8,
+      "results": [
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.500000954179999
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.5000008802094085
+        },
+        {
+          "id": "b69a0ab5-5583-408c-9534-058a1b12fcb1",
+          "name": "City Compact",
+          "score": 2.5000007448940544
+        },
+        {
+          "id": "b6e9af84-a636-449c-ae0e-b32b7be0b6f8",
+          "name": "City SW",
+          "score": 2.5000004091633095
+        },
+        {
+          "id": "b69a0ab5-5583-408c-9534-058a1b12fcb1",
+          "name": "City Compact",
+          "score": 2.5000003961641433
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 2.0000004999302545
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 2.0000002657865976
+        },
+        {
+          "id": "3269da45-65b9-4472-8e8a-32b937519ab1",
+          "name": "Basic",
+          "score": 1.5000007701299047
+        },
+        {
+          "id": "bfd0a683-708e-4055-8914-6fe4521b140a",
+          "name": "Basic",
+          "score": 1.5000001933414613
+        }
+      ]
+    }
+  ],
+  "tutorial": { "winChance": true, "upgrade": false },
+  "locked": { "race": { "free": false, "city": false, "track": false } },
+  "experience": {
+    "business": { "exp": 7, "newCars": 0, "usedCars": 0, "max": 1000000 },
+    "race": { "exp": 7, "price": 0, "prizes": 0, "max": 1000000 },
+    "mechanic": { "exp": 4, "acc": 0, "spd": 0, "hnd": 0, "max": 1000000000 }
+  },
+  "sponsors": {
+    "active": {
+      "72e47abf-e1a2-45d5-b4cc-91832679a748_free": {
+        "event": "free",
+        "reward": "mechanic",
+        "timestamp": 1599937515737
+      },
+      "649b075a-a514-41ee-b987-32e9e3d6897d_free": {
+        "event": "free",
+        "reward": "mechanic",
+        "timestamp": 1599938536010
+      },
+      "c92fb1c7-2902-426c-b479-90d29c933e12_sponsor": {
+        "event": "free",
+        "reward": "money",
+        "timestamp": 1599938536010
+      },
+      "72e47abf-e1a2-45d5-b4cc-91832679a748_offroad": {
+        "event": "offroad",
+        "reward": "mechanic",
+        "timestamp": 1599938596755
+      },
+      "649b075a-a514-41ee-b987-32e9e3d6897d_offroad": {
+        "event": "offroad",
+        "reward": "mechanic",
+        "timestamp": 1599938596755
+      },
+      "9b67ac96-1094-4362-af3f-5855dae643a2_sponsor": {
+        "event": "offroad",
+        "reward": "money",
+        "timestamp": 1599938596755
+      },
+      "19065c6a-d554-45c5-bee6-2d14ed1169a3_sponsor": {
+        "event": "offroad",
+        "reward": "money",
+        "timestamp": 1599938780318
+      },
+      "c57480e9-2537-412b-a625-3146965b8a91_sponsor": {
+        "event": "offroad",
+        "reward": "money",
+        "timestamp": 1599939087049
+      }
+    },
+    "timestamp": 1599939241491
+  },
+  "boughtCars": {
+    "bfd0a683-708e-4055-8914-6fe4521b140a": 1,
+    "c3d09522-9842-4593-ac12-1a46ca4268a6": 1
+  },
+  "version": 0.708,
+  "toasts": [],
+  "warnings": {
+    "storeReset": false,
+    "offlineEarnings": {
+      "sponsorsValue": 0,
+      "timelapse": 0,
+      "maxTime": 7200000
+    }
+  },
+  "timestamp": 1599939242490,
+  "timelapse": 499
+}

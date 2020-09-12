@@ -23,8 +23,7 @@ const GarageUpgrades = props => {
     <CollapsiblePanel
       wrap="wrap"
       bg={colors.lightBlue}
-      color="black"
-      border="none"
+      color={colors.darkGray}
       text={`Garage Upgrades (Mechanics: ${mechanics})`}
       {...props}
     >

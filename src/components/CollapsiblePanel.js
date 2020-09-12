@@ -47,6 +47,7 @@ const CollapsiblePanel = ({
         alignItems="center"
         justifyContent="space-between"
         isDisabled={isDisabled}
+        border={`1px solid ${colors.darkGray}`}
         onClick={toggle}
       >
         <Box

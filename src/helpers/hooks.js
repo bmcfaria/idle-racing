@@ -5,6 +5,7 @@ import {
   experienceSelector,
   tracksStatsSelector,
   raceSponsorsActiveSelector,
+  tracksSelector,
 } from '../state/selectors';
 import {
   buffValue,
@@ -189,4 +190,20 @@ export const useMechanicsCount = () => {
   return Object.values(sponsors).filter(
     sponsor => sponsor.reward === 'mechanic'
   ).length;
+};
+
+export const useEventTracksStatsState = eventType => {
+  const tracks = useSelector(tracksSelector);
+  const tracksStats = useSelector(tracksStatsSelector);
+  const eventRacesAll = tracks.filter(item => item.category === eventType);
+
+  return eventRacesAll.reduce(
+    (result, track) => ({
+      everRaced: result.everRaced || !!tracksStats[track.id]?.raced,
+      raced: result.raced && !!tracksStats[track.id]?.raced,
+      won: result.won && tracksStats[track.id]?.won > 0,
+      won100: result.won100 && tracksStats[track.id]?.won >= 100,
+    }),
+    { everRaced: false, raced: true, won: true, won100: true }
+  );
 };
