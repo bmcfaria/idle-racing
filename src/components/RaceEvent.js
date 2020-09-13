@@ -7,10 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   tracksSelector,
   lockedSelector,
-  raceSponsorsSelector,
-  trackSelector,
-  dealerCarSelector,
-  raceSponsorsActiveSelector,
   lockedRaceEventsSelector,
   trackStatsSelector,
 } from '../state/selectors';
@@ -19,15 +15,11 @@ import { closeResultsAction } from '../state/actions';
 import {
   useDynamicCardContainerWidth,
   usePreviousUnlockedTrackChecker,
-  usePassiveIncome,
-  useEventTracksStatsState,
 } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
-import CollapsiblePanel from './CollapsiblePanel';
 import { BottomSpacer } from './BottomSpacer';
-import { ReactComponent as MechanicIcon } from '../assets/icons/mechanic.svg';
-import { sponsorEntryText } from '../helpers/utils';
+import RaceEventSponsors from './RaceEventSponsors';
 
 const TracksContainer = ({ tracks, locked, ...props }) => {
   const isPreviousUnlocked = usePreviousUnlockedTrackChecker(tracks);
@@ -69,175 +61,6 @@ const TracksContainer = ({ tracks, locked, ...props }) => {
   );
 };
 
-const SponsorReward = ({ sponsor, activeBg = colors.darkGray, ...props }) => {
-  const track = useSelector(trackSelector(sponsor.track));
-  const car = useSelector(dealerCarSelector(sponsor.car));
-  const active = !!useSelector(raceSponsorsActiveSelector)?.[sponsor.id];
-
-  const text = sponsorEntryText(sponsor);
-
-  return (
-    <Flex
-      borderRadius="16px"
-      minW="160px"
-      h="48px"
-      {...(!active && {
-        bg: colors.lightGray,
-      })}
-      border={`1px solid ${colors.darkGray}`}
-      {...props}
-    >
-      <Flex
-        w="40px"
-        h="48px"
-        {...(active && {
-          bg: activeBg,
-        })}
-        borderRadius="16px 0 0 16px"
-        margin="-1px 0 0 -1px"
-      >
-        <SponsorRewardIcon
-          sponsor={sponsor}
-          margin="auto"
-          nonActiveColor={colors.darkGray}
-          nonActiveBorderColor={colors.lightGray}
-        />
-      </Flex>
-      <Flex
-        maxW="119px"
-        flexGrow="1"
-        direction="column"
-        justifyContent="space-around"
-        color={active ? 'black' : colors.darkGray}
-      >
-        <Text
-          textAlign="center"
-          fontSize="16px"
-          lineHeight="16px"
-          whiteSpace="nowrap"
-          overflow="hidden"
-          textOverflow="ellipsis"
-        >
-          {text}
-        </Text>
-        {track && (
-          <Text
-            textAlign="center"
-            fontSize="14px"
-            lineHeight="14px"
-            whiteSpace="nowrap"
-            overflow="hidden"
-            textOverflow="ellipsis"
-          >
-            "{track?.name}"
-          </Text>
-        )}
-        {car && (
-          <Text
-            textAlign="center"
-            fontSize="14px"
-            lineHeight="14px"
-            whiteSpace="nowrap"
-            overflow="hidden"
-            textOverflow="ellipsis"
-          >
-            "{car?.name}"
-          </Text>
-        )}
-      </Flex>
-    </Flex>
-  );
-};
-
-const SponsorRewardIcon = ({
-  sponsor,
-  color = colors.darkGray,
-  activeBg = colors.white,
-  nonActiveColor = colors.white,
-  nonActiveBorderColor = colors.white,
-  ...props
-}) => {
-  const active = !!useSelector(raceSponsorsActiveSelector)?.[sponsor.id];
-  return (
-    <Flex
-      w="24px"
-      h="24px"
-      borderRadius="12px"
-      margin="0 2px"
-      color={active ? color : nonActiveColor}
-      {...(active && { bg: activeBg })}
-      {...(!active && { border: `1px solid ${nonActiveBorderColor}` })}
-      {...props}
-    >
-      {sponsor.reward !== 'mechanic' && (
-        <Text
-          w="100%"
-          h="100%"
-          textAlign="center"
-          lineHeight="22px"
-          fontSize="22px"
-        >
-          $
-        </Text>
-      )}
-      {sponsor.reward === 'mechanic' && (
-        <Box maxW="16px" maxH="16px" margin="auto" as={MechanicIcon} />
-      )}
-    </Flex>
-  );
-};
-
-const Sponsors = ({ event, ...props }) => {
-  const sponsors = useSelector(raceSponsorsSelector).filter(
-    sponsor => sponsor.event === event
-  );
-  const tracksStatsState = useEventTracksStatsState(event);
-
-  const bgColor =
-    (tracksStatsState.won100 && colors.lightBlue) ||
-    (tracksStatsState.won && colors.green) ||
-    (tracksStatsState.raced && colors.orange) ||
-    (tracksStatsState.everRaced && colors.darkGray) ||
-    colors.lightGray;
-
-  const color =
-    (tracksStatsState.won100 && colors.darkGray) ||
-    (tracksStatsState.won && colors.darkGray) ||
-    (tracksStatsState.raced && colors.darkGray) ||
-    (tracksStatsState.everRaced && colors.white) ||
-    colors.darkGray;
-
-  const eventPassiveIncome = usePassiveIncome(event);
-
-  return (
-    <CollapsiblePanel
-      wrap="wrap"
-      text={
-        'Sponsors' +
-        (eventPassiveIncome > 0 ? ` ($${eventPassiveIncome} /s)` : '')
-      }
-      secondaryLine={sponsors.map(sponsor => (
-        <SponsorRewardIcon
-          sponsor={sponsor}
-          color={bgColor}
-          activeBg={color}
-          nonActiveColor={color}
-          nonActiveBorderColor={color}
-          key={sponsor.id}
-        />
-      ))}
-      padding="8px 0 4px 0"
-      bg={bgColor}
-      color={color}
-      {...props}
-    >
-      {sponsors.map(sponsor => (
-        <SponsorReward margin="4px 4px" sponsor={sponsor} key={sponsor.id} />
-      ))}
-    </CollapsiblePanel>
-  );
-};
-
 const RaceEvent = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -266,7 +89,7 @@ const RaceEvent = () => {
         <RaceDetails />
       </Modal>
 
-      <Sponsors w={`${containerWidth - 16}px`} event={event} />
+      <RaceEventSponsors w={`${containerWidth - 16}px`} event={event} />
 
       <TracksContainer
         w={`${containerWidth}px`}
