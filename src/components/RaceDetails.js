@@ -34,24 +34,31 @@ import CardCarSmallRace from './CardCarSmallRace';
 import Button from './Button';
 import { RaceContext } from '../helpers/context';
 
-const CarsContainer = ({ cars, selectCar, ...props }) => {
+const CarsContainer = ({ cars, selectCar, onClose, ...props }) => {
   const containerWidth = useDynamicCardContainerWidth();
 
   return (
-    <Box
-      maxH="calc(100vh - 2 * 48px - 2 * 32px)"
-      overflowX="hidden"
-      overflowY="auto"
+    <Flex
+      position="absolute"
+      left="0"
+      right="0"
+      top="0"
+      bottom="0"
+      paddingTop={`${48 + 40 + 16}px`}
+      paddingBottom="80px"
       borderRadius="16px"
+      overflowX="hidden"
+      onClick={onClose}
     >
       <Flex
         w={`${containerWidth}px`}
-        minH="40vh"
+        minH="240px"
         wrap="wrap"
-        margin="0 auto"
+        margin="auto"
         paddingTop="16px"
         paddingLeft="16px"
         boxSizing="content-box"
+        borderRadius="16px"
         bg={colors.white}
         {...props}
       >
@@ -77,7 +84,7 @@ const CarsContainer = ({ cars, selectCar, ...props }) => {
           </Box>
         ))}
       </Flex>
-    </Box>
+    </Flex>
   );
 };
 
@@ -246,7 +253,11 @@ const RaceDetails = props => {
         )}
 
         <Modal isOpen={carsModal} onClose={carsModalClose} bg="none">
-          <CarsContainer cars={cars} selectCar={selectCar} />
+          <CarsContainer
+            cars={cars}
+            selectCar={selectCar}
+            onClose={carsModalClose}
+          />
         </Modal>
 
         <Flex direction="row">
