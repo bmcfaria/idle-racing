@@ -5,7 +5,6 @@ import {
   tracksSelector,
   raceByTrackSelector,
   lockedSelector,
-  trackStatsSelector,
   lockedRaceEventsSelector,
 } from '../state/selectors';
 import { useSelector } from 'react-redux';
@@ -18,15 +17,14 @@ import {
   usePreviousUnlockedTrackChecker,
   usePassiveIncome,
   useEventTracksStatsState,
+  useTrackStatsState,
 } from '../helpers/hooks';
 
 const TrackItem = ({ track, active = true, ...props }) => {
   const race = useSelector(raceByTrackSelector(track.id));
-  const trackStats = useSelector(trackStatsSelector(track.id));
+  const trackStateState = useTrackStatsState(track.id);
 
-  const raced = trackStats?.raced;
-  const won = trackStats?.won > 0;
-  const won100 = trackStats?.won >= 100;
+  const { raced, won, won10 } = trackStateState;
 
   return (
     <Flex {...props}>
@@ -58,8 +56,8 @@ const TrackItem = ({ track, active = true, ...props }) => {
         <Box
           w="8px"
           h="8px"
-          border={`1px solid ${won100 ? colors.darkGray : colors.lightGray}`}
-          {...(won100 && { bg: colors.lightBlue })}
+          border={`1px solid ${won10 ? colors.darkGray : colors.lightGray}`}
+          {...(won10 && { bg: colors.lightBlue })}
           marginTop="2px"
         />
       </Box>
@@ -99,7 +97,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
     '(No sponsors)';
 
   const secondaryColor =
-    (tracksStatsState.won100 && colors.lightBlue) ||
+    (tracksStatsState.won10 && colors.lightBlue) ||
     (tracksStatsState.won && colors.green) ||
     (tracksStatsState.raced && colors.orange) ||
     colors.lightGray;

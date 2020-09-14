@@ -2,13 +2,14 @@ import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import getImageTrack from '../helpers/imageMappingTracks';
 import { useSelector } from 'react-redux';
-import { enoughMoneySelector, trackStatsSelector } from '../state/selectors';
+import { enoughMoneySelector } from '../state/selectors';
 import RequirementsList from './RequirementsList';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES, formatDuration, formatMoney } from '../helpers/utils';
 import {
   useRacePrizesWithBuff,
   useRacePriceWithDiscount,
+  useTrackStatsState,
 } from '../helpers/hooks';
 import { cars } from '../helpers/data';
 
@@ -62,21 +63,21 @@ const TrackPrize = ({ text, prize, ...props }) => {
 
 const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
   const { name, prizes, duration, price, requirements } = track;
-  const trackStats = useSelector(trackStatsSelector(track.id));
+  const trackStateState = useTrackStatsState(track.id);
   const calculatedPrice = ~~useRacePriceWithDiscount(price);
   const enoughMoney = useSelector(enoughMoneySelector(calculatedPrice));
   const calculatedPrizes = useRacePrizesWithBuff(prizes);
 
   const bgColor =
-    (trackStats?.won > 100 && colors.lightBlue) ||
-    (trackStats?.won > 0 && colors.green) ||
-    (trackStats?.raced && colors.orange) ||
+    (trackStateState.won10 && colors.lightBlue) ||
+    (trackStateState.won && colors.green) ||
+    (trackStateState.raced && colors.orange) ||
     colors.darkGray;
 
   const color =
-    (trackStats?.won > 100 && 'black') ||
-    (trackStats?.won > 0 && 'black') ||
-    (trackStats?.raced && 'black') ||
+    (trackStateState.won10 && 'black') ||
+    (trackStateState.won && 'black') ||
+    (trackStateState.raced && 'black') ||
     colors.white;
 
   return (

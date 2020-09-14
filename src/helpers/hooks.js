@@ -6,6 +6,7 @@ import {
   tracksStatsSelector,
   raceSponsorsActiveSelector,
   tracksSelector,
+  trackStatsSelector,
 } from '../state/selectors';
 import {
   buffValue,
@@ -202,8 +203,18 @@ export const useEventTracksStatsState = eventType => {
       everRaced: result.everRaced || !!tracksStats[track.id]?.raced,
       raced: result.raced && !!tracksStats[track.id]?.raced,
       won: result.won && tracksStats[track.id]?.won > 0,
-      won100: result.won100 && tracksStats[track.id]?.won >= 100,
+      won10: result.won10 && tracksStats[track.id]?.won >= 10,
     }),
-    { everRaced: false, raced: true, won: true, won100: true }
+    { everRaced: false, raced: true, won: true, won10: true }
   );
+};
+
+export const useTrackStatsState = trackId => {
+  const trackStats = useSelector(trackStatsSelector(trackId));
+
+  return {
+    raced: trackStats?.raced,
+    won: trackStats?.won > 0,
+    won10: trackStats?.won > 10,
+  };
 };

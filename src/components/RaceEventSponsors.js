@@ -14,14 +14,14 @@ const RaceEventSponsors = ({ event, ...props }) => {
   const tracksStatsState = useEventTracksStatsState(event);
 
   const bgColor =
-    (tracksStatsState.won100 && colors.lightBlue) ||
+    (tracksStatsState.won10 && colors.lightBlue) ||
     (tracksStatsState.won && colors.green) ||
     (tracksStatsState.raced && colors.orange) ||
     (tracksStatsState.everRaced && colors.darkGray) ||
     colors.lightGray;
 
   const color =
-    (tracksStatsState.won100 && colors.darkGray) ||
+    (tracksStatsState.won10 && colors.darkGray) ||
     (tracksStatsState.won && colors.darkGray) ||
     (tracksStatsState.raced && colors.darkGray) ||
     (tracksStatsState.everRaced && colors.white) ||
