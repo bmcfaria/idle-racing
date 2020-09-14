@@ -75,27 +75,6 @@ const CardCarSmallRace = ({ car, onClick, ...props }) => {
       padding="0"
       {...props}
     >
-      <Box w="100%" h="100px" position="absolute">
-        {!meetsRequirements && (
-          <Flex
-            position="absolute"
-            w="100%"
-            h="100%"
-            bg="blackAlpha.800"
-            flexDirection="column"
-            borderRadius="16px"
-          >
-            <Text
-              fontSize="24px"
-              textAlign="center"
-              margin="auto"
-              color="white"
-            >
-              Don't meet the requirements
-            </Text>
-          </Flex>
-        )}
-      </Box>
       {selectedTrack && (
         <CardWinningChance
           car={car}

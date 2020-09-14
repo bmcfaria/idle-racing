@@ -9,6 +9,10 @@ import CardCarSmallRace from './CardCarSmallRace';
 const RaceDetailsCarsContainer = ({ cars, selectCar, onClose, ...props }) => {
   const containerWidth = useDynamicCardContainerWidth();
 
+  const onClickChild = e => {
+    e.stopPropagation();
+  };
+
   return (
     <Flex
       position="absolute"
@@ -32,6 +36,7 @@ const RaceDetailsCarsContainer = ({ cars, selectCar, onClose, ...props }) => {
         boxSizing="content-box"
         borderRadius="16px"
         bg={colors.white}
+        onClick={onClickChild}
         {...props}
       >
         {cars.length === 0 && (
