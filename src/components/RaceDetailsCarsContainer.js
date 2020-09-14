@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
@@ -8,6 +8,20 @@ import CardCarSmallRace from './CardCarSmallRace';
 
 const RaceDetailsCarsContainer = ({ cars, selectCar, onClose, ...props }) => {
   const containerWidth = useDynamicCardContainerWidth();
+
+  useEffect(() => {
+    const escapeClose = event => {
+      if (event.keyCode === 27) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', escapeClose, false);
+
+    return () => {
+      document.removeEventListener('keydown', escapeClose, false);
+    };
+  }, [onClose]);
 
   const onClickChild = e => {
     e.stopPropagation();
