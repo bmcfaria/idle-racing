@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Box, Flex, Text } from '@chakra-ui/core';
+import { Box, Flex } from '@chakra-ui/core';
 import CardProgressOverlay from './CardProgressOverlay';
 import { useDispatch, useSelector } from 'react-redux';
 import { startRaceAction } from '../state/actions';
 import RaceResults from './RaceResults';
-import { useLocation, Link, useHistory } from 'react-router-dom';
-import { Link as ChakraLink } from '@chakra-ui/core';
+import { useLocation, useHistory } from 'react-router-dom';
 import {
   raceSelector,
   garageCarsSelector,
@@ -18,74 +17,16 @@ import {
 import CardTrackContent from './CardTrackContent';
 import { colors } from '../helpers/theme';
 import RaceDetailsSelectCar from './RaceDetailsSelectCar';
-import {
-  useOpenClose,
-  useDynamicCardContainerWidth,
-  useRacePriceWithDiscount,
-} from '../helpers/hooks';
+import { useOpenClose, useRacePriceWithDiscount } from '../helpers/hooks';
 import RaceDetailsSelectedCar from './RaceDetailsSelectedCar';
 import {
   doMeetRequirements,
   winProbability,
   PROBABILITY_GOOD_VALUE,
 } from '../helpers/utils';
-import CardCarSmallRace from './CardCarSmallRace';
 import Button from './Button';
 import { RaceContext } from '../helpers/context';
-
-const CarsContainer = ({ cars, selectCar, onClose, ...props }) => {
-  const containerWidth = useDynamicCardContainerWidth();
-
-  return (
-    <Flex
-      position="absolute"
-      left="0"
-      right="0"
-      top="0"
-      bottom="0"
-      paddingTop={`${48 + 40 + 16}px`}
-      paddingBottom="80px"
-      borderRadius="16px"
-      overflowX="hidden"
-      onClick={onClose}
-    >
-      <Flex
-        w={`${containerWidth}px`}
-        minH="240px"
-        wrap="wrap"
-        margin="auto"
-        paddingTop="16px"
-        paddingLeft="16px"
-        boxSizing="content-box"
-        borderRadius="16px"
-        bg={colors.white}
-        {...props}
-      >
-        {cars.length === 0 && (
-          <Flex margin="auto" direction="column">
-            <Text textAlign="center" fontSize="24px">
-              You need to buy a car first
-            </Text>
-            <ChakraLink
-              as={Link}
-              to="/dealer"
-              fontSize="12px"
-              color="teal.500"
-              margin="8px auto 0"
-            >
-              go to Dealer
-            </ChakraLink>
-          </Flex>
-        )}
-        {cars.map(car => (
-          <Box marginRight="16px" marginBottom="16px" key={car.id}>
-            <CardCarSmallRace car={car} onClick={selectCar} />
-          </Box>
-        ))}
-      </Flex>
-    </Flex>
-  );
-};
+import RaceDetailsCarsContainer from './RaceDetailsCarsContainer';
 
 const ActionContent = ({
   selectedCar,
@@ -235,7 +176,7 @@ const RaceDetails = props => {
   return (
     <RaceContext.Provider value={{ winProbabilityValue }}>
       {carsModal && (
-        <CarsContainer
+        <RaceDetailsCarsContainer
           cars={cars}
           selectCar={selectCar}
           onClose={carsModalClose}
