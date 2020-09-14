@@ -16,7 +16,6 @@ import {
   trackStatsSelector,
 } from '../state/selectors';
 import CardTrackContent from './CardTrackContent';
-import Modal from './Modal';
 import { colors } from '../helpers/theme';
 import RaceDetailsSelectCar from './RaceDetailsSelectCar';
 import {
@@ -235,48 +234,54 @@ const RaceDetails = props => {
 
   return (
     <RaceContext.Provider value={{ winProbabilityValue }}>
-      <Box
-        position="relative"
-        w="320px"
-        h="180px"
-        overflowY={['scroll', 'scroll', 'unset']}
-        bg={colors.darkGray}
-        borderRadius="16px"
-        {...props}
-      >
-        {currentRace && (
-          <CardProgressOverlay
-            zIndex="1"
-            race={currentRace}
-            borderRadius="16px"
-          />
-        )}
+      {carsModal && (
+        <CarsContainer
+          cars={cars}
+          selectCar={selectCar}
+          onClose={carsModalClose}
+        />
+      )}
 
-        <Modal isOpen={carsModal} onClose={carsModalClose} bg="none">
-          <CarsContainer
-            cars={cars}
-            selectCar={selectCar}
-            onClose={carsModalClose}
-          />
-        </Modal>
-
-        <Flex direction="row">
-          <CardTrackContent w="50%" track={selectedTrack} borderRadius="16px" />
-          <Box w="50%" position="relative">
-            <ActionContent
-              selectedCar={selectedCar}
-              selectedTrack={selectedTrack}
-              carsModalOpen={carsModalOpen}
-              enoughMoney={enoughMoney}
-              currentRace={currentRace}
-              startRace={startRace}
-              results={results}
-              pastRace={pastRace}
-              meetsRequirements={meetsRequirements}
+      {!carsModal && (
+        <Box
+          position="relative"
+          w="320px"
+          h="180px"
+          overflowY={['scroll', 'scroll', 'unset']}
+          bg={colors.darkGray}
+          borderRadius="16px"
+          {...props}
+        >
+          {currentRace && (
+            <CardProgressOverlay
+              zIndex="1"
+              race={currentRace}
+              borderRadius="16px"
             />
-          </Box>
-        </Flex>
-      </Box>
+          )}
+
+          <Flex direction="row">
+            <CardTrackContent
+              w="50%"
+              track={selectedTrack}
+              borderRadius="16px"
+            />
+            <Box w="50%" position="relative">
+              <ActionContent
+                selectedCar={selectedCar}
+                selectedTrack={selectedTrack}
+                carsModalOpen={carsModalOpen}
+                enoughMoney={enoughMoney}
+                currentRace={currentRace}
+                startRace={startRace}
+                results={results}
+                pastRace={pastRace}
+                meetsRequirements={meetsRequirements}
+              />
+            </Box>
+          </Flex>
+        </Box>
+      )}
     </RaceContext.Provider>
   );
 };
