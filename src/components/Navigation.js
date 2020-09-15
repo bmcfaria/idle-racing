@@ -34,12 +34,14 @@ const NavigationButton = ({ icon, to, text, notification }) => {
       to={to}
       w="176px"
       h={['64px', '40px']}
-      borderRadius={['4px', '20px']}
+      borderRadius={['0', '20px']}
       color={colors.white}
       bg={match ? colors.purple : colors.blue}
-      marginRight={['2px', 0]}
-      paddingLeft="0"
-      paddingRight="0"
+      boxShadow={['none', '0px 4px 4px rgba(0, 0, 0, 0.25)']}
+      transition="color 0.2s ease-out"
+      _focus={{
+        color: colors.darkGray,
+      }}
     >
       <Flex
         w="100%"
@@ -87,9 +89,9 @@ const Navigation = ({ icon, iconOnly, ...props }) => {
   return (
     <Flex
       w="100%"
-      h="80px"
+      h={['64px', '80px']}
       position="fixed"
-      bottom="0"
+      bottom="env(safe-area-inset-bottom)"
       zIndex="1"
       justifyContent="center"
       {...props}
@@ -101,7 +103,7 @@ const Navigation = ({ icon, iconOnly, ...props }) => {
         background={`linear-gradient(180deg, ${colors.white}00 0%, ${colors.white} 100%)`}
         justifyContent="space-evenly"
         alignItems="center"
-        paddingLeft={['2px', 0]}
+        boxShadow={['0px -4px 4px rgba(0, 0, 0, 0.25)', 'none']}
       >
         <NavigationButton icon={CarIcon} to="/dealer" text="Dealer" />
         <NavigationButton icon={TrophyIcon} to="/race" text="Race" />
