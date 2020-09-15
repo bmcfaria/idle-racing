@@ -6,7 +6,7 @@ import { Link, useLocation, useHistory } from 'react-router-dom';
 import Notifications from './Notifications';
 import { useSelector } from 'react-redux';
 import { moneySelector } from '../state/selectors';
-import { zIndex, colors } from '../helpers/theme';
+import { zIndex, colors, MAX_WIDTH } from '../helpers/theme';
 import {
   useCurrentPage,
   useExperienceBusiness,
@@ -202,29 +202,36 @@ const HeaderBar = () => {
           h="40px"
           bg={colors.white}
           boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-          justifyContent="space-around"
+          justifyContent="center"
         >
-          <ExperienceButton
-            text="Business exp"
-            experience={experienceBusiness}
-            color={colors.orange}
-            onClick={() => openUpgradeModal('business')}
-            selected={expTypeModal === 'business'}
-          />
-          <ExperienceButton
-            text="Race exp"
-            experience={experienceRace}
-            color={colors.green}
-            onClick={() => openUpgradeModal('race')}
-            selected={expTypeModal === 'race'}
-          />
-          <ExperienceButton
-            text="Mechanic exp"
-            experience={experienceMechanic}
-            color={colors.lightBlue}
-            onClick={() => openUpgradeModal('mechanic')}
-            selected={expTypeModal === 'mechanic'}
-          />
+          <Flex
+            w="100%"
+            maxW={MAX_WIDTH}
+            h="100%"
+            justifyContent="space-around"
+          >
+            <ExperienceButton
+              text="Business exp"
+              experience={experienceBusiness}
+              color={colors.orange}
+              onClick={() => openUpgradeModal('business')}
+              selected={expTypeModal === 'business'}
+            />
+            <ExperienceButton
+              text="Race exp"
+              experience={experienceRace}
+              color={colors.green}
+              onClick={() => openUpgradeModal('race')}
+              selected={expTypeModal === 'race'}
+            />
+            <ExperienceButton
+              text="Mechanic exp"
+              experience={experienceMechanic}
+              color={colors.lightBlue}
+              onClick={() => openUpgradeModal('mechanic')}
+              selected={expTypeModal === 'mechanic'}
+            />
+          </Flex>
         </Flex>
       </Box>
     </header>

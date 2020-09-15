@@ -20,6 +20,7 @@ import {
   passiveMoneySponsors,
 } from './utils';
 import { raceEvents } from './data';
+import { MAX_WIDTH_VALUE } from './theme';
 
 export const useOpenClose = defaultValue => {
   const [open, setOpen] = useState(!!defaultValue);
@@ -91,9 +92,10 @@ export const useDynamicCardContainerWidth = (
   cardMargin = 16
 ) => {
   const { width } = useWindowDimensions();
+  const normalizedWidth = width > MAX_WIDTH_VALUE ? MAX_WIDTH_VALUE : width;
 
   return (
-    Math.floor((width - 2 * 24) / (cardWidth + cardMargin)) *
+    Math.floor((normalizedWidth - 2 * 24) / (cardWidth + cardMargin)) *
     (cardWidth + cardMargin)
   );
 };

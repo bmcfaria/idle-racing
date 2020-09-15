@@ -5,7 +5,7 @@ import { ReactComponent as CarIcon } from '../assets/icons/car.svg';
 import { ReactComponent as TrophyIcon } from '../assets/icons/trophy.svg';
 import { ReactComponent as GarageIcon } from '../assets/icons/garage.svg';
 import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
-import { colors } from '../helpers/theme';
+import { colors, MAX_WIDTH } from '../helpers/theme';
 import Button from './Button';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
@@ -91,21 +91,28 @@ const Navigation = ({ icon, iconOnly, ...props }) => {
       position="fixed"
       bottom="0"
       zIndex="1"
-      background={`linear-gradient(180deg, ${colors.white}00 0%, ${colors.white} 100%)`}
-      justifyContent="space-evenly"
-      alignItems="center"
-      paddingLeft={['2px', 0]}
+      justifyContent="center"
       {...props}
     >
-      <NavigationButton icon={CarIcon} to="/dealer" text="Dealer" />
-      <NavigationButton icon={TrophyIcon} to="/race" text="Race" />
-      <NavigationButton
-        icon={GarageIcon}
-        to="/garage"
-        text="Garage"
-        notification={pageNotifications?.garagePage}
-      />
-      <NavigationButton icon={SettingsIcon} to="/settings" text="Settings" />
+      <Flex
+        w="100%"
+        h="100%"
+        maxW={MAX_WIDTH}
+        background={`linear-gradient(180deg, ${colors.white}00 0%, ${colors.white} 100%)`}
+        justifyContent="space-evenly"
+        alignItems="center"
+        paddingLeft={['2px', 0]}
+      >
+        <NavigationButton icon={CarIcon} to="/dealer" text="Dealer" />
+        <NavigationButton icon={TrophyIcon} to="/race" text="Race" />
+        <NavigationButton
+          icon={GarageIcon}
+          to="/garage"
+          text="Garage"
+          notification={pageNotifications?.garagePage}
+        />
+        <NavigationButton icon={SettingsIcon} to="/settings" text="Settings" />
+      </Flex>
     </Flex>
   );
 };

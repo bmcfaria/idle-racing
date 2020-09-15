@@ -19,6 +19,9 @@ export const colors = {
   darkGray: '#4E4E4E',
 };
 
+export const MAX_WIDTH_VALUE = 800;
+export const MAX_WIDTH = `${MAX_WIDTH_VALUE}px`;
+
 export const CARD_WIDTH = 304;
 export const CARD_MARGIN = 28;
 

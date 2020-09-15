@@ -12,7 +12,6 @@ import { Provider } from 'react-redux';
 import configureStore from './state/configureStore';
 import Home from './components/Home';
 import Settings from './components/Settings';
-import { colors } from './helpers/theme';
 import ForcedResetWarning from './components/ForcedResetWarning';
 import OfflineEarningsNotification from './components/OfflineEarningsNotification';
 import Toasts from './components/Toasts';
@@ -45,7 +44,7 @@ function App() {
             h="100%"
             top="0"
             left="0"
-            bg={colors.white}
+            bg="grey"
           >
             <HeaderBar />
             <Content flexGrow="1">
