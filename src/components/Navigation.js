@@ -42,6 +42,8 @@ const NavigationButton = ({ icon, to, text, notification }) => {
       _focus={{
         color: colors.darkGray,
       }}
+      paddingLeft="0"
+      paddingRight="0"
     >
       <Flex
         w="100%"
