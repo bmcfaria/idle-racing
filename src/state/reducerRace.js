@@ -13,6 +13,7 @@ import {
   cars,
   generateGarageCar,
   tracks,
+  raceEvents,
 } from '../helpers/data';
 import {
   raceResults,
@@ -21,6 +22,8 @@ import {
   TOAST_TYPES,
   sponsorEntryText,
   moneySponsorsCount,
+  eventSponsorsStats,
+  passiveMoneySponsors,
 } from '../helpers/utils';
 import { evaluateSponsors } from '../helpers/sponsors';
 
@@ -180,6 +183,8 @@ const reducerRace = (state = {}, { type, payload }) => {
 
       return {
         ...state,
+        // Flag to notify CHECK_SPONSORS_TYPE of new track stats
+        finishRace: true,
         money: state.money + earnings,
         locked: {
           ...state.locked,
@@ -304,10 +309,32 @@ const reducerRace = (state = {}, { type, payload }) => {
           : state.warnings.offlineEarnings.maxTime) / 1000
       );
 
-      const moneyEarned = activeMoneySponsors * cycles;
+      // Recalculate event modifiers if necessary
+      let eventMultipliers = state.eventMultipliers;
+      if (state.finishRace || cycles > 10) {
+        eventMultipliers = raceEvents.reduce((result, { type }) => {
+          const eventTracks = tracks.filter(item => item.category === type);
+          const eventStats = eventSponsorsStats(eventTracks, state.tracksStats);
+          return {
+            ...result,
+            [type]:
+              2 ** (~~eventStats.raced + ~~eventStats.won + ~~eventStats.won10),
+          };
+        }, {});
+      }
+
+      const passiveMoney = passiveMoneySponsors(
+        state.sponsors.active,
+        eventMultipliers
+      );
+
+      const moneyEarned = passiveMoney * cycles;
 
       return {
         ...state,
+        // Disable flag
+        finishRace: false,
+        eventMultipliers: eventMultipliers,
         money: state.money + moneyEarned,
         sponsors: {
           ...state.sponsors,

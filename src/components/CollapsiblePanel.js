@@ -15,6 +15,7 @@ const CollapsiblePanel = ({
   color = colors.white,
   padding = '8px 0 8px 0',
   open: defaultOpen,
+  footer,
   ...props
 }) => {
   const [open, setOpen] = useState(defaultOpen);
@@ -70,14 +71,17 @@ const CollapsiblePanel = ({
         />
       </Button>
       {open && (
-        <Box
-          padding={padding}
-          borderRadius="16px"
-          display="grid"
-          gridTemplateColumns="repeat( auto-fit, minmax(160px, 1fr) )"
-        >
-          {children}
-        </Box>
+        <>
+          <Box
+            padding={padding}
+            borderRadius="16px"
+            display="grid"
+            gridTemplateColumns="repeat(auto-fit, minmax(160px, 1fr))"
+          >
+            {children}
+          </Box>
+          {footer}
+        </>
       )}
     </Flex>
   );

@@ -305,3 +305,23 @@ export const moneySponsorsCount = (sponsors, event) =>
   Object.values(sponsors).filter(
     sponsor => (sponsor.event === event || !event) && sponsor.reward === 'money'
   ).length;
+
+export const eventSponsorsStats = (tracks, tracksStats) =>
+  tracks.reduce(
+    (result, track) => ({
+      everRaced: result.everRaced || !!tracksStats[track.id]?.raced,
+      raced: result.raced && !!tracksStats[track.id]?.raced,
+      won: result.won && tracksStats[track.id]?.won > 0,
+      won10: result.won10 && tracksStats[track.id]?.won >= 10,
+    }),
+    { everRaced: false, raced: true, won: true, won10: true }
+  );
+
+export const passiveMoneySponsors = (sponsors, eventMultipliers) =>
+  Object.values(sponsors).reduce(
+    (result, sponsor) =>
+      sponsor.reward === 'money'
+        ? result + ~~eventMultipliers?.[sponsor.event] || 1
+        : result,
+    0
+  );

@@ -7,6 +7,7 @@ import {
   raceSponsorsActiveSelector,
   tracksSelector,
   trackStatsSelector,
+  eventMultipliersSelector,
 } from '../state/selectors';
 import {
   buffValue,
@@ -15,6 +16,8 @@ import {
   expLevel,
   expNextLevel,
   moneySponsorsCount,
+  eventSponsorsStats,
+  passiveMoneySponsors,
 } from './utils';
 import { raceEvents } from './data';
 
@@ -179,10 +182,20 @@ export const usePreviousUnlockedTrackChecker = tracks => {
   return isPreviousUnlocked;
 };
 
-export const usePassiveIncome = event => {
+export const usePassiveIncomeEvent = event => {
   const sponsors = useSelector(raceSponsorsActiveSelector);
+  const eventMultipliers = useSelector(eventMultipliersSelector);
 
-  return moneySponsorsCount(sponsors, event);
+  const multiplier = ~~eventMultipliers?.[event] || 1;
+
+  return multiplier * moneySponsorsCount(sponsors, event);
+};
+
+export const usePassiveIncome = () => {
+  const sponsors = useSelector(raceSponsorsActiveSelector);
+  const eventMultipliers = useSelector(eventMultipliersSelector);
+
+  return passiveMoneySponsors(sponsors, eventMultipliers);
 };
 
 export const useMechanicsCount = () => {
@@ -198,15 +211,7 @@ export const useEventTracksStatsState = eventType => {
   const tracksStats = useSelector(tracksStatsSelector);
   const eventRacesAll = tracks.filter(item => item.category === eventType);
 
-  return eventRacesAll.reduce(
-    (result, track) => ({
-      everRaced: result.everRaced || !!tracksStats[track.id]?.raced,
-      raced: result.raced && !!tracksStats[track.id]?.raced,
-      won: result.won && tracksStats[track.id]?.won > 0,
-      won10: result.won10 && tracksStats[track.id]?.won >= 10,
-    }),
-    { everRaced: false, raced: true, won: true, won10: true }
-  );
+  return eventSponsorsStats(eventRacesAll, tracksStats);
 };
 
 export const useTrackStatsState = trackId => {
@@ -215,6 +220,6 @@ export const useTrackStatsState = trackId => {
   return {
     raced: trackStats?.raced,
     won: trackStats?.won > 0,
-    won10: trackStats?.won > 10,
+    won10: trackStats?.won >= 10,
   };
 };

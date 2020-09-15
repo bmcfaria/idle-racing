@@ -14,6 +14,7 @@ import { discountValue } from '../helpers/utils';
 import objectAssignDeep from 'object-assign-deep';
 
 export const initialState = {
+  finishRace: true,
   autoRace: false,
   lockedRaceEvents: false,
   garageCars: [],
@@ -65,6 +66,7 @@ export const initialState = {
   boughtCars: {},
   version: 0.708,
   toasts: [],
+  eventMultipliers: {},
   warnings: {
     storeReset: false,
     offlineEarnings: {
