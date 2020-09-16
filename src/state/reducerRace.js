@@ -217,6 +217,10 @@ const reducerRace = (state = {}, { type, payload }) => {
           },
         }),
         ...(garageCar && {
+          rewardCars: {
+            ...state.rewardCars,
+            [garageCar.dealerCar]: ~~state.rewardCars[garageCar.dealerCar] + 1,
+          },
           pageNotifications: {
             ...state.pageNotifications,
             garagePage: true,

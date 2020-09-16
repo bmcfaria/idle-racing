@@ -64,6 +64,7 @@ export const initialState = {
     timestamp: null,
   },
   boughtCars: {},
+  rewardCars: {},
   version: 0.708,
   toasts: [],
   eventMultipliers: {},

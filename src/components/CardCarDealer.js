@@ -4,6 +4,7 @@ import {
   garageCarsSelector,
   boughtCarsSelector,
   enoughMoneySelector,
+  rewardCarsSelector,
 } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
@@ -29,6 +30,7 @@ const CardCarDealer = ({ car, ...props }) => {
   const { id, price } = car;
   const garageCars = useSelector(garageCarsSelector);
   const boughtCars = useSelector(boughtCarsSelector);
+  const rewardCars = useSelector(rewardCarsSelector);
   const enoughMoney = useSelector(enoughMoneySelector(price));
   const [bought, setBought] = useState();
 
@@ -50,7 +52,9 @@ const CardCarDealer = ({ car, ...props }) => {
       w="160px"
       h="148px"
       bg={colors.darkGray}
-      infoBgColor={boughtCars[id] ? colors.orange : colors.lightGray}
+      infoBgColor={
+        boughtCars[id] || rewardCars[id] ? colors.orange : colors.lightGray
+      }
       infoH="124px"
       car={car}
       {...props}

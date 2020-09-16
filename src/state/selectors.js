@@ -70,6 +70,7 @@ export const raceSponsorsActiveSelector = state => state.sponsors.active;
 export const autoRaceEnabledSelector = state => state.autoRace;
 
 export const boughtCarsSelector = state => state.boughtCars;
+export const rewardCarsSelector = state => state.rewardCars;
 
 export const lockedRaceEventsSelector = state => state.lockedRaceEvents;
 
