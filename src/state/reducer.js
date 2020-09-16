@@ -98,10 +98,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
       const enoughMoney = state.money >= calculatedPrice;
 
+      const rewardedCarsCount = state.garageCars.reduce(
+        (result, { reward }) => result + ~~reward,
+        0
+      );
+
       if (
         !car ||
         !enoughMoney ||
-        state.garageCars.length >= state.garageSlots
+        state.garageCars.length - rewardedCarsCount >= state.garageSlots
       ) {
         return state;
       }

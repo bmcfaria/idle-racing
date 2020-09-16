@@ -5,13 +5,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   garageCarsSelector,
   pageNotificationsGarageSelector,
-  garageSlotsEmptySelector,
 } from '../state/selectors';
 import CardCarGarage from './CardCarGarage';
 import Modal from './Modal';
 import { useLocation, Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
-import { useDynamicCardContainerWidth } from '../helpers/hooks';
+import {
+  useDynamicCardContainerWidth,
+  useEmptyGarageSlots,
+} from '../helpers/hooks';
 import { openGarageAction } from '../state/actions';
 import { colors } from '../helpers/theme';
 import GarageBuySlot from './GarageBuySlot';
@@ -20,11 +22,7 @@ import { BottomSpacer } from './BottomSpacer';
 
 const CarsContainer = ({ cars, ...props }) => {
   const pageNotificationsGarage = useSelector(pageNotificationsGarageSelector);
-  const rewardCars = useSelector(garageCarsSelector).reduce(
-    (acumulator, { reward }) => acumulator + ~~reward,
-    0
-  );
-  const emptySlots = useSelector(garageSlotsEmptySelector) + rewardCars;
+  const emptySlots = useEmptyGarageSlots();
 
   return (
     <>

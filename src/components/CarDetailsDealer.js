@@ -2,24 +2,21 @@ import React from 'react';
 import { Flex, Text } from '@chakra-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { buyCarAction } from '../state/actions';
-import {
-  garageSlotsEmptySelector,
-  enoughMoneySelector,
-} from '../state/selectors';
+import { enoughMoneySelector } from '../state/selectors';
 import { useHistory } from 'react-router-dom';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import AttributeCircle from './AttributeCircle';
 import Button from './Button';
 import CarDetailsContainer from './CarDetailsContainer';
-import { useCarPriceWithDiscount } from '../helpers/hooks';
+import { useCarPriceWithDiscount, useEmptyGarageSlots } from '../helpers/hooks';
 
 const CarDetailsDealer = ({ car, ...props }) => {
   const { id, name, price, reward } = car;
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const emptySlots = useSelector(garageSlotsEmptySelector);
+  const emptySlots = useEmptyGarageSlots();
 
   const calculatedPrice = ~~useCarPriceWithDiscount(price);
   const enoughMoney = useSelector(enoughMoneySelector(calculatedPrice));
@@ -49,7 +46,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
       </Flex>
       <Button
         onClick={buy}
-        isDisabled={!enoughMoney || reward || emptySlots === 0}
+        isDisabled={!enoughMoney || reward || emptySlots <= 0}
         color={colors.darkGray}
         bg={colors.white}
       >

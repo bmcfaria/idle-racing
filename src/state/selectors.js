@@ -53,8 +53,6 @@ export const warningsSelector = state => state.warnings;
 export const offlineEarningsSelector = state => state.warnings.offlineEarnings;
 
 export const garageSlotsSelector = state => state.garageSlots;
-export const garageSlotsEmptySelector = state =>
-  state.garageSlots - state.garageCars.length;
 export const garageSlotPriceSelector = state => 250 * 2 ** state.garageSlots;
 
 export const toastsSelector = state => state.toasts;

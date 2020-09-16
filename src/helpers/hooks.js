@@ -8,6 +8,8 @@ import {
   tracksSelector,
   trackStatsSelector,
   eventMultipliersSelector,
+  garageSlotsSelector,
+  garageCarsSelector,
 } from '../state/selectors';
 import {
   buffValue,
@@ -224,4 +226,16 @@ export const useTrackStatsState = trackId => {
     won: trackStats?.won > 0,
     won10: trackStats?.won >= 10,
   };
+};
+
+export const useEmptyGarageSlots = () => {
+  const garageCars = useSelector(garageCarsSelector);
+  const garageSlots = useSelector(garageSlotsSelector);
+
+  const rewardedCarsCount = garageCars.reduce(
+    (result, { reward }) => result + ~~reward,
+    0
+  );
+
+  return rewardedCarsCount - (garageCars.length - garageSlots);
 };
