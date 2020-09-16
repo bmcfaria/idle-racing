@@ -52,6 +52,7 @@ const TrackPrize = ({ text, prize, ...props }) => {
           maxW="48px"
           overflow="hidden"
           textOverflow="ellipsis"
+          whiteSpace="nowrap"
         >
           {car.name}
         </Text>
