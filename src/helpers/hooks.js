@@ -10,6 +10,7 @@ import {
   eventMultipliersSelector,
   garageSlotsSelector,
   garageCarsSelector,
+  dealerCarsSelector,
 } from '../state/selectors';
 import {
   buffValue,
@@ -238,4 +239,42 @@ export const useEmptyGarageSlots = () => {
   );
 
   return rewardedCarsCount - (garageCars.length - garageSlots);
+};
+
+export const useRequirements = () => {
+  const dealerCars = useSelector(dealerCarsSelector);
+
+  const typeText = {
+    rwd: 'Rear-wheel-drive',
+    fwd: 'Front-wheel-drive',
+    '4x4': '4x4',
+  };
+
+  const attrCompare = {
+    lt: '<',
+    eq: '=',
+    gt: '>',
+  };
+
+  const requirementText = ({ type, value }) => {
+    switch (type) {
+      case 'no_ups':
+        return 'No upgrades';
+      case 'brand':
+        return `${capitalize(value)} cars`;
+      case 'type':
+        return `${typeText[value]} only`;
+      case 'attr':
+        return `Cars with ${value.attr.toUpperCase()} ${
+          attrCompare[value.compare]
+        } ${value.value}`;
+      case 'car':
+        const car = dealerCars.find(item => item.id === value);
+        return `"${capitalize(car?.name)}" car`;
+      default:
+        return '';
+    }
+  };
+
+  return { requirementText };
 };
