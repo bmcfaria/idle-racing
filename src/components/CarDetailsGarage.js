@@ -32,6 +32,7 @@ const AttributeCircleButton = ({
   text,
   nextUpgrade,
   confirmationState,
+  reward,
   ...props
 }) => {
   const tutorial = useSelector(tutorialUpgradeSelector);
@@ -45,12 +46,15 @@ const AttributeCircleButton = ({
     dispatch(disableTutorialUpgradeAction);
   };
 
+  const bg =
+    (disabled && 'transparent') || (reward && colors.green) || colors.lightBlue;
+
   return (
     <Box position="relative">
       <Button
         w="56px"
         h="56px"
-        bg={disabled ? 'transparent' : colors.lightBlue}
+        bg={bg}
         border={`1px solid ${colors.white}`}
         onMouseEnter={() => !disabled && setHoverOnAttr(true)}
         onMouseLeave={() => setHoverOnAttr()}
@@ -80,7 +84,7 @@ const AttributeCircleButton = ({
 };
 
 const CarDetailsGarage = ({ car, ...props }) => {
-  const { id, name, price } = car;
+  const { id, name, price, reward } = car;
   const mechanics = useMechanicsCount();
   const pastRaces = useSelector(pastRacesSelector);
 
@@ -143,7 +147,7 @@ const CarDetailsGarage = ({ car, ...props }) => {
   const buttonColors = ((confirmationState === 'ACC' ||
     confirmationState === 'SPD' ||
     confirmationState === 'HND') && {
-    bg: colors.lightBlue,
+    bg: reward ? colors.green : colors.lightBlue,
     color: 'black',
   }) || { bg: colors.darkGray, color: colors.white };
 
@@ -194,12 +198,13 @@ const CarDetailsGarage = ({ car, ...props }) => {
     }
   };
 
+  const cardBg =
+    (confirmationState && colors.lightGray) ||
+    (reward && colors.green) ||
+    colors.lightBlue;
+
   return (
-    <CarDetailsContainer
-      bg={confirmationState ? colors.lightGray : colors.lightBlue}
-      car={car}
-      {...props}
-    >
+    <CarDetailsContainer bg={cardBg} car={car} {...props}>
       <Text textAlign="center" fontSize="14px" lineHeight="14px">
         {title}
       </Text>
@@ -208,18 +213,21 @@ const CarDetailsGarage = ({ car, ...props }) => {
           attr={car[ATTRIBUTE_TYPES.ACCELERATION]}
           text="ACC"
           confirmationState={confirmationState}
+          reward={reward}
           onClick={() => setConfirmationState('ACC')}
         />
         <AttributeCircleButton
           attr={car[ATTRIBUTE_TYPES.SPEED]}
           text="SPD"
           confirmationState={confirmationState}
+          reward={reward}
           onClick={() => setConfirmationState('SPD')}
         />
         <AttributeCircleButton
           attr={car[ATTRIBUTE_TYPES.HANDLING]}
           text="HND"
           confirmationState={confirmationState}
+          reward={reward}
           onClick={() => setConfirmationState('HND')}
         />
       </Flex>
