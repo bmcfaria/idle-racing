@@ -12,7 +12,7 @@ import Button from './Button';
 import { useRacePrizesWithBuff } from '../helpers/hooks';
 import { formatMoney } from '../helpers/utils';
 
-const Row = ({ index, car, playerCarId, prize }) => (
+const Row = ({ index, car, playerCarId, prize = 0 }) => (
   <Flex
     w="100%"
     fontSize="12px"
@@ -24,7 +24,8 @@ const Row = ({ index, car, playerCarId, prize }) => (
       {index + 1}
     </Text>
     <Text marginLeft="2px">- {car ? car.name : '[selled car]'}</Text>
-    <Text marginLeft="auto">${formatMoney(prize)}</Text>
+    {isNaN(prize) && <Text marginLeft="auto">CAR</Text>}
+    {!isNaN(prize) && <Text marginLeft="auto">${formatMoney(prize)}</Text>}
   </Flex>
 );
 
@@ -58,7 +59,7 @@ const RaceResults = ({ pastRace, raceAgain, selectCar, ...props }) => {
               carsGarage.find(item => item.id === car.id)
             }
             playerCarId={pastRace.car}
-            prize={`$${~~calculatedPrizes[index]}`}
+            prize={calculatedPrizes[index]}
           />
         ))}
       </Box>
