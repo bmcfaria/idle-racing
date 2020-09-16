@@ -174,7 +174,9 @@ const RaceDetails = props => {
   };
 
   return (
-    <RaceContext.Provider value={{ winProbabilityValue }}>
+    <RaceContext.Provider
+      value={{ winProbabilityValue, requirements: selectedTrack?.requirements }}
+    >
       {carsModal && (
         <RaceDetailsCarsContainer
           cars={cars}
