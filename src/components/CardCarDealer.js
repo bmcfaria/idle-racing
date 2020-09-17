@@ -57,6 +57,8 @@ const CardCarDealer = ({ car, ...props }) => {
       }
       infoH="124px"
       car={car}
+      display="flex"
+      flexDirection="column"
       {...props}
     >
       <Text
