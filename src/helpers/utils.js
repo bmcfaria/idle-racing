@@ -209,48 +209,75 @@ export const doMeetRequirements = (car, requirements, upgradable) => {
     return true;
   }
 
-  const specificAllowedCars = requirements.reduce((result, requirement) => {
-    if (requirement.type === 'car') {
-      return [...result, requirement.value];
-    }
+  // Requirements could allow multiple cars / brands / types
+  const { allowedCars, allowedBrands, allowedTypes } = requirements.reduce(
+    (result, requirement) => {
+      let allowedCars = [];
+      if (requirement.type === 'car') {
+        allowedCars = [...result.allowedCars, requirement.value];
+      }
 
-    // default
-    return result;
-  }, []);
+      let allowedBrands = [];
+      if (requirement.type === 'brand') {
+        allowedBrands = [...result.allowedBrands, requirement.value];
+      }
 
+      let allowedTypes = [];
+      if (requirement.type === 'type') {
+        allowedTypes = [...result.allowedTypes, requirement.value];
+      }
+
+      return {
+        allowedCars: [...result.allowedCars, ...allowedCars],
+        allowedBrands: [...result.allowedBrands, ...allowedBrands],
+        allowedTypes: [...result.allowedTypes, ...allowedTypes],
+      };
+    },
+    { allowedCars: [], allowedBrands: [], allowedTypes: [] }
+  );
+
+  // Test car
   if (
-    specificAllowedCars.length > 0 &&
-    !specificAllowedCars.includes(car.dealerCar || car.id)
+    allowedCars.length > 0 &&
+    !allowedCars.includes(car.dealerCar || car.id)
   ) {
     return false;
   }
 
-  const noUpsBrandType = requirements.reduce((result, requirement) => {
+  // Test brand
+  if (allowedBrands.length > 0 && !allowedBrands.includes(car.brand)) {
+    return false;
+  }
+
+  // Test type
+  if (allowedTypes.length > 0 && !allowedTypes.includes(car.type)) {
+    return false;
+  }
+
+  const noUps = requirements.reduce((result, requirement) => {
     if (requirement.type === 'no_ups') {
       const noUpgrades =
         car.acc.upgrade === 0 && car.spd.upgrade === 0 && car.hnd.upgrade === 0;
       return result && !!noUpgrades;
     }
 
-    if (requirement.type === 'brand') {
-      return result && car.brand === requirement.value;
-    }
-
-    if (requirement.type === 'type') {
-      return result && car.type === requirement.value;
-    }
-
     // default
     return result;
   }, true);
 
-  if (!noUpsBrandType) {
+  if (!noUps) {
     return false;
   }
 
-  const noUps = requirements.find(req => req.type === 'no_ups');
+  const noUpsRequirementExists = requirements.find(
+    req => req.type === 'no_ups'
+  );
 
-  return validateAttrRequirements(car, requirements, !noUps && upgradable);
+  return validateAttrRequirements(
+    car,
+    requirements,
+    !noUpsRequirementExists && upgradable
+  );
 };
 
 export const buffValue = (value, times, buffPercentage = 0.1) =>
