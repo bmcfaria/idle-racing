@@ -91,9 +91,9 @@ const Navigation = ({ icon, iconOnly, ...props }) => {
   return (
     <Flex
       w="100%"
-      h={['64px', '80px']}
+      h={['calc(64px + env(safe-area-inset-bottom))', '80px']}
       position="fixed"
-      bottom="env(safe-area-inset-bottom)"
+      bottom="0"
       zIndex="1"
       justifyContent="center"
       {...props}
@@ -102,6 +102,7 @@ const Navigation = ({ icon, iconOnly, ...props }) => {
         w="100%"
         h="100%"
         maxW={MAX_WIDTH}
+        paddingBottom="env(safe-area-inset-bottom)"
         background={`linear-gradient(180deg, ${colors.white}00 0%, ${colors.white} 100%)`}
         justifyContent="space-evenly"
         alignItems="center"
