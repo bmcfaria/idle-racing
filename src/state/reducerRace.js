@@ -27,6 +27,7 @@ import {
   eventSponsorsStats,
   passiveMoneySponsors,
   passiveMoneyBrands,
+  capitalize,
 } from '../helpers/utils';
 import { brandSponsors } from '../helpers/sponsors';
 import { evaluateSponsors } from '../helpers/sponsors';
@@ -328,11 +329,28 @@ const reducerRace = (state = {}, { type, payload }) => {
         brandSponsors
       );
 
+      const toasts = Object.keys(brandComplete).reduce(
+        (result, brandKey) =>
+          !!brandComplete[brandKey] !== !!state.brandComplete[brandKey]
+            ? [
+                ...result,
+                generateToast(
+                  `${capitalize(brandKey)} cars`,
+                  'brand sponsor',
+                  TOAST_TYPES.BRAND,
+                  { value: brandSponsors[brandKey] }
+                ),
+              ]
+            : result,
+        []
+      );
+
       return {
         ...state,
         //Disable flag
         acquiredCar: false,
         brandComplete,
+        toasts: toasts.length > 0 ? [...state.toasts, ...toasts] : state.toasts,
       };
     }
 

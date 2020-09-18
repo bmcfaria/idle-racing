@@ -9,6 +9,7 @@ import { dismissToastAction } from '../state/actions';
 import Button from './Button';
 import { ReactComponent as TrophyIcon } from '../assets/icons/trophy.svg';
 import { ReactComponent as MechanicIcon } from '../assets/icons/mechanic.svg';
+import { ReactComponent as CarIcon } from '../assets/icons/car.svg';
 
 const toastTypeReward = (type, extra) =>
   ({
@@ -17,6 +18,7 @@ const toastTypeReward = (type, extra) =>
     [TOAST_TYPES.RACE_WON]: 'Won',
     [TOAST_TYPES.RACE_TOP_3]: `Pos: ${extra.position}`,
     [TOAST_TYPES.RACE_LOST]: 'Lost',
+    [TOAST_TYPES.BRAND]: `+ $${extra.value}/s`,
   }[type]);
 
 const toastTypeColor = {
@@ -25,6 +27,7 @@ const toastTypeColor = {
   [TOAST_TYPES.RACE_WON]: colors.green,
   [TOAST_TYPES.RACE_TOP_3]: colors.yellow,
   [TOAST_TYPES.RACE_LOST]: colors.red,
+  [TOAST_TYPES.BRAND]: colors.orange,
 };
 
 const TrophyIconResized = props => (
@@ -37,6 +40,7 @@ const toastTypeIcon = {
   [TOAST_TYPES.RACE_WON]: TrophyIconResized,
   [TOAST_TYPES.RACE_TOP_3]: TrophyIconResized,
   [TOAST_TYPES.RACE_LOST]: TrophyIconResized,
+  [TOAST_TYPES.BRAND]: CarIcon,
 };
 
 const Toast = ({

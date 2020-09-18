@@ -300,6 +300,7 @@ export const TOAST_TYPES = {
   RACE_WON: 'RACE_WON',
   RACE_TOP_3: 'RACE_TOP_3',
   RACE_LOST: 'RACE_LOST',
+  BRAND: 'BRAND',
 };
 
 export const sponsorEntryText = sponsor => {
