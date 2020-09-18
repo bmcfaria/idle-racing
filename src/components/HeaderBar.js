@@ -76,7 +76,7 @@ const Money = props => {
       </Text>
       {passiveIncome > 0 && (
         <Text fontSize="16px" marginLeft="4px" color={colors.white}>
-          {`(+${passiveIncome} /s)`}
+          {`(+ $${passiveIncome}/s)`}
         </Text>
       )}
     </Flex>

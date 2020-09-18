@@ -94,7 +94,7 @@ const RaceEventSponsors = ({ event, ...props }) => {
       wrap="wrap"
       text={
         'Sponsors' +
-        (eventPassiveIncome > 0 ? ` ($${eventPassiveIncome} /s)` : '')
+        (eventPassiveIncome > 0 ? ` ($${eventPassiveIncome}/s)` : '')
       }
       secondaryLine={sponsors.map(sponsor => (
         <RaceEventSponsorRewardIcon

@@ -90,7 +90,7 @@ const Brand = () => {
           )}
           {allCarsAcquired && (
             <Text margin="auto" textAlign="center">
-              "{capitalize(brand)}" cars brand sponsor ({`$${brandSponsor} /s`})
+              "{capitalize(brand)}" cars brand sponsor ({`$${brandSponsor}/s`})
             </Text>
           )}
         </Flex>

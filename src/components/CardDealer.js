@@ -46,7 +46,7 @@ const CardDealer = ({ brandType, brandName, ...props }) => {
       primaryText={capitalize(brandName)}
       secondaryText={
         allCarsAcquired
-          ? `Sponsor: $${~~brandSponsors[brandType]} /s`
+          ? `Sponsor: $${~~brandSponsors[brandType]}/s`
           : '(No sponsor)'
       }
       theme={{

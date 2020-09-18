@@ -93,7 +93,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
 
   const secondaryText =
     (locked && 'Locked') ||
-    (eventPassiveIncome > 0 && `Sponsor: $${eventPassiveIncome} /s`) ||
+    (eventPassiveIncome > 0 && `Sponsor: $${eventPassiveIncome}/s`) ||
     '(No sponsors)';
 
   const secondaryColor =
