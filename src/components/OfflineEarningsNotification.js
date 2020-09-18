@@ -204,6 +204,15 @@ const OfflineEarningsNotification = props => {
         />
 
         <DetailsRow
+          text="Brands (max 2h):"
+          value={`+ $${formatMoney(offlineEarnings.brandsValue)}`}
+          icon={CarIcon}
+          iconW="14px"
+          iconH="14px"
+          bg={colors.orange}
+        />
+
+        <DetailsRow
           text="Mechanics (unlocked):"
           value={`+ ${newMechanics}`}
           icon={MechanicIcon}
@@ -214,15 +223,6 @@ const OfflineEarningsNotification = props => {
           text="Sponsors (unlocked):"
           value={`+ ${newMoneySponsors}`}
           bg={colors.green}
-        />
-
-        <DetailsRow
-          text="Brand Sponsors:"
-          value={`+ ${offlineEarnings.brandsValue}`}
-          icon={CarIcon}
-          iconW="14px"
-          iconH="14px"
-          bg={colors.orange}
         />
 
         <DetailsRow
