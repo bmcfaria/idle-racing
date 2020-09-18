@@ -1,7 +1,9 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer, { initialState } from './reducer';
 import raceReducer from './reducerRace';
 import garageReducer from './reducerGarage';
+import mySaga from './sagas';
 import throttle from 'lodash/throttle';
 import objectAssignDeep from 'object-assign-deep';
 
@@ -67,14 +69,18 @@ const saveState = state => {
   }
 };
 
+const sagaMiddleware = createSagaMiddleware();
+
+const composeDevtoolsWithMiddleware = midleware =>
+  inDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(midleware)
+    : midleware;
+
 export default function configureStore() {
   const store = createStore(
     combinedReducer,
     loadState(),
-    inDev
-      ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__()
-      : undefined
+    composeDevtoolsWithMiddleware(applyMiddleware(sagaMiddleware))
   );
 
   store.subscribe(
@@ -82,6 +88,8 @@ export default function configureStore() {
       saveState(store.getState());
     }, 1000)
   );
+
+  sagaMiddleware.run(mySaga);
 
   return store;
 }

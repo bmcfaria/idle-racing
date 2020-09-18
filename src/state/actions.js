@@ -97,7 +97,13 @@ export const dismissToastAction = id => ({
   payload: { toastId: id },
 });
 
+export const RECALCULATE_EVENT_MULTIPLIERS_TYPE =
+  'RECALCULATE_EVENT_MULTIPLIERS';
+export const RECALCULATE_BRAND_COMPLETE_TYPE = 'RECALCULATE_BRAND_COMPLETE';
+
 export const CHECK_SPONSORS_TYPE = 'CHECK_SPONSORS';
-export const checkSponsorsAction = {
-  type: CHECK_SPONSORS_TYPE,
+
+export const SYNC_PASSIVE_INCOME_TYPE = 'SYNC_PASSIVE_INCOME';
+export const syncPassiveIncomeAction = {
+  type: SYNC_PASSIVE_INCOME_TYPE,
 };

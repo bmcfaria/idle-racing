@@ -4,6 +4,8 @@ import {
   CLOSE_RESULTS_TYPE,
   STOP_RACE_TYPE,
   CHECK_SPONSORS_TYPE,
+  RECALCULATE_EVENT_MULTIPLIERS_TYPE,
+  RECALCULATE_BRAND_COMPLETE_TYPE,
 } from './actions';
 import {
   generateRace,
@@ -297,6 +299,43 @@ const reducerRace = (state = {}, { type, payload }) => {
       };
     }
 
+    case RECALCULATE_EVENT_MULTIPLIERS_TYPE: {
+      const eventMultipliers = raceEvents.reduce((result, { type }) => {
+        const eventTracks = tracks.filter(item => item.category === type);
+        const eventStats = eventSponsorsStats(eventTracks, state.tracksStats);
+        return {
+          ...result,
+          [type]:
+            2 ** (~~eventStats.raced + ~~eventStats.won + ~~eventStats.won10),
+        };
+      }, {});
+
+      return {
+        ...state,
+        //Disable flag
+        finishRace: false,
+        eventMultipliers,
+      };
+    }
+
+    case RECALCULATE_BRAND_COMPLETE_TYPE: {
+      const brandComplete = cars.reduce(
+        (result, { id, brand }) => ({
+          ...result,
+          [brand]:
+            !!result[brand] && !!(state.boughtCars[id] || state.rewardCars[id]),
+        }),
+        brandSponsors
+      );
+
+      return {
+        ...state,
+        //Disable flag
+        acquiredCar: false,
+        brandComplete,
+      };
+    }
+
     case CHECK_SPONSORS_TYPE: {
       const activeMoneySponsors = moneySponsorsCount(state.sponsors.active);
       const currentTime = new Date().getTime();
@@ -316,38 +355,11 @@ const reducerRace = (state = {}, { type, payload }) => {
           : state.warnings.offlineEarnings.maxTime) / 1000
       );
 
-      // Recalculate event modifiers if necessary
-      let eventMultipliers = state.eventMultipliers;
-      if (state.finishRace || cycles > 10) {
-        eventMultipliers = raceEvents.reduce((result, { type }) => {
-          const eventTracks = tracks.filter(item => item.category === type);
-          const eventStats = eventSponsorsStats(eventTracks, state.tracksStats);
-          return {
-            ...result,
-            [type]:
-              2 ** (~~eventStats.raced + ~~eventStats.won + ~~eventStats.won10),
-          };
-        }, {});
-      }
-
-      let brandComplete = state.brandComplete;
-      if (state.acquiredCar) {
-        brandComplete = cars.reduce(
-          (result, { id, brand }) => ({
-            ...result,
-            [brand]:
-              !!result[brand] &&
-              !!(state.boughtCars[id] || state.rewardCars[id]),
-          }),
-          brandSponsors
-        );
-      }
-
-      const passiveMoneyBrandSponsors = passiveMoneyBrands(brandComplete);
+      const passiveMoneyBrandSponsors = passiveMoneyBrands(state.brandComplete);
 
       const passiveMoneyRaceSponsors = passiveMoneySponsors(
         state.sponsors.active,
-        eventMultipliers
+        state.eventMultipliers
       );
 
       const moneyEarned =
@@ -355,11 +367,6 @@ const reducerRace = (state = {}, { type, payload }) => {
 
       return {
         ...state,
-        // Disable flags
-        finishRace: false,
-        acquiredCar: false,
-        brandComplete,
-        eventMultipliers,
         money: state.money + moneyEarned,
         sponsors: {
           ...state.sponsors,
