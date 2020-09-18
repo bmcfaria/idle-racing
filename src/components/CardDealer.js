@@ -6,13 +6,19 @@ import { useSelector } from 'react-redux';
 import getImageCar from '../helpers/imageMappingCars';
 import CardBig from './CardBig';
 import { capitalize } from '../helpers/utils';
+import { useCarsAcquired } from '../helpers/hooks';
+import { brandSponsors } from '../helpers/sponsors';
 
 const CardDealer = ({ brandType, brandName, ...props }) => {
   const location = useLocation();
   const history = useHistory();
   const cars = useSelector(dealerCarsSelector);
 
-  const brandCars = cars.filter(item => item.brand === brandType).slice(0, 9);
+  const allBrandCars = cars.filter(item => item.brand === brandType);
+  const brandCars = allBrandCars.slice(0, 9);
+
+  const carsAcquired = useCarsAcquired(allBrandCars);
+  const allCarsAcquired = carsAcquired === brandCars.length;
 
   const divider = ~~((brandCars.length - 1) / 3 + 1);
 
@@ -27,7 +33,11 @@ const CardDealer = ({ brandType, brandName, ...props }) => {
     <CardBig
       onClick={onClick}
       primaryText={capitalize(brandName)}
-      secondaryText={'Sponsor: $0 / second'}
+      secondaryText={
+        allCarsAcquired
+          ? `Sponsor: $${~~brandSponsors[brandType]} /s`
+          : '(No sponsor)'
+      }
       {...props}
     >
       {brandCars.map(car => (

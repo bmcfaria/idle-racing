@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { raceSponsorsSelector } from '../state/selectors';
 import {
-  usePassiveIncomeEvent,
+  usePassiveIncomeEventSponsors,
   useEventTracksStatsState,
 } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
@@ -87,7 +87,7 @@ const RaceEventSponsors = ({ event, ...props }) => {
     (tracksStatsState.everRaced && colors.white) ||
     colors.darkGray;
 
-  const eventPassiveIncome = usePassiveIncomeEvent(event);
+  const eventPassiveIncome = usePassiveIncomeEventSponsors(event);
 
   return (
     <CollapsiblePanel

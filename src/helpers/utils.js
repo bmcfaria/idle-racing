@@ -1,6 +1,7 @@
 import { cars } from './data';
 import seedrandom from 'seedrandom';
 import numbro from 'numbro';
+import { brandSponsors } from './sponsors';
 
 export const displayResponsivePanel = condition => [
   condition ? 'none' : 'flex',
@@ -350,5 +351,12 @@ export const passiveMoneySponsors = (sponsors, eventMultipliers) =>
       sponsor.reward === 'money'
         ? result + ~~eventMultipliers?.[sponsor.event] || 1
         : result,
+    0
+  );
+
+export const passiveMoneyBrands = brandComplete =>
+  Object.keys(brandComplete).reduce(
+    (result, brandKey) =>
+      result + ~~(brandComplete[brandKey] && brandSponsors[brandKey]),
     0
   );

@@ -15,7 +15,7 @@ import CardProgressOverlay from './CardProgressOverlay';
 import { capitalize } from '../helpers/utils';
 import {
   usePreviousUnlockedTrackChecker,
-  usePassiveIncomeEvent,
+  usePassiveIncomeEventSponsors,
   useEventTracksStatsState,
   useTrackStatsState,
 } from '../helpers/hooks';
@@ -70,7 +70,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const history = useHistory();
   const tracks = useSelector(tracksSelector);
   const tracksStatsState = useEventTracksStatsState(eventType);
-  const eventPassiveIncome = usePassiveIncomeEvent(eventType);
+  const eventPassiveIncome = usePassiveIncomeEventSponsors(eventType);
 
   const lockedRaceEvents = useSelector(lockedRaceEventsSelector);
   const locked =

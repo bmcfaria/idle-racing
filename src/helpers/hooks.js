@@ -11,6 +11,9 @@ import {
   garageSlotsSelector,
   garageCarsSelector,
   dealerCarsSelector,
+  boughtCarsSelector,
+  rewardCarsSelector,
+  brandCompleteSelector,
 } from '../state/selectors';
 import {
   buffValue,
@@ -21,6 +24,7 @@ import {
   moneySponsorsCount,
   eventSponsorsStats,
   passiveMoneySponsors,
+  passiveMoneyBrands,
 } from './utils';
 import { raceEvents } from './data';
 import { MAX_WIDTH_VALUE } from './theme';
@@ -187,7 +191,7 @@ export const usePreviousUnlockedTrackChecker = tracks => {
   return isPreviousUnlocked;
 };
 
-export const usePassiveIncomeEvent = event => {
+export const usePassiveIncomeEventSponsors = event => {
   const sponsors = useSelector(raceSponsorsActiveSelector);
   const eventMultipliers = useSelector(eventMultipliersSelector);
 
@@ -196,11 +200,24 @@ export const usePassiveIncomeEvent = event => {
   return multiplier * moneySponsorsCount(sponsors, event);
 };
 
-export const usePassiveIncome = () => {
+export const usePassiveIncomeSponsors = () => {
   const sponsors = useSelector(raceSponsorsActiveSelector);
   const eventMultipliers = useSelector(eventMultipliersSelector);
 
   return passiveMoneySponsors(sponsors, eventMultipliers);
+};
+
+export const usePassiveIncomeBrands = () => {
+  const brandComplete = useSelector(brandCompleteSelector);
+
+  return passiveMoneyBrands(brandComplete);
+};
+
+export const usePassiveIncome = () => {
+  const passiveIncomeSponsors = usePassiveIncomeSponsors();
+  const passiveIncomeBrands = usePassiveIncomeBrands();
+
+  return passiveIncomeSponsors + passiveIncomeBrands;
 };
 
 export const useMechanicsCount = () => {
@@ -277,4 +294,14 @@ export const useRequirements = () => {
   };
 
   return { requirementText };
+};
+
+export const useCarsAcquired = cars => {
+  const boughtCars = useSelector(boughtCarsSelector);
+  const rewardCars = useSelector(rewardCarsSelector);
+
+  return cars.reduce(
+    (result, { id }) => result + ~~(boughtCars[id] || rewardCars[id]),
+    0
+  );
 };

@@ -24,7 +24,9 @@ import {
   moneySponsorsCount,
   eventSponsorsStats,
   passiveMoneySponsors,
+  passiveMoneyBrands,
 } from '../helpers/utils';
+import { brandSponsors } from '../helpers/sponsors';
 import { evaluateSponsors } from '../helpers/sponsors';
 
 const reducerRace = (state = {}, { type, payload }) => {
@@ -185,6 +187,7 @@ const reducerRace = (state = {}, { type, payload }) => {
         ...state,
         // Flag to notify CHECK_SPONSORS_TYPE of new track stats
         finishRace: true,
+        acquiredCar: !!garageCar,
         money: state.money + earnings,
         locked: {
           ...state.locked,
@@ -327,18 +330,36 @@ const reducerRace = (state = {}, { type, payload }) => {
         }, {});
       }
 
-      const passiveMoney = passiveMoneySponsors(
+      let brandComplete = state.brandComplete;
+      if (state.acquiredCar) {
+        brandComplete = cars.reduce(
+          (result, { id, brand }) => ({
+            ...result,
+            [brand]:
+              !!result[brand] &&
+              !!(state.boughtCars[id] || state.rewardCars[id]),
+          }),
+          brandSponsors
+        );
+      }
+
+      const passiveMoneyBrandSponsors = passiveMoneyBrands(brandComplete);
+
+      const passiveMoneyRaceSponsors = passiveMoneySponsors(
         state.sponsors.active,
         eventMultipliers
       );
 
-      const moneyEarned = passiveMoney * cycles;
+      const moneyEarned =
+        (passiveMoneyRaceSponsors + passiveMoneyBrandSponsors) * cycles;
 
       return {
         ...state,
-        // Disable flag
+        // Disable flags
         finishRace: false,
-        eventMultipliers: eventMultipliers,
+        acquiredCar: false,
+        brandComplete,
+        eventMultipliers,
         money: state.money + moneyEarned,
         sponsors: {
           ...state.sponsors,
@@ -349,7 +370,9 @@ const reducerRace = (state = {}, { type, payload }) => {
             ...state.warnings,
             offlineEarnings: {
               ...state.warnings.offlineEarnings,
-              sponsorsValue: moneyEarned,
+              totalValue: moneyEarned,
+              sponsorsValue: passiveMoneyRaceSponsors * cycles,
+              brandsValue: passiveMoneyBrandSponsors * cycles,
               timelapse,
             },
           },

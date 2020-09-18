@@ -73,3 +73,4 @@ export const rewardCarsSelector = state => state.rewardCars;
 export const lockedRaceEventsSelector = state => state.lockedRaceEvents;
 
 export const eventMultipliersSelector = state => state.eventMultipliers;
+export const brandCompleteSelector = state => state.brandComplete;

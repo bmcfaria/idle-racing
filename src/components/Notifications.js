@@ -35,13 +35,13 @@ const Notifications = () => {
   const [open, onOpen, onClose] = useOpenClose(false);
   const notifications = useSelector(notificationsSelector);
   const races = useSelector(racesSelector);
-  const sponsorsPassiveIncome = usePassiveIncome();
+  const passiveIncome = usePassiveIncome();
 
   const isRacing = races?.length > 0;
 
   useEffect(() => {
     const countDown = setInterval(() => {
-      if (sponsorsPassiveIncome > 0) {
+      if (passiveIncome > 0) {
         dispatch(checkSponsorsAction);
       }
 
@@ -53,7 +53,7 @@ const Notifications = () => {
     return () => {
       clearInterval(countDown);
     };
-  }, [dispatch, races, sponsorsPassiveIncome]);
+  }, [dispatch, races, passiveIncome]);
 
   return (
     <>

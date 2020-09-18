@@ -6,7 +6,10 @@ import { useSelector } from 'react-redux';
 import { dealerCarsSelector } from '../state/selectors';
 import Modal from './Modal';
 import CardCarDealer from './CardCarDealer';
-import { useDynamicCardContainerWidth } from '../helpers/hooks';
+import {
+  useCarsAcquired,
+  useDynamicCardContainerWidth,
+} from '../helpers/hooks';
 import { BottomSpacer } from './BottomSpacer';
 import { colors } from '../helpers/theme';
 import { capitalize } from '../helpers/utils';
@@ -31,9 +34,13 @@ const CarsContainer = ({ cars, ...props }) => (
 const Brand = () => {
   const location = useLocation();
   const { brand } = useParams();
+
   const cars = useSelector(dealerCarsSelector).filter(
     item => item.brand === brand
   );
+
+  const carsAcquired = useCarsAcquired(cars);
+  const allCarsAcquired = carsAcquired === cars.length;
 
   const containerWidth = useDynamicCardContainerWidth();
 
@@ -62,12 +69,19 @@ const Brand = () => {
           borderRadius="16px"
           marginLeft="16px"
           border="1px solid black"
-          bg={colors.lightGray}
+          bg={allCarsAcquired ? colors.orange : colors.lightGray}
         >
-          <Text margin="auto" textAlign="center">
-            Acquire all "{capitalize(brand)}" cars to unlock brand sponsor (
-            {`0/${cars.length} cars`})
-          </Text>
+          {!allCarsAcquired && (
+            <Text margin="auto" textAlign="center">
+              Acquire all "{capitalize(brand)}" cars to unlock brand sponsor (
+              {`${carsAcquired}/${cars.length} cars`})
+            </Text>
+          )}
+          {allCarsAcquired && (
+            <Text margin="auto" textAlign="center">
+              "{capitalize(brand)}" cars brand sponsor ({`$${brandSponsor} /s`})
+            </Text>
+          )}
         </Flex>
       )}
 

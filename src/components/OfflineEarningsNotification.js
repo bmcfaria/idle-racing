@@ -139,7 +139,7 @@ const OfflineEarningsNotification = props => {
     { raceEarnings: 0, newCars: 0 }
   );
 
-  const totalEarning = offlineEarnings.sponsorsValue + raceEarnings;
+  const totalEarning = offlineEarnings.totalValue + raceEarnings;
 
   const earningsToShow =
     totalEarning > 0 || newMechanics > 0 || offlineRaces.length > 0;
@@ -214,6 +214,15 @@ const OfflineEarningsNotification = props => {
           text="Sponsors (unlocked):"
           value={`+ ${newMoneySponsors}`}
           bg={colors.green}
+        />
+
+        <DetailsRow
+          text="Brand Sponsors:"
+          value={`+ ${offlineEarnings.brandsValue}`}
+          icon={CarIcon}
+          iconW="14px"
+          iconH="14px"
+          bg={colors.orange}
         />
 
         <DetailsRow

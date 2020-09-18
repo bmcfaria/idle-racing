@@ -15,6 +15,7 @@ import objectAssignDeep from 'object-assign-deep';
 
 export const initialState = {
   finishRace: true,
+  acquiredCar: true,
   autoRace: false,
   lockedRaceEvents: false,
   garageCars: [],
@@ -65,13 +66,16 @@ export const initialState = {
   },
   boughtCars: {},
   rewardCars: {},
+  brandComplete: {},
   version: 0.708,
   toasts: [],
   eventMultipliers: {},
   warnings: {
     storeReset: false,
     offlineEarnings: {
+      totalValue: 0,
       sponsorsValue: 0,
+      brandsValue: 0,
       timelapse: 0,
       maxTime: 2 * 60 * 60 * 1000,
     },
@@ -118,6 +122,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
       return {
         ...state,
+        acquiredCar: true,
         money: state.money - calculatedPrice,
         boughtCars: {
           ...state.boughtCars,
