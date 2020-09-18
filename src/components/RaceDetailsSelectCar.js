@@ -64,7 +64,7 @@ const RaceDetailsSelectCar = ({ onClick, ...props }) => {
           <Flex
             flexGrow="1"
             h="100%"
-            borderRadius="16px 0 0 16px"
+            borderRadius="8px 0 0 8px"
             bg={colors.green}
             direction="column"
             fontSize="14px"
@@ -75,12 +75,7 @@ const RaceDetailsSelectCar = ({ onClick, ...props }) => {
             <Text color={colors.darkGray}>1st Prize</Text>
             <Text>{rewardCar.name}</Text>
           </Flex>
-          <Flex
-            w="52px"
-            h="100%"
-            borderRadius="0 16px 16px 0"
-            bg={colors.white}
-          >
+          <Flex w="52px" h="100%" borderRadius="0 8px 8px 0" bg={colors.white}>
             <Image
               w="100%"
               h="100%"
