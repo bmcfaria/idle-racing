@@ -1,7 +1,7 @@
 import { put, takeLatest, select } from 'redux-saga/effects';
 import {
   SYNC_PASSIVE_INCOME_TYPE,
-  CHECK_SPONSORS_TYPE,
+  PASSIVE_INCOME_TYPE,
   RECALCULATE_EVENT_MULTIPLIERS_TYPE,
   RECALCULATE_BRAND_COMPLETE_TYPE,
 } from './actions';
@@ -18,7 +18,7 @@ function* syncPassiveIncome(action) {
       yield put({ type: RECALCULATE_BRAND_COMPLETE_TYPE });
     }
 
-    yield put({ type: CHECK_SPONSORS_TYPE });
+    yield put({ type: PASSIVE_INCOME_TYPE });
   } catch (e) {}
 }
 

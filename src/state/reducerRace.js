@@ -3,7 +3,7 @@ import {
   CHECK_END_RACE_TYPE,
   CLOSE_RESULTS_TYPE,
   STOP_RACE_TYPE,
-  CHECK_SPONSORS_TYPE,
+  PASSIVE_INCOME_TYPE,
   RECALCULATE_EVENT_MULTIPLIERS_TYPE,
   RECALCULATE_BRAND_COMPLETE_TYPE,
 } from './actions';
@@ -187,7 +187,7 @@ const reducerRace = (state = {}, { type, payload }) => {
 
       return {
         ...state,
-        // Flag to notify CHECK_SPONSORS_TYPE of new track stats
+        // Flag to notify to recalculate event multipliers of new track stats
         finishRace: true,
         acquiredCar: !!garageCar,
         money: state.money + earnings,
@@ -336,7 +336,7 @@ const reducerRace = (state = {}, { type, payload }) => {
       };
     }
 
-    case CHECK_SPONSORS_TYPE: {
+    case PASSIVE_INCOME_TYPE: {
       const activeMoneySponsors = moneySponsorsCount(state.sponsors.active);
       const currentTime = new Date().getTime();
 
