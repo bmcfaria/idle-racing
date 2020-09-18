@@ -8,6 +8,7 @@ import CardBig from './CardBig';
 import { capitalize } from '../helpers/utils';
 import { useCarsAcquired } from '../helpers/hooks';
 import { brandSponsors } from '../helpers/sponsors';
+import { colors } from '../helpers/theme';
 
 const CardDealer = ({ brandType, brandName, ...props }) => {
   const location = useLocation();
@@ -29,6 +30,16 @@ const CardDealer = ({ brandType, brandName, ...props }) => {
     history.push(location.pathname + '/' + brandType);
   };
 
+  const primaryBg =
+    (allCarsAcquired && colors.orange) ||
+    (carsAcquired > 0 && colors.darkGray) ||
+    colors.lightGray;
+
+  const primaryColor =
+    (allCarsAcquired && 'black') ||
+    (carsAcquired > 0 && colors.white) ||
+    'black';
+
   return (
     <CardBig
       onClick={onClick}
@@ -38,6 +49,11 @@ const CardDealer = ({ brandType, brandName, ...props }) => {
           ? `Sponsor: $${~~brandSponsors[brandType]} /s`
           : '(No sponsor)'
       }
+      theme={{
+        primaryBg: primaryBg,
+        secondaryBg: colors.lightGray,
+        primaryColor: primaryColor,
+      }}
       {...props}
     >
       {brandCars.map(car => (

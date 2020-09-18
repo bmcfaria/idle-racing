@@ -50,6 +50,16 @@ const Brand = () => {
 
   const brandSponsor = ~~brandSponsors[brand];
 
+  const primaryBg =
+    (allCarsAcquired && colors.orange) ||
+    (carsAcquired > 0 && colors.darkGray) ||
+    colors.lightGray;
+
+  const primaryColor =
+    (allCarsAcquired && 'black') ||
+    (carsAcquired > 0 && colors.white) ||
+    'black';
+
   return (
     <Box>
       <Modal isOpen={!!selectedCar} backOnClose>
@@ -69,7 +79,8 @@ const Brand = () => {
           borderRadius="16px"
           marginLeft="16px"
           border="1px solid black"
-          bg={allCarsAcquired ? colors.orange : colors.lightGray}
+          color={primaryColor}
+          bg={primaryBg}
         >
           {!allCarsAcquired && (
             <Text margin="auto" textAlign="center">
