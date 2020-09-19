@@ -107,3 +107,8 @@ export const SYNC_PASSIVE_INCOME_TYPE = 'SYNC_PASSIVE_INCOME';
 export const syncPassiveIncomeAction = {
   type: SYNC_PASSIVE_INCOME_TYPE,
 };
+
+export const SYNC_RACES_TYPE = 'SYNC_RACES';
+export const syncRacesAction = {
+  type: SYNC_RACES_TYPE,
+};

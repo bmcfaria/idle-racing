@@ -4,9 +4,11 @@ import {
   PASSIVE_INCOME_TYPE,
   RECALCULATE_EVENT_MULTIPLIERS_TYPE,
   RECALCULATE_BRAND_COMPLETE_TYPE,
+  SYNC_RACES_TYPE,
+  checkEndRaceAction,
 } from './actions';
 
-function* syncPassiveIncome(action) {
+function* syncPassiveIncome() {
   try {
     const { finishRace, acquiredCar } = yield select();
 
@@ -22,8 +24,19 @@ function* syncPassiveIncome(action) {
   } catch (e) {}
 }
 
+function* syncRaces() {
+  try {
+    const { races } = yield select();
+
+    for (let race of races) {
+      yield put(checkEndRaceAction(race.id));
+    }
+  } catch (e) {}
+}
+
 function* mySaga() {
   yield takeLatest(SYNC_PASSIVE_INCOME_TYPE, syncPassiveIncome);
+  yield takeLatest(SYNC_RACES_TYPE, syncRaces);
 }
 
 //   function* mySaga() {
