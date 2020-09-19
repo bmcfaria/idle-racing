@@ -40,6 +40,11 @@ const Notifications = () => {
   const isRacing = races?.length > 0;
 
   useEffect(() => {
+    // No need to start a timer without passive income or races
+    if (passiveIncome === 0 && races.length === 0) {
+      return;
+    }
+
     const countDown = setInterval(() => {
       if (passiveIncome > 0) {
         dispatch(syncPassiveIncomeAction);
