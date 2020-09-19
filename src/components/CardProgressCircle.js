@@ -33,6 +33,8 @@ const CardProgressCircle = ({
     return null;
   }
 
+  const normalizedValue = value < 0 ? 0 : value;
+
   return (
     <CustomCircularProgress
       value={progress > 100 ? 100 : progress}
@@ -44,9 +46,9 @@ const CardProgressCircle = ({
       {
         <CircularProgressLabel color={textColor}>
           <Box>
-            <Text>{formatDuration(value)}</Text>
-            {showSeconds && value > 60 * 1000 && (
-              <Text fontSize="16px">({~~(value / 1000)}s)</Text>
+            <Text>{formatDuration(normalizedValue)}</Text>
+            {showSeconds && normalizedValue > 60 * 1000 && (
+              <Text fontSize="16px">({~~(normalizedValue / 1000)}s)</Text>
             )}
           </Box>
         </CircularProgressLabel>
