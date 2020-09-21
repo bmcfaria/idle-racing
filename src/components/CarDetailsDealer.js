@@ -8,7 +8,7 @@ import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import AttributeCircle from './AttributeCircle';
 import Button from './Button';
-import CarDetailsContainer from './CarDetailsContainer';
+import CarDetailsDealerContainer from './CarDetailsDealerContainer';
 import { useCarPriceWithDiscount, useEmptyGarageSlots } from '../helpers/hooks';
 
 const CarDetailsDealer = ({ car, ...props }) => {
@@ -27,7 +27,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
   };
 
   return (
-    <CarDetailsContainer car={car} {...props}>
+    <CarDetailsDealerContainer car={car} {...props}>
       <Text textAlign="center" fontSize="14px" lineHeight="14px">
         {name}
       </Text>
@@ -52,7 +52,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
       >
         {reward ? 'Reward' : `$${calculatedPrice}`}
       </Button>
-    </CarDetailsContainer>
+    </CarDetailsDealerContainer>
   );
 };
 
