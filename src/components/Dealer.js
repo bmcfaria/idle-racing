@@ -20,8 +20,8 @@ const Dealer = props => {
         w={`${containerDealersWidth || 320}px`}
         marginTop="24px"
       >
-        {brands.map((brand, index) => (
-          <Box marginRight="16px" marginBottom="16px" key={index}>
+        {brands.map(brand => (
+          <Box marginRight="16px" marginBottom="16px" key={brand.type}>
             <CardDealer brandType={brand.type} brandName={brand.name} />
           </Box>
         ))}
