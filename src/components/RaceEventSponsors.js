@@ -9,7 +9,7 @@ import { colors } from '../helpers/theme';
 import CollapsiblePanel from './CollapsiblePanel';
 import RaceEventSponsorRewardIcon from './RaceEventSponsorRewardIcon';
 import RaceEventSponsorReward from './RaceEventSponsorReward';
-import { Flex, Text } from '@chakra-ui/core';
+import { Box, Flex, Text } from '@chakra-ui/core';
 
 const TracksStatsLegend = ({ tracksStatsState, ...props }) => {
   const statsColors = [
@@ -22,7 +22,7 @@ const TracksStatsLegend = ({ tracksStatsState, ...props }) => {
     (!tracksStatsState.raced && colors.orange) ||
     (!tracksStatsState.won && colors.green) ||
     (!tracksStatsState.won10 && colors.lightBlue) ||
-    colors.lightGray;
+    colors.darkGray;
 
   const text =
     (!tracksStatsState.raced && 'Race all') ||
@@ -31,6 +31,14 @@ const TracksStatsLegend = ({ tracksStatsState, ...props }) => {
 
   return (
     <Flex fontSize="16px" h="32px" {...props}>
+      <Box
+        w="24px"
+        h="100%"
+        borderRadius="16px 0 0 16px"
+        bg={textBg}
+        border={`1px solid ${colors.darkGray}`}
+        borderRight="none"
+      />
       {statsColors.map((color, index) => (
         <Flex
           w="40px"
@@ -52,6 +60,7 @@ const TracksStatsLegend = ({ tracksStatsState, ...props }) => {
           w="148px"
           h="100%"
           border={`1px solid ${colors.darkGray}`}
+          borderRight="none"
           padding="0 2px"
           bg={textBg}
           color="black"
@@ -63,6 +72,14 @@ const TracksStatsLegend = ({ tracksStatsState, ...props }) => {
           <Text>{text}</Text>
         </Flex>
       )}
+      <Box
+        w="24px"
+        h="100%"
+        borderRadius="0 16px 16px 0"
+        bg={textBg}
+        border={`1px solid ${colors.darkGray}`}
+        borderLeft="none"
+      />
     </Flex>
   );
 };
