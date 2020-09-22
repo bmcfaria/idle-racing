@@ -6,6 +6,11 @@ import {
   PASSIVE_INCOME_TYPE,
   RECALCULATE_EVENT_MULTIPLIERS_TYPE,
   RECALCULATE_BRAND_COMPLETE_TYPE,
+  END_RACE_TOAST_TYPE,
+  END_RACE_REWARDS_TYPE,
+  END_RACE_UPDATE_STATS_TYPE,
+  END_RACE_EXPERIENCE_TYPE,
+  END_RACE_SPONSORS_TYPE,
 } from './actions';
 import {
   generateRace,
@@ -87,7 +92,6 @@ const reducerRace = (state = {}, { type, payload }) => {
 
       const car = state.garageCars.find(item => item.id === race.car);
       const track = tracks.find(item => item.id === race.track);
-      const carIndex = state.garageCars.findIndex(item => item.id === car.id);
 
       const results = raceResults(car, track);
       const position = results.findIndex(item => item.id === car.id) + 1;
@@ -96,102 +100,26 @@ const reducerRace = (state = {}, { type, payload }) => {
         buffValue(prize, state.experience.race.prizes)
       );
 
-      const earnedCar =
-        isNaN(track.prizes[position - 1]) &&
-        cars.find(({ id }) => id === track.prizes[position - 1]);
-
-      const garageCar = earnedCar && generateGarageCar(earnedCar, true);
-
-      let earnings = ~~calculatedPrizes[position - 1];
-
-      const trackStats = {
-        ...(state.tracksStats[track.id] || {}),
-        raced: ~~state.tracksStats[track.id]?.raced + 1,
-        won: ~~state.tracksStats[track.id]?.won + ~~(position === 1),
-      };
-
-      const sponsors = evaluateSponsors(
-        track,
-        car,
-        position,
-        state.pastRaces,
-        state.sponsors.active
-      );
-
-      const sponsorToasts = Object.keys(sponsors).map(key => {
-        const sponsor = raceSponsors.find(item => item.id === key);
-        return generateToast(
-          track.name,
-          sponsorEntryText(sponsor),
-          sponsor.reward === 'mechanic'
-            ? TOAST_TYPES.MECHANIC
-            : TOAST_TYPES.SPONSOR
-        );
-      });
-
-      // Append won race toast if race won
-      const toasts = [
-        ...sponsorToasts,
-        generateToast(
-          track.name,
-          car.name,
-          position <= 3
-            ? position === 1
-              ? TOAST_TYPES.RACE_WON
-              : TOAST_TYPES.RACE_TOP_3
-            : TOAST_TYPES.RACE_LOST,
-          { position }
-        ),
-      ];
-
-      let stateUpdate = {};
-      let expEarned = 0;
+      let earnings = calculatedPrizes[position - 1];
 
       const pastRace = generatePastRace(
         race,
         car,
         track,
-        earnings,
+        isNaN(earnings) ? track.prizes[position - 1] : earnings,
         position,
         results
       );
-
-      const garageCars = Object.assign([], state.garageCars, {
-        [carIndex]: {
-          ...car,
-          race: undefined,
-        },
-      });
-
-      stateUpdate = {
-        races: state.races.filter(item => item.id !== race.id),
-        garageCars: garageCar ? [...garageCars, garageCar] : garageCars,
-        tracksStats: Object.assign({}, state.tracksStats, {
-          [track.id]: {
-            ...trackStats,
-            race: undefined,
-            lastRace: pastRace.id,
-          },
-        }),
-        notifications: [pastRace, ...state.notifications],
-        pastRaces: [pastRace, ...state.pastRaces],
-      };
-
-      expEarned = 1;
-
-      // Initialize active sponsors timestamp if necessary
-      const activeMoneySponsors = moneySponsorsCount(sponsors);
-      const sponsorsTimestamp =
-        !state.sponsors.timestamp && activeMoneySponsors > 0
-          ? new Date().getTime()
-          : state.sponsors.timestamp;
 
       return {
         ...state,
         // Flag to notify to recalculate event multipliers of new track stats
         finishRace: true,
-        acquiredCar: !!garageCar,
-        money: state.money + earnings,
+
+        races: state.races.filter(item => item.id !== race.id),
+        notifications: [pastRace, ...state.notifications],
+        pastRaces: [pastRace, ...state.pastRaces],
+
         locked: {
           ...state.locked,
           race: {
@@ -203,6 +131,51 @@ const reducerRace = (state = {}, { type, payload }) => {
               position === 1 && { track: false }),
           },
         },
+      };
+    }
+
+    case END_RACE_UPDATE_STATS_TYPE: {
+      const { pastRace } = payload;
+
+      if (!pastRace) {
+        return state;
+      }
+
+      const car = state.garageCars.find(item => item.id === pastRace.car);
+      const carIndex = state.garageCars.findIndex(item => item.id === car.id);
+      const track = tracks.find(item => item.id === pastRace.track);
+      const { position } = pastRace;
+
+      const trackStats = {
+        ...(state.tracksStats[track.id] || {}),
+        raced: ~~state.tracksStats[track.id]?.raced + 1,
+        won: ~~state.tracksStats[track.id]?.won + ~~(position === 1),
+      };
+
+      return {
+        ...state,
+        tracksStats: Object.assign({}, state.tracksStats, {
+          [track.id]: {
+            ...trackStats,
+            race: undefined,
+            lastRace: pastRace.id,
+          },
+        }),
+        garageCars: Object.assign([], state.garageCars, {
+          [carIndex]: {
+            ...car,
+            race: undefined,
+          },
+        }),
+      };
+    }
+
+    case END_RACE_EXPERIENCE_TYPE: {
+      // TODO: experience depends on track difficulty
+      const expEarned = 1;
+
+      return {
+        ...state,
         experience: {
           ...state.experience,
           race: {
@@ -210,19 +183,27 @@ const reducerRace = (state = {}, { type, payload }) => {
             exp: state.experience.race.exp + expEarned,
           },
         },
-        ...stateUpdate,
-        ...(toasts.length > 0 && { toasts: [...state.toasts, ...toasts] }),
-        ...(Object.keys(sponsors).length > 0 && {
-          sponsors: {
-            ...state.sponsors,
-            active: {
-              ...state.sponsors.active,
-              ...sponsors,
-            },
-            timestamp: sponsorsTimestamp,
-          },
-        }),
+      };
+    }
+
+    case END_RACE_REWARDS_TYPE: {
+      const { reward } = payload;
+
+      if (!payload) {
+        return state;
+      }
+
+      const earnedCar = isNaN(reward) && cars.find(({ id }) => id === reward);
+
+      const garageCar = earnedCar && generateGarageCar(earnedCar, true);
+
+      return {
+        ...state,
+        // Flag to recalculate brand complete
+        acquiredCar: !!garageCar,
+        money: state.money + ~~reward,
         ...(garageCar && {
+          garageCars: [...state.garageCars, garageCar],
           rewardCars: {
             ...state.rewardCars,
             [garageCar.dealerCar]: ~~state.rewardCars[garageCar.dealerCar] + 1,
@@ -233,6 +214,86 @@ const reducerRace = (state = {}, { type, payload }) => {
             garage: [...state.pageNotifications.garage, garageCar.id],
           },
         }),
+      };
+    }
+
+    case END_RACE_SPONSORS_TYPE: {
+      const { pastRace } = payload;
+
+      if (!pastRace) {
+        return state;
+      }
+
+      const car = state.garageCars.find(item => item.id === pastRace.car);
+      const track = tracks.find(item => item.id === pastRace.track);
+
+      const sponsors = evaluateSponsors(
+        track,
+        car,
+        pastRace.position,
+        state.pastRaces.slice(1), // To remove the last race
+        state.sponsors.active
+      );
+
+      // Initialize active sponsors timestamp if necessary
+      const activeMoneySponsors = moneySponsorsCount(sponsors);
+      const sponsorsTimestamp =
+        !state.sponsors.timestamp && activeMoneySponsors > 0
+          ? new Date().getTime()
+          : state.sponsors.timestamp;
+
+      return {
+        ...state,
+        ...(Object.keys(sponsors).length > 0 && {
+          sponsors: {
+            ...state.sponsors,
+            active: {
+              ...state.sponsors.active,
+              ...sponsors,
+            },
+            timestamp: sponsorsTimestamp,
+          },
+        }),
+      };
+    }
+
+    case END_RACE_TOAST_TYPE: {
+      const { pastRace, sponsors } = payload;
+
+      if (!pastRace) {
+        return state;
+      }
+
+      const car = state.garageCars.find(item => item.id === pastRace.car);
+      const track = tracks.find(item => item.id === pastRace.track);
+      const { position } = pastRace;
+
+      // Append won race toast if race won
+      const racerToast = generateToast(
+        track.name,
+        car.name,
+        position <= 3
+          ? position === 1
+            ? TOAST_TYPES.RACE_WON
+            : TOAST_TYPES.RACE_TOP_3
+          : TOAST_TYPES.RACE_LOST,
+        { position }
+      );
+
+      const sponsorToasts = Object.keys(sponsors || {}).map(key => {
+        const sponsor = raceSponsors.find(item => item.id === key);
+        return generateToast(
+          track.name,
+          sponsorEntryText(sponsor),
+          sponsor.reward === 'mechanic'
+            ? TOAST_TYPES.MECHANIC
+            : TOAST_TYPES.SPONSOR
+        );
+      });
+
+      return {
+        ...state,
+        toasts: [...state.toasts, racerToast, ...sponsorToasts],
       };
     }
 

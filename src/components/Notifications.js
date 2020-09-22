@@ -18,7 +18,7 @@ import NotificationsPastRace from './NotificationsPastRace';
 import { useOpenClose, usePassiveIncome } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import styled from '@emotion/styled';
-import { syncPassiveIncomeAction, syncRacesAction } from '../state/actions';
+import { syncAction } from '../state/actions';
 
 // Workaround to override the circle color without the theme color variants
 const CustomCircularProgress = styled(CircularProgress)`
@@ -46,12 +46,8 @@ const Notifications = () => {
     }
 
     const countDown = setInterval(() => {
-      if (passiveIncome > 0) {
-        dispatch(syncPassiveIncomeAction);
-      }
-
-      if (races.length > 0) {
-        dispatch(syncRacesAction);
+      if (passiveIncome > 0 || races.length > 0) {
+        dispatch(syncAction);
       }
     }, 500);
 

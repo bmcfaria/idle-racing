@@ -101,14 +101,15 @@ export const RECALCULATE_EVENT_MULTIPLIERS_TYPE =
   'RECALCULATE_EVENT_MULTIPLIERS';
 export const RECALCULATE_BRAND_COMPLETE_TYPE = 'RECALCULATE_BRAND_COMPLETE';
 
+export const END_RACE_UPDATE_STATS_TYPE = 'END_RACE_UPDATE_STATS';
+export const END_RACE_EXPERIENCE_TYPE = 'END_RACE_EXPERIENCE';
+export const END_RACE_REWARDS_TYPE = 'END_RACE_REWARDS';
+export const END_RACE_TOAST_TYPE = 'END_RACE_TOAST';
+export const END_RACE_SPONSORS_TYPE = 'END_RACE_SPONSORS';
+
 export const PASSIVE_INCOME_TYPE = 'PASSIVE_INCOME';
 
-export const SYNC_PASSIVE_INCOME_TYPE = 'SYNC_PASSIVE_INCOME';
-export const syncPassiveIncomeAction = {
-  type: SYNC_PASSIVE_INCOME_TYPE,
-};
-
-export const SYNC_RACES_TYPE = 'SYNC_RACES';
-export const syncRacesAction = {
-  type: SYNC_RACES_TYPE,
+export const SYNC_TYPE = 'SYNC';
+export const syncAction = {
+  type: SYNC_TYPE,
 };
