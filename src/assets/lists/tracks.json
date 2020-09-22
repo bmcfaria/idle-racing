@@ -89,7 +89,7 @@
     "category": "city",
     "price": 100,
     "duration": 10,
-    "requirements": "",
+    "requirements": "[type_fwd]",
     "acc": 0.4,
     "spd": 0.8,
     "hnd": 0.6,
