@@ -34,18 +34,7 @@ const RaceDetailsCarsContainer = ({ cars, selectCar, onClose, ...props }) => {
   };
 
   return (
-    <Flex
-      position="absolute"
-      left="0"
-      right="0"
-      top="0"
-      bottom="0"
-      paddingTop={`${48 + 40 + 32}px`}
-      paddingBottom="80px"
-      borderRadius="16px"
-      overflowX="hidden"
-      onClick={onClose}
-    >
+    <Flex borderRadius="16px" overflowX="hidden" onClick={onClose}>
       <Box
         w={`${containerWidth + 16}px`}
         borderRadius="16px"

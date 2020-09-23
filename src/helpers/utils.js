@@ -361,3 +361,9 @@ export const passiveMoneyBrands = brandComplete =>
       result + ~~(brandComplete[brandKey] && brandSponsors[brandKey]),
     0
   );
+
+export const carTypeText = {
+  rwd: 'Rear-wheel-drive',
+  fwd: 'Front-wheel-drive',
+  '4x4': '4x4',
+};

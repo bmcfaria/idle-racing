@@ -8,8 +8,8 @@ import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import AttributeCircle from './AttributeCircle';
 import Button from './Button';
-import CarDetailsDealerContainer from './CarDetailsDealerContainer';
 import { useCarPriceWithDiscount, useEmptyGarageSlots } from '../helpers/hooks';
+import CarDetailsImageAndType from './CarDetailsImageAndType';
 
 const CarDetailsDealer = ({ car, ...props }) => {
   const { id, name, price, reward } = car;
@@ -27,32 +27,59 @@ const CarDetailsDealer = ({ car, ...props }) => {
   };
 
   return (
-    <CarDetailsDealerContainer car={car} {...props}>
-      <Text textAlign="center" fontSize="14px" lineHeight="14px">
-        {name}
-      </Text>
-      <Flex w="100%" justifyContent="space-evenly">
-        <AttributeCircle
-          attr={car[ATTRIBUTE_TYPES.ACCELERATION]}
-          text="ACC"
-          showMax
-        />
-        <AttributeCircle attr={car[ATTRIBUTE_TYPES.SPEED]} text="SPD" showMax />
-        <AttributeCircle
-          attr={car[ATTRIBUTE_TYPES.HANDLING]}
-          text="HND"
-          showMax
-        />
+    <Flex
+      position="relative"
+      w="200px"
+      bg={colors.orange}
+      padding="1px"
+      borderRadius="16px"
+      direction="column"
+      {...props}
+    >
+      <CarDetailsImageAndType car={car} />
+      <Flex w="100%" h="100%" direction="column" alignItems="center">
+        <Text
+          margin="8px 0"
+          textAlign="center"
+          fontSize="16px"
+          lineHeight="16px"
+        >
+          {name}
+        </Text>
+        <Flex
+          w="194px"
+          border={`1px solid ${colors.darkGray}`}
+          borderRadius="16px"
+          justifyContent="space-evenly"
+          padding="4px 0"
+        >
+          <AttributeCircle
+            attr={car[ATTRIBUTE_TYPES.ACCELERATION]}
+            text="ACC"
+            showMax
+          />
+          <AttributeCircle
+            attr={car[ATTRIBUTE_TYPES.SPEED]}
+            text="SPD"
+            showMax
+          />
+          <AttributeCircle
+            attr={car[ATTRIBUTE_TYPES.HANDLING]}
+            text="HND"
+            showMax
+          />
+        </Flex>
+        <Button
+          margin="8px 0"
+          onClick={buy}
+          isDisabled={!enoughMoney || reward || emptySlots <= 0}
+          color={colors.darkGray}
+          bg={colors.white}
+        >
+          {reward ? 'Reward' : `$${calculatedPrice}`}
+        </Button>
       </Flex>
-      <Button
-        onClick={buy}
-        isDisabled={!enoughMoney || reward || emptySlots <= 0}
-        color={colors.darkGray}
-        bg={colors.white}
-      >
-        {reward ? 'Reward' : `$${calculatedPrice}`}
-      </Button>
-    </CarDetailsDealerContainer>
+    </Flex>
   );
 };
 

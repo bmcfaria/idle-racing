@@ -25,6 +25,7 @@ import {
   eventSponsorsStats,
   passiveMoneySponsors,
   passiveMoneyBrands,
+  carTypeText,
 } from './utils';
 import { raceEvents } from './data';
 import { MAX_WIDTH_VALUE } from './theme';
@@ -261,12 +262,6 @@ export const useEmptyGarageSlots = () => {
 export const useRequirements = () => {
   const dealerCars = useSelector(dealerCarsSelector);
 
-  const typeText = {
-    rwd: 'Rear-wheel-drive',
-    fwd: 'Front-wheel-drive',
-    '4x4': '4x4',
-  };
-
   const attrCompare = {
     lt: '<',
     eq: '=',
@@ -280,7 +275,7 @@ export const useRequirements = () => {
       case 'brand':
         return `${capitalize(value)} cars`;
       case 'type':
-        return `${typeText[value]} only`;
+        return `${carTypeText[value]} only`;
       case 'attr':
         return `Cars with ${value.attr.toUpperCase()} ${
           attrCompare[value.compare]

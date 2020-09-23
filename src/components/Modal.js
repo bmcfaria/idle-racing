@@ -27,10 +27,13 @@ const Modal = ({ children, isOpen, onClose, backOnClose, ...props }) => {
           width="100%"
           height="100%"
           position="fixed"
+          paddingTop={`${48 + 40 + 32}px`}
+          paddingBottom="80px"
           bg="#000000c0"
           display="flex"
           zIndex={zIndex.modalBackground}
           onClick={onCloseClick}
+          overflowY="auto"
           {...props}
         >
           <Box margin="auto" onClick={onClickChild}>
