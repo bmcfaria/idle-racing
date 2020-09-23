@@ -47,7 +47,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
           {name}
         </Text>
         <Flex
-          w="194px"
+          w={`${200 - 2 * 8}px`}
           border={`1px solid ${colors.darkGray}`}
           borderRadius="16px"
           justifyContent="space-evenly"

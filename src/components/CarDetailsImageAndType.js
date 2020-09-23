@@ -21,7 +21,7 @@ const CarDetailsImageAndType = ({ car, bg = colors.orange, ...props }) => {
       alignItems="center"
       {...props}
     >
-      <Flex h="48px" direction="column" justifyContent="space-around">
+      <Flex h="48px" direction="column" justifyContent="center">
         <Text>{capitalize(brand)} car</Text>
         <Text>
           {carTypeText[type]} ({type})
