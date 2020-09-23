@@ -295,8 +295,11 @@ export const useCarsAcquired = cars => {
   const boughtCars = useSelector(boughtCarsSelector);
   const rewardCars = useSelector(rewardCarsSelector);
 
-  return cars.reduce(
-    (result, { id }) => result + ~~(boughtCars[id] || rewardCars[id]),
-    0
+  const uniqueCars = cars.reduce(
+    (result, { id }) =>
+      boughtCars[id] || rewardCars[id] ? { ...result, [id]: true } : result,
+    {}
   );
+
+  return Object.keys(uniqueCars).length;
 };
