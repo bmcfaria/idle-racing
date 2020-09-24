@@ -119,18 +119,6 @@ const reducerRace = (state = {}, { type, payload }) => {
         races: state.races.filter(item => item.id !== race.id),
         notifications: [pastRace, ...state.notifications],
         pastRaces: [pastRace, ...state.pastRaces],
-
-        locked: {
-          ...state.locked,
-          race: {
-            ...state.locked.race,
-            ...(track.category === 'free' && position === 1 && { city: false }),
-            ...(track.category === 'city' &&
-              position === 1 && { offroad: false }),
-            ...(track.category === 'offroad' &&
-              position === 1 && { track: false }),
-          },
-        },
       };
     }
 

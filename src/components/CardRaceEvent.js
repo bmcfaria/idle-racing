@@ -87,7 +87,8 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const columns =
     (eventRaces.length > 2 && 3) || (eventRaces.length > 1 && 2) || 1;
 
-  const onClick = () => {
+  const onClick = e => {
+    e.stopPropagation();
     history.push(location.pathname + '/' + eventType);
   };
 
