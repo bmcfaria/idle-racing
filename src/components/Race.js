@@ -1,14 +1,13 @@
 import React from 'react';
 import { Box, Flex } from '@chakra-ui/core';
-import { useDynamicCardContainerWidth } from '../helpers/hooks';
+import {
+  useDynamicCardContainerWidth,
+  useEventsLockedState,
+} from '../helpers/hooks';
 import { BottomSpacer } from './BottomSpacer';
 import CardRaceEvent from './CardRaceEvent';
 import { useSelector } from 'react-redux';
-import {
-  lockedRaceEventsSelector,
-  lockedSelector,
-  raceEventsSelector,
-} from '../state/selectors';
+import { raceEventsSelector } from '../state/selectors';
 import Button from './Button';
 import { colors } from '../helpers/theme';
 import Modal from './Modal';
@@ -17,11 +16,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 const RaceEvents = ({ containerWidth, showAll, ...props }) => {
   const events = useSelector(raceEventsSelector);
 
-  const globalLockedRaceEvents = useSelector(lockedRaceEventsSelector);
-  const lockedRaceEvents = useSelector(lockedSelector)?.race;
-
-  const isLocked = eventType =>
-    lockedRaceEvents[eventType] !== false && globalLockedRaceEvents && !showAll;
+  const { isLocked: isLockedHook } = useEventsLockedState();
+  const isLocked = eventType => isLockedHook(eventType) && !showAll;
 
   return (
     <Flex

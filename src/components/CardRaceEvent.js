@@ -1,12 +1,7 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
-import {
-  tracksSelector,
-  raceByTrackSelector,
-  lockedSelector,
-  lockedRaceEventsSelector,
-} from '../state/selectors';
+import { tracksSelector, raceByTrackSelector } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
 import getImageTrack from '../helpers/imageMappingTracks';
@@ -18,6 +13,7 @@ import {
   usePassiveIncomeEventSponsors,
   useEventTracksStatsState,
   useTrackStatsState,
+  useEventsLockedState,
 } from '../helpers/hooks';
 
 const TrackItem = ({ track, active = true, ...props }) => {
@@ -72,9 +68,9 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const tracksStatsState = useEventTracksStatsState(eventType);
   const eventPassiveIncome = usePassiveIncomeEventSponsors(eventType);
 
-  const lockedRaceEvents = useSelector(lockedRaceEventsSelector);
-  const locked =
-    useSelector(lockedSelector)?.race[eventType] !== false && lockedRaceEvents;
+  const { isLocked, lockedText } = useEventsLockedState();
+  const locked = isLocked(eventType);
+  const lockedTextValue = lockedText(eventType);
 
   const eventRaces = tracks
     .filter(item => item.category === eventType)
@@ -130,7 +126,7 @@ const CardRaceEvent = ({ eventType, eventName, ...props }) => {
       {locked && (
         <Flex w="100%" h="120px" left="0" top="0" position="absolute">
           <Text w="100%" margin="auto 0" fontSize="24px" whiteSpace="pre-wrap">
-            Win a race in the previous section to unlock this one
+            {lockedTextValue || 'Locked'}
           </Text>
         </Flex>
       )}

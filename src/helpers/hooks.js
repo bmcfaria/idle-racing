@@ -183,7 +183,7 @@ export const usePreviousUnlockedTrackChecker = tracks => {
   const isPreviousUnlocked = index => {
     return (
       raceEvents.find(({ type }) => type === tracks[index]?.category)
-        ?.unlocked ||
+        ?.unlockedTracks ||
       index === 0 ||
       tracksStats[tracks[index - 1]?.id]?.raced > 0
     );
@@ -302,4 +302,39 @@ export const useCarsAcquired = cars => {
   );
 
   return Object.keys(uniqueCars).length;
+};
+
+export const useEventsLockedState = () => {
+  const experience = useSelector(experienceSelector);
+
+  const isLocked = eventType => {
+    const { unlockRequirements } =
+      raceEvents.find(({ type }) => type === eventType) || {};
+
+    if (unlockRequirements?.type === 'none') {
+      return false;
+    }
+
+    if (unlockRequirements?.type === 'race-exp') {
+      return !(experience.race.exp >= unlockRequirements.value);
+    }
+
+    return true;
+  };
+
+  const lockedText = eventType => {
+    const { unlockRequirements } =
+      raceEvents.find(({ type }) => type === eventType) || {};
+
+    if (
+      unlockRequirements?.type === 'race-exp' &&
+      !(experience.race.exp >= unlockRequirements.value)
+    ) {
+      return `Requires ${unlockRequirements.value} race exp or above to unlock`;
+    }
+
+    return '';
+  };
+
+  return { isLocked, lockedText };
 };

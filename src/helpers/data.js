@@ -19,15 +19,24 @@ export const dealerBrands = [
 ];
 
 export const raceEvents = [
-  { type: 'free', name: 'free' },
-  { type: 'city', name: 'city' },
+  { type: 'free', name: 'free', unlockRequirements: { type: 'none' } },
+  {
+    type: 'city',
+    name: 'city',
+    unlockRequirements: { type: 'race-exp', value: 5 },
+  },
   { type: 'offroad', name: 'offroad' },
   { type: 'track', name: 'track' },
   { type: 'track-day', name: 'track day' },
   { type: 'beginner-racing', name: 'beginner racing' },
   { type: 'pro-racing', name: 'pro racing' },
   { type: 'formula-world', name: 'formula world' },
-  { type: 'endurance', name: 'endurance', unlocked: true },
+  {
+    type: 'endurance',
+    name: 'endurance',
+    unlockedTracks: true,
+    unlockRequirements: { type: 'none' },
+  },
 ];
 
 const generateAttribute = (base, unit, max, basePrice, upgrade) => {
