@@ -40,7 +40,6 @@ export const pastRaceSelector = pastRaceId => state =>
 
 export const tutorialWinChanceSelector = state => state.tutorial?.winChance;
 export const tutorialUpgradeSelector = state => state.tutorial?.upgrade;
-export const lockedSelector = state => state.locked;
 
 export const pageNotificationsSelector = state => state.pageNotifications;
 
@@ -69,8 +68,6 @@ export const autoRaceEnabledSelector = state => state.autoRace;
 
 export const boughtCarsSelector = state => state.boughtCars;
 export const rewardCarsSelector = state => state.rewardCars;
-
-export const lockedRaceEventsSelector = state => state.lockedRaceEvents;
 
 export const eventMultipliersSelector = state => state.eventMultipliers;
 export const brandCompleteSelector = state => state.brandComplete;

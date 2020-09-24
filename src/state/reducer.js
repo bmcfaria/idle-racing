@@ -17,7 +17,6 @@ export const initialState = {
   finishRace: true,
   acquiredCar: true,
   autoRace: false,
-  lockedRaceEvents: true,
   garageCars: [],
   garageSlots: 1,
   tracksStats: {},

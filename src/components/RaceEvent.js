@@ -4,16 +4,12 @@ import { useLocation, useHistory, useParams } from 'react-router-dom';
 import CardTrack from './CardTrack';
 import RaceDetails from './RaceDetails';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  tracksSelector,
-  lockedSelector,
-  lockedRaceEventsSelector,
-  trackStatsSelector,
-} from '../state/selectors';
+import { tracksSelector, trackStatsSelector } from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
 import {
   useDynamicCardContainerWidth,
+  useEventsLockedState,
   usePreviousUnlockedTrackChecker,
 } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
@@ -21,8 +17,12 @@ import hexAlpha from 'hex-alpha';
 import { BottomSpacer } from './BottomSpacer';
 import RaceEventSponsors from './RaceEventSponsors';
 
-const TracksContainer = ({ tracks, locked, ...props }) => {
+const TracksContainer = ({ tracks, eventType, ...props }) => {
   const isPreviousUnlocked = usePreviousUnlockedTrackChecker(tracks);
+
+  const { isLocked, lockedText } = useEventsLockedState();
+  const locked = isLocked(eventType);
+  const lockedTextValue = lockedText(eventType);
 
   return (
     <Flex
@@ -53,7 +53,7 @@ const TracksContainer = ({ tracks, locked, ...props }) => {
           bg={hexAlpha(colors.lightGray, 0.98)}
         >
           <Text fontSize="24px" textAlign="center" margin="auto">
-            Win a race in the previous section to unlock this one
+            {lockedTextValue || 'Locked'}
           </Text>
         </Flex>
       )}
@@ -69,8 +69,6 @@ const RaceEvent = () => {
   const tracks = useSelector(tracksSelector).filter(
     item => item.category === event
   );
-  const lockedRaceEvents = useSelector(lockedRaceEventsSelector);
-  const locked = useSelector(lockedSelector);
   const containerWidth = useDynamicCardContainerWidth();
 
   const selectedTrackId = location?.state?.track;
@@ -95,7 +93,7 @@ const RaceEvent = () => {
         w={`${containerWidth}px`}
         marginTop="24px"
         tracks={tracks}
-        locked={lockedRaceEvents && locked?.race[event] !== false}
+        eventType={event}
       />
 
       <BottomSpacer />

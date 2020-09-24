@@ -25,12 +25,36 @@ export const raceEvents = [
     name: 'city',
     unlockRequirements: { type: 'race-exp', value: 5 },
   },
-  { type: 'offroad', name: 'offroad' },
-  { type: 'track', name: 'track' },
-  { type: 'track-day', name: 'track day' },
-  { type: 'beginner-racing', name: 'beginner racing' },
-  { type: 'pro-racing', name: 'pro racing' },
-  { type: 'formula-world', name: 'formula world' },
+  {
+    type: 'offroad',
+    name: 'offroad',
+    unlockRequirements: { type: 'race-exp', value: 10 },
+  },
+  {
+    type: 'track',
+    name: 'track',
+    unlockRequirements: { type: 'race-exp', value: 15 },
+  },
+  {
+    type: 'track-day',
+    name: 'track day',
+    unlockRequirements: { type: 'race-exp', value: 20 },
+  },
+  {
+    type: 'beginner-racing',
+    name: 'beginner racing',
+    unlockRequirements: { type: 'race-exp', value: 25 },
+  },
+  {
+    type: 'pro-racing',
+    name: 'pro racing',
+    unlockRequirements: { type: 'race-exp', value: 30 },
+  },
+  {
+    type: 'formula-world',
+    name: 'formula world',
+    unlockRequirements: { type: 'race-exp', value: 35 },
+  },
   {
     type: 'endurance',
     name: 'endurance',
