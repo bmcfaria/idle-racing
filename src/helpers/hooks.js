@@ -185,7 +185,7 @@ export const usePreviousUnlockedTrackChecker = tracks => {
       raceEvents.find(({ type }) => type === tracks[index]?.category)
         ?.unlocked ||
       index === 0 ||
-      tracksStats[tracks[index - 1]?.id]?.won > 0
+      tracksStats[tracks[index - 1]?.id]?.raced > 0
     );
   };
 

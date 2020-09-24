@@ -64,7 +64,7 @@ const CardTrack = ({ track, locked }) => {
           padding="0 8px"
         >
           <Text w="100%" margin="auto 0" fontSize="24px" whiteSpace="pre-wrap">
-            Win previous race to unlock
+            Race previous track to unlock
           </Text>
         </Flex>
       )}
