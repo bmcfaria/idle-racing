@@ -1,11 +1,12 @@
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import rootReducer, { initialState } from './reducer';
+import rootReducer from './reducer';
 import raceReducer from './reducerRace';
 import garageReducer from './reducerGarage';
 import mySaga from './sagas';
 import throttle from 'lodash/throttle';
 import objectAssignDeep from 'object-assign-deep';
+import initialState from './initialState';
 
 const inDev = process.env.NODE_ENV === 'development';
 

@@ -9,8 +9,9 @@ import {
 import { upgradeAttribute, generateCarPrice } from '../helpers/data';
 import { buffValue, discountValue } from '../helpers/utils';
 import { upgradeCenter } from '../helpers/garageUpgrades';
+import initialState from './initialState';
 
-const reducerGarage = (state = {}, { type, payload }) => {
+const reducerGarage = (state = initialState, { type, payload }) => {
   switch (type) {
     case SELL_CAR_TYPE: {
       const car = state.garageCars.find(item => item.id === payload.carId);

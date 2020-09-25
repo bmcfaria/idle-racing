@@ -36,8 +36,9 @@ import {
 } from '../helpers/utils';
 import { brandSponsors } from '../helpers/sponsors';
 import { evaluateSponsors } from '../helpers/sponsors';
+import initialState from './initialState';
 
-const reducerRace = (state = {}, { type, payload }) => {
+const reducerRace = (state = initialState, { type, payload }) => {
   switch (type) {
     case START_RACE_TYPE: {
       const car = state.garageCars.find(item => item.id === payload.carId);
