@@ -65,6 +65,8 @@ const initialState = {
   },
   boughtCars: {},
   rewardCars: {},
+  soldCars: {},
+
   brandComplete: {},
   version: 0.708,
   toasts: [],

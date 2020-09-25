@@ -30,6 +30,10 @@ const reducerGarage = (state = initialState, { type, payload }) => {
 
       return {
         ...state,
+        soldCars: {
+          ...state.soldCars,
+          [car.dealerCar]: ~~state.soldCars[car.dealerCar] + 1,
+        },
         money: state.money + calculatedPrice,
         garageCars: state.garageCars.filter(item => item.id !== car.id),
         experience: {

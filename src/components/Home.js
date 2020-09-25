@@ -10,6 +10,7 @@ import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
 import Button from './Button';
 import HomeCardMoney from './HomeCardMoney';
 import HomeCardRaces from './HomeCardRaces';
+import HomeCardCars from './HomeCardCars';
 
 const Home = () => {
   const cars = useSelector(garageCarsSelector);
@@ -51,6 +52,7 @@ const Home = () => {
             gridGap="8px"
           >
             <HomeCardRaces />
+            <HomeCardCars />
             <HomeCardMoney />
 
             <Button

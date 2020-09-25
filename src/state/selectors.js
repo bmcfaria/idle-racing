@@ -74,6 +74,7 @@ export const autoRaceEnabledSelector = state => state.autoRace;
 
 export const boughtCarsSelector = state => state.boughtCars;
 export const rewardCarsSelector = state => state.rewardCars;
+export const soldCarsSelector = state => state.soldCars;
 
 export const eventMultipliersSelector = state => state.eventMultipliers;
 export const brandCompleteSelector = state => state.brandComplete;
