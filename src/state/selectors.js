@@ -24,6 +24,8 @@ export const trackStatsSelector = trackId => state =>
   state.tracksStats[trackId];
 
 export const moneySelector = state => state.money;
+export const totalMoneyEarnedSelector = state => state.totalMoneyEarned;
+export const totalMoneySpentSelector = state => state.totalMoneySpent;
 export const enoughMoneySelector = price => state => state.money >= price;
 export const notificationsSelector = state => state.notifications;
 

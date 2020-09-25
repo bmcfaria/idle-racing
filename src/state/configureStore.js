@@ -11,6 +11,22 @@ const inDev = process.env.NODE_ENV === 'development';
 
 const minimunStoreVersion = 0.708;
 
+const moneyTrackerReducer = state => {
+  const moneyEarned = ~~(
+    state.money - state.lastMoneyValue > 0 && state.money - state.lastMoneyValue
+  );
+  const moneySpent = ~~(
+    state.lastMoneyValue - state.money > 0 && state.lastMoneyValue - state.money
+  );
+
+  return {
+    ...state,
+    totalMoneyEarned: state.totalMoneyEarned + moneyEarned,
+    totalMoneySpent: state.totalMoneySpent + moneySpent,
+    lastMoneyValue: state.money,
+  };
+};
+
 const timestampReducer = state => {
   const timelapse = new Date().getTime() - state.timestamp;
 
@@ -31,7 +47,13 @@ const reduceReducers = (reducers = [], state, action) =>
 // therefore they're reduced instead of combined
 const combinedReducer = (state, action) =>
   reduceReducers(
-    [rootReducer, raceReducer, garageReducer, timestampReducer],
+    [
+      rootReducer,
+      raceReducer,
+      garageReducer,
+      moneyTrackerReducer,
+      timestampReducer,
+    ],
     state,
     action
   );

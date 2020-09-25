@@ -20,7 +20,14 @@ export const initialState = {
   garageCars: [],
   garageSlots: 1,
   tracksStats: {},
+
+  // This will be used to take track of overall spending
+  lastMoneyValue: 650,
   money: 650,
+  // For statistics
+  totalMoneyEarned: 0,
+  totalMoneySpent: 0,
+
   notifications: [],
   pageNotifications: {
     garagePage: false,
