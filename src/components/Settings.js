@@ -2,7 +2,10 @@ import React from 'react';
 import { Flex, Text, Box } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
 import { colors } from '../helpers/theme';
-import { resetAction, resetDevAction } from '../state/actions';
+import {
+  resetAndRecalculateAction,
+  resetAndRecalculateDevAction,
+} from '../state/actions';
 import offroadRaceAll from '../dev/offroad_race_al.json';
 import Button from './Button';
 
@@ -12,11 +15,11 @@ const Settings = () => {
   const dispatch = useDispatch();
 
   const reset = () => {
-    dispatch(resetAction);
+    dispatch(resetAndRecalculateAction);
   };
 
   const resetDev = state => {
-    dispatch(resetDevAction(state));
+    dispatch(resetAndRecalculateDevAction(state));
   };
 
   return (

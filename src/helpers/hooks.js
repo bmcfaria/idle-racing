@@ -14,6 +14,7 @@ import {
   boughtCarsSelector,
   rewardCarsSelector,
   brandCompleteSelector,
+  lockedSelector,
 } from '../state/selectors';
 import {
   buffValue,
@@ -306,21 +307,9 @@ export const useCarsAcquired = cars => {
 
 export const useEventsLockedState = () => {
   const experience = useSelector(experienceSelector);
+  const { race: lockedRaceEvents } = useSelector(lockedSelector);
 
-  const isLocked = eventType => {
-    const { unlockRequirements } =
-      raceEvents.find(({ type }) => type === eventType) || {};
-
-    if (unlockRequirements?.type === 'none') {
-      return false;
-    }
-
-    if (unlockRequirements?.type === 'race-exp') {
-      return !(experience.race.exp >= unlockRequirements.value);
-    }
-
-    return true;
-  };
+  const isLocked = eventType => lockedRaceEvents[eventType];
 
   const lockedText = eventType => {
     const { unlockRequirements } =

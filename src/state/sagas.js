@@ -1,4 +1,4 @@
-import { put, takeLatest, select, call } from 'redux-saga/effects';
+import { put, takeLatest, select, call, takeEvery } from 'redux-saga/effects';
 import {
   PASSIVE_INCOME_TYPE,
   RECALCULATE_EVENT_MULTIPLIERS_TYPE,
@@ -10,7 +10,13 @@ import {
   END_RACE_UPDATE_STATS_TYPE,
   END_RACE_EXPERIENCE_TYPE,
   END_RACE_SPONSORS_TYPE,
+  RACE_LOCKED_REFRESH_TYPE,
+  RESET_AND_RECALCULATE_TYPE,
+  RESET_AND_RECALCULATE_DEV_TYPE,
+  RESET_DEV_TYPE,
+  RESET_TYPE,
 } from './actions';
+import { lockedSelector } from './selectors';
 
 function* syncPassiveIncome() {
   const { finishRace, acquiredCar } = yield select();
@@ -44,6 +50,15 @@ function* syncRace(race) {
 
   yield put({ type: END_RACE_EXPERIENCE_TYPE });
 
+  const { race: preLockedRaceEvents } = yield select(lockedSelector);
+  yield put({ type: RACE_LOCKED_REFRESH_TYPE });
+  const { race: postLockedRaceEvents } = yield select(lockedSelector);
+  const unlockedRaceEvents = Object.entries(preLockedRaceEvents).reduce(
+    (result, [key, value]) =>
+      value && !postLockedRaceEvents[key] ? [...result, key] : result,
+    []
+  );
+
   yield put({
     type: END_RACE_REWARDS_TYPE,
     payload: { reward: pastRace.reward },
@@ -71,7 +86,11 @@ function* syncRace(race) {
 
   yield put({
     type: END_RACE_TOAST_TYPE,
-    payload: { pastRace, sponsors: newSponsorForToasts },
+    payload: {
+      pastRace,
+      sponsors: newSponsorForToasts,
+      raceEvents: unlockedRaceEvents,
+    },
   });
 }
 
@@ -89,8 +108,27 @@ function* sync() {
   }
 }
 
+function* reset({ type, payload }) {
+  if (type === RESET_AND_RECALCULATE_DEV_TYPE) {
+    yield put({ type: RESET_DEV_TYPE, payload });
+  } else {
+    yield put({ type: RESET_TYPE });
+  }
+
+  // Calculate locked race events if necessary
+  yield put({ type: RACE_LOCKED_REFRESH_TYPE });
+}
+
 function* mySaga() {
+  // Calculate locked race events if necessary
+  const { race: lockedRaceEvents } = yield select(lockedSelector);
+  if (Object.keys(lockedRaceEvents).length === 0) {
+    yield put({ type: RACE_LOCKED_REFRESH_TYPE });
+  }
+
   yield takeLatest(SYNC_TYPE, sync);
+  yield takeEvery(RESET_AND_RECALCULATE_TYPE, reset);
+  yield takeEvery(RESET_AND_RECALCULATE_DEV_TYPE, reset);
 }
 
 export default mySaga;

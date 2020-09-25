@@ -301,6 +301,7 @@ export const TOAST_TYPES = {
   RACE_TOP_3: 'RACE_TOP_3',
   RACE_LOST: 'RACE_LOST',
   BRAND: 'BRAND',
+  RACE_EVENT: 'RACE_EVENT',
 };
 
 export const sponsorEntryText = sponsor => {
@@ -314,6 +315,8 @@ export const sponsorEntryText = sponsor => {
         `;
   return text;
 };
+
+export const raceEventToastSubtitle = 'Race event unlocked';
 
 export const formatDuration = (duration, decimals = 0) =>
   duration / 1000 / 60 / 60 >= 1

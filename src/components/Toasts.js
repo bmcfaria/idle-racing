@@ -28,6 +28,7 @@ const toastTypeColor = {
   [TOAST_TYPES.RACE_TOP_3]: colors.yellow,
   [TOAST_TYPES.RACE_LOST]: colors.red,
   [TOAST_TYPES.BRAND]: colors.orange,
+  [TOAST_TYPES.RACE_EVENT]: colors.lightGray,
 };
 
 const TrophyIconResized = props => (
@@ -41,6 +42,7 @@ const toastTypeIcon = {
   [TOAST_TYPES.RACE_TOP_3]: TrophyIconResized,
   [TOAST_TYPES.RACE_LOST]: TrophyIconResized,
   [TOAST_TYPES.BRAND]: CarIcon,
+  [TOAST_TYPES.RACE_EVENT]: TrophyIconResized,
 };
 
 const Toast = ({
@@ -100,8 +102,10 @@ const Toast = ({
       <Box flexGrow="1">
         <Text textAlign="center">{title}</Text>
         <Flex w="100%" justifyContent="space-between" padding="0 4px">
-          <Text>{reward}</Text>
-          <Text>({subtitle})</Text>
+          {reward && <Text>{reward}</Text>}
+          <Text {...(!reward && { w: '100%', textAlign: 'center' })}>
+            ({subtitle})
+          </Text>
         </Flex>
       </Box>
     </Button>

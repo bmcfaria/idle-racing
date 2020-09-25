@@ -11,6 +11,7 @@ import {
   END_RACE_UPDATE_STATS_TYPE,
   END_RACE_EXPERIENCE_TYPE,
   END_RACE_SPONSORS_TYPE,
+  RACE_LOCKED_REFRESH_TYPE,
 } from './actions';
 import {
   generateRace,
@@ -33,6 +34,7 @@ import {
   passiveMoneySponsors,
   passiveMoneyBrands,
   capitalize,
+  raceEventToastSubtitle,
 } from '../helpers/utils';
 import { brandSponsors } from '../helpers/sponsors';
 import { evaluateSponsors } from '../helpers/sponsors';
@@ -249,7 +251,7 @@ const reducerRace = (state = initialState, { type, payload }) => {
     }
 
     case END_RACE_TOAST_TYPE: {
-      const { pastRace, sponsors } = payload;
+      const { pastRace, sponsors, raceEvents } = payload;
 
       if (!pastRace) {
         return state;
@@ -282,9 +284,22 @@ const reducerRace = (state = initialState, { type, payload }) => {
         );
       });
 
+      const raceEventsToasts = Object.values(raceEvents).map(raceEvent =>
+        generateToast(
+          capitalize(raceEvent),
+          raceEventToastSubtitle,
+          TOAST_TYPES.RACE_EVENT
+        )
+      );
+
       return {
         ...state,
-        toasts: [...state.toasts, racerToast, ...sponsorToasts],
+        toasts: [
+          ...state.toasts,
+          racerToast,
+          ...sponsorToasts,
+          ...raceEventsToasts,
+        ],
       };
     }
 
@@ -319,6 +334,35 @@ const reducerRace = (state = initialState, { type, payload }) => {
         // TODO: auto race history
         // notifications: [pastRace, ...state.notifications],
         // pastRaces: [pastRace, ...state.pastRaces],
+      };
+    }
+
+    case RACE_LOCKED_REFRESH_TYPE: {
+      const newLockedRaces = raceEvents.reduce((result, raceEvent) => {
+        const { unlockRequirements, type: eventType } = raceEvent;
+
+        if (unlockRequirements?.type === 'none') {
+          return { ...result, [eventType]: false };
+        }
+
+        if (unlockRequirements?.type === 'race-exp') {
+          return {
+            ...result,
+            [eventType]: !(
+              state.experience.race.exp >= unlockRequirements.value
+            ),
+          };
+        }
+
+        return result;
+      }, {});
+
+      return {
+        ...state,
+        locked: {
+          ...state.locked,
+          race: newLockedRaces,
+        },
       };
     }
 

@@ -32,11 +32,7 @@ const initialState = {
     upgrade: true,
   },
   locked: {
-    race: {
-      // all true by default
-      free: false,
-      endurance: false,
-    },
+    race: {},
   },
   experience: {
     business: {

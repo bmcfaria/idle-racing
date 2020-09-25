@@ -1,11 +1,13 @@
 export const RESET_TYPE = 'RESET';
-export const resetAction = {
-  type: RESET_TYPE,
+export const RESET_AND_RECALCULATE_TYPE = 'RESET_AND_RECALCULATE';
+export const resetAndRecalculateAction = {
+  type: RESET_AND_RECALCULATE_TYPE,
 };
 
 export const RESET_DEV_TYPE = 'RESET_DEV';
-export const resetDevAction = state => ({
-  type: RESET_DEV_TYPE,
+export const RESET_AND_RECALCULATE_DEV_TYPE = 'RESET_AND_RECALCULATE_DEV';
+export const resetAndRecalculateDevAction = state => ({
+  type: RESET_AND_RECALCULATE_DEV_TYPE,
   payload: { state },
 });
 
@@ -106,6 +108,8 @@ export const END_RACE_EXPERIENCE_TYPE = 'END_RACE_EXPERIENCE';
 export const END_RACE_REWARDS_TYPE = 'END_RACE_REWARDS';
 export const END_RACE_TOAST_TYPE = 'END_RACE_TOAST';
 export const END_RACE_SPONSORS_TYPE = 'END_RACE_SPONSORS';
+
+export const RACE_LOCKED_REFRESH_TYPE = 'RACE_LOCKED_REFRESH';
 
 export const PASSIVE_INCOME_TYPE = 'PASSIVE_INCOME';
 

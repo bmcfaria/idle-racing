@@ -78,3 +78,5 @@ export const soldCarsSelector = state => state.soldCars;
 
 export const eventMultipliersSelector = state => state.eventMultipliers;
 export const brandCompleteSelector = state => state.brandComplete;
+
+export const lockedSelector = state => state.locked;
