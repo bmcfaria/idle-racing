@@ -77,6 +77,7 @@ const Race = props => {
         marginLeft={`${containerWidth > 0 ? 16 : 0}px`}
         bg={colors.darkGray}
         color={colors.white}
+        borderRadius="8px"
         onClick={openAllEvents}
       >
         All Race Events
