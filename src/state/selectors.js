@@ -33,6 +33,10 @@ export const racesSelector = state => state.races;
 export const raceSelector = raceId => state =>
   state.races.find(item => item.id === raceId);
 
+export const totalRacesWonSelector = state => state.totalRacesWon;
+export const totalRacesLostSelector = state => state.totalRacesLost;
+export const totalRacesCanceledSelector = state => state.totalRacesCanceled;
+
 export const raceByTrackSelector = trackId => state =>
   state.races.find(item => item.track === trackId);
 

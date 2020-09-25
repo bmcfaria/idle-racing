@@ -20,8 +20,13 @@ const initialState = {
     garagePage: false,
     garage: [],
   },
+
   races: [],
   pastRaces: [],
+  totalRacesWon: 0,
+  totalRacesLost: 0,
+  totalRacesCanceled: 0,
+
   tutorial: {
     winChance: true,
     upgrade: true,

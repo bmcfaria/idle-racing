@@ -143,6 +143,8 @@ const reducerRace = (state = initialState, { type, payload }) => {
 
       return {
         ...state,
+        totalRacesWon: state.totalRacesWon + ~~(position === 1),
+        totalRacesLost: state.totalRacesLost + ~~(position !== 1),
         tracksStats: Object.assign({}, state.tracksStats, {
           [track.id]: {
             ...trackStats,
@@ -299,6 +301,7 @@ const reducerRace = (state = initialState, { type, payload }) => {
 
       return {
         ...state,
+        totalRacesCanceled: state.totalRacesCanceled + 1,
         races: state.races.filter(item => item.id !== race.id),
         garageCars: Object.assign([], state.garageCars, {
           [carIndex]: {
