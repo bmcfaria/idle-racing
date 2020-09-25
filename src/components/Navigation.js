@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { Link, useRouteMatch } from 'react-router-dom';
+import { ReactComponent as HomeIcon } from '../assets/icons/home.svg';
 import { ReactComponent as CarIcon } from '../assets/icons/car.svg';
 import { ReactComponent as TrophyIcon } from '../assets/icons/trophy.svg';
 import { ReactComponent as GarageIcon } from '../assets/icons/garage.svg';
-import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
 import { colors, MAX_WIDTH } from '../helpers/theme';
 import Button from './Button';
 import styled from '@emotion/styled';
@@ -26,8 +26,8 @@ const BlinkingDot = styled(Box)`
   }
 `;
 
-const NavigationButton = ({ icon, to, text, notification }) => {
-  const match = useRouteMatch(to);
+const NavigationButton = ({ icon, to, exact, text, notification }) => {
+  const match = useRouteMatch({ path: to, exact });
   return (
     <Button
       as={Link}
@@ -108,6 +108,7 @@ const Navigation = ({ icon, iconOnly, ...props }) => {
         alignItems="center"
         boxShadow={['0px -4px 4px rgba(0, 0, 0, 0.25)', 'none']}
       >
+        <NavigationButton icon={HomeIcon} to="/" text="Home" exact />
         <NavigationButton icon={CarIcon} to="/dealer" text="Dealer" />
         <NavigationButton icon={TrophyIcon} to="/race" text="Race" />
         <NavigationButton
@@ -116,7 +117,6 @@ const Navigation = ({ icon, iconOnly, ...props }) => {
           text="Garage"
           notification={pageNotifications?.garagePage}
         />
-        <NavigationButton icon={SettingsIcon} to="/settings" text="Settings" />
       </Flex>
     </Flex>
   );
