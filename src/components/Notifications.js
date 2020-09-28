@@ -14,11 +14,11 @@ import { MdFlag } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
 import { notificationsSelector, racesSelector } from '../state/selectors';
 import NotificationsActiveRace from './NotificationsActiveRace';
-import NotificationsPastRace from './NotificationsPastRace';
 import { useOpenClose, usePassiveIncome } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import styled from '@emotion/styled';
 import { syncAction } from '../state/actions';
+import Toast from './Toast';
 
 // Workaround to override the circle color without the theme color variants
 const CustomCircularProgress = styled(CircularProgress)`
@@ -112,9 +112,12 @@ const Notifications = () => {
 
             <Box>
               {notifications.map(item => (
-                <NotificationsPastRace
+                <Toast
+                  w="270px"
+                  h="48px"
+                  fontSize="16px"
                   key={item.id}
-                  pastRace={item}
+                  toast={item}
                   onClose={onClose}
                 />
               ))}

@@ -64,7 +64,7 @@ const initialState = {
   soldCars: {},
 
   brandComplete: {},
-  version: 0.708,
+  version: 0.709,
   toasts: [],
   eventMultipliers: {},
   warnings: {

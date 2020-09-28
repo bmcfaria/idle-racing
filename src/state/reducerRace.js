@@ -120,7 +120,7 @@ const reducerRace = (state = initialState, { type, payload }) => {
         finishRace: true,
 
         races: state.races.filter(item => item.id !== race.id),
-        notifications: [pastRace, ...state.notifications],
+        // notifications: [pastRace, ...state.notifications],
         pastRaces: [pastRace, ...state.pastRaces],
       };
     }
@@ -262,7 +262,7 @@ const reducerRace = (state = initialState, { type, payload }) => {
       const { position } = pastRace;
 
       // Append won race toast if race won
-      const racerToast = generateToast(
+      const raceToast = generateToast(
         track.name,
         car.name,
         position <= 3
@@ -292,14 +292,12 @@ const reducerRace = (state = initialState, { type, payload }) => {
         )
       );
 
+      const allNewToasts = [raceToast, ...sponsorToasts, ...raceEventsToasts];
+
       return {
         ...state,
-        toasts: [
-          ...state.toasts,
-          racerToast,
-          ...sponsorToasts,
-          ...raceEventsToasts,
-        ],
+        toasts: [...state.toasts, ...allNewToasts],
+        notifications: [...state.notifications, ...allNewToasts],
       };
     }
 
