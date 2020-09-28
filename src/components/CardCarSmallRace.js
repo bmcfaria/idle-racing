@@ -81,7 +81,7 @@ const CardCarSmallRace = ({ car, onClick, ...props }) => {
           track={selectedTrack}
           meetsRequirements={meetsRequirements}
           w="100%"
-          h="100%"
+          h="136px"
           borderRadius="16px"
         />
       )}
