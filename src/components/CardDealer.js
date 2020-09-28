@@ -1,5 +1,4 @@
 import React from 'react';
-import { Image } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import { dealerCarsSelector } from '../state/selectors';
 import { useSelector } from 'react-redux';
@@ -9,6 +8,14 @@ import { capitalize } from '../helpers/utils';
 import { useCarsAcquired } from '../helpers/hooks';
 import { brandSponsors } from '../helpers/sponsors';
 import { colors } from '../helpers/theme';
+import styled from '@emotion/styled';
+
+const Image = styled.img`
+  ${({ columns }) => `width: ${100 / columns}%`};
+  ${({ divider }) => `height: ${~~(100 / divider)}%`};
+  border-radius: 16px;
+  object-fit: contain;
+`;
 
 const CardDealer = ({ brandType, brandName, ...props }) => {
   const location = useLocation();
@@ -58,12 +65,10 @@ const CardDealer = ({ brandType, brandName, ...props }) => {
     >
       {brandCars.map(car => (
         <Image
-          w={`${100 / columns}%`}
-          h={`${~~(100 / divider)}%`}
           alt="car"
-          borderRadius="16px"
-          objectFit="contain"
           src={getImageCar(car)}
+          columns={columns}
+          divider={divider}
           key={car.id}
         />
       ))}
