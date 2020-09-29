@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, PseudoBox } from '@chakra-ui/core';
 import { Flex } from '@chakra-ui/core';
 import { Text } from '@chakra-ui/core';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 import Notifications from './Notifications';
 import { useSelector } from 'react-redux';
 import { moneySelector } from '../state/selectors';
@@ -38,9 +38,10 @@ const TriangleArrowButton = props => (
 );
 
 const Navigation = () => {
+  const matchHome = useRouteMatch({ path: '/', exact: true });
   const currentPage = useCurrentPage();
 
-  if (!currentPage) {
+  if (!currentPage?.name || matchHome) {
     return <Box />;
   }
 
