@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Flex, Image } from '@chakra-ui/core';
+import { Box, Text, Flex } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
 import CardProgressOverlay from './CardProgressOverlay';
 import { raceSelector, tracksSelector } from '../state/selectors';
@@ -13,6 +13,14 @@ import {
 import { colors } from '../helpers/theme';
 import getImageCar from '../helpers/imageMappingCars';
 import Button from './Button';
+import styled from '@emotion/styled';
+
+const Image = styled.img`
+  max-width: 80px;
+  height: 100%;
+  border-radius: 16px;
+  object-fit: contain;
+`;
 
 const CarAttribute = ({ text, attr, ...props }) => (
   <Box w="48px" lineHeight="14px" textAlign="center" {...props}>
@@ -103,14 +111,7 @@ const CardCarSmallRace = ({ car, onClick, ...props }) => {
           bg={colors.white}
           justifyContent="space-evenly"
         >
-          <Image
-            maxW="80px"
-            h="100%"
-            alt="car"
-            borderRadius="16px"
-            objectFit="contain"
-            src={getImageCar(car)}
-          />
+          <Image alt="car" src={getImageCar(car)} />
           <Flex
             direction="column"
             justifyContent="space-evenly"

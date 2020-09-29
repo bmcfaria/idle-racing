@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Flex, Image, Text } from '@chakra-ui/core';
+import { Flex, Text } from '@chakra-ui/core';
 import styled from '@emotion/styled';
 import Button from './Button';
 import { colors } from '../helpers/theme';
@@ -8,6 +8,14 @@ import { useRequirements } from '../helpers/hooks';
 import { useSelector } from 'react-redux';
 import { dealerCarsSelector } from '../state/selectors';
 import getImageCar from '../helpers/imageMappingCars';
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  object-fit: contain;
+  margin: auto;
+`;
 
 const SelectCarContainer = styled(Flex)`
   cursor: pointer;
@@ -76,15 +84,7 @@ const RaceDetailsSelectCar = ({ onClick, ...props }) => {
             <Text>{rewardCar.name}</Text>
           </Flex>
           <Flex w="52px" h="100%" borderRadius="0 8px 8px 0" bg={colors.white}>
-            <Image
-              w="100%"
-              h="100%"
-              alt="car"
-              margin="auto"
-              borderRadius="16px"
-              objectFit="contain"
-              src={getImageCar(rewardCar)}
-            />
+            <Image alt="car" src={getImageCar(rewardCar)} />
           </Flex>
         </Flex>
       )}

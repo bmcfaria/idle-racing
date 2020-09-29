@@ -1,8 +1,17 @@
 import React from 'react';
-import { Flex, Image, Text } from '@chakra-ui/core';
+import { Flex, Text } from '@chakra-ui/core';
 import getImageCar from '../helpers/imageMappingCars';
 import { colors } from '../helpers/theme';
 import { capitalize, carTypeText } from '../helpers/utils';
+import styled from '@emotion/styled';
+
+const Image = styled.img`
+  height: 112px;
+  border-radius: 16px;
+  object-fit: contain;
+  position: absolute;
+  bottom: 0;
+`;
 
 const CarDetailsImageAndType = ({ car, bg = colors.orange, ...props }) => {
   const { type, brand } = car;
@@ -27,15 +36,7 @@ const CarDetailsImageAndType = ({ car, bg = colors.orange, ...props }) => {
           {carTypeText[type]} ({type})
         </Text>
       </Flex>
-      <Image
-        h="112px"
-        borderRadius="16px"
-        alt="car"
-        objectFit="contain"
-        position="absolute"
-        bottom="0"
-        src={getImageCar(car)}
-      />
+      <Image alt="car" src={getImageCar(car)} />
     </Flex>
   );
 };
