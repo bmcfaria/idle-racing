@@ -7,7 +7,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
   DrawerBody,
-  DrawerHeader,
   CircularProgress,
 } from '@chakra-ui/core';
 import { MdFlag } from 'react-icons/md';
@@ -15,7 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { notificationsSelector, racesSelector } from '../state/selectors';
 import NotificationsActiveRace from './NotificationsActiveRace';
 import { useOpenClose, usePassiveIncome } from '../helpers/hooks';
-import { colors } from '../helpers/theme';
+import { colors, zIndex } from '../helpers/theme';
 import styled from '@emotion/styled';
 import { syncAction } from '../state/actions';
 import Toast from './Toast';
@@ -86,11 +85,13 @@ const Notifications = () => {
       </Flex>
       <Drawer isOpen={open} onClose={onClose} placement="right">
         <DrawerOverlay />
-        <DrawerContent borderLeft={`2px solid ${colors.darkGray}`}>
+        <DrawerContent
+          borderLeft={`2px solid ${colors.darkGray}`}
+          zIndex={zIndex.sidebar}
+        >
           <DrawerCloseButton />
-          <DrawerHeader fontSize="24px">Races</DrawerHeader>
 
-          <DrawerBody>
+          <DrawerBody marginTop="40px">
             <Box>
               {races.map(item => (
                 <NotificationsActiveRace
@@ -110,7 +111,7 @@ const Notifications = () => {
               />
             )}
 
-            <Box>
+            <Flex direction="column" alignItems="center">
               {notifications.map(item => (
                 <Toast
                   w="270px"
@@ -121,7 +122,7 @@ const Notifications = () => {
                   onClose={onClose}
                 />
               ))}
-            </Box>
+            </Flex>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

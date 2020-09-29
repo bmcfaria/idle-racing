@@ -1,5 +1,6 @@
 export const zIndex = {
   warningModal: 10000,
+  sidebar: 6000,
   headerBar: 1000,
   winChanceTip: 100,
   modalBackground: 10,
