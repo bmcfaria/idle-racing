@@ -41,7 +41,7 @@ const toastTypeIcon = {
   [TOAST_TYPES.RACE_EVENT]: TrophyIconResized,
 };
 
-const Toast = ({ toast, removeFromStore, onClose, ...props }) => {
+const Toast = ({ toast, removeFromStore, onClose, h = '44px', ...props }) => {
   const { id, title, subtitle, type, extra } = toast;
   const reward = toastTypeReward(type, extra);
   const color = toastTypeColor[type];
@@ -58,7 +58,7 @@ const Toast = ({ toast, removeFromStore, onClose, ...props }) => {
   return (
     <Button
       w="224px"
-      h="44px"
+      h={h}
       borderRadius="4px"
       margin="8px"
       padding="0"
@@ -71,8 +71,9 @@ const Toast = ({ toast, removeFromStore, onClose, ...props }) => {
     >
       <Flex
         w="30px"
-        h="calc(100% + 4px)"
-        marginLeft="-2px"
+        // iPadOS was not handling h="100%" correctly
+        h={h}
+        margin="-2px 0 -2px -2px"
         borderRadius="4px 0 0 4px"
         bg={colors.darkGray}
         color={color}
