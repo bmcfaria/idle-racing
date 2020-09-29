@@ -44,6 +44,7 @@ const NavigationButton = ({ icon, to, exact, text, notification }) => {
       }}
       paddingLeft="0"
       paddingRight="0"
+      pointerEvents="auto"
     >
       <Flex
         w="100%"
@@ -96,6 +97,7 @@ const Navigation = ({ icon, iconOnly, ...props }) => {
       bottom="0"
       zIndex="1"
       justifyContent="center"
+      pointerEvents="none"
       {...props}
     >
       <Flex
