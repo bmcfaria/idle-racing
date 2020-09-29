@@ -36,7 +36,11 @@ const Modal = ({ children, isOpen, onClose, backOnClose, ...props }) => {
           overflowY="auto"
           {...props}
         >
-          <Box margin="auto" onClick={onClickChild}>
+          <Box
+            margin="auto"
+            paddingLeft="calc(100vw - 100%)"
+            onClick={onClickChild}
+          >
             {children}
           </Box>
         </Box>
