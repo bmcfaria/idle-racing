@@ -292,12 +292,12 @@ const reducerRace = (state = initialState, { type, payload }) => {
         )
       );
 
-      const allNewToasts = [raceToast, ...sponsorToasts, ...raceEventsToasts];
+      const allNewToasts = [...raceEventsToasts, ...sponsorToasts, raceToast];
 
       return {
         ...state,
-        toasts: [...state.toasts, ...allNewToasts],
-        notifications: [...state.notifications, ...allNewToasts],
+        toasts: [...allNewToasts, ...state.toasts],
+        notifications: [...allNewToasts, ...state.notifications],
       };
     }
 

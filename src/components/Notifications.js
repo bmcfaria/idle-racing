@@ -64,6 +64,10 @@ const Notifications = () => {
         h="48px"
         color={colors.white}
         onClick={onOpen}
+        cursor="pointer"
+        style={{
+          WebkitTapHighlightColor: 'transparent',
+        }}
       >
         <Box
           as={MdFlag}
@@ -91,7 +95,11 @@ const Notifications = () => {
         >
           <DrawerCloseButton />
 
-          <DrawerBody marginTop="40px">
+          <DrawerBody
+            marginTop="48px"
+            overflowY="auto"
+            paddingBottom="env(safe-area-inset-bottom)"
+          >
             <Box>
               {races.map(item => (
                 <NotificationsActiveRace
