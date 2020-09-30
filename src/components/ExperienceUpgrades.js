@@ -1,16 +1,65 @@
-import React from 'react';
-import { Text, Flex } from '@chakra-ui/core';
+import React, { useState } from 'react';
+import { Text, Flex, Box } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
-import { colors } from '../helpers/theme';
+import { colors, MAX_WIDTH_VALUE } from '../helpers/theme';
 import { buyExperienceBuffAction } from '../state/actions';
-import ExperienceUpgradesColumnBuffs from './ExperienceUpgradesColumnBuffs';
 import {
   useExperienceBusiness,
   useExperienceRace,
   useExperienceMechanic,
 } from '../helpers/hooks';
+import Button from './Button';
+import UpgradableCircle from './UpgradableCircle';
 
-const ExperienceUpgrades = ({ expType }) => {
+const CardUpgrade = ({
+  text,
+  base = 0,
+  value = 0,
+  max = 1,
+  onClick,
+  innerTextArray = [],
+  ...props
+}) => {
+  const [hoverOnAttr, setHoverOnAttr] = useState();
+  const clickable = value < max;
+  const showNext = clickable && hoverOnAttr;
+
+  return (
+    <Button
+      w="80px"
+      h="104px"
+      margin="0 auto"
+      padding="8px"
+      border={`1px solid ${colors.darkGray}`}
+      whiteSpace="normal"
+      flexDirection="column"
+      justifyContent="space-between"
+      onMouseEnter={() => clickable && setHoverOnAttr(true)}
+      onMouseLeave={() => setHoverOnAttr()}
+      {...(clickable && { onClick: onClick })}
+      {...(!clickable && { cursor: 'auto', boxShadow: 'none' })}
+      {...props}
+    >
+      <Text textAlign="center">{text}</Text>
+      <UpgradableCircle
+        base={base}
+        value={value}
+        max={max}
+        showNextUpgradeValue={showNext}
+      >
+        {innerTextArray.length > 0 && (
+          <Flex margin="auto" alignItems="center">
+            <Text fontSize="14px" lineHeight="14px">
+              {showNext ? innerTextArray?.[value + 1] : innerTextArray?.[value]}
+            </Text>
+          </Flex>
+        )}
+      </UpgradableCircle>
+    </Button>
+  );
+};
+
+const ExperienceUpgrades = ({ expType, ...props }) => {
   const dispatch = useDispatch();
   const experienceBusiness = useExperienceBusiness();
   const experienceRace = useExperienceRace();
@@ -22,12 +71,6 @@ const ExperienceUpgrades = ({ expType }) => {
     (expType === 'mechanic' && experienceMechanic) ||
     {};
 
-  const colorBought =
-    (expType === 'business' && colors.orange) ||
-    (expType === 'race' && colors.green) ||
-    (expType === 'mechanic' && colors.lightBlue) ||
-    'white';
-
   const buyBuff = (type, subType) => {
     dispatch(buyExperienceBuffAction(type, subType));
   };
@@ -35,96 +78,89 @@ const ExperienceUpgrades = ({ expType }) => {
   return (
     <Flex
       direction="column"
-      borderRadius="16px"
+      w="100vw"
+      maxW={`${MAX_WIDTH_VALUE - 2 * 32}px`}
       padding="24px"
       bg={colors.white}
       alignItems="center"
+      {...props}
     >
-      <Flex w="100%" justifyContent="space-between" lineHeight="16px">
-        {expType === 'business' && (
-          <>
-            <Text w="48px" marginLeft="-4px" textAlign="center">
-              New cars
-            </Text>
-            <Text w="48px" marginRight="-4px" textAlign="center">
-              Used cars
-            </Text>
-          </>
-        )}
-        {expType === 'race' && (
-          <>
-            <Text w="48px" marginLeft="-4px" textAlign="center">
-              Race price
-            </Text>
-            <Text w="48px" marginRight="-4px" textAlign="center">
-              Race prizes
-            </Text>
-          </>
-        )}
-        {expType === 'mechanic' && (
-          <Text w="100%" textAlign="center">
-            Discount on upgrades
-          </Text>
-        )}
-      </Flex>
-      <Flex
-        w={`${40 * 3 + 12 * 2}px`}
-        marginTop="16px"
-        justifyContent="space-between"
+      <Box
+        w="100%"
+        display="grid"
+        gridTemplateColumns="repeat(auto-fit, minmax(88px, 1fr))"
       >
         {expType === 'business' && (
           <>
-            <ExperienceUpgradesColumnBuffs
-              colorBought={colorBought}
-              experience={experienceBusiness.newCars}
-              buyBuff={() => buyBuff('business', 'newCars')}
+            <CardUpgrade
+              text="New cars price"
+              value={experienceBusiness.newCars}
+              max={3}
+              onClick={() => buyBuff('business', 'newCars')}
+              innerTextArray={['-0%', '-10%', '-20%', '-30%']}
+              bg={colors.orange}
             />
-            <ExperienceUpgradesColumnBuffs
-              colorBought={colorBought}
-              experience={experienceBusiness.usedCars}
-              buyBuff={() => buyBuff('business', 'usedCars')}
-              valueText="+10%"
+            <CardUpgrade
+              text="Old cars price"
+              value={experienceBusiness.usedCars}
+              max={3}
+              onClick={() => buyBuff('business', 'usedCars')}
+              innerTextArray={['+0%', '+10%', '+20%', '+30%']}
+              bg={colors.orange}
             />
           </>
         )}
+
         {expType === 'race' && (
           <>
-            <ExperienceUpgradesColumnBuffs
-              colorBought={colorBought}
-              experience={experienceRace.price}
-              buyBuff={() => buyBuff('race', 'price')}
+            <CardUpgrade
+              text="Race price"
+              value={experienceRace.price}
+              max={3}
+              onClick={() => buyBuff('race', 'price')}
+              innerTextArray={['-0%', '-10%', '-20%', '-30%']}
+              bg={colors.green}
             />
-            <ExperienceUpgradesColumnBuffs
-              colorBought={colorBought}
-              experience={experienceRace.prizes}
-              buyBuff={() => buyBuff('race', 'prizes')}
-              valueText="+10%"
+            <CardUpgrade
+              text="Race prizes"
+              value={experienceRace.prizes}
+              max={3}
+              onClick={() => buyBuff('race', 'prizes')}
+              innerTextArray={['-0%', '-10%', '-20%', '-30%']}
+              bg={colors.green}
             />
           </>
         )}
+
         {expType === 'mechanic' && (
           <>
-            <ExperienceUpgradesColumnBuffs
-              colorBought={colorBought}
-              text="Acc"
-              experience={experienceMechanic.acc}
-              buyBuff={() => buyBuff('mechanic', 'acc')}
+            <CardUpgrade
+              text="ACC price"
+              value={experienceMechanic.acc}
+              max={3}
+              onClick={() => buyBuff('mechanic', 'acc')}
+              innerTextArray={['-0%', '-10%', '-20%']}
+              bg={colors.lightBlue}
             />
-            <ExperienceUpgradesColumnBuffs
-              colorBought={colorBought}
-              text="Spd"
-              experience={experienceMechanic.spd}
-              buyBuff={() => buyBuff('mechanic', 'spd')}
+            <CardUpgrade
+              text="SPD price"
+              value={experienceMechanic.spd}
+              max={3}
+              onClick={() => buyBuff('mechanic', 'spd')}
+              innerTextArray={['-0%', '-10%', '-20%', '-30%']}
+              bg={colors.lightBlue}
             />
-            <ExperienceUpgradesColumnBuffs
-              colorBought={colorBought}
-              text="Hnd"
-              experience={experienceMechanic.hnd}
-              buyBuff={() => buyBuff('mechanic', 'hnd')}
+            <CardUpgrade
+              text="HND price"
+              value={experienceMechanic.hnd}
+              max={3}
+              onClick={() => buyBuff('mechanic', 'hnd')}
+              innerTextArray={['-0%', '-10%', '-20%', '-30%']}
+              bg={colors.lightBlue}
             />
           </>
         )}
-      </Flex>
+      </Box>
       <Text
         w="100%"
         marginTop="16px"

@@ -3,7 +3,14 @@ import { Box } from '@chakra-ui/core';
 import { zIndex } from '../helpers/theme';
 import { useHistory } from 'react-router-dom';
 
-const Modal = ({ children, isOpen, onClose, backOnClose, ...props }) => {
+const Modal = ({
+  children,
+  isOpen,
+  onClose,
+  backOnClose,
+  wrapperProps = {},
+  ...props
+}) => {
   const history = useHistory();
 
   const onCloseClick = () => {
@@ -40,6 +47,7 @@ const Modal = ({ children, isOpen, onClose, backOnClose, ...props }) => {
             margin="auto"
             paddingLeft="calc(100vw - 100%)"
             onClick={onClickChild}
+            {...wrapperProps}
           >
             {children}
           </Box>

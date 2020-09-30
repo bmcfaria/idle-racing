@@ -181,8 +181,18 @@ const HeaderBar = () => {
       {/* spacer */}
       <Box w="100%" h="88px" />
 
-      <Modal isOpen={!!expTypeModal} backOnClose zIndex={zIndex.headerBar}>
-        <ExperienceUpgrades expType={expTypeModal} />
+      <Modal
+        isOpen={!!expTypeModal}
+        backOnClose
+        zIndex={zIndex.headerBar}
+        paddingTop={`${48 + 40}px`}
+        wrapperProps={{ margin: '0 auto', h: 'fit-content' }}
+      >
+        <ExperienceUpgrades
+          expType={expTypeModal}
+          borderRadius="0 0 16px 16px"
+          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+        />
       </Modal>
 
       <Box position="fixed" top="0" left="0" w="100%" zIndex={zIndex.headerBar}>
@@ -202,7 +212,9 @@ const HeaderBar = () => {
           w="100%"
           h="40px"
           bg={colors.white}
-          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+          {...(!expTypeModal && {
+            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+          })}
           justifyContent="center"
         >
           <Flex
