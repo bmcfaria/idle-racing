@@ -9,6 +9,7 @@ import {
 } from '../state/selectors';
 import CardProgressCircle from './CardProgressCircle';
 import { colors } from '../helpers/theme';
+import Button from './Button';
 
 const NotificationsActiveRace = ({ race, onClose }) => {
   const location = useLocation();
@@ -32,16 +33,16 @@ const NotificationsActiveRace = ({ race, onClose }) => {
   };
 
   return (
-    <Flex
+    <Button
       borderBottom="solid 1px black"
       onClick={onClick}
       w="100%"
       h="48px"
       border={`2px solid ${colors.orange}`}
       borderRadius="4px"
-      paddingLeft="8px"
       marginTop="4px"
-      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+      padding="0"
+      bg={colors.white}
     >
       <CardProgressCircle
         margin="auto 0"
@@ -49,11 +50,11 @@ const NotificationsActiveRace = ({ race, onClose }) => {
         color="black"
         race={currentRace}
       />
-      <Box flexGrow="1" textAlign="center" fontSize="14px">
-        <Text h="24px">{car.name}</Text>
-        <Text h="24px">{track.name}</Text>
+      <Box flexGrow="1" textAlign="center" fontSize="16px">
+        <Text>{car.name}</Text>
+        <Text>{track.name}</Text>
       </Box>
-    </Flex>
+    </Button>
   );
 };
 

@@ -127,7 +127,8 @@ const Notifications = () => {
                   fontSize="16px"
                   key={item.id}
                   toast={item}
-                  onClose={onClose}
+                  clickable={false}
+                  margin="4px"
                 />
               ))}
             </Flex>

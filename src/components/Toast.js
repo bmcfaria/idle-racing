@@ -41,7 +41,14 @@ const toastTypeIcon = {
   [TOAST_TYPES.RACE_EVENT]: TrophyIconResized,
 };
 
-const Toast = ({ toast, removeFromStore, onClose, h = '44px', ...props }) => {
+const Toast = ({
+  toast,
+  removeFromStore,
+  onClose,
+  h = '44px',
+  clickable = true,
+  ...props
+}) => {
   const { id, title, subtitle, type, extra } = toast;
   const reward = toastTypeReward(type, extra);
   const color = toastTypeColor[type];
@@ -66,7 +73,8 @@ const Toast = ({ toast, removeFromStore, onClose, h = '44px', ...props }) => {
       bg={color}
       fontSize="14px"
       flexDirection="row"
-      onClick={onClose}
+      {...(clickable && { onClick: onClose })}
+      {...(!clickable && { cursor: 'auto', boxShadow: 'none' })}
       {...props}
     >
       <Flex
