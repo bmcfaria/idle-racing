@@ -20,14 +20,15 @@ const Image = styled.img`
 const BlinkCard = styled(Button)`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   -webkit-tap-highlight-color: transparent;
-  animation: ${({ blink }) => (blink ? 'blink 1s ease infinite' : 'none')};
+  animation: ${({ blink }) =>
+    blink ? 'card-car-shadow-blink 1s ease infinite' : 'none'};
   padding: 0;
 
   :hover {
     animation: none;
   }
 
-  @keyframes blink {
+  @keyframes card-car-shadow-blink {
     50% {
       box-shadow: none;
     }

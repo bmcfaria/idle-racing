@@ -12,9 +12,9 @@ import { useSelector } from 'react-redux';
 import { pageNotificationsSelector } from '../state/selectors';
 
 const BlinkingDot = styled(Box)`
-  animation: pulseBlink 1s ease-out infinite;
+  animation: dot-pulse-blink 1s ease-out infinite;
 
-  @keyframes pulseBlink {
+  @keyframes dot-pulse-blink {
     0% {
       opacity: 0.9;
     }
