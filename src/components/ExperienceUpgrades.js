@@ -37,11 +37,55 @@ const CardUpgrade = ({
   max = 1,
   onClick,
   innerTextArray = [],
+  availablePoints,
   ...props
 }) => {
   const [hoverOnAttr, setHoverOnAttr] = useState();
+
+  const [isTouchEvent, setIsTouchEvent] = useState();
+  const [showNextTouchTimeout, setShowNextTouchTimeout] = useState();
+
   const clickable = value < max;
   const showNext = clickable && hoverOnAttr;
+
+  const onMouseEnter = () => {
+    if (isTouchEvent && availablePoints > 0) {
+      // Don't showNext when the user is "upgrading" on a touch device
+      // or else the value will increase and show the next value
+      // creating confusion
+      setHoverOnAttr();
+    } else {
+      setHoverOnAttr(true);
+    }
+  };
+
+  const onClickAndHandleFlag = () => {
+    if (onClick) {
+      onClick();
+    }
+
+    // reset flag
+    setIsTouchEvent();
+  };
+
+  const onTouchStart = () => {
+    // Only enable hover flag when not "upgrading"
+    setHoverOnAttr(availablePoints === 0);
+    setIsTouchEvent(true);
+  };
+
+  // Since touch devices don't have onHover
+  // the showNext will activate when a user touches the button
+  // the timeOut will disable the showNext after 1.5s for better experience
+  const onTouchEnd = () => {
+    clearTimeout(showNextTouchTimeout);
+
+    setShowNextTouchTimeout(
+      setTimeout(() => {
+        setHoverOnAttr();
+      }, 1500)
+    );
+  };
 
   return (
     <Button
@@ -53,9 +97,11 @@ const CardUpgrade = ({
       whiteSpace="normal"
       flexDirection="column"
       justifyContent="space-between"
-      onMouseEnter={() => clickable && setHoverOnAttr(true)}
+      onMouseEnter={onMouseEnter}
       onMouseLeave={() => setHoverOnAttr()}
-      {...(clickable && { onClick: onClick })}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      onClick={onClickAndHandleFlag}
       {...(!clickable && { cursor: 'auto', boxShadow: 'none' })}
       {...props}
     >
@@ -80,9 +126,7 @@ const CardUpgrade = ({
 
 const ExperienceUpgrades = ({ expType, ...props }) => {
   const dispatch = useDispatch();
-  const [notEnoughPointsAnimation, setNotEnoughPointsAnimation] = useState(
-    false
-  );
+  const [notEnoughPointsAnimation, setNotEnoughPointsAnimation] = useState();
   const experienceBusiness = useExperienceBusiness();
   const experienceRace = useExperienceRace();
   const experienceMechanic = useExperienceMechanic();
@@ -125,6 +169,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               onClick={() => buyBuff('business', 'newCars')}
               innerTextArray={['-0%', '-10%', '-20%', '-30%']}
               bg={colors.orange}
+              availablePoints={availablePointsObject.availablePoints}
             />
             <CardUpgrade
               text="Old cars price"
@@ -133,6 +178,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               onClick={() => buyBuff('business', 'usedCars')}
               innerTextArray={['+0%', '+10%', '+20%', '+30%']}
               bg={colors.orange}
+              availablePoints={availablePointsObject.availablePoints}
             />
           </>
         )}
@@ -146,6 +192,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               onClick={() => buyBuff('race', 'price')}
               innerTextArray={['-0%', '-10%', '-20%', '-30%']}
               bg={colors.green}
+              availablePoints={availablePointsObject.availablePoints}
             />
             <CardUpgrade
               text="Race prizes"
@@ -154,6 +201,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               onClick={() => buyBuff('race', 'prizes')}
               innerTextArray={['+0%', '+10%', '+20%', '+30%']}
               bg={colors.green}
+              availablePoints={availablePointsObject.availablePoints}
             />
           </>
         )}
@@ -167,6 +215,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               onClick={() => buyBuff('mechanic', 'acc')}
               innerTextArray={['-0%', '-10%', '-20%']}
               bg={colors.lightBlue}
+              availablePoints={availablePointsObject.availablePoints}
             />
             <CardUpgrade
               text="SPD price"
@@ -175,6 +224,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               onClick={() => buyBuff('mechanic', 'spd')}
               innerTextArray={['-0%', '-10%', '-20%', '-30%']}
               bg={colors.lightBlue}
+              availablePoints={availablePointsObject.availablePoints}
             />
             <CardUpgrade
               text="HND price"
@@ -183,6 +233,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               onClick={() => buyBuff('mechanic', 'hnd')}
               innerTextArray={['-0%', '-10%', '-20%', '-30%']}
               bg={colors.lightBlue}
+              availablePoints={availablePointsObject.availablePoints}
             />
           </>
         )}
@@ -192,7 +243,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
         textAlign="center"
         padding="0 8px"
         blink={notEnoughPointsAnimation}
-        onAnimationEnd={() => setNotEnoughPointsAnimation(false)}
+        onAnimationEnd={() => setNotEnoughPointsAnimation()}
       >{`Available points: ${availablePointsObject.availablePoints}`}</TextWithAnimation>
     </Flex>
   );
