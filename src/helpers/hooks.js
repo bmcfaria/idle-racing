@@ -111,9 +111,9 @@ export const useDynamicCardContainerWidth = (
 
 export const useExperienceBusiness = () => {
   const experience = useSelector(experienceSelector);
-  const { exp, max, newCars, usedCars } = experience.business;
+  const { exp, max, newCars, usedCars, rewardCars } = experience.business;
   const level = expLevel(exp, max);
-  const availablePoints = level - 1 - newCars - usedCars;
+  const availablePoints = level - 1 - newCars - usedCars - rewardCars;
 
   return {
     ...experience.business,

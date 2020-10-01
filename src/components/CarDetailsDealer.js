@@ -8,7 +8,11 @@ import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import AttributeCircle from './AttributeCircle';
 import Button from './Button';
-import { useCarPriceWithDiscount, useEmptyGarageSlots } from '../helpers/hooks';
+import {
+  useCarPriceWithDiscount,
+  useEmptyGarageSlots,
+  useExperienceBusiness,
+} from '../helpers/hooks';
 import CarDetailsImageAndType from './CarDetailsImageAndType';
 
 const CarDetailsDealer = ({ car, ...props }) => {
@@ -20,6 +24,9 @@ const CarDetailsDealer = ({ car, ...props }) => {
 
   const calculatedPrice = ~~useCarPriceWithDiscount(price);
   const enoughMoney = useSelector(enoughMoneySelector(calculatedPrice));
+  const experienceBusiness = useExperienceBusiness();
+
+  const rewardOnly = reward && !(experienceBusiness.rewardCars > 0);
 
   const buy = () => {
     dispatch(buyCarAction(id));
@@ -72,11 +79,11 @@ const CarDetailsDealer = ({ car, ...props }) => {
         <Button
           margin="8px 0"
           onClick={buy}
-          isDisabled={!enoughMoney || reward || emptySlots <= 0}
+          isDisabled={!enoughMoney || rewardOnly || emptySlots <= 0}
           color={colors.darkGray}
           bg={colors.white}
         >
-          {reward ? 'Reward' : `$${calculatedPrice}`}
+          {rewardOnly ? 'Reward' : `$${calculatedPrice}`}
         </Button>
       </Flex>
     </Flex>

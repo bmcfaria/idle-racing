@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Text, Flex, Box } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
 import { colors, MAX_WIDTH_VALUE } from '../helpers/theme';
@@ -8,9 +8,8 @@ import {
   useExperienceRace,
   useExperienceMechanic,
 } from '../helpers/hooks';
-import Button from './Button';
-import UpgradableCircle from './UpgradableCircle';
 import styled from '@emotion/styled';
+import ExperienceUpgradesCard from './ExperienceUpgradesCard';
 
 const TextWithAnimation = styled(Text)`
   animation: ${({ blink }) =>
@@ -29,108 +28,6 @@ const TextWithAnimation = styled(Text)`
     }
   }
 `;
-
-const CardUpgrade = ({
-  text,
-  base = 0,
-  value = 0,
-  max = 1,
-  onClick,
-  innerTextArray = [],
-  availablePoints,
-  ...props
-}) => {
-  const [hoverOnAttr, setHoverOnAttr] = useState();
-
-  const [isTouchEvent, setIsTouchEvent] = useState();
-  const [showNextTouchTimeout, setShowNextTouchTimeout] = useState();
-
-  const clickable = value < max;
-  const showNext = clickable && hoverOnAttr;
-
-  useEffect(() => {
-    let touchHoverTimeout;
-    if (showNextTouchTimeout) {
-      touchHoverTimeout = setTimeout(() => {
-        setShowNextTouchTimeout();
-        setHoverOnAttr();
-      }, 1500);
-    }
-
-    return () => {
-      clearTimeout(touchHoverTimeout);
-    };
-  }, [showNextTouchTimeout]);
-
-  const onMouseEnter = () => {
-    if (isTouchEvent && availablePoints > 0) {
-      // Don't showNext when the user is "upgrading" on a touch device
-      // or else the value will increase and show the next value
-      // creating confusion
-      setHoverOnAttr();
-    } else {
-      setHoverOnAttr(true);
-    }
-  };
-
-  const onClickAndHandleFlag = () => {
-    if (onClick && clickable) {
-      onClick();
-    }
-
-    // reset flag
-    setIsTouchEvent();
-  };
-
-  const onTouchStart = () => {
-    // Only enable hover flag when not "upgrading"
-    setHoverOnAttr(availablePoints === 0);
-    setIsTouchEvent(true);
-  };
-
-  // Since touch devices don't have onHover
-  // the showNext will activate when a user touches the button
-  // the timeOut will disable the showNext after 1.5s for better experience
-  const onTouchEnd = () => {
-    setShowNextTouchTimeout(true);
-  };
-
-  return (
-    <Button
-      w="80px"
-      h="104px"
-      margin="0 auto"
-      padding="8px"
-      border={`1px solid ${colors.darkGray}`}
-      whiteSpace="normal"
-      flexDirection="column"
-      justifyContent="space-between"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={() => setHoverOnAttr()}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-      onClick={onClickAndHandleFlag}
-      {...(!clickable && { cursor: 'auto', boxShadow: 'none' })}
-      {...props}
-    >
-      <Text textAlign="center">{text}</Text>
-      <UpgradableCircle
-        base={base}
-        value={value}
-        max={max}
-        showNextUpgradeValue={showNext}
-      >
-        {innerTextArray.length > 0 && (
-          <Flex margin="auto" alignItems="center">
-            <Text fontSize="14px" lineHeight="14px">
-              {showNext ? innerTextArray?.[value + 1] : innerTextArray?.[value]}
-            </Text>
-          </Flex>
-        )}
-      </UpgradableCircle>
-    </Button>
-  );
-};
 
 const ExperienceUpgrades = ({ expType, ...props }) => {
   const dispatch = useDispatch();
@@ -170,7 +67,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
       >
         {expType === 'business' && (
           <>
-            <CardUpgrade
+            <ExperienceUpgradesCard
               text="New cars price"
               value={experienceBusiness.newCars}
               max={3}
@@ -179,7 +76,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               bg={colors.orange}
               availablePoints={availablePointsObject.availablePoints}
             />
-            <CardUpgrade
+            <ExperienceUpgradesCard
               text="Old cars price"
               value={experienceBusiness.usedCars}
               max={3}
@@ -188,12 +85,26 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               bg={colors.orange}
               availablePoints={availablePointsObject.availablePoints}
             />
+            <ExperienceUpgradesCard
+              text="Buy reward cars"
+              value={experienceBusiness.rewardCars}
+              max={1}
+              onClick={() => buyBuff('business', 'rewardCars')}
+              innerTextArray={['OFF', 'ON']}
+              bg={colors.orange}
+              availablePoints={availablePointsObject.availablePoints}
+              lockedText={
+                experienceBusiness.exp < 50
+                  ? `Missing ${50 - experienceBusiness.exp} exp to unlock`
+                  : undefined
+              }
+            />
           </>
         )}
 
         {expType === 'race' && (
           <>
-            <CardUpgrade
+            <ExperienceUpgradesCard
               text="Race price"
               value={experienceRace.price}
               max={3}
@@ -202,7 +113,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               bg={colors.green}
               availablePoints={availablePointsObject.availablePoints}
             />
-            <CardUpgrade
+            <ExperienceUpgradesCard
               text="Race prizes"
               value={experienceRace.prizes}
               max={3}
@@ -216,7 +127,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
 
         {expType === 'mechanic' && (
           <>
-            <CardUpgrade
+            <ExperienceUpgradesCard
               text="ACC price"
               value={experienceMechanic.acc}
               max={3}
@@ -225,7 +136,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               bg={colors.lightBlue}
               availablePoints={availablePointsObject.availablePoints}
             />
-            <CardUpgrade
+            <ExperienceUpgradesCard
               text="SPD price"
               value={experienceMechanic.spd}
               max={3}
@@ -234,7 +145,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               bg={colors.lightBlue}
               availablePoints={availablePointsObject.availablePoints}
             />
-            <CardUpgrade
+            <ExperienceUpgradesCard
               text="HND price"
               value={experienceMechanic.hnd}
               max={3}

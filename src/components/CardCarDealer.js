@@ -11,6 +11,7 @@ import styled from '@emotion/styled';
 import { colors } from '../helpers/theme';
 import CardCarSmall from './CardCarSmall';
 import { formatMoney } from '../helpers/utils';
+import { useExperienceBusiness } from '../helpers/hooks';
 
 const BoughtAnimation = styled(Flex)`
   animation: fadeOut ease 1.5s;
@@ -31,8 +32,11 @@ const CardCarDealer = ({ car, ...props }) => {
   const garageCars = useSelector(garageCarsSelector);
   const boughtCars = useSelector(boughtCarsSelector);
   const rewardCars = useSelector(rewardCarsSelector);
+  const experienceBusiness = useExperienceBusiness();
   const enoughMoney = useSelector(enoughMoneySelector(price));
   const [bought, setBought] = useState();
+
+  const rewardOnly = car.reward && !(experienceBusiness.rewardCars > 0);
 
   useEffect(() => {
     const currentTime = new Date().getTime();
@@ -67,9 +71,9 @@ const CardCarDealer = ({ car, ...props }) => {
         textAlign="center"
         w="100%"
         marginTop="auto"
-        color={!enoughMoney && !car.reward ? colors.red : colors.white}
+        color={!enoughMoney && !rewardOnly ? colors.red : colors.white}
       >
-        {car.reward ? 'Reward' : `$${formatMoney(car.price)}`}
+        {rewardOnly ? 'Reward' : `$${formatMoney(car.price)}`}
       </Text>
       {bought && (
         <BoughtAnimation

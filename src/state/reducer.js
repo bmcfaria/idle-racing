@@ -96,10 +96,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case BUY_EXPERIENCE_BUFF_TYPE: {
       if (
         payload.type === 'business' &&
-        (payload.subType === 'newCars' || payload.subType === 'usedCars')
+        (payload.subType === 'newCars' ||
+          payload.subType === 'usedCars' ||
+          payload.subType === 'rewardCars')
       ) {
-        const { exp, newCars, usedCars } = state.experience.business;
-        const availablePoints = `${~~exp}`.length - 1 - newCars - usedCars;
+        const {
+          exp,
+          newCars,
+          usedCars,
+          rewardCars,
+        } = state.experience.business;
+        const availablePoints =
+          `${~~exp}`.length - 1 - newCars - usedCars - rewardCars;
 
         const increment =
           availablePoints > 0 && state.experience.business[payload.subType] < 3

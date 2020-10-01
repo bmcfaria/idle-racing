@@ -39,6 +39,7 @@ const initialState = {
       exp: 0,
       newCars: 0,
       usedCars: 0,
+      rewardCars: 0,
       max: 10 ** (2 * 3),
     },
     race: {
