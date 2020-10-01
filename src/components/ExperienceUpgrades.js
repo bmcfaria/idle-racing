@@ -74,7 +74,7 @@ const CardUpgrade = ({
   };
 
   const onClickAndHandleFlag = () => {
-    if (onClick) {
+    if (onClick && clickable) {
       onClick();
     }
 
