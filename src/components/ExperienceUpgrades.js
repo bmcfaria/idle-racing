@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, Flex, Box } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
 import { colors, MAX_WIDTH_VALUE } from '../helpers/theme';
@@ -48,6 +48,20 @@ const CardUpgrade = ({
   const clickable = value < max;
   const showNext = clickable && hoverOnAttr;
 
+  useEffect(() => {
+    let touchHoverTimeout;
+    if (showNextTouchTimeout) {
+      touchHoverTimeout = setTimeout(() => {
+        setShowNextTouchTimeout();
+        setHoverOnAttr();
+      }, 1500);
+    }
+
+    return () => {
+      clearTimeout(touchHoverTimeout);
+    };
+  }, [showNextTouchTimeout]);
+
   const onMouseEnter = () => {
     if (isTouchEvent && availablePoints > 0) {
       // Don't showNext when the user is "upgrading" on a touch device
@@ -78,13 +92,7 @@ const CardUpgrade = ({
   // the showNext will activate when a user touches the button
   // the timeOut will disable the showNext after 1.5s for better experience
   const onTouchEnd = () => {
-    clearTimeout(showNextTouchTimeout);
-
-    setShowNextTouchTimeout(
-      setTimeout(() => {
-        setHoverOnAttr();
-      }, 1500)
-    );
+    setShowNextTouchTimeout(true);
   };
 
   return (
