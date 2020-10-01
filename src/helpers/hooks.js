@@ -46,6 +46,7 @@ export const useOpenClose = defaultValue => {
 };
 
 export const useCurrentPage = () => {
+  const matchHome = useRouteMatch({ path: '/', exact: true });
   const matchGarage = useRouteMatch('/garage');
   const matchDealerBrand = useRouteMatch('/dealer/:brand');
   const matchDealer = useRouteMatch('/dealer');
@@ -53,22 +54,20 @@ export const useCurrentPage = () => {
   const matchRace = useRouteMatch('/race');
   const matchSettings = useRouteMatch('/settings');
 
-  let selectedPage;
-  selectedPage = matchGarage ? 'Garage' : selectedPage;
-  selectedPage = matchDealer ? 'Dealer' : selectedPage;
-  selectedPage = matchDealerBrand
-    ? '/' + capitalize(matchDealerBrand?.params?.brand)
-    : selectedPage;
-  selectedPage = matchRace ? 'Race' : selectedPage;
-  selectedPage = matchRaceEvent
-    ? '/' + capitalize(matchRaceEvent?.params?.event)
-    : selectedPage;
-  selectedPage = matchSettings ? 'Settings' : selectedPage;
+  const selectedPage =
+    (matchHome && 'Home') ||
+    (matchGarage && 'Garage') ||
+    (matchDealer && 'Dealer') ||
+    (matchDealerBrand && '/' + capitalize(matchDealerBrand?.params?.brand)) ||
+    (matchRace && 'Race') ||
+    (matchRaceEvent && '/' + capitalize(matchRaceEvent?.params?.event)) ||
+    (matchSettings && 'Settings') ||
+    '';
 
   const backPage =
     (matchDealerBrand && '/dealer') || (matchRaceEvent && '/race') || '/';
 
-  return { name: selectedPage, back: backPage };
+  return { name: selectedPage, ...(!matchHome && { back: backPage }) };
 };
 
 const getWindowDimensions = () => {
