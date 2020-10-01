@@ -10,6 +10,25 @@ import {
 } from '../helpers/hooks';
 import Button from './Button';
 import UpgradableCircle from './UpgradableCircle';
+import styled from '@emotion/styled';
+
+const TextWithAnimation = styled(Text)`
+  animation: ${({ blink }) =>
+    blink ? 'not-enough-experience-points 0.5s ease 3' : 'none'};
+
+  :hover {
+    animation: none;
+  }
+
+  @keyframes not-enough-experience-points {
+    50% {
+      background-color: ${colors.red};
+    }
+    100% {
+      background-color: inherit;
+    }
+  }
+`;
 
 const CardUpgrade = ({
   text,
@@ -61,6 +80,9 @@ const CardUpgrade = ({
 
 const ExperienceUpgrades = ({ expType, ...props }) => {
   const dispatch = useDispatch();
+  const [notEnoughPointsAnimation, setNotEnoughPointsAnimation] = useState(
+    false
+  );
   const experienceBusiness = useExperienceBusiness();
   const experienceRace = useExperienceRace();
   const experienceMechanic = useExperienceMechanic();
@@ -72,7 +94,11 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
     {};
 
   const buyBuff = (type, subType) => {
-    dispatch(buyExperienceBuffAction(type, subType));
+    if (availablePointsObject.availablePoints > 0) {
+      dispatch(buyExperienceBuffAction(type, subType));
+    } else {
+      setNotEnoughPointsAnimation(true);
+    }
   };
 
   return (
@@ -126,7 +152,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               value={experienceRace.prizes}
               max={3}
               onClick={() => buyBuff('race', 'prizes')}
-              innerTextArray={['-0%', '-10%', '-20%', '-30%']}
+              innerTextArray={['+0%', '+10%', '+20%', '+30%']}
               bg={colors.green}
             />
           </>
@@ -161,11 +187,13 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
           </>
         )}
       </Box>
-      <Text
-        w="100%"
+      <TextWithAnimation
         marginTop="16px"
         textAlign="center"
-      >{`Available points: ${availablePointsObject.availablePoints}`}</Text>
+        padding="0 8px"
+        blink={notEnoughPointsAnimation}
+        onAnimationEnd={() => setNotEnoughPointsAnimation(false)}
+      >{`Available points: ${availablePointsObject.availablePoints}`}</TextWithAnimation>
     </Flex>
   );
 };
