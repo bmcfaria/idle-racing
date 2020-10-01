@@ -164,10 +164,14 @@ const HeaderBar = () => {
 
   const openUpgradeModal = expType => {
     if (location.state?.expType) {
-      history.replace({
-        pathname: location.pathname,
-        state: { ...(location.state || {}), expType },
-      });
+      if (location.state?.expType === expType) {
+        history.goBack();
+      } else {
+        history.replace({
+          pathname: location.pathname,
+          state: { ...(location.state || {}), expType },
+        });
+      }
     } else {
       history.push({
         pathname: location.pathname,
