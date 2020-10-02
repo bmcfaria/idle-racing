@@ -10,6 +10,7 @@ import {
 } from '../helpers/hooks';
 import styled from '@emotion/styled';
 import ExperienceUpgradesCard from './ExperienceUpgradesCard';
+import experienceObject from '../helpers/experience';
 
 const TextWithAnimation = styled(Text)`
   animation: ${({ blink }) =>
@@ -28,6 +29,12 @@ const TextWithAnimation = styled(Text)`
     }
   }
 `;
+
+const cardTypeColors = {
+  business: colors.orange,
+  race: colors.green,
+  mechanic: colors.lightBlue,
+};
 
 const ExperienceUpgrades = ({ expType, ...props }) => {
   const dispatch = useDispatch();
@@ -65,96 +72,20 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
         display="grid"
         gridTemplateColumns="repeat(auto-fit, minmax(88px, 1fr))"
       >
-        {expType === 'business' && (
-          <>
+        {Object.entries(experienceObject?.[expType]).map(
+          ([subTypeKey, subTypeValue]) => (
             <ExperienceUpgradesCard
-              text="New cars price"
-              value={experienceBusiness.newCars}
-              max={3}
-              onClick={() => buyBuff('business', 'newCars')}
-              innerTextArray={['-0%', '-10%', '-20%', '-30%']}
-              bg={colors.orange}
+              text={subTypeValue.title}
+              value={availablePointsObject[subTypeKey]}
+              max={subTypeValue.max}
+              onClick={() => buyBuff(expType, subTypeKey)}
+              innerTextArray={subTypeValue.textArray}
+              bg={cardTypeColors[expType]}
               availablePoints={availablePointsObject.availablePoints}
+              lockedText={subTypeValue.lockedText?.(availablePointsObject.exp)}
+              key={`${expType}_${subTypeKey}`}
             />
-            <ExperienceUpgradesCard
-              text="Old cars price"
-              value={experienceBusiness.usedCars}
-              max={3}
-              onClick={() => buyBuff('business', 'usedCars')}
-              innerTextArray={['+0%', '+10%', '+20%', '+30%']}
-              bg={colors.orange}
-              availablePoints={availablePointsObject.availablePoints}
-            />
-            <ExperienceUpgradesCard
-              text="Buy reward cars"
-              value={experienceBusiness.rewardCars}
-              max={1}
-              onClick={() => buyBuff('business', 'rewardCars')}
-              innerTextArray={['OFF', 'ON']}
-              bg={colors.orange}
-              availablePoints={availablePointsObject.availablePoints}
-              lockedText={
-                experienceBusiness.exp < 50
-                  ? `Missing ${50 - experienceBusiness.exp} exp to unlock`
-                  : undefined
-              }
-            />
-          </>
-        )}
-
-        {expType === 'race' && (
-          <>
-            <ExperienceUpgradesCard
-              text="Race price"
-              value={experienceRace.price}
-              max={3}
-              onClick={() => buyBuff('race', 'price')}
-              innerTextArray={['-0%', '-10%', '-20%', '-30%']}
-              bg={colors.green}
-              availablePoints={availablePointsObject.availablePoints}
-            />
-            <ExperienceUpgradesCard
-              text="Race prizes"
-              value={experienceRace.prizes}
-              max={3}
-              onClick={() => buyBuff('race', 'prizes')}
-              innerTextArray={['+0%', '+10%', '+20%', '+30%']}
-              bg={colors.green}
-              availablePoints={availablePointsObject.availablePoints}
-            />
-          </>
-        )}
-
-        {expType === 'mechanic' && (
-          <>
-            <ExperienceUpgradesCard
-              text="ACC price"
-              value={experienceMechanic.acc}
-              max={3}
-              onClick={() => buyBuff('mechanic', 'acc')}
-              innerTextArray={['-0%', '-10%', '-20%']}
-              bg={colors.lightBlue}
-              availablePoints={availablePointsObject.availablePoints}
-            />
-            <ExperienceUpgradesCard
-              text="SPD price"
-              value={experienceMechanic.spd}
-              max={3}
-              onClick={() => buyBuff('mechanic', 'spd')}
-              innerTextArray={['-0%', '-10%', '-20%', '-30%']}
-              bg={colors.lightBlue}
-              availablePoints={availablePointsObject.availablePoints}
-            />
-            <ExperienceUpgradesCard
-              text="HND price"
-              value={experienceMechanic.hnd}
-              max={3}
-              onClick={() => buyBuff('mechanic', 'hnd')}
-              innerTextArray={['-0%', '-10%', '-20%', '-30%']}
-              bg={colors.lightBlue}
-              availablePoints={availablePointsObject.availablePoints}
-            />
-          </>
+          )
         )}
       </Box>
       <TextWithAnimation
