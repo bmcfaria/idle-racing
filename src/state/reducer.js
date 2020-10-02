@@ -13,6 +13,7 @@ import { cars as dealerCars, generateGarageCar } from '../helpers/data';
 import { discountValue } from '../helpers/utils';
 import objectAssignDeep from 'object-assign-deep';
 import initialState from './initialState';
+import experience, { experienceTypePointsSpent } from '../helpers/experience';
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -94,92 +95,40 @@ const rootReducer = (state = initialState, { type, payload }) => {
     }
 
     case BUY_EXPERIENCE_BUFF_TYPE: {
-      if (
-        payload.type === 'business' &&
-        (payload.subType === 'newCars' ||
-          payload.subType === 'usedCars' ||
-          payload.subType === 'rewardCars')
-      ) {
-        const {
-          exp,
-          newCars,
-          usedCars,
-          rewardCars,
-        } = state.experience.business;
-        const availablePoints =
-          `${~~exp}`.length - 1 - newCars - usedCars - rewardCars;
-
-        const increment =
-          availablePoints > 0 && state.experience.business[payload.subType] < 3
-            ? 1
-            : 0;
-
-        return {
-          ...state,
-          experience: {
-            ...state.experience,
-            business: {
-              ...state.experience.business,
-              [payload.subType]:
-                state.experience.business[payload.subType] + increment,
-            },
-          },
-        };
+      const subTypeObject = experience?.[payload.type][payload.subType];
+      if (!subTypeObject) {
+        return state;
       }
 
-      if (
-        payload.type === 'race' &&
-        (payload.subType === 'price' || payload.subType === 'prizes')
-      ) {
-        const { exp, price, prizes } = state.experience.race;
-        const availablePoints = `${~~exp}`.length - 1 - price - prizes;
-
-        const increment =
-          availablePoints > 0 && state.experience.race[payload.subType] < 3
-            ? 1
-            : 0;
-
-        return {
-          ...state,
-          experience: {
-            ...state.experience,
-            race: {
-              ...state.experience.race,
-              [payload.subType]:
-                state.experience.race[payload.subType] + increment,
-            },
-          },
-        };
+      const stateSubTypeValue =
+        state.experience?.[payload.type][payload.subType];
+      if (stateSubTypeValue >= subTypeObject?.max) {
+        return state;
       }
 
-      if (
-        payload.type === 'mechanic' &&
-        (payload.subType === 'acc' ||
-          payload.subType === 'spd' ||
-          payload.subType === 'hnd')
-      ) {
-        const { exp, acc, spd, hnd } = state.experience.mechanic;
-        const availablePoints = `${~~exp}`.length - 1 - acc - spd - hnd;
+      const exp = ~~state.experience?.[payload.type].exp;
+      const totalEarnedPoints = `${~~exp}`.length - 1;
+      const pointsSpent = experienceTypePointsSpent(
+        payload.type,
+        state.experience
+      );
+      const availablePoints = totalEarnedPoints - pointsSpent;
 
-        const increment =
-          availablePoints > 0 && state.experience.mechanic[payload.subType] < 3
-            ? 1
-            : 0;
-
-        return {
-          ...state,
-          experience: {
-            ...state.experience,
-            mechanic: {
-              ...state.experience.mechanic,
-              [payload.subType]:
-                state.experience.mechanic[payload.subType] + increment,
-            },
-          },
-        };
+      if (availablePoints < 1) {
+        return state;
       }
 
-      return state;
+      return {
+        ...state,
+        experience: {
+          ...state.experience,
+          [payload.type]: {
+            ...(state.experience[payload.type] || {}),
+            [payload.subType]:
+              ~~state.experience?.[payload.type][payload.subType] + 1,
+          },
+        },
+      };
     }
 
     case CLEAR_STORE_RESET_TYPE: {

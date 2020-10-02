@@ -1,4 +1,4 @@
-export default {
+const experience = {
   business: {
     newCars: {
       max: 3,
@@ -52,3 +52,11 @@ export default {
     },
   },
 };
+
+export const experienceTypePointsSpent = (type, stateExperience) =>
+  Object.keys(experience[type]).reduce(
+    (result, subType) => result + ~~stateExperience?.[type][subType],
+    0
+  );
+
+export default experience;

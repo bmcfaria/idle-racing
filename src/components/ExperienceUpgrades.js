@@ -3,11 +3,7 @@ import { Text, Flex, Box } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
 import { colors, MAX_WIDTH_VALUE } from '../helpers/theme';
 import { buyExperienceBuffAction } from '../state/actions';
-import {
-  useExperienceBusiness,
-  useExperienceRace,
-  useExperienceMechanic,
-} from '../helpers/hooks';
+import { useExperience } from '../helpers/hooks';
 import styled from '@emotion/styled';
 import ExperienceUpgradesCard from './ExperienceUpgradesCard';
 import experienceObject from '../helpers/experience';
@@ -39,9 +35,9 @@ const cardTypeColors = {
 const ExperienceUpgrades = ({ expType, ...props }) => {
   const dispatch = useDispatch();
   const [notEnoughPointsAnimation, setNotEnoughPointsAnimation] = useState();
-  const experienceBusiness = useExperienceBusiness();
-  const experienceRace = useExperienceRace();
-  const experienceMechanic = useExperienceMechanic();
+  const experienceBusiness = useExperience('business');
+  const experienceRace = useExperience('race');
+  const experienceMechanic = useExperience('mechanic');
 
   const availablePointsObject =
     (expType === 'business' && experienceBusiness) ||

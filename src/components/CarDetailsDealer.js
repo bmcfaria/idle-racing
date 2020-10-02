@@ -11,7 +11,7 @@ import Button from './Button';
 import {
   useCarPriceWithDiscount,
   useEmptyGarageSlots,
-  useExperienceBusiness,
+  useExperience,
 } from '../helpers/hooks';
 import CarDetailsImageAndType from './CarDetailsImageAndType';
 
@@ -24,7 +24,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
 
   const calculatedPrice = ~~useCarPriceWithDiscount(price);
   const enoughMoney = useSelector(enoughMoneySelector(calculatedPrice));
-  const experienceBusiness = useExperienceBusiness();
+  const experienceBusiness = useExperience('business');
 
   const rewardOnly = reward && !(experienceBusiness.rewardCars > 0);
 

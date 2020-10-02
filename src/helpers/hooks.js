@@ -30,6 +30,7 @@ import {
 } from './utils';
 import { raceEvents } from './data';
 import { MAX_WIDTH_VALUE } from './theme';
+import { experienceTypePointsSpent } from './experience';
 
 export const useOpenClose = defaultValue => {
   const [open, setOpen] = useState(!!defaultValue);
@@ -108,73 +109,50 @@ export const useDynamicCardContainerWidth = (
   );
 };
 
-export const useExperienceBusiness = () => {
+export const useExperience = type => {
   const experience = useSelector(experienceSelector);
-  const { exp, max, newCars, usedCars, rewardCars } = experience.business;
+  const { exp, max } = experience[type];
   const level = expLevel(exp, max);
-  const availablePoints = level - 1 - newCars - usedCars - rewardCars;
+  const pointsSpent = experienceTypePointsSpent([type], experience);
+  const availablePoints = level - 1 - pointsSpent;
 
   return {
-    ...experience.business,
-    nextLevel: expNextLevel(exp),
-    availablePoints,
-  };
-};
-export const useExperienceRace = () => {
-  const experience = useSelector(experienceSelector);
-  const { exp, max, price, prizes } = experience.race;
-  const level = expLevel(exp, max);
-  const availablePoints = level - 1 - price - prizes;
-
-  return {
-    ...experience.race,
-    nextLevel: expNextLevel(exp),
-    availablePoints,
-  };
-};
-export const useExperienceMechanic = () => {
-  const experience = useSelector(experienceSelector);
-  const { exp, max, acc, spd, hnd } = experience.mechanic;
-  const level = expLevel(exp, max);
-  const availablePoints = level - 1 - acc - spd - hnd;
-
-  return {
-    ...experience.mechanic,
+    ...experience[type],
     nextLevel: expNextLevel(exp),
     availablePoints,
   };
 };
 
 export const useCarPriceWithDiscount = price => {
-  const experience = useExperienceBusiness();
+  const experience = useExperience('business');
 
-  return discountValue(price, experience.newCars);
+  return discountValue(price, ~~experience.newCars);
 };
 
 export const useCarPriceWithBuff = price => {
-  const experience = useExperienceBusiness();
+  const experience = useExperience('business');
 
-  return buffValue(price, experience.usedCars);
+  return buffValue(price, ~~experience.usedCars);
 };
 
 export const useRacePrizesWithBuff = prizes => {
-  const experience = useExperienceRace();
+  const experience = useExperience('race');
 
   return prizes.map(prize =>
-    isNaN(prize) ? prize : buffValue(prize, experience.prizes)
+    isNaN(prize) ? prize : buffValue(prize, ~~experience.prizes)
   );
 };
 
 export const useRacePriceWithDiscount = price => {
-  const experience = useExperienceRace();
+  const experience = useExperience('race');
 
-  return discountValue(price, experience.price);
+  return discountValue(price, ~~experience.price);
 };
 
 export const useUpgradePriceWithDiscount = (price, type) => {
-  const experience = useExperienceMechanic();
+  const experience = useExperience('mechanic');
 
-  return discountValue(price, experience[type]);
+  return discountValue(price, ~~experience[type]);
 };
 
 export const usePreviousUnlockedTrackChecker = tracks => {

@@ -9,9 +9,7 @@ import { moneySelector } from '../state/selectors';
 import { zIndex, colors, MAX_WIDTH } from '../helpers/theme';
 import {
   useCurrentPage,
-  useExperienceBusiness,
-  useExperienceRace,
-  useExperienceMechanic,
+  useExperience,
   usePassiveIncome,
 } from '../helpers/hooks';
 import Button from './Button';
@@ -157,9 +155,9 @@ const ExperienceButton = ({
 const HeaderBar = () => {
   const location = useLocation();
   const history = useHistory();
-  const experienceBusiness = useExperienceBusiness();
-  const experienceRace = useExperienceRace();
-  const experienceMechanic = useExperienceMechanic();
+  const experienceBusiness = useExperience('business');
+  const experienceRace = useExperience('race');
+  const experienceMechanic = useExperience('mechanic');
 
   const expTypeModal = location.state?.expType;
 
