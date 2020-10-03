@@ -282,10 +282,10 @@ export const doMeetRequirements = (car, requirements, upgradable) => {
 };
 
 export const buffValue = (value, times, buffPercentage = 0.1) =>
-  value * (1 + buffPercentage * times);
+  value * (1 + buffPercentage * ~~times);
 
 export const discountValue = (value, times, buffPercentage = 0.1) =>
-  value * (1 - buffPercentage * times);
+  value * (1 - buffPercentage * ~~times);
 
 export const expLevel = (exp, max) =>
   exp < max ? `${~~exp}`.length : `${~~max}`.length;
