@@ -82,27 +82,8 @@ const CardTrack = ({ track, locked }) => {
         track={track}
         borderRadius="16px"
         imageBorderRadius="16px 16px 0 0"
+        results={trackStats?.lastRace}
       />
-      {trackStats?.lastRace && (
-        <Flex
-          w="100%"
-          h="100%"
-          direction="column"
-          justifyContent="space-between"
-          alignItems="center"
-          padding="8px 0"
-          borderRadius="16px"
-          bg={hexAlpha(colors.white, 0.98)}
-          color={colors.darkGray}
-          position="absolute"
-          top="0"
-          left="0"
-        >
-          <Text fontSize="14px">({track?.name})</Text>
-          <Text fontSize="24px">Results</Text>
-          <Text fontSize="14px">({car ? car.name : '[selled car]'})</Text>
-        </Flex>
-      )}
     </Button>
   );
 };

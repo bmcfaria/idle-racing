@@ -62,7 +62,13 @@ const TrackPrize = ({ text, prize, ...props }) => {
   );
 };
 
-const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
+const CardTrackContent = ({
+  track,
+  imageBorderRadius,
+  results,
+  children,
+  ...props
+}) => {
   const { name, prizes, duration, price, requirements } = track;
   const trackStateState = useTrackStatsState(track.id);
   const calculatedPrice = ~~useRacePriceWithDiscount(price);
@@ -70,12 +76,14 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
   const calculatedPrizes = useRacePrizesWithBuff(prizes);
 
   const bgColor =
+    (!!results && colors.white) ||
     (trackStateState.won10 && colors.lightBlue) ||
     (trackStateState.won && colors.green) ||
     (trackStateState.raced && colors.orange) ||
     colors.darkGray;
 
   const color =
+    (!!results && 'black') ||
     (trackStateState.won10 && 'black') ||
     (trackStateState.won && 'black') ||
     (trackStateState.raced && 'black') ||
@@ -148,13 +156,24 @@ const CardTrackContent = ({ track, imageBorderRadius, children, ...props }) => {
         </Flex>
       </Box>
 
-      <Flex w="100%" h="20px" fontSize="12px">
-        <Text margin="auto" color={color}>
-          {formatDuration(duration)}
-        </Text>
-        <Text margin="auto" color={!enoughMoney ? colors.red : color}>
-          {calculatedPrice === 0 ? 'FREE' : `$${formatMoney(calculatedPrice)}`}
-        </Text>
+      <Flex w="100%" h="20px" fontSize="14px">
+        {results && (
+          <Text margin="auto" color={color}>
+            Results
+          </Text>
+        )}
+        {!results && (
+          <>
+            <Text margin="auto" color={color}>
+              {formatDuration(duration)}
+            </Text>
+            <Text margin="auto" color={!enoughMoney ? colors.red : color}>
+              {calculatedPrice === 0
+                ? 'FREE'
+                : `$${formatMoney(calculatedPrice)}`}
+            </Text>
+          </>
+        )}
       </Flex>
     </Flex>
   );
