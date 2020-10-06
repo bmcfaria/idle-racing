@@ -5,17 +5,6 @@ import Button from './Button';
 import { colors } from '../helpers/theme';
 import { RaceContext } from '../helpers/context';
 import { useRequirements } from '../helpers/hooks';
-import { useSelector } from 'react-redux';
-import { dealerCarsSelector } from '../state/selectors';
-import getImageCar from '../helpers/imageMappingCars';
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  object-fit: contain;
-  margin: auto;
-`;
 
 const SelectCarContainer = styled(Flex)`
   cursor: pointer;
@@ -23,13 +12,9 @@ const SelectCarContainer = styled(Flex)`
 `;
 
 const RaceDetailsSelectCar = ({ onClick, ...props }) => {
-  const { requirements, prizes } = useContext(RaceContext);
-  const dealerCars = useSelector(dealerCarsSelector);
+  const { requirements } = useContext(RaceContext);
   const { requirementText } = useRequirements();
   const [hover, setHover] = useState(false);
-
-  const rewardCar =
-    isNaN(prizes[0]) && dealerCars.find(({ id }) => id === prizes[0]);
 
   return (
     <SelectCarContainer
@@ -45,7 +30,7 @@ const RaceDetailsSelectCar = ({ onClick, ...props }) => {
     >
       <Flex
         w="100%"
-        h="74px"
+        h="calc(50% - 16px)"
         color={colors.white}
         textAlign="center"
         fontSize="14px"
@@ -67,27 +52,6 @@ const RaceDetailsSelectCar = ({ onClick, ...props }) => {
       >
         Select car
       </Button>
-      {rewardCar && (
-        <Flex w="144px" h="40px" marginTop="auto" marginBottom="20px">
-          <Flex
-            flexGrow="1"
-            h="100%"
-            borderRadius="8px 0 0 8px"
-            bg={colors.green}
-            direction="column"
-            fontSize="14px"
-            paddingLeft="12px"
-            whiteSpace="nowrap"
-            overflow="hidden"
-          >
-            <Text color={colors.darkGray}>1st Prize</Text>
-            <Text>{rewardCar.name}</Text>
-          </Flex>
-          <Flex w="52px" h="100%" borderRadius="0 8px 8px 0" bg={colors.white}>
-            <Image alt="car" src={getImageCar(rewardCar)} />
-          </Flex>
-        </Flex>
-      )}
     </SelectCarContainer>
   );
 };

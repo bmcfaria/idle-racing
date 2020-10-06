@@ -192,10 +192,7 @@ const RaceDetails = props => {
       {!carsModal && (
         <Box
           position="relative"
-          w="320px"
-          h="180px"
           overflowY={['scroll', 'scroll', 'unset']}
-          bg={colors.darkGray}
           borderRadius="16px"
           {...props}
         >
@@ -209,11 +206,18 @@ const RaceDetails = props => {
 
           <Flex direction="row">
             <CardTrackContent
-              w="50%"
+              w="200px"
               track={selectedTrack}
               borderRadius="16px"
+              large
             />
-            <Box w="50%" position="relative">
+            <Box
+              w="200px"
+              position="relative"
+              marginLeft="4px"
+              borderRadius="16px"
+              bg={colors.darkGray}
+            >
               <ActionContent
                 selectedCar={selectedCar}
                 selectedTrack={selectedTrack}

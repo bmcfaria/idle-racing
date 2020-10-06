@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import getImageTrack from '../helpers/imageMappingTracks';
 import { useSelector } from 'react-redux';
-import { enoughMoneySelector } from '../state/selectors';
+import { dealerCarsSelector, enoughMoneySelector } from '../state/selectors';
 import RequirementsList from './RequirementsList';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES, formatDuration, formatMoney } from '../helpers/utils';
@@ -12,8 +12,18 @@ import {
   useTrackStatsState,
 } from '../helpers/hooks';
 import { cars } from '../helpers/data';
+import styled from '@emotion/styled';
+import getImageCar from '../helpers/imageMappingCars';
 
-const TrackAttribute = ({ name, value, ...props }) => {
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  object-fit: contain;
+  margin: auto;
+`;
+
+const TrackAttribute = ({ name, value, large, ...props }) => {
   const color = percentageValue => {
     if (percentageValue < 1 / 3) {
       return colors.red;
@@ -27,22 +37,30 @@ const TrackAttribute = ({ name, value, ...props }) => {
   };
 
   return (
-    <Box w="20px" {...props}>
-      <Text textAlign="center" fontSize="10px" lineHeight="10px">
-        {name}
-      </Text>
-      <Box w="100%" h="3px" bg={colors.darkGray}>
+    <Box
+      w="20px"
+      fontSize={`${large ? 14 : 10}px`}
+      lineHeight={`${large ? 14 : 10}px`}
+      {...props}
+    >
+      <Text textAlign="center">{name}</Text>
+      <Box w="100%" h={`${large ? 4 : 3}px`} bg={colors.darkGray}>
         <Box w={`${value * 100}%`} h="100%" bg={color(value)} />
       </Box>
     </Box>
   );
 };
 
-const TrackPrize = ({ text, prize, ...props }) => {
+const TrackPrize = ({ text, prize, large, ...props }) => {
   const car = isNaN(prize) && cars.find(({ id }) => id === prize);
 
   return (
-    <Box w="48px" fontSize="12px" lineHeight="14px" {...props}>
+    <Box
+      w="48px"
+      fontSize={`${large ? 14 : 12}px`}
+      lineHeight={`${large ? 16 : 14}px`}
+      {...props}
+    >
       <Text textAlign="center" color={colors.darkGray}>
         {text}
       </Text>
@@ -67,13 +85,18 @@ const CardTrackContent = ({
   imageBorderRadius,
   results,
   children,
+  large,
   ...props
 }) => {
   const { name, prizes, duration, price, requirements } = track;
+  const dealerCars = useSelector(dealerCarsSelector);
   const trackStateState = useTrackStatsState(track.id);
   const calculatedPrice = ~~useRacePriceWithDiscount(price);
   const enoughMoney = useSelector(enoughMoneySelector(calculatedPrice));
   const calculatedPrizes = useRacePrizesWithBuff(prizes);
+
+  const rewardCar =
+    isNaN(prizes[0]) && dealerCars.find(({ id }) => id === prizes[0]);
 
   const bgColor =
     (!!results && colors.white) ||
@@ -99,8 +122,8 @@ const CardTrackContent = ({
       {...props}
     >
       <Box
-        w="160px"
-        h="160px"
+        w={large ? '200px' : '160px'}
+        h={`${large ? 168 + ~~(rewardCar && 44) : 160}px`}
         border={`1px solid ${colors.darkGray}`}
         bg={colors.lightGray}
         borderRadius="16px"
@@ -115,7 +138,10 @@ const CardTrackContent = ({
           borderRadius="16px"
         >
           <Box
-            margin="auto"
+            w="100%"
+            h="auto"
+            maxH={`${large ? 60 : 50}px`}
+            margin={large ? '28px auto 0' : 'auto'}
             color={colors.darkGray}
             as={getImageTrack(track)}
           />
@@ -127,32 +153,54 @@ const CardTrackContent = ({
             justifyContent="space-around"
           >
             <TrackAttribute
+              large={large}
               name="ACC"
               value={track[ATTRIBUTE_TYPES.ACCELERATION]}
             />
-            <TrackAttribute name="SPD" value={track[ATTRIBUTE_TYPES.SPEED]} />
             <TrackAttribute
+              large={large}
+              name="SPD"
+              value={track[ATTRIBUTE_TYPES.SPEED]}
+            />
+            <TrackAttribute
+              large={large}
               name="HND"
               value={track[ATTRIBUTE_TYPES.HANDLING]}
             />
           </Flex>
 
-          <RequirementsList
-            bottom="4px"
-            w="100%"
-            position="absolute"
-            requirements={requirements}
-          />
+          {!large && (
+            <RequirementsList
+              bottom="4px"
+              w="100%"
+              position="absolute"
+              requirements={requirements}
+            />
+          )}
         </Flex>
 
-        <Text textAlign="center" fontSize="14px">
+        <Text textAlign="center" fontSize={`${large ? 16 : 14}px`}>
           {name}
         </Text>
 
+        {rewardCar && large && (
+          <Flex w="100%" h="44px" padding="0 16px" alignItems="center">
+            <Box flexGrow="1" fontSize="16px" lineHeight="16px">
+              <Text color={colors.darkGray}>1st Prize</Text>
+              <Text>{rewardCar.name}</Text>
+            </Box>
+            <Box w="64px">
+              <Image alt="car" src={getImageCar(rewardCar)} />
+            </Box>
+          </Flex>
+        )}
+
         <Flex marginTop="4px" justifyContent="center">
-          <TrackPrize text="1st" prize={calculatedPrizes[0]} />
-          <TrackPrize text="2nd" prize={calculatedPrizes[1]} />
-          <TrackPrize text="3rd" prize={calculatedPrizes[2]} />
+          {(!rewardCar || !large) && (
+            <TrackPrize large={large} text="1st" prize={calculatedPrizes[0]} />
+          )}
+          <TrackPrize large={large} text="2nd" prize={calculatedPrizes[1]} />
+          <TrackPrize large={large} text="3rd" prize={calculatedPrizes[2]} />
         </Flex>
       </Box>
 
