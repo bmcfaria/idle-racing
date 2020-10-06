@@ -185,9 +185,11 @@ const CardTrackContent = ({
 
         {rewardCar && large && (
           <Flex w="100%" h="44px" padding="0 16px" alignItems="center">
-            <Box flexGrow="1" fontSize="16px" lineHeight="16px">
-              <Text color={colors.darkGray}>1st Prize</Text>
-              <Text>{rewardCar.name}</Text>
+            <Box flexGrow="1" lineHeight="16px">
+              <Text fontSize="14px" color={colors.darkGray}>
+                1st Prize
+              </Text>
+              <Text fontSize="16px">{rewardCar.name}</Text>
             </Box>
             <Box w="64px">
               <Image alt="car" src={getImageCar(rewardCar)} />
