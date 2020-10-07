@@ -98,13 +98,16 @@ export const useWindowDimensions = () => {
 
 export const useDynamicCardContainerWidth = (
   cardWidth = 160,
-  cardMargin = 16
+  cardMargin = 16,
+  screenMargin = 24
 ) => {
   const { width } = useWindowDimensions();
   const normalizedWidth = width > MAX_WIDTH_VALUE ? MAX_WIDTH_VALUE : width;
 
   return (
-    Math.floor((normalizedWidth - 2 * 24) / (cardWidth + cardMargin)) *
+    Math.floor(
+      (normalizedWidth - 2 * screenMargin) / (cardWidth + cardMargin)
+    ) *
     (cardWidth + cardMargin)
   );
 };

@@ -31,6 +31,7 @@ const RaceDetailsSelectCar = ({ onClick, ...props }) => {
       <Flex
         w="100%"
         h="calc(50% - 16px)"
+        minH="32px"
         color={colors.white}
         textAlign="center"
         fontSize="14px"
@@ -49,6 +50,7 @@ const RaceDetailsSelectCar = ({ onClick, ...props }) => {
           border: `4px solid ${colors.purple}`,
         }}
         isActive={hover}
+        marginBottom="32px"
       >
         Select car
       </Button>

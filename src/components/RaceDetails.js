@@ -17,7 +17,11 @@ import {
 import CardTrackContent from './CardTrackContent';
 import { colors } from '../helpers/theme';
 import RaceDetailsSelectCar from './RaceDetailsSelectCar';
-import { useOpenClose, useRacePriceWithDiscount } from '../helpers/hooks';
+import {
+  useDynamicCardContainerWidth,
+  useOpenClose,
+  useRacePriceWithDiscount,
+} from '../helpers/hooks';
 import RaceDetailsSelectedCar from './RaceDetailsSelectedCar';
 import {
   doMeetRequirements,
@@ -75,7 +79,7 @@ const ActionContent = ({
             track={selectedTrack}
             carsModalOpen={carsModalOpen}
           />
-          <Flex margin="auto auto 20px">
+          <Flex margin="20px auto 20px">
             {autoEnabled && (
               <Button
                 w="32px"
@@ -121,6 +125,7 @@ const ActionContent = ({
 };
 
 const RaceDetails = props => {
+  const containerWidth = useDynamicCardContainerWidth(200, 2, 0);
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -204,19 +209,29 @@ const RaceDetails = props => {
             />
           )}
 
-          <Flex direction="row">
+          <Box
+            w={containerWidth}
+            minW="200px"
+            maxW={`${200 * 2 + 4}px`}
+            margin="0 auto"
+            display="grid"
+            gridTemplateColumns="repeat(auto-fit, minmax(200px, 1fr))"
+            gridGap="4px"
+          >
             <CardTrackContent
               w="200px"
               track={selectedTrack}
               borderRadius="16px"
+              margin="0 auto"
               large
             />
             <Box
               w="200px"
+              minH="96px"
               position="relative"
-              marginLeft="4px"
               borderRadius="16px"
               bg={colors.darkGray}
+              margin="0 auto"
             >
               <ActionContent
                 selectedCar={selectedCar}
@@ -230,7 +245,7 @@ const RaceDetails = props => {
                 meetsRequirements={meetsRequirements}
               />
             </Box>
-          </Flex>
+          </Box>
         </Box>
       )}
     </RaceContext.Provider>
