@@ -79,7 +79,13 @@ const ActionContent = ({
             track={selectedTrack}
             carsModalOpen={carsModalOpen}
           />
-          <Flex margin="20px auto 20px">
+          <Flex
+            w="100%"
+            h="100%"
+            alignItems="center"
+            justifyContent="center"
+            padding="16px"
+          >
             {autoEnabled && (
               <Button
                 w="32px"
@@ -227,7 +233,7 @@ const RaceDetails = props => {
             />
             <Box
               w="200px"
-              minH="96px"
+              // minH="96px"
               position="relative"
               borderRadius="16px"
               bg={colors.darkGray}

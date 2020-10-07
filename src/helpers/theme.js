@@ -18,6 +18,7 @@ export const colors = {
   white: '#FFFFFC',
   lightGray: '#F4F4F3',
   darkGray: '#4E4E4E',
+  gray: '#B7B7B7',
 };
 
 export const MAX_WIDTH_VALUE = 800;

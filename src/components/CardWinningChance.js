@@ -1,14 +1,7 @@
 import React from 'react';
 import { Flex, Text } from '@chakra-ui/core';
 import { winProbability } from '../helpers/utils';
-
-const colors = {
-  green: '#57F583',
-  yellow: '#F5EF57',
-  orange: '#F5A357',
-  red: '#F55757',
-  gray: '#B7B7B7',
-};
+import { colors } from '../helpers/theme';
 
 const winningChances = {
   0: { text: 'BAD', color: colors.red },
