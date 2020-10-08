@@ -33,6 +33,7 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
     <Flex
       w="100%"
       h="100%"
+      minH="112px"
       direction="column"
       alignItems="center"
       padding="16px 16px 0"
@@ -40,7 +41,7 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
     >
       <Button
         w="100%"
-        h="auto"
+        minH="76px"
         padding="8px 8px 4px 8px"
         border={`1px solid ${colors.white}`}
         bg={colors.white}
@@ -62,7 +63,7 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
               lineHeight="16px"
               flexGrow="1"
               zIndex="1"
-              background={`linear-gradient(180deg, ${colors.white}, ${colors.white} 50%, transparent)`}
+              background={`linear-gradient(180deg, ${colors.white}, ${colors.white} 50%, ${colors.white}00)`}
             >
               {car.name}
             </Text>
@@ -87,6 +88,7 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
         </Flex>
       </Button>
       <CardWinningChance
+        minH="24px"
         car={car}
         track={track}
         meetsRequirements={meetsRequirements}
