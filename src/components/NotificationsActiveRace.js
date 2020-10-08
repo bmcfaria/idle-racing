@@ -1,23 +1,19 @@
 import React from 'react';
 import { Box, Text } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import {
-  raceSelector,
-  garageCarSelector,
-  trackSelector,
-} from '../state/selectors';
 import CardProgressCircle from './CardProgressCircle';
 import { colors } from '../helpers/theme';
 import Button from './Button';
+import { useGarageCar } from '../helpers/hooksGarage';
+import { useRace, useTrack } from '../helpers/hooksRace';
 
 const NotificationsActiveRace = ({ race, onClose }) => {
   const location = useLocation();
   const history = useHistory();
 
-  const currentRace = useSelector(raceSelector(race));
-  const car = useSelector(garageCarSelector(currentRace.car));
-  const track = useSelector(trackSelector(currentRace.track));
+  const currentRace = useRace(race);
+  const car = useGarageCar(currentRace.car);
+  const track = useTrack(currentRace.track);
 
   const onClick = () => {
     history.push({

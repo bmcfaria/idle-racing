@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
-import { tracksSelector, raceByTrackSelector } from '../state/selectors';
+import { tracksSelector } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
 import getImageTrack from '../helpers/imageMappingTracks';
@@ -13,11 +13,12 @@ import {
   useEventsLockedState,
   useEventTracksStatsState,
   usePreviousUnlockedTrackChecker,
+  useRaceByTrack,
   useTrackStatsState,
 } from '../helpers/hooksRace';
 
 const TrackItem = ({ track, active = true, ...props }) => {
-  const race = useSelector(raceByTrackSelector(track.id));
+  const race = useRaceByTrack(track.id);
   const trackStateState = useTrackStatsState(track.id);
 
   const { raced, won, won10 } = trackStateState;

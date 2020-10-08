@@ -4,7 +4,7 @@ import { useLocation, useHistory, useParams } from 'react-router-dom';
 import CardTrack from './CardTrack';
 import RaceDetails from './RaceDetails';
 import { useSelector, useDispatch } from 'react-redux';
-import { tracksSelector, trackStatsSelector } from '../state/selectors';
+import { tracksSelector } from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
@@ -15,6 +15,7 @@ import RaceEventSponsors from './RaceEventSponsors';
 import {
   useEventsLockedState,
   usePreviousUnlockedTrackChecker,
+  useTrackStats,
 } from '../helpers/hooksRace';
 
 const TracksContainer = ({ tracks, eventType, ...props }) => {
@@ -74,7 +75,7 @@ const RaceEvent = () => {
   const selectedTrackId = location?.state?.track;
   const selectedTrack = tracks.find(item => item.id === selectedTrackId);
 
-  const trackStats = useSelector(trackStatsSelector(selectedTrackId));
+  const trackStats = useTrackStats(selectedTrackId);
 
   const onClose = () => {
     dispatch(closeResultsAction(trackStats?.lastRace));

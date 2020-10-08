@@ -1,15 +1,32 @@
 import { useSelector } from 'react-redux';
-import { dealerCarsSelector } from '../state/selectors';
+import {
+  dealerCarsSelector,
+  pastRacesSelector,
+  racesSelector,
+} from '../state/selectors';
 import { capitalize, carTypeText } from './utils';
 import {
   experienceSelector,
   tracksStatsSelector,
   tracksSelector,
-  trackStatsSelector,
   lockedSelector,
 } from '../state/selectors';
 import { eventSponsorsStats } from './utils';
-import { raceEvents } from './data';
+import { raceEvents, tracks } from './data';
+
+export const useTrack = trackId => tracks.find(item => item.id === trackId);
+
+export const useTrackStats = trackId =>
+  useSelector(tracksStatsSelector)[trackId];
+
+export const useRace = raceId =>
+  useSelector(racesSelector).find(item => item.id === raceId);
+
+export const usePastRace = pastRaceId =>
+  useSelector(pastRacesSelector).find(item => item.id === pastRaceId);
+
+export const useRaceByTrack = trackId =>
+  useSelector(racesSelector).find(item => item.track === trackId);
 
 export const usePreviousUnlockedTrackChecker = tracks => {
   const tracksStats = useSelector(tracksStatsSelector);
@@ -35,7 +52,7 @@ export const useEventTracksStatsState = eventType => {
 };
 
 export const useTrackStatsState = trackId => {
-  const trackStats = useSelector(trackStatsSelector(trackId));
+  const trackStats = useTrackStats(trackId);
 
   return {
     raced: trackStats?.raced,

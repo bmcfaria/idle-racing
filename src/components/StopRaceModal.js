@@ -4,15 +4,15 @@ import { colors } from '../helpers/theme';
 import Modal from './Modal';
 import Button from './Button';
 import { useLocation, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { stopRaceAction } from '../state/actions';
-import { raceSelector } from '../state/selectors';
+import { useRace } from '../helpers/hooksRace';
 
 const StopRaceModal = props => {
   const location = useLocation();
   const history = useHistory();
   const raceId = location.state?.cancelRaceModal;
-  const race = useSelector(raceSelector(raceId));
+  const race = useRace(raceId);
   const dispatch = useDispatch();
 
   const stopRace = () => {

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Flex, Text } from '@chakra-ui/core';
 import { useSelector } from 'react-redux';
-import { dealerCarSelector, garageCarsSelector } from '../state/selectors';
+import { garageCarsSelector } from '../state/selectors';
 import { colors } from '../helpers/theme';
 import { validateAttrRequirements } from '../helpers/utils';
+import { useDealerCar } from '../helpers/hooksDealer';
 
 const RequirementsListNoUps = () => {
   const garagesCars = useSelector(garageCarsSelector);
@@ -79,7 +80,7 @@ const RequirementsListAttr = ({ attr, requirements }) => {
 
 const RequirementsListCar = ({ carId }) => {
   const garagesCars = useSelector(garageCarsSelector);
-  const car = useSelector(dealerCarSelector(carId));
+  const car = useDealerCar(carId);
 
   const meetRequirement = garagesCars.find(
     garageCar => garageCar.dealerCar === car.id,

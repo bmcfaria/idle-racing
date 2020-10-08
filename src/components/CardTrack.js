@@ -1,28 +1,23 @@
 import React from 'react';
 import { Text, Flex } from '@chakra-ui/core';
 import { useLocation, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import {
-  raceSelector,
-  garageCarSelector,
-  pastRaceSelector,
-  trackStatsSelector,
-} from '../state/selectors';
 import CardProgressOverlay from './CardProgressOverlay';
 import CardTrackContent from './CardTrackContent';
 import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
 import Button from './Button';
+import { useGarageCar } from '../helpers/hooksGarage';
+import { usePastRace, useRace, useTrackStats } from '../helpers/hooksRace';
 
 const CardTrack = ({ track, locked }) => {
   const { id } = track;
   const location = useLocation();
   const history = useHistory();
 
-  const trackStats = useSelector(trackStatsSelector(track.id));
-  const currentRace = useSelector(raceSelector(trackStats?.race));
-  const pastRace = useSelector(pastRaceSelector(trackStats?.lastRace));
-  const car = useSelector(garageCarSelector(currentRace?.car || pastRace?.car));
+  const trackStats = useTrackStats(track.id);
+  const currentRace = useRace(trackStats?.race);
+  const pastRace = usePastRace(trackStats?.lastRace);
+  const car = useGarageCar(currentRace?.car || pastRace?.car);
 
   // To improve mobile navigation,
   // this way the back button will un-select

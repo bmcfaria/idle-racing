@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Box, Text, Flex } from '@chakra-ui/core';
 import CardProgressOverlay from './CardProgressOverlay';
-import { raceSelector, trackSelector } from '../state/selectors';
-import { useSelector } from 'react-redux';
 import CardWinningChance from './CardWinningChance';
 import {
   doMeetRequirements,
@@ -14,6 +12,7 @@ import getImageCar from '../helpers/imageMappingCars';
 import Button from './Button';
 import styled from '@emotion/styled';
 import { RaceContext } from '../helpers/context';
+import { useRace, useTrack } from '../helpers/hooksRace';
 
 const Image = styled.img`
   max-width: 80px;
@@ -34,9 +33,9 @@ const CarAttribute = ({ text, attr, ...props }) => (
 const CardCarSmallRace = ({ car, onClick, ...props }) => {
   const { race } = car;
   const { trackId } = useContext(RaceContext);
-  const selectedTrack = useSelector(trackSelector(trackId));
+  const selectedTrack = useTrack(trackId);
 
-  const currentRace = useSelector(raceSelector(race));
+  const currentRace = useRace(race);
 
   const meetsRequirements = doMeetRequirements(
     car,

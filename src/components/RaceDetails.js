@@ -6,12 +6,9 @@ import { startRaceAction } from '../state/actions';
 import RaceResults from './RaceResults';
 import { useLocation, useHistory } from 'react-router-dom';
 import {
-  raceSelector,
   garageCarsSelector,
   tracksSelector,
-  pastRaceSelector,
   enoughMoneySelector,
-  trackStatsSelector,
 } from '../state/selectors';
 import CardTrackContent from './CardTrackContent';
 import { colors } from '../helpers/theme';
@@ -25,6 +22,7 @@ import { doMeetRequirements, winProbability } from '../helpers/utils';
 import { RaceContext } from '../helpers/context';
 import RaceDetailsCarsContainer from './RaceDetailsCarsContainer';
 import RaceDetailsReady from './RaceDetailsReady';
+import { usePastRace, useRace, useTrackStats } from '../helpers/hooksRace';
 
 const BlockContainer = ({ borderColor, children, ...props }) => (
   <Box
@@ -56,8 +54,8 @@ const RaceDetails = ({ onClose, ...props }) => {
 
   const [selectedCar, setSelectedCar] = useState();
 
-  const trackStats = useSelector(trackStatsSelector(selectedTrackId));
-  const pastRace = useSelector(pastRaceSelector(trackStats?.lastRace));
+  const trackStats = useTrackStats(selectedTrackId);
+  const pastRace = usePastRace(trackStats?.lastRace);
   const results = !!pastRace && pastRace.checked === false;
 
   const winProbabilityValue =
@@ -69,7 +67,7 @@ const RaceDetails = ({ onClose, ...props }) => {
     }
   }, [results, pastRace, cars]);
 
-  const currentRace = useSelector(raceSelector(trackStats?.race));
+  const currentRace = useRace(trackStats?.race);
 
   const [carsModal, carsModalOpen, carsModalClose] = useOpenClose();
 

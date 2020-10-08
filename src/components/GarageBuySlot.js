@@ -1,20 +1,17 @@
 import React from 'react';
 import { Text, Flex, Box } from '@chakra-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  garageSlotPriceSelector,
-  enoughMoneySelector,
-} from '../state/selectors';
+import { enoughMoneySelector } from '../state/selectors';
 import { buyGarageSlotAction } from '../state/actions';
 import { colors } from '../helpers/theme';
 import Button from './Button';
 import Modal from './Modal';
 import { useLocation, useHistory } from 'react-router-dom';
 import { formatMoney } from '../helpers/utils';
-import { useMechanicsCount } from '../helpers/hooksGarage';
+import { useGarageSlotPrice, useMechanicsCount } from '../helpers/hooksGarage';
 
 const GarageBuySlot = props => {
-  const slotPrice = useSelector(garageSlotPriceSelector);
+  const slotPrice = useGarageSlotPrice();
   const enoughMoney = useSelector(enoughMoneySelector(slotPrice));
 
   const mechanics = useMechanicsCount();

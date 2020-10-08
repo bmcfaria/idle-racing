@@ -1,14 +1,13 @@
 import React from 'react';
 import CardProgressOverlay from './CardProgressOverlay';
-import { raceSelector } from '../state/selectors';
-import { useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
 import CardCarSmall from './CardCarSmall';
+import { useRace } from '../helpers/hooksRace';
 
 const CardCarGarage = ({ car, showAttributes, ...props }) => {
   const { race, reward } = car;
 
-  const currentRace = useSelector(raceSelector(race));
+  const currentRace = useRace(race);
 
   const onClickPrevent = () => {
     return;

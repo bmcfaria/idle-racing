@@ -1,22 +1,20 @@
 import React from 'react';
 import { Flex, Text } from '@chakra-ui/core';
 import { useSelector } from 'react-redux';
-import {
-  trackSelector,
-  dealerCarSelector,
-  raceSponsorsActiveSelector,
-} from '../state/selectors';
+import { raceSponsorsActiveSelector } from '../state/selectors';
 import { colors } from '../helpers/theme';
 import { sponsorEntryText } from '../helpers/utils';
 import RaceEventSponsorRewardIcon from './RaceEventSponsorRewardIcon';
+import { useDealerCar } from '../helpers/hooksDealer';
+import { useTrack } from '../helpers/hooksRace';
 
 const RaceEventSponsorReward = ({
   sponsor,
   activeBg = colors.darkGray,
   ...props
 }) => {
-  const track = useSelector(trackSelector(sponsor.track));
-  const car = useSelector(dealerCarSelector(sponsor.car));
+  const track = useTrack(sponsor.track);
+  const car = useDealerCar(sponsor.car);
   const active = !!useSelector(raceSponsorsActiveSelector)?.[sponsor.id];
 
   const text = sponsorEntryText(sponsor);

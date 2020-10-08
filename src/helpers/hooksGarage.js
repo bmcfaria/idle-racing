@@ -5,6 +5,16 @@ import {
   raceSponsorsActiveSelector,
 } from '../state/selectors';
 
+export const useGarageCar = carId => {
+  const garageCars = useSelector(garageCarsSelector);
+  return garageCars.find(item => item.id === carId);
+};
+
+export const useGarageSlotPrice = () => {
+  const garageSlots = useSelector(garageSlotsSelector);
+  return 250 * 2 ** garageSlots;
+};
+
 export const useMechanicsCount = () => {
   const sponsors = useSelector(raceSponsorsActiveSelector);
 
