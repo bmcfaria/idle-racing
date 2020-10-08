@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Box, Flex } from '@chakra-ui/core';
+import React, { useState, useEffect } from 'react';
+import { Box } from '@chakra-ui/core';
 import CardProgressOverlay from './CardProgressOverlay';
 import { useDispatch, useSelector } from 'react-redux';
 import { startRaceAction } from '../state/actions';
@@ -10,7 +10,6 @@ import {
   garageCarsSelector,
   tracksSelector,
   pastRaceSelector,
-  autoRaceEnabledSelector,
   enoughMoneySelector,
   trackStatsSelector,
 } from '../state/selectors';
@@ -22,115 +21,26 @@ import {
   useOpenClose,
   useRacePriceWithDiscount,
 } from '../helpers/hooks';
-import RaceDetailsSelectedCar from './RaceDetailsSelectedCar';
-import {
-  doMeetRequirements,
-  winProbability,
-  PROBABILITY_GOOD_VALUE,
-} from '../helpers/utils';
-import Button from './Button';
+import { doMeetRequirements, winProbability } from '../helpers/utils';
 import { RaceContext } from '../helpers/context';
 import RaceDetailsCarsContainer from './RaceDetailsCarsContainer';
+import RaceDetailsReady from './RaceDetailsReady';
 
-const ActionContent = ({
-  selectedCar,
-  selectedTrack,
-  carsModalOpen,
-  enoughMoney,
-  currentRace,
-  startRace,
-  results,
-  pastRace,
-  meetsRequirements,
-  ...props
-}) => {
-  const autoEnabled = useSelector(autoRaceEnabledSelector);
+const BlockContainer = ({ children, ...props }) => (
+  <Box
+    w="200px"
+    position="relative"
+    borderRadius="16px"
+    bg={colors.darkGray}
+    margin="0 auto"
+    onClick={e => e.stopPropagation()}
+    {...props}
+  >
+    {children}
+  </Box>
+);
 
-  const [auto, setAuto] = useState();
-  const { winProbabilityValue } = useContext(RaceContext);
-
-  const goodChances = winProbabilityValue === PROBABILITY_GOOD_VALUE;
-
-  const toggleAuto = () => {
-    setAuto(!auto);
-  };
-
-  const startRaceWithAuto = () => {
-    startRace(auto);
-  };
-
-  return (
-    <Flex h="100%" direction="column" {...props}>
-      {results && (
-        <RaceResults
-          pastRace={pastRace}
-          raceAgain={startRace}
-          selectCar={carsModalOpen}
-        />
-      )}
-      {!results && !selectedCar && (
-        <RaceDetailsSelectCar onClick={carsModalOpen} />
-      )}
-
-      {!results && selectedCar && (
-        <>
-          <RaceDetailsSelectedCar
-            car={selectedCar}
-            track={selectedTrack}
-            carsModalOpen={carsModalOpen}
-          />
-          <Flex
-            w="100%"
-            h="100%"
-            alignItems="center"
-            justifyContent="center"
-            padding="16px"
-          >
-            {autoEnabled && (
-              <Button
-                w="32px"
-                minW="32px"
-                h="32px"
-                padding="0"
-                isDisabled={!goodChances}
-                bg={auto ? colors.blue : colors.white}
-                color={auto ? colors.white : colors.darkGray}
-                {...(auto && { boxShadow: 'none' })}
-                _hover={{
-                  bg: colors.blue,
-                  color: colors.white,
-                  boxShadow: 'none',
-                }}
-                fontSize="12px"
-                whiteSpace={'normal'}
-                onClick={toggleAuto}
-              >
-                Auto {auto ? 'ON' : 'OFF'}
-              </Button>
-            )}
-            <Button
-              w="96px"
-              {...(autoEnabled && { marginLeft: '12px' })}
-              isDisabled={!enoughMoney || currentRace || !meetsRequirements}
-              bg={colors.white}
-              color={colors.darkGray}
-              _hover={{
-                bg: colors.blue,
-                color: colors.white,
-                boxShadow: 'none',
-              }}
-              onClick={startRaceWithAuto}
-            >
-              Race
-            </Button>
-          </Flex>
-        </>
-      )}
-    </Flex>
-  );
-};
-
-const RaceDetails = props => {
+const RaceDetails = ({ onClose, ...props }) => {
   const containerWidth = useDynamicCardContainerWidth(200, 2, 0);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -190,6 +100,7 @@ const RaceDetails = props => {
         winProbabilityValue,
         requirements: selectedTrack?.requirements,
         prizes: selectedTrack?.prizes,
+        trackId: selectedTrack?.id,
       }}
     >
       {carsModal && (
@@ -223,34 +134,41 @@ const RaceDetails = props => {
             display="grid"
             gridTemplateColumns="repeat(auto-fit, minmax(200px, 1fr))"
             gridGap="4px"
+            onClick={onClose}
           >
-            <CardTrackContent
-              w="200px"
-              track={selectedTrack}
-              borderRadius="16px"
-              margin="0 auto"
-              large
-            />
-            <Box
-              w="200px"
-              // minH="96px"
-              position="relative"
-              borderRadius="16px"
-              bg={colors.darkGray}
-              margin="0 auto"
-            >
-              <ActionContent
-                selectedCar={selectedCar}
-                selectedTrack={selectedTrack}
-                carsModalOpen={carsModalOpen}
-                enoughMoney={enoughMoney}
-                currentRace={currentRace}
-                startRace={startRace}
-                results={results}
-                pastRace={pastRace}
-                meetsRequirements={meetsRequirements}
+            <BlockContainer w="200px">
+              <CardTrackContent
+                track={selectedTrack}
+                borderRadius="16px"
+                margin="0 auto"
+                large
               />
-            </Box>
+            </BlockContainer>
+
+            {!selectedCar && (
+              <BlockContainer w="200px">
+                <RaceDetailsSelectCar onClick={carsModalOpen} />
+              </BlockContainer>
+            )}
+
+            {selectedCar && (
+              <BlockContainer w="200px">
+                <RaceDetailsReady
+                  selectedCar={selectedCar}
+                  selectedTrack={selectedTrack}
+                  carsModalOpen={carsModalOpen}
+                  enoughMoney={enoughMoney}
+                  currentRace={currentRace}
+                  startRace={startRace}
+                  meetsRequirements={meetsRequirements}
+                  again={!!pastRace}
+                />
+              </BlockContainer>
+            )}
+
+            <BlockContainer w="200px">
+              <RaceResults />
+            </BlockContainer>
           </Box>
         </Box>
       )}

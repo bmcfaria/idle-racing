@@ -84,7 +84,7 @@ const RaceEvent = () => {
   return (
     <Box paddingBottom="64px">
       <Modal isOpen={!!selectedTrack} onClose={onClose}>
-        <RaceDetails />
+        <RaceDetails onClose={onClose} />
       </Modal>
 
       <RaceEventSponsors w={`${containerWidth - 16}px`} event={event} />
