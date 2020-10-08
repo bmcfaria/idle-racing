@@ -8,12 +8,9 @@ import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import AttributeCircle from './AttributeCircle';
 import Button from './Button';
-import {
-  useCarPriceWithDiscount,
-  useEmptyGarageSlots,
-  useExperience,
-} from '../helpers/hooks';
+import { useCarPriceWithDiscount, useExperience } from '../helpers/hooks';
 import CarDetailsImageAndType from './CarDetailsImageAndType';
+import { useEmptyGarageSlots } from '../helpers/hooksGarage';
 
 const CarDetailsDealer = ({ car, ...props }) => {
   const { id, name, price, reward } = car;

@@ -6,14 +6,12 @@ import { useSelector } from 'react-redux';
 import { dealerCarsSelector } from '../state/selectors';
 import Modal from './Modal';
 import CardCarDealer from './CardCarDealer';
-import {
-  useCarsAcquired,
-  useDynamicCardContainerWidth,
-} from '../helpers/hooks';
+import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { BottomSpacer } from './BottomSpacer';
 import { colors } from '../helpers/theme';
 import { capitalize } from '../helpers/utils';
 import { brandSponsors } from '../helpers/sponsors';
+import { useCarsAcquired } from '../helpers/hooksDealer';
 
 const CarsContainer = ({ cars, ...props }) => (
   <Flex

@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Button from './Button';
 import { colors } from '../helpers/theme';
 import { RaceContext } from '../helpers/context';
-import { useRequirements } from '../helpers/hooks';
+import { useRequirements } from '../helpers/hooksRace';
 
 const SelectCarContainer = styled(Flex)`
   cursor: pointer;

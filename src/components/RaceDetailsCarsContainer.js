@@ -3,10 +3,8 @@ import { Box, Flex, Text } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import { colors } from '../helpers/theme';
-import {
-  useDynamicCardContainerWidth,
-  useRequirements,
-} from '../helpers/hooks';
+import { useDynamicCardContainerWidth } from '../helpers/hooks';
+import { useRequirements } from '../helpers/hooksRace';
 import CardCarSmallRace from './CardCarSmallRace';
 import { RaceContext } from '../helpers/context';
 

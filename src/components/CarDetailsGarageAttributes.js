@@ -17,11 +17,9 @@ import {
 import { colors } from '../helpers/theme';
 import AttributeCircle from './AttributeCircle';
 import CallForAttention from './CallForAttention';
-import {
-  useUpgradePriceWithDiscount,
-  useMechanicsCount,
-} from '../helpers/hooks';
+import { useUpgradePriceWithDiscount } from '../helpers/hooks';
 import { upgradeCenter } from '../helpers/garageUpgrades';
+import { useMechanicsCount } from '../helpers/hooksGarage';
 
 const AttributeCircleButton = ({
   attr,

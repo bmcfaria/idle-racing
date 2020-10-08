@@ -10,15 +10,13 @@ import CardCarGarage from './CardCarGarage';
 import Modal from './Modal';
 import { useLocation, Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
-import {
-  useDynamicCardContainerWidth,
-  useEmptyGarageSlots,
-} from '../helpers/hooks';
+import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { openGarageAction } from '../state/actions';
 import { colors } from '../helpers/theme';
 import GarageBuySlot from './GarageBuySlot';
 import GarageUpgrades from './GarageUpgrades';
 import { BottomSpacer } from './BottomSpacer';
+import { useEmptyGarageSlots } from '../helpers/hooksGarage';
 
 const CarsContainer = ({ cars, ...props }) => {
   const pageNotificationsGarage = useSelector(pageNotificationsGarageSelector);

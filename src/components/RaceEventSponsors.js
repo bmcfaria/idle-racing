@@ -1,15 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { raceSponsorsSelector } from '../state/selectors';
-import {
-  usePassiveIncomeEventSponsors,
-  useEventTracksStatsState,
-} from '../helpers/hooks';
+import { usePassiveIncomeEventSponsors } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import CollapsiblePanel from './CollapsiblePanel';
 import RaceEventSponsorRewardIcon from './RaceEventSponsorRewardIcon';
 import RaceEventSponsorReward from './RaceEventSponsorReward';
 import { Box, Flex, Text } from '@chakra-ui/core';
+import { useEventTracksStatsState } from '../helpers/hooksRace';
 
 const TracksStatsLegend = ({ tracksStatsState, ...props }) => {
   const statsColors = [

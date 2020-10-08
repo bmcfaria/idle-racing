@@ -10,8 +10,8 @@ import { colors } from '../helpers/theme';
 import Button from './Button';
 import Modal from './Modal';
 import { useLocation, useHistory } from 'react-router-dom';
-import { useMechanicsCount } from '../helpers/hooks';
 import { formatMoney } from '../helpers/utils';
+import { useMechanicsCount } from '../helpers/hooksGarage';
 
 const GarageBuySlot = props => {
   const slotPrice = useSelector(garageSlotPriceSelector);

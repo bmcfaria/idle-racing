@@ -9,11 +9,11 @@ import { ATTRIBUTE_TYPES, formatDuration, formatMoney } from '../helpers/utils';
 import {
   useRacePrizesWithBuff,
   useRacePriceWithDiscount,
-  useTrackStatsState,
 } from '../helpers/hooks';
 import { cars } from '../helpers/data';
 import styled from '@emotion/styled';
 import getImageCar from '../helpers/imageMappingCars';
+import { useTrackStatsState } from '../helpers/hooksRace';
 
 const Image = styled.img`
   width: 100%;

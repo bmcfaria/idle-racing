@@ -7,15 +7,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { tracksSelector, trackStatsSelector } from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
-import {
-  useDynamicCardContainerWidth,
-  useEventsLockedState,
-  usePreviousUnlockedTrackChecker,
-} from '../helpers/hooks';
+import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
 import { BottomSpacer } from './BottomSpacer';
 import RaceEventSponsors from './RaceEventSponsors';
+import {
+  useEventsLockedState,
+  usePreviousUnlockedTrackChecker,
+} from '../helpers/hooksRace';
 
 const TracksContainer = ({ tracks, eventType, ...props }) => {
   const isPreviousUnlocked = usePreviousUnlockedTrackChecker(tracks);

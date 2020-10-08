@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux';
 import getImageCar from '../helpers/imageMappingCars';
 import CardBig from './CardBig';
 import { capitalize } from '../helpers/utils';
-import { useCarsAcquired } from '../helpers/hooks';
 import { brandSponsors } from '../helpers/sponsors';
 import { colors } from '../helpers/theme';
 import styled from '@emotion/styled';
+import { useCarsAcquired } from '../helpers/hooksDealer';
 
 const Image = styled.img`
   ${({ columns }) => `width: ${100 / columns}%`};

@@ -3,7 +3,7 @@ import { Box, Flex, Text } from '@chakra-ui/core';
 import CollapsiblePanel from './CollapsiblePanel';
 import { colors } from '../helpers/theme';
 import garageUpgrades from '../helpers/garageUpgrades';
-import { useMechanicsCount } from '../helpers/hooks';
+import { useMechanicsCount } from '../helpers/hooksGarage';
 
 const GarageUpgrades = props => {
   const mechanics = useMechanicsCount();

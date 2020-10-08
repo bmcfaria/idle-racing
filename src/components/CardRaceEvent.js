@@ -8,13 +8,13 @@ import getImageTrack from '../helpers/imageMappingTracks';
 import CardBig from './CardBig';
 import CardProgressOverlay from './CardProgressOverlay';
 import { capitalize } from '../helpers/utils';
+import { usePassiveIncomeEventSponsors } from '../helpers/hooks';
 import {
-  usePreviousUnlockedTrackChecker,
-  usePassiveIncomeEventSponsors,
-  useEventTracksStatsState,
-  useTrackStatsState,
   useEventsLockedState,
-} from '../helpers/hooks';
+  useEventTracksStatsState,
+  usePreviousUnlockedTrackChecker,
+  useTrackStatsState,
+} from '../helpers/hooksRace';
 
 const TrackItem = ({ track, active = true, ...props }) => {
   const race = useSelector(raceByTrackSelector(track.id));
