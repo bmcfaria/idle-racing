@@ -111,7 +111,8 @@ const reducerRace = (state = initialState, { type, payload }) => {
         track,
         isNaN(earnings) ? track.prizes[position - 1] : earnings,
         position,
-        results
+        results,
+        calculatedPrizes
       );
 
       return {

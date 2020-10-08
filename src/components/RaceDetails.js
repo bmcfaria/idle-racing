@@ -99,7 +99,6 @@ const RaceDetails = ({ onClose, ...props }) => {
       value={{
         winProbabilityValue,
         requirements: selectedTrack?.requirements,
-        prizes: selectedTrack?.prizes,
         trackId: selectedTrack?.id,
       }}
     >

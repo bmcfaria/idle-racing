@@ -8,7 +8,6 @@ import {
 } from '../state/selectors';
 import { colors } from '../helpers/theme';
 import Button from './Button';
-import { useRacePrizesWithBuff } from '../helpers/hooks';
 import { formatMoney } from '../helpers/utils';
 import { ReactComponent as TriangeIcon } from '../assets/icons/triangle.svg';
 import { RaceContext } from '../helpers/context';
@@ -30,7 +29,7 @@ const Row = ({ index, car, playerCarId, prize = 0 }) => (
 );
 
 const RaceResults = props => {
-  const { trackId, prizes } = useContext(RaceContext);
+  const { trackId } = useContext(RaceContext);
   const [pastRaceIndex, setPastRaceIndex] = useState(0);
   const cars = useSelector(dealerCarsSelector);
   const pastRaces = useSelector(pastRacesSelector).filter(
@@ -38,7 +37,6 @@ const RaceResults = props => {
   );
 
   const carsGarage = useSelector(garageCarsSelector);
-  const calculatedPrizes = useRacePrizesWithBuff(prizes);
 
   const pastRace = pastRaces?.[pastRaceIndex];
 
@@ -78,7 +76,7 @@ const RaceResults = props => {
               carsGarage.find(item => item.id === car.id)
             }
             playerCarId={pastRace.car}
-            prize={calculatedPrizes[index]}
+            prize={pastRace.prizes[index]}
           />
         ))}
       </Box>

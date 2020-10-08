@@ -242,7 +242,8 @@ export const generatePastRace = (
   track,
   reward,
   position,
-  results
+  results,
+  prizes
 ) => ({
   id: uuid(),
   race: race.id,
@@ -254,6 +255,7 @@ export const generatePastRace = (
   reward,
   position,
   results,
+  prizes: [...prizes],
 });
 
 export const generateToast = (title, subtitle, type, extra = {}) => ({
