@@ -17,6 +17,15 @@ const Image = styled.img`
   margin: auto;
 `;
 
+const Attribute = ({ text, value, ...props }) => (
+  <Flex fontSize="14px" lineHeight="14px" justifyContent="flex-end" {...props}>
+    <Text>{text}:</Text>
+    <Text w="16px" textAlign="right">
+      {value}
+    </Text>
+  </Flex>
+);
+
 const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
   const meetsRequirements = doMeetRequirements(car, track.requirements);
 
@@ -32,7 +41,7 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
       <Button
         w="100%"
         h="auto"
-        padding="8px"
+        padding="8px 8px 4px 8px"
         border={`1px solid ${colors.white}`}
         bg={colors.white}
         color={colors.darkGray}
@@ -45,42 +54,34 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
         }}
         onClick={carsModalOpen}
       >
-        <Flex
-          w="100%"
-          // h="100%"
-          direction="column"
-          justifyContent="space-evenly"
-        >
+        <Flex w="100%" direction="column" justifyContent="space-evenly">
           <Flex>
             <Text
               textAlign="left"
               fontSize="16px"
               lineHeight="16px"
               flexGrow="1"
+              zIndex="1"
+              background={`linear-gradient(180deg, ${colors.white}, ${colors.white} 50%, transparent)`}
             >
               {car.name}
             </Text>
             <Box w="14px" h="14px" as={ChangeIcon} />
           </Flex>
-          <Flex position="relative">
-            <Box w="56px" position="absolute" bottom="-12px" left="0">
+          <Flex position="relative" marginTop="4px">
+            <Box w="72px" position="absolute" bottom="-12px" left="0">
               <Image alt="car" src={getImageCar(car)} />
             </Box>
-            <Flex
-              direction="column"
-              flexGrow="1"
-              fontSize="14px"
-              lineHeight="14px"
-            >
-              <Text textAlign="right" fontSize="12px">
-                ACC: {car[ATTRIBUTE_TYPES.ACCELERATION].value}
-              </Text>
-              <Text textAlign="right" fontSize="12px">
-                SPD: {car[ATTRIBUTE_TYPES.SPEED].value}
-              </Text>
-              <Text textAlign="right" fontSize="12px">
-                HND: {car[ATTRIBUTE_TYPES.HANDLING].value}
-              </Text>
+            <Flex direction="column" flexGrow="1">
+              <Attribute
+                text="ACC"
+                value={car[ATTRIBUTE_TYPES.ACCELERATION].value}
+              />
+              <Attribute text="SPD" value={car[ATTRIBUTE_TYPES.SPEED].value} />
+              <Attribute
+                text="HND"
+                value={car[ATTRIBUTE_TYPES.HANDLING].value}
+              />
             </Flex>
           </Flex>
         </Flex>
