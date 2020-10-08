@@ -11,6 +11,7 @@ const CardProgressOverlay = ({
   car,
   circleSize = '116px',
   showSeconds,
+  disableClick,
   ...props
 }) => {
   const location = useLocation();
@@ -21,6 +22,10 @@ const CardProgressOverlay = ({
   }
 
   const openModal = () => {
+    if (disableClick) {
+      return;
+    }
+
     history.push({
       pathname: location.pathname,
       state: { ...(location.state || {}), cancelRaceModal: race.id },

@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Text, Flex } from '@chakra-ui/core';
-import { useLocation, useHistory } from 'react-router-dom';
 import CardProgressOverlay from './CardProgressOverlay';
-import { raceSelector, tracksSelector } from '../state/selectors';
+import { raceSelector, trackSelector } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import CardWinningChance from './CardWinningChance';
 import {
@@ -14,6 +13,7 @@ import { colors } from '../helpers/theme';
 import getImageCar from '../helpers/imageMappingCars';
 import Button from './Button';
 import styled from '@emotion/styled';
+import { RaceContext } from '../helpers/context';
 
 const Image = styled.img`
   max-width: 80px;
@@ -32,12 +32,9 @@ const CarAttribute = ({ text, attr, ...props }) => (
 );
 
 const CardCarSmallRace = ({ car, onClick, ...props }) => {
-  const { id, race } = car;
-  const location = useLocation();
-  const history = useHistory();
-  const tracks = useSelector(tracksSelector);
-  const selectedTrackId = location?.state?.track;
-  const selectedTrack = tracks.find(item => item.id === selectedTrackId);
+  const { race } = car;
+  const { trackId } = useContext(RaceContext);
+  const selectedTrack = useSelector(trackSelector(trackId));
 
   const currentRace = useSelector(raceSelector(race));
 
@@ -48,27 +45,14 @@ const CardCarSmallRace = ({ car, onClick, ...props }) => {
 
   // To improve mobile navigation,
   // this way the back button will un-select
-  const setSelected = () => {
+  const setSelected = e => {
     if (!meetsRequirements) return;
+    if (currentRace) return;
 
     if (onClick) {
       onClick(car);
 
       return;
-    }
-
-    if (currentRace) return;
-
-    if (location?.state?.car) {
-      history.replace({
-        pathname: location.pathname,
-        state: { ...(location.state || {}), car: id },
-      });
-    } else {
-      history.push({
-        pathname: location.pathname,
-        state: { ...(location.state || {}), car: id },
-      });
     }
   };
 
@@ -142,6 +126,7 @@ const CardCarSmallRace = ({ car, onClick, ...props }) => {
           label
           borderRadius="16px"
           circleSize="72px"
+          disableClick
         />
       )}
     </Button>
