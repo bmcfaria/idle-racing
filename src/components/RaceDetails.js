@@ -26,7 +26,7 @@ import { RaceContext } from '../helpers/context';
 import RaceDetailsCarsContainer from './RaceDetailsCarsContainer';
 import RaceDetailsReady from './RaceDetailsReady';
 
-const BlockContainer = ({ children, ...props }) => (
+const BlockContainer = ({ borderColor, children, ...props }) => (
   <Box
     w="200px"
     position="relative"
@@ -34,6 +34,7 @@ const BlockContainer = ({ children, ...props }) => (
     bg={colors.darkGray}
     margin="0 auto"
     onClick={e => e.stopPropagation()}
+    {...(borderColor && { border: `1px solid ${borderColor}` })}
     {...props}
   >
     {children}
