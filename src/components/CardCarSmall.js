@@ -109,17 +109,17 @@ const CardCarSmall = ({
           <Flex justifyContent="space-evenly">
             <AttributeCircle
               attr={car[ATTRIBUTE_TYPES.ACCELERATION]}
-              tuning={~~car?.tuning[ATTRIBUTE_TYPES.ACCELERATION]}
+              tuning={~~car.tuning?.[ATTRIBUTE_TYPES.ACCELERATION]}
               text="ACC"
             />
             <AttributeCircle
               attr={car[ATTRIBUTE_TYPES.SPEED]}
-              tuning={~~car?.tuning[ATTRIBUTE_TYPES.SPEED]}
+              tuning={~~car.tuning?.[ATTRIBUTE_TYPES.SPEED]}
               text="SPD"
             />
             <AttributeCircle
               attr={car[ATTRIBUTE_TYPES.HANDLING]}
-              tuning={~~car?.tuning[ATTRIBUTE_TYPES.HANDLING]}
+              tuning={~~car.tuning?.[ATTRIBUTE_TYPES.HANDLING]}
               text="HND"
             />
           </Flex>
