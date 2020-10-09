@@ -25,7 +25,7 @@ const DetailsRow = ({
   iconH = '16px',
   ...props
 }) => (
-  <Flex lineHeight="16px" alignItems="center" {...props}>
+  <Flex lineHeight="24px" alignItems="center" {...props}>
     {!icon ? (
       <Text w="16px" textAlign="center" fontSize="24px" marginRight="4px">
         $
@@ -62,7 +62,7 @@ const DetailsRow = ({
 );
 
 const RaceRow = ({ race, ...props }) => (
-  <Flex lineHeight="16px" alignItems="center" {...props}>
+  <Flex lineHeight="24px" alignItems="center" {...props}>
     <Box
       w="14px"
       h="14px"
@@ -97,11 +97,13 @@ const OfflineEarningsNotification = props => {
 
   const showModal = location.state?.offlineEarnings;
 
+  const hourInSeconds = 60 * 60;
+  const dayInSeconds = hourInSeconds * 24;
   const totalSeconds = offlineEarnings.timelapse / 1000;
-  const days = totalSeconds / (60 * 60 * 24);
-  const hours = (totalSeconds % (60 * 60 * 24)) / (60 * 60);
-  const minutes = ((totalSeconds % (60 * 60 * 24)) % (60 * 60)) / 60;
-  const seconds = ((totalSeconds % (60 * 60 * 24)) % (60 * 60)) % 60;
+  const days = totalSeconds / dayInSeconds;
+  const hours = (totalSeconds % dayInSeconds) / hourInSeconds;
+  const minutes = ((totalSeconds % dayInSeconds) % hourInSeconds) / 60;
+  const seconds = ((totalSeconds % dayInSeconds) % hourInSeconds) % 60;
 
   const previousTimestamp = new Date().getTime() - offlineEarnings.timelapse;
 
