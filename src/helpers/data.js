@@ -137,6 +137,11 @@ export const generateGarageCar = (car, reward = false) => ({
   race: undefined,
   timestamp: new Date().getTime(),
   reward,
+  tuning: {
+    [ATTRIBUTE_TYPES.ACCELERATION]: 0,
+    [ATTRIBUTE_TYPES.SPEED]: 0,
+    [ATTRIBUTE_TYPES.HANDLING]: 0,
+  },
 });
 
 export const upgradeAttribute = attribute => {

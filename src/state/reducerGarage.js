@@ -5,9 +5,10 @@ import {
   OPEN_GARAGE_CAR_TYPE,
   DISABLE_TUTORIAL_UPGRADE_TYPE,
   BUY_GARAGE_SLOT_TYPE,
+  TUNE_CAR_TYPE,
 } from './actions';
 import { upgradeAttribute, generateCarPrice } from '../helpers/data';
-import { buffValue, discountValue } from '../helpers/utils';
+import { ATTRIBUTE_TYPES, buffValue, discountValue } from '../helpers/utils';
 import { upgradeCenter } from '../helpers/garageUpgrades';
 import initialState from './initialState';
 
@@ -72,7 +73,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
         return state;
       }
 
-      const newCar = Object.assign({}, car);
+      let newCar = Object.assign({}, car);
       newCar[payload.type] = upgradeAttribute(attribute);
       newCar.price = generateCarPrice(newCar);
 
@@ -90,6 +91,36 @@ const reducerGarage = (state = initialState, { type, payload }) => {
             exp: state.experience.mechanic.exp + 1,
           },
         },
+      };
+    }
+
+    case TUNE_CAR_TYPE: {
+      const { carId, tuneAttrs } = payload;
+
+      const car = state.garageCars.find(item => item.id === carId);
+
+      const tunningTotal =
+        ~~tuneAttrs?.[ATTRIBUTE_TYPES.ACCELERATION] +
+        ~~tuneAttrs?.[ATTRIBUTE_TYPES.SPEED] +
+        ~~tuneAttrs?.[ATTRIBUTE_TYPES.HANDLING];
+
+      if (!car || tunningTotal > 0) {
+        return state;
+      }
+
+      const newTuning = {
+        ...car.tuning,
+        ...tuneAttrs,
+      };
+      let newCar = Object.assign({}, car);
+      newCar.tuning = newTuning;
+
+      const carIndex = state.garageCars.findIndex(item => item.id === car.id);
+      return {
+        ...state,
+        garageCars: Object.assign([], state.garageCars, {
+          [carIndex]: newCar,
+        }),
       };
     }
 

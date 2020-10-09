@@ -6,6 +6,10 @@ import { colors } from '../helpers/theme';
 import CarDetailsImageAndType from './CarDetailsImageAndType';
 import CarDetailsGarageSell from './CarDetailsGarageSell';
 import CarDetailsGarageAttributes from './CarDetailsGarageAttributes';
+import CarDetailsGarageTuning from './CarDetailsGarageTuning';
+
+// For testing
+const inDev = process.env.NODE_ENV === 'development';
 
 const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, reward } = car;
@@ -42,6 +46,8 @@ const CarDetailsGarage = ({ car, ...props }) => {
       </Flex>
 
       <CarDetailsGarageAttributes car={car} marginTop="4px" />
+
+      {inDev && <CarDetailsGarageTuning car={car} marginTop="4px" />}
 
       <CarDetailsGarageSell car={car} marginTop="4px" />
     </>

@@ -117,3 +117,9 @@ export const SYNC_TYPE = 'SYNC';
 export const syncAction = {
   type: SYNC_TYPE,
 };
+
+export const TUNE_CAR_TYPE = 'TUNE_CAR';
+export const tuneCarAction = (carId, tuneAttrs) => ({
+  type: TUNE_CAR_TYPE,
+  payload: { carId, tuneAttrs },
+});
