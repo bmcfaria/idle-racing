@@ -165,6 +165,7 @@ const OfflineEarningsNotification = props => {
       isOpen={showModal && earningsToShow}
       onClose={onClose}
       zIndex={zIndex.warningModal}
+      paddingTop="80px"
     >
       <Flex
         w="304px"
