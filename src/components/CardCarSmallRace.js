@@ -6,6 +6,7 @@ import {
   doMeetRequirements,
   capitalize,
   ATTRIBUTE_TYPES,
+  calculateCarAttributeValues,
 } from '../helpers/utils';
 import { colors } from '../helpers/theme';
 import getImageCar from '../helpers/imageMappingCars';
@@ -41,6 +42,8 @@ const CardCarSmallRace = ({ car, onClick, ...props }) => {
     car,
     selectedTrack?.requirements
   );
+
+  const carAttrs = calculateCarAttributeValues(car);
 
   // To improve mobile navigation,
   // this way the back button will un-select
@@ -111,11 +114,11 @@ const CardCarSmallRace = ({ car, onClick, ...props }) => {
         </Text>
         <Flex marginTop="4px" justifyContent="center">
           <CarAttribute
-            attr={car[ATTRIBUTE_TYPES.ACCELERATION].value}
+            attr={carAttrs[ATTRIBUTE_TYPES.ACCELERATION]}
             text="ACC"
           />
-          <CarAttribute attr={car[ATTRIBUTE_TYPES.SPEED].value} text="SPD" />
-          <CarAttribute attr={car[ATTRIBUTE_TYPES.HANDLING].value} text="HND" />
+          <CarAttribute attr={carAttrs[ATTRIBUTE_TYPES.SPEED]} text="SPD" />
+          <CarAttribute attr={carAttrs[ATTRIBUTE_TYPES.HANDLING]} text="HND" />
         </Flex>
       </Flex>
       {currentRace && (

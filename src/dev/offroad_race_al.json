@@ -924,9 +924,15 @@
   "tutorial": { "winChance": true, "upgrade": false },
   "locked": { "race": { "free": false, "city": false, "track": false } },
   "experience": {
-    "business": { "exp": 7, "newCars": 0, "usedCars": 0, "max": 1000000 },
-    "race": { "exp": 7, "price": 0, "prizes": 0, "max": 1000000 },
-    "mechanic": { "exp": 4, "acc": 0, "spd": 0, "hnd": 0, "max": 1000000000 }
+    "business": { "exp": 70000, "newCars": 0, "usedCars": 0, "max": 1000000 },
+    "race": { "exp": 70000, "price": 0, "prizes": 0, "max": 1000000 },
+    "mechanic": {
+      "exp": 40000,
+      "acc": 0,
+      "spd": 0,
+      "hnd": 0,
+      "max": 1000000000
+    }
   },
   "sponsors": {
     "active": {

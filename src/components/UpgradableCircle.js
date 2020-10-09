@@ -17,6 +17,7 @@ const UpgradableCircle = ({
   max = 1,
   size = 44,
   showNextUpgradeValue,
+  tuning,
   children,
   ...props
 }) => {
@@ -35,64 +36,94 @@ const UpgradableCircle = ({
   return (
     <Flex w={size + 8} h={size + 8} position="relative" {...props}>
       <svg width={size + 8} height={size + 8}>
-        {/* All circle segments */}
-        <circle
-          r={radius}
-          cx="50%"
-          cy="50%"
-          strokeWidth="3"
-          stroke={colors.white}
-          fill="none"
-          strokeDasharray={`${dashSize - divider} ${divider}`}
-          strokeDashoffset={`${perimeter / 4 - divider / 2}`}
-        />
-        {/* Base / "initial value" segments */}
-        {base > 0 && (
-          <circle
-            r={radius}
-            cx="50%"
-            cy="50%"
-            strokeWidth="5"
-            stroke="black"
-            fill="none"
-            strokeDasharray={baseDashArray(base, dashSize, divider, perimeter)}
-            strokeDashoffset={`${perimeter / 4 - divider / 2}`}
-          />
+        {tuning !== 0 && (
+          <>
+            {/* Special feedback for tuned attributes */}
+            <circle
+              r={radius}
+              cx="50%"
+              cy="50%"
+              strokeWidth="5"
+              stroke="black"
+              fill={colors.white}
+            />
+            <circle
+              r={radius}
+              cx="50%"
+              cy="50%"
+              strokeWidth="3"
+              stroke={tuning < 0 ? colors.red : colors.green}
+              fill="none"
+            />
+          </>
         )}
-        {/* Already upgraded segments */}
-        {upgrade > 0 && (
-          <circle
-            r={radius}
-            cx="50%"
-            cy="50%"
-            strokeWidth="3"
-            stroke={colors.darkGray}
-            fill="none"
-            strokeDasharray={baseDashArray(
-              upgrade,
-              dashSize,
-              divider,
-              perimeter
+        {tuning === 0 && (
+          <>
+            {/* All circle segments */}
+            <circle
+              r={radius}
+              cx="50%"
+              cy="50%"
+              strokeWidth="3"
+              stroke={colors.white}
+              fill="none"
+              strokeDasharray={`${dashSize - divider} ${divider}`}
+              strokeDashoffset={`${perimeter / 4 - divider / 2}`}
+            />
+            {/* Base / "initial value" segments */}
+            {base > 0 && (
+              <circle
+                r={radius}
+                cx="50%"
+                cy="50%"
+                strokeWidth="5"
+                stroke="black"
+                fill="none"
+                strokeDasharray={baseDashArray(
+                  base,
+                  dashSize,
+                  divider,
+                  perimeter
+                )}
+                strokeDashoffset={`${perimeter / 4 - divider / 2}`}
+              />
             )}
-            strokeDashoffset={`${
-              perimeter / 4 - divider / 2 - baseSize - divider
-            }`}
-          />
-        )}
-        {/* Next segment highlight */}
-        {showNextUpgradeValue && (
-          <circle
-            r={radius}
-            cx="50%"
-            cy="50%"
-            strokeWidth="3"
-            stroke={colors.blue}
-            fill="none"
-            strokeDasharray={baseDashArray(1, dashSize, divider, perimeter)}
-            strokeDashoffset={`${
-              perimeter / 4 - divider / 2 - baseAndUpgradeSize - divider
-            }`}
-          />
+            {/* Already upgraded segments */}
+            {upgrade > 0 && (
+              <circle
+                r={radius}
+                cx="50%"
+                cy="50%"
+                strokeWidth="3"
+                stroke={colors.darkGray}
+                fill="none"
+                strokeDasharray={baseDashArray(
+                  upgrade,
+                  dashSize,
+                  divider,
+                  perimeter
+                )}
+                strokeDashoffset={`${
+                  perimeter / 4 - divider / 2 - baseSize - divider
+                }`}
+              />
+            )}
+            {/* Next segment highlight */}
+            {showNextUpgradeValue && (
+              <circle
+                r={radius}
+                cx="50%"
+                cy="50%"
+                strokeWidth="3"
+                stroke={colors.blue}
+                fill="none"
+                strokeDasharray={baseDashArray(1, dashSize, divider, perimeter)}
+                strokeDashoffset={`${
+                  perimeter / 4 - divider / 2 - baseAndUpgradeSize - divider
+                }`}
+              />
+            )}
+          </>
         )}
       </svg>
       {children && (

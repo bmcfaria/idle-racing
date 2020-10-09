@@ -15,15 +15,27 @@ export const ATTRIBUTE_TYPES = {
   HANDLING: 'hnd',
 };
 
-const calculateScore = (car, track, withRandom = false) =>
-  track[ATTRIBUTE_TYPES.ACCELERATION] *
-    (car[ATTRIBUTE_TYPES.ACCELERATION].value ||
-      car[ATTRIBUTE_TYPES.ACCELERATION]) +
-  track[ATTRIBUTE_TYPES.SPEED] *
-    (car[ATTRIBUTE_TYPES.SPEED].value || car[ATTRIBUTE_TYPES.SPEED]) +
-  track[ATTRIBUTE_TYPES.HANDLING] *
-    (car[ATTRIBUTE_TYPES.HANDLING].value || car[ATTRIBUTE_TYPES.HANDLING]) +
-  (withRandom ? Math.random() * 0.000001 : 0);
+export const calculateCarAttributeValues = car => ({
+  [ATTRIBUTE_TYPES.ACCELERATION]:
+    car[ATTRIBUTE_TYPES.ACCELERATION].value +
+    ~~car.tuning?.[ATTRIBUTE_TYPES.ACCELERATION],
+  [ATTRIBUTE_TYPES.SPEED]:
+    car[ATTRIBUTE_TYPES.SPEED].value + ~~car.tuning?.[ATTRIBUTE_TYPES.SPEED],
+  [ATTRIBUTE_TYPES.HANDLING]:
+    car[ATTRIBUTE_TYPES.HANDLING].value +
+    ~~car.tuning?.[ATTRIBUTE_TYPES.HANDLING],
+});
+
+const calculateScore = (car, track, withRandom = false) => {
+  const carAttrs = calculateCarAttributeValues(car);
+  return (
+    track[ATTRIBUTE_TYPES.ACCELERATION] *
+      carAttrs[ATTRIBUTE_TYPES.ACCELERATION] +
+    track[ATTRIBUTE_TYPES.SPEED] * carAttrs[ATTRIBUTE_TYPES.SPEED] +
+    track[ATTRIBUTE_TYPES.HANDLING] * carAttrs[ATTRIBUTE_TYPES.HANDLING] +
+    (withRandom ? Math.random() * 0.000001 : 0)
+  );
+};
 
 const cloneCar = car => ({
   ...car,
@@ -178,10 +190,12 @@ export const capitalize = (str = '') =>
   str.charAt(0).toUpperCase() + str.toLowerCase().slice(1);
 
 export const validateAttrRequirements = (car, requirements, upgradable) => {
+  const carAttrs = calculateCarAttributeValues(car);
+  // TODO: handle upgradable tuned cars
   return requirements.reduce((result, requirement) => {
     if (requirement.type === 'attr') {
       const sum =
-        car[requirement.value.attr].value +
+        carAttrs[requirement.value.attr] +
         (upgradable
           ? car[requirement.value.attr].max -
             car[requirement.value.attr].upgrade
