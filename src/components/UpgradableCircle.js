@@ -17,7 +17,7 @@ const UpgradableCircle = ({
   max = 1,
   size = 44,
   showNextUpgradeValue,
-  tuning,
+  tuning = 0,
   children,
   ...props
 }) => {
