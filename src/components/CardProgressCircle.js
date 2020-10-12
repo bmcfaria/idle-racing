@@ -3,6 +3,7 @@ import { CircularProgressLabel, Box, Text } from '@chakra-ui/core';
 import { useDispatch } from 'react-redux';
 import { CustomCircularProgress } from './CustomCircularProgress';
 import { formatDuration } from '../helpers/utils';
+import { useRaceDurationWithDiscount } from '../helpers/hooks';
 
 const CardProgressCircle = ({
   race,
@@ -11,12 +12,14 @@ const CardProgressCircle = ({
   ...props
 }) => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState(race.duration);
-  const progress = ((race.duration - value) * 100) / race.duration;
+  const calculatedDuration = useRaceDurationWithDiscount(race.duration);
+  const [value, setValue] = useState(calculatedDuration);
+  const progress = ((calculatedDuration - value) * 100) / calculatedDuration;
 
   useEffect(() => {
     const countDown = setInterval(() => {
-      const nextValue = race.duration - (new Date().getTime() - race.start);
+      const nextValue =
+        calculatedDuration - (new Date().getTime() - race.start);
       if (nextValue <= 0) {
         clearInterval(countDown);
       }
@@ -27,7 +30,7 @@ const CardProgressCircle = ({
     return () => {
       clearInterval(countDown);
     };
-  }, [dispatch, race]);
+  }, [calculatedDuration, dispatch, race]);
 
   if (!race) {
     return null;

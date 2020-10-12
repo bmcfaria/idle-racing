@@ -39,6 +39,7 @@ import {
 import { brandSponsors } from '../helpers/sponsors';
 import { evaluateSponsors } from '../helpers/sponsors';
 import initialState from './initialState';
+import experience from '../helpers/experience';
 
 const reducerRace = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -88,7 +89,13 @@ const reducerRace = (state = initialState, { type, payload }) => {
     case CHECK_END_RACE_TYPE: {
       const race = state.races.find(item => item.id === payload.raceId);
 
-      const timeLeft = race.duration - (new Date().getTime() - race.start);
+      const calculatedDuration = discountValue(
+        race.duration,
+        ~~state.experience.race.duration,
+        experience.race.duration.value
+      );
+
+      const timeLeft = calculatedDuration - (new Date().getTime() - race.start);
       if (!race || timeLeft > 0) {
         return state;
       }

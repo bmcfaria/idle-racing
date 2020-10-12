@@ -18,7 +18,7 @@ import {
   passiveMoneyBrands,
 } from './utils';
 import { MAX_WIDTH_VALUE } from './theme';
-import { experienceTypePointsSpent } from './experience';
+import experience, { experienceTypePointsSpent } from './experience';
 
 export const useOpenClose = defaultValue => {
   const [open, setOpen] = useState(!!defaultValue);
@@ -173,4 +173,12 @@ export const usePassiveIncome = () => {
   const passiveIncomeBrands = usePassiveIncomeBrands();
 
   return passiveIncomeSponsors + passiveIncomeBrands;
+};
+
+export const useRaceDurationWithDiscount = duration => {
+  const raceExperience = useExperience('race');
+
+  const { value } = experience.race.duration;
+
+  return discountValue(duration, ~~raceExperience.duration, value);
 };

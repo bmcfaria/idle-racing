@@ -32,6 +32,16 @@ const experience = {
       title: 'Race prizes',
       textArray: ['0%', '+10%', '+20%', '+30%'],
     },
+    duration: {
+      max: 3,
+      title: 'Race duration',
+      textArray: ['0%', '-25%', '-50%', '-75%'],
+      value: 0.25,
+      lockedText: currentExp =>
+        currentExp < 50
+          ? `Missing ${50 - currentExp} exp to unlock`
+          : undefined,
+    },
   },
 
   mechanic: {

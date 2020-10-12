@@ -9,6 +9,7 @@ import { ATTRIBUTE_TYPES, formatDuration, formatMoney } from '../helpers/utils';
 import {
   useRacePrizesWithBuff,
   useRacePriceWithDiscount,
+  useRaceDurationWithDiscount,
 } from '../helpers/hooks';
 import { cars } from '../helpers/data';
 import styled from '@emotion/styled';
@@ -94,6 +95,7 @@ const CardTrackContent = ({
   const calculatedPrice = ~~useRacePriceWithDiscount(price);
   const enoughMoney = useSelector(enoughMoneySelector(calculatedPrice));
   const calculatedPrizes = useRacePrizesWithBuff(prizes);
+  const calculatedDuration = useRaceDurationWithDiscount(duration);
 
   const rewardCar =
     isNaN(prizes[0]) && dealerCars.find(({ id }) => id === prizes[0]);
@@ -215,7 +217,7 @@ const CardTrackContent = ({
         {!results && (
           <>
             <Text margin="auto" color={color}>
-              {formatDuration(duration)}
+              {formatDuration(calculatedDuration)}
             </Text>
             <Text margin="auto" color={!enoughMoney ? colors.red : color}>
               {calculatedPrice === 0
