@@ -171,6 +171,13 @@ const reducerGarage = (state = initialState, { type, payload }) => {
         ...state,
         money: state.money - slotPrice,
         garageSlots: state.garageSlots + 1,
+        experience: {
+          ...state.experience,
+          mechanic: {
+            ...state.experience.mechanic,
+            exp: state.experience.mechanic.exp + state.garageSlots,
+          },
+        },
       };
     }
 
