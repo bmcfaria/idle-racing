@@ -31,7 +31,7 @@ const CarAttribute = ({ text, attr, ...props }) => (
   </Box>
 );
 
-const CardCarSmallRace = ({ car, onClick, ...props }) => {
+const CardCarSmallRace = ({ car, onClick, failedRequirements, ...props }) => {
   const { race } = car;
   const { trackId } = useContext(RaceContext);
   const selectedTrack = useTrack(trackId);
@@ -48,7 +48,17 @@ const CardCarSmallRace = ({ car, onClick, ...props }) => {
   // To improve mobile navigation,
   // this way the back button will un-select
   const setSelected = e => {
-    if (!meetsRequirements) return;
+    if (!meetsRequirements) {
+      // Test one by one separately
+      const failedRequirementsList = selectedTrack?.requirements.map(
+        requirement => !doMeetRequirements(car, [requirement])
+      );
+
+      failedRequirements(failedRequirementsList);
+
+      return;
+    }
+
     if (currentRace) return;
 
     if (onClick) {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
@@ -7,11 +7,34 @@ import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { useRequirements } from '../helpers/hooksRace';
 import CardCarSmallRace from './CardCarSmallRace';
 import { RaceContext } from '../helpers/context';
+import styled from '@emotion/styled';
+
+const RequirementText = styled(Text)`
+  animation: ${({ blink }) =>
+    blink ? 'fails-requirement 0.5s ease 3' : 'none'};
+
+  :hover {
+    animation: none;
+  }
+
+  @keyframes fails-requirement {
+    50% {
+      background-color: ${colors.red};
+    }
+    100% {
+      background-color: inherit;
+    }
+  }
+`;
 
 const RaceDetailsCarsContainer = ({ cars, selectCar, onClose, ...props }) => {
   const containerWidth = useDynamicCardContainerWidth();
   const { requirements } = useContext(RaceContext);
   const { requirementText } = useRequirements();
+  const [
+    failedRequirementsAnimation,
+    setFailedRequirementsAnimation,
+  ] = useState(new Array(requirements.length));
 
   useEffect(() => {
     const escapeClose = event => {
@@ -31,6 +54,13 @@ const RaceDetailsCarsContainer = ({ cars, selectCar, onClose, ...props }) => {
     e.stopPropagation();
   };
 
+  const failedRequirements = failRequirementsValue => {
+    setFailedRequirementsAnimation({
+      ...failedRequirementsAnimation,
+      ...failRequirementsValue,
+    });
+  };
+
   return (
     <Flex borderRadius="16px" overflowX="hidden" onClick={onClose}>
       <Box
@@ -43,15 +73,22 @@ const RaceDetailsCarsContainer = ({ cars, selectCar, onClose, ...props }) => {
         {requirements.length > 0 && (
           <Flex justifyContent="space-around" flexWrap="wrap">
             {requirements.map((requirement, index) => (
-              <Text
+              <RequirementText
                 margin="4px"
                 minW="160px"
                 textAlign="center"
                 border={`2px solid ${colors.darkGray}`}
-                key={index}
+                key={requirementText(requirement)}
+                blink={failedRequirementsAnimation[index]}
+                onAnimationEnd={() =>
+                  setFailedRequirementsAnimation({
+                    ...failedRequirementsAnimation,
+                    [index]: undefined,
+                  })
+                }
               >
                 {requirementText(requirement)}
-              </Text>
+              </RequirementText>
             ))}
           </Flex>
         )}
@@ -83,7 +120,11 @@ const RaceDetailsCarsContainer = ({ cars, selectCar, onClose, ...props }) => {
           )}
           {cars.map(car => (
             <Box marginRight="16px" marginBottom="16px" key={car.id}>
-              <CardCarSmallRace car={car} onClick={selectCar} />
+              <CardCarSmallRace
+                car={car}
+                onClick={selectCar}
+                failedRequirements={failedRequirements}
+              />
             </Box>
           ))}
         </Flex>
