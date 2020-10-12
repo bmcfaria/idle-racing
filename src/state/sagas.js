@@ -48,7 +48,10 @@ function* syncRace(race) {
     payload: { pastRace },
   });
 
-  yield put({ type: END_RACE_EXPERIENCE_TYPE });
+  yield put({
+    type: END_RACE_EXPERIENCE_TYPE,
+    payload: { pastRace },
+  });
 
   const { race: preLockedRaceEvents } = yield select(lockedSelector);
   yield put({ type: RACE_LOCKED_REFRESH_TYPE });

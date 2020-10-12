@@ -172,8 +172,17 @@ const reducerRace = (state = initialState, { type, payload }) => {
     }
 
     case END_RACE_EXPERIENCE_TYPE: {
-      // TODO: experience depends on track difficulty
-      const expEarned = 1;
+      const { pastRace } = payload;
+
+      if (!pastRace) {
+        return state;
+      }
+
+      const track = tracks.find(item => item.id === pastRace.track);
+      const trackExp =
+        raceEvents.find(({ type }) => type === track.category)?.exp || 1;
+
+      const expEarned = pastRace.position === 1 ? 2 * trackExp : trackExp;
 
       return {
         ...state,
