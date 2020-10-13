@@ -123,7 +123,14 @@ const reducerGarage = (state = initialState, { type, payload }) => {
         Math.abs(~~tuneAttrs?.[ATTRIBUTE_TYPES.SPEED]) <= maxDifference &&
         Math.abs(~~tuneAttrs?.[ATTRIBUTE_TYPES.HANDLING]) <= maxDifference;
 
-      if (!car || tunningTotal > 0 || !allowedTuning) {
+      const expTuningSlotUnlocked = ~~state.experience?.mechanic?.tuning > 0;
+
+      if (
+        !car ||
+        tunningTotal > 0 ||
+        !allowedTuning ||
+        !expTuningSlotUnlocked
+      ) {
         return state;
       }
 

@@ -60,6 +60,15 @@ const experience = {
       title: 'HND price',
       textArray: ['0%', '-10%', '-20%', '-30%'],
     },
+    tuning: {
+      max: 1,
+      title: 'Tuning slot',
+      textArray: ['OFF', 'ON'],
+      lockedText: currentExp =>
+        currentExp < 20
+          ? `Missing ${20 - currentExp} exp to unlock`
+          : undefined,
+    },
   },
 };
 

@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import { tuneCarAction } from '../state/actions';
 import { maxUnlockedUpgrade } from '../helpers/garageUpgrades';
 import { useMechanicsCount } from '../helpers/hooksGarage';
+import hexAlpha from 'hex-alpha';
+import { useExperience } from '../helpers/hooks';
 
 const AttrTextValue = ({ name, value, tuning, ...props }) => (
   <Box w="60px" textAlign="center" {...props}>
@@ -71,6 +73,8 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
   const { id, reward } = car;
   const dispatch = useDispatch();
   const mechanics = useMechanicsCount();
+  const experienceMechanic = useExperience('mechanic');
+  const expTuningSlotUnlocked = ~~experienceMechanic.tuning > 0;
 
   // Fallback values in case the car is from a previous store version
   const tuning = {
@@ -188,6 +192,21 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
       >
         (Max tuning per attr: +/- {maxDifference})
       </Text>
+      {!expTuningSlotUnlocked && (
+        <Flex
+          w="100%"
+          h="100%"
+          top="0"
+          left="0"
+          position="absolute"
+          borderRadius="inherit"
+          bg={hexAlpha(colors.lightGray, 0.98)}
+        >
+          <Text fontSize="24px" textAlign="center" margin="auto">
+            Missing <br /> Tuning slot <br /> (exp upgrade)
+          </Text>
+        </Flex>
+      )}
     </Flex>
   );
 };

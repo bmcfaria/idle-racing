@@ -21,8 +21,8 @@ const MechanicTech = ({ module, totalMechanics }) => (
       justifyContent="center"
       lineHeight="20px"
     >
-      <Text w="100%">{module.text}</Text>
-      {module.subText && <Text w="100%">{module.subText}</Text>}
+      <Text>{module.text}</Text>
+      {module.subText && <Text fontSize="14px">{module.subText}</Text>}
     </Flex>
     <Box
       w="100%"
