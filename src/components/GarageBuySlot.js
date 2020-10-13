@@ -9,6 +9,7 @@ import Modal from './Modal';
 import { useLocation, useHistory } from 'react-router-dom';
 import { formatMoney } from '../helpers/utils';
 import { useGarageSlotPrice, useMechanicsCount } from '../helpers/hooksGarage';
+import { maxUnlockedUpgrade } from '../helpers/garageUpgrades';
 
 const GarageBuySlot = props => {
   const slotPrice = useGarageSlotPrice();
@@ -20,6 +21,8 @@ const GarageBuySlot = props => {
   const location = useLocation();
   const history = useHistory();
   const showModal = location.state?.buySlot;
+
+  const buyUnlocked = !!maxUnlockedUpgrade('garage_expanse', mechanics);
 
   const buySlot = () => {
     dispatch(buyGarageSlotAction);
@@ -56,8 +59,8 @@ const GarageBuySlot = props => {
               isDisabled={!enoughMoney}
               onClick={buySlot}
               minW="72px"
-              h="24px"
-              fontSize="12px"
+              h="32px"
+              fontSize="14px"
               bg={colors.lightBlue}
             >
               ${formatMoney(slotPrice)}
@@ -65,8 +68,8 @@ const GarageBuySlot = props => {
             <Button
               onClick={onClose}
               minW="72px"
-              h="24px"
-              fontSize="12px"
+              h="32px"
+              fontSize="14px"
               color={colors.darkGray}
               bg={colors.lightGray}
               marginLeft="16px"
@@ -85,7 +88,7 @@ const GarageBuySlot = props => {
         flexDirection="column"
         justifyContent="space-around"
         onClick={openModal}
-        isDisabled={mechanics < 2}
+        isDisabled={!buyUnlocked}
         {...props}
       >
         <Text fontSize="14px">Buy car slot</Text>
@@ -103,15 +106,13 @@ const GarageBuySlot = props => {
             fill="currentColor"
           />
         </svg>
-        {mechanics < 2 && (
+        {!buyUnlocked && (
           <Box>
             <Text fontSize="16px">Missing</Text>
-            <Text fontSize="16px">Expanse upgrade</Text>
+            <Text fontSize="16px">Garage Expanse</Text>
           </Box>
         )}
-        {mechanics >= 2 && (
-          <Text fontSize="16px">${formatMoney(slotPrice)}</Text>
-        )}
+        {buyUnlocked && <Text fontSize="16px">${formatMoney(slotPrice)}</Text>}
       </Button>
     </>
   );

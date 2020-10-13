@@ -182,7 +182,9 @@ const reducerGarage = (state = initialState, { type, payload }) => {
         sponsor => sponsor.reward === 'mechanic'
       ).length;
 
-      if (state.money < slotPrice || mechanics < 2) {
+      const unlockedUpgrade = maxUnlockedUpgrade('garage_expanse', mechanics);
+
+      if (state.money < slotPrice || !unlockedUpgrade) {
         return state;
       }
 

@@ -14,7 +14,7 @@ const upgrades = [
     subText: '(2 -> 4)',
   },
   {
-    mechanics: 4,
+    mechanics: 3,
     type: 'garage_expanse',
     text: 'Garage Expanse',
   },
