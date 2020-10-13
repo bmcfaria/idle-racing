@@ -6,6 +6,8 @@ import Button from './Button';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import { useDispatch } from 'react-redux';
 import { tuneCarAction } from '../state/actions';
+import { maxUnlockedUpgrade } from '../helpers/garageUpgrades';
+import { useMechanicsCount } from '../helpers/hooksGarage';
 
 const AttrTextValue = ({ name, value, tuning, ...props }) => (
   <Box w="60px" textAlign="center" {...props}>
@@ -68,6 +70,7 @@ const UpDownButtons = ({
 const CarDetailsGarageTuning = ({ car, ...props }) => {
   const { id, reward } = car;
   const dispatch = useDispatch();
+  const mechanics = useMechanicsCount();
 
   // Fallback values in case the car is from a previous store version
   const tuning = {
@@ -84,6 +87,20 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
     (tuning[ATTRIBUTE_TYPES.ACCELERATION] +
       tuning[ATTRIBUTE_TYPES.SPEED] +
       tuning[ATTRIBUTE_TYPES.HANDLING]);
+
+  const maxUnlockedUpgradeObject = maxUnlockedUpgrade(
+    'tuning_center',
+    mechanics
+  );
+
+  // Fallback in case no upgrade available
+  const maxDifference = (~~maxUnlockedUpgradeObject?.interval[1] || 1) - 1;
+
+  const upDisabled = attr =>
+    !(availableAttrPoints > 0 && tuning[attr] < maxDifference);
+
+  const downDisabled = attr =>
+    !(car[attr].value + tuning[attr] > 1 && tuning[attr] > -maxDifference);
 
   const increaseAttr = attr => {
     if (availableAttrPoints <= 0) {
@@ -115,7 +132,6 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
     <Flex
       position="relative"
       w="200px"
-      h="128px"
       bg={cardBg}
       padding="8px 0"
       borderRadius="16px"
@@ -147,34 +163,31 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
       <Flex w="100%" marginTop="8px" justifyContent="space-around">
         <UpDownButtons
           upCallback={() => increaseAttr(ATTRIBUTE_TYPES.ACCELERATION)}
-          upDisabled={availableAttrPoints <= 0}
+          upDisabled={upDisabled(ATTRIBUTE_TYPES.ACCELERATION)}
           downCallback={() => decreaseAttr(ATTRIBUTE_TYPES.ACCELERATION)}
-          downDisabled={
-            car[ATTRIBUTE_TYPES.ACCELERATION].value +
-              tuning[ATTRIBUTE_TYPES.ACCELERATION] <=
-            1
-          }
+          downDisabled={downDisabled(ATTRIBUTE_TYPES.ACCELERATION)}
         />
         <UpDownButtons
           upCallback={() => increaseAttr(ATTRIBUTE_TYPES.SPEED)}
-          upDisabled={availableAttrPoints <= 0}
+          upDisabled={upDisabled(ATTRIBUTE_TYPES.SPEED)}
           downCallback={() => decreaseAttr(ATTRIBUTE_TYPES.SPEED)}
-          downDisabled={
-            car[ATTRIBUTE_TYPES.SPEED].value + tuning[ATTRIBUTE_TYPES.SPEED] <=
-            1
-          }
+          downDisabled={downDisabled(ATTRIBUTE_TYPES.SPEED)}
         />
         <UpDownButtons
           upCallback={() => increaseAttr(ATTRIBUTE_TYPES.HANDLING)}
-          upDisabled={availableAttrPoints <= 0}
+          upDisabled={upDisabled(ATTRIBUTE_TYPES.HANDLING)}
           downCallback={() => decreaseAttr(ATTRIBUTE_TYPES.HANDLING)}
-          downDisabled={
-            car[ATTRIBUTE_TYPES.HANDLING].value +
-              tuning[ATTRIBUTE_TYPES.HANDLING] <=
-            1
-          }
+          downDisabled={downDisabled(ATTRIBUTE_TYPES.HANDLING)}
         />
       </Flex>
+      <Text
+        fontSize="14px"
+        lineHeight="14px"
+        textAlign="center"
+        marginTop="8px"
+      >
+        (Max tuning per attr: +/- {maxDifference})
+      </Text>
     </Flex>
   );
 };

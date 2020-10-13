@@ -9,7 +9,7 @@ import {
 } from './actions';
 import { upgradeAttribute, generateCarPrice } from '../helpers/data';
 import { ATTRIBUTE_TYPES, buffValue, discountValue } from '../helpers/utils';
-import { requiredUpgrade } from '../helpers/garageUpgrades';
+import { maxUnlockedUpgrade, requiredUpgrade } from '../helpers/garageUpgrades';
 import initialState from './initialState';
 
 const reducerGarage = (state = initialState, { type, payload }) => {
@@ -100,12 +100,30 @@ const reducerGarage = (state = initialState, { type, payload }) => {
 
       const car = state.garageCars.find(item => item.id === carId);
 
+      const mechanics = Object.values(state.sponsors.active).filter(
+        sponsor => sponsor.reward === 'mechanic'
+      ).length;
+
+      const maxUnlockedUpgradeObject = maxUnlockedUpgrade(
+        'tuning_center',
+        mechanics
+      );
+
+      // Fallback in case no upgrade available
+      const maxDifference = (~~maxUnlockedUpgradeObject?.interval[1] || 1) - 1;
+
       const tunningTotal =
         ~~tuneAttrs?.[ATTRIBUTE_TYPES.ACCELERATION] +
         ~~tuneAttrs?.[ATTRIBUTE_TYPES.SPEED] +
         ~~tuneAttrs?.[ATTRIBUTE_TYPES.HANDLING];
 
-      if (!car || tunningTotal > 0) {
+      const allowedTuning =
+        Math.abs(~~tuneAttrs?.[ATTRIBUTE_TYPES.ACCELERATION]) <=
+          maxDifference &&
+        Math.abs(~~tuneAttrs?.[ATTRIBUTE_TYPES.SPEED]) <= maxDifference &&
+        Math.abs(~~tuneAttrs?.[ATTRIBUTE_TYPES.HANDLING]) <= maxDifference;
+
+      if (!car || tunningTotal > 0 || !allowedTuning) {
         return state;
       }
 

@@ -77,6 +77,7 @@ const RaceDetailsCarsContainer = ({ cars, selectCar, onClose, ...props }) => {
                 margin="4px"
                 minW="160px"
                 textAlign="center"
+                padding="0 4px"
                 border={`2px solid ${colors.darkGray}`}
                 key={requirementText(requirement)}
                 blink={failedRequirementsAnimation[index]}

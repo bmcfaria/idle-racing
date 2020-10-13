@@ -39,7 +39,7 @@ const upgrades = [
     subText: '(8 -> 16)',
   },
   {
-    mechanics: 20,
+    mechanics: 18,
     type: 'tuning_center_lvl_2',
     text: 'Tuning Center lvl 2',
     interval: [2, 3],
@@ -73,6 +73,22 @@ export const requiredUpgrade = (type, upgradeFromValue) => {
       return upgrade;
     }
   }
+};
+
+export const maxUnlockedUpgrade = (type, mechanics) => {
+  let maxUpgrade;
+  for (let upgrade of upgrades) {
+    if (!upgrade.type.startsWith(type)) {
+      continue;
+    }
+
+    // Check if enough mechanics
+    if (mechanics >= upgrade.mechanics) {
+      maxUpgrade = upgrade;
+    }
+  }
+
+  return maxUpgrade;
 };
 
 export default upgrades;
