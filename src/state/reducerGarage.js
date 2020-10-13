@@ -9,7 +9,7 @@ import {
 } from './actions';
 import { upgradeAttribute, generateCarPrice } from '../helpers/data';
 import { ATTRIBUTE_TYPES, buffValue, discountValue } from '../helpers/utils';
-import { upgradeCenter } from '../helpers/garageUpgrades';
+import { requiredUpgrade } from '../helpers/garageUpgrades';
 import initialState from './initialState';
 
 const reducerGarage = (state = initialState, { type, payload }) => {
@@ -63,13 +63,14 @@ const reducerGarage = (state = initialState, { type, payload }) => {
       const mechanics = Object.values(state.sponsors.active).filter(
         sponsor => sponsor.reward === 'mechanic'
       ).length;
-      const upgradeCenterValue = upgradeCenter[mechanics] ?? 100;
+      const requiredUpgradeObject = requiredUpgrade(
+        'upgrade_center',
+        attribute.value
+      );
+      const canUpgrade =
+        !!requiredUpgradeObject && requiredUpgradeObject.mechanics <= mechanics;
 
-      if (
-        !calculatedPrice ||
-        state.money < calculatedPrice ||
-        attribute.upgrade + attribute.base > upgradeCenterValue
-      ) {
+      if (!calculatedPrice || state.money < calculatedPrice || !canUpgrade) {
         return state;
       }
 

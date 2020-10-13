@@ -18,7 +18,7 @@ import { colors } from '../helpers/theme';
 import AttributeCircle from './AttributeCircle';
 import CallForAttention from './CallForAttention';
 import { useUpgradePriceWithDiscount } from '../helpers/hooks';
-import { upgradeCenter } from '../helpers/garageUpgrades';
+import { requiredUpgrade } from '../helpers/garageUpgrades';
 import { useMechanicsCount } from '../helpers/hooksGarage';
 
 const AttributeCircleButton = ({
@@ -100,13 +100,9 @@ const CarDetailsGarageAttributes = ({ car, ...props }) => {
   const dispatch = useDispatch();
   const garageCars = useSelector(garageCarsSelector);
 
-  const baseUpgradeAcc =
-    car[ATTRIBUTE_TYPES.ACCELERATION].upgrade +
-    car[ATTRIBUTE_TYPES.ACCELERATION].base;
-  const baseUpgradeSpd =
-    car[ATTRIBUTE_TYPES.SPEED].upgrade + car[ATTRIBUTE_TYPES.SPEED].base;
-  const baseUpgradeHnd =
-    car[ATTRIBUTE_TYPES.HANDLING].upgrade + car[ATTRIBUTE_TYPES.HANDLING].base;
+  const baseUpgradeAcc = car[ATTRIBUTE_TYPES.ACCELERATION].value;
+  const baseUpgradeSpd = car[ATTRIBUTE_TYPES.SPEED].value;
+  const baseUpgradeHnd = car[ATTRIBUTE_TYPES.HANDLING].value;
 
   const maxUpgraded =
     car[ATTRIBUTE_TYPES.ACCELERATION].upgrade >=
@@ -114,17 +110,16 @@ const CarDetailsGarageAttributes = ({ car, ...props }) => {
     car[ATTRIBUTE_TYPES.SPEED].upgrade >= car[ATTRIBUTE_TYPES.SPEED].max &&
     car[ATTRIBUTE_TYPES.HANDLING].upgrade >= car[ATTRIBUTE_TYPES.HANDLING].max;
 
-  const upgradeCenterValue = upgradeCenter[mechanics] ?? 100;
-  const missingUpgradeCenter =
-    (confirmationState === 'ACC' &&
-      baseUpgradeAcc > upgradeCenterValue &&
-      baseUpgradeAcc) ||
-    (confirmationState === 'SPD' &&
-      baseUpgradeSpd > upgradeCenterValue &&
-      baseUpgradeSpd) ||
-    (confirmationState === 'HND' &&
-      baseUpgradeHnd > upgradeCenterValue &&
-      baseUpgradeHnd);
+  const valueToUpgrade =
+    (confirmationState === 'ACC' && baseUpgradeAcc) ||
+    (confirmationState === 'SPD' && baseUpgradeSpd) ||
+    (confirmationState === 'HND' && baseUpgradeHnd);
+  const requiredUpgradeObject = requiredUpgrade(
+    'upgrade_center',
+    valueToUpgrade
+  );
+  const canUpgrade =
+    !!requiredUpgradeObject && requiredUpgradeObject.mechanics <= mechanics;
 
   const buttonText =
     (confirmationState === 'ACC' && `$${formatMoney(calculatedPriceAcc)}`) ||
@@ -150,6 +145,7 @@ const CarDetailsGarageAttributes = ({ car, ...props }) => {
   const upgrade = type => {
     dispatch(upgradeAttributeAction(type, id));
 
+    // Clear past race so the car won't appear already selected on the last track
     const pastRace = [...pastRaces].reverse().find(race => race.car === id);
     if (pastRace) {
       dispatch(closeResultsAction(pastRace.id));
@@ -229,7 +225,7 @@ const CarDetailsGarageAttributes = ({ car, ...props }) => {
 
         {confirmationState && (
           <Flex w="100%" justifyContent="space-around" alignItems="center">
-            {!missingUpgradeCenter && (
+            {canUpgrade && (
               <Button
                 onClick={buttonCallback}
                 minW="72px"
@@ -241,11 +237,15 @@ const CarDetailsGarageAttributes = ({ car, ...props }) => {
                 {buttonText}
               </Button>
             )}
-            {missingUpgradeCenter && (
-              <Box minW="72px" textAlign="center">
-                <Text fontSize="14px">Upgrade</Text>
-                <Text fontSize="14px">Center lvl {missingUpgradeCenter}</Text>
-              </Box>
+            {!canUpgrade && (
+              <Text
+                fontSize="14px"
+                lineHeight="16px"
+                textAlign="center"
+                padding="0 8px"
+              >
+                {requiredUpgradeObject.text}
+              </Text>
             )}
             {confirmationState && (
               <Button
