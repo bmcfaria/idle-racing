@@ -1,25 +1,22 @@
-import styled from '@emotion/styled';
+import { PseudoBox } from '@chakra-ui/core';
 import React from 'react';
 import getImageCar from '../helpers/imageMappingCars';
 
-const Image = styled.img`
-  object-fit: contain;
-  ${({ w = '100%' }) => `width:  ${w}`};
-  ${({ h = '100%' }) => `height:  ${h}`};
-  ${({ borderRadius = '16px' }) => `border-radius:  ${borderRadius}`};
-  ${({ bg }) => (bg ? `background-color:  ${bg}` : '')};
-  ${({ border }) => (border ? `border:  ${border}` : '')};
-  ${({ maxW }) => (maxW ? `max-width:  ${maxW}` : '')};
-  ${({ position }) => (position ? `position:  ${position}` : '')};
-  ${({ top }) => (top ? `top:  ${top}` : '')};
-  ${({ right }) => (right ? `right:  ${right}` : '')};
-  ${({ bottom }) => (bottom ? `bottom:  ${bottom}` : '')};
-  ${({ left }) => (left ? `left:  ${left}` : '')};
-  ${({ margin }) => (margin ? `margin:  ${margin}` : '')};
-`;
-
 const CarImage = ({ car, ...props }) => {
-  return <Image alt="car" src={getImageCar(car)} {...props} />;
+  return (
+    // Chakra-UI Image, re-renders more than necessary or loads slower
+    // creating an undesired flick effect / empty image
+    <PseudoBox
+      as="img"
+      w="100%"
+      h="100%"
+      borderRadius="16px"
+      objectFit="contain"
+      alt="car"
+      src={getImageCar(car)}
+      {...props}
+    />
+  );
 };
 
 export default CarImage;
