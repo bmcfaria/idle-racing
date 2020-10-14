@@ -4,18 +4,9 @@ import { useLocation, useHistory } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { capitalize, ATTRIBUTE_TYPES } from '../helpers/utils';
 import { colors } from '../helpers/theme';
-import getImageCar from '../helpers/imageMappingCars';
 import AttributeCircle from './AttributeCircle';
 import Button from './Button';
-
-const Image = styled.img`
-  width: 100%;
-  height: 100px;
-  border-radius: 16px;
-  object-fit: contain;
-  background-color: ${colors.white};
-  ${({ infoBgColor }) => `1px solid ${infoBgColor}`};
-`;
+import CarImage from './CarImage';
 
 const BlinkCard = styled(Button)`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -136,7 +127,7 @@ const CardCarSmall = ({
         fontSize="12px"
         lineHeight="12px"
       >
-        <Image alt="car" src={getImageCar(car)} />
+        <CarImage car={car} bg={colors.white} />
         <Text top="8px" left="8px" position="absolute">
           {capitalize(car.brand)}
         </Text>

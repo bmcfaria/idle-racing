@@ -5,17 +5,8 @@ import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES, doMeetRequirements } from '../helpers/utils';
 import { ReactComponent as ChangeIcon } from '../assets/icons/change.svg';
 import Button from './Button';
-import styled from '@emotion/styled';
-import getImageCar from '../helpers/imageMappingCars';
 import CardWinningChance from './CardWinningChance';
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  object-fit: contain;
-  margin: auto;
-`;
+import CarImage from './CarImage';
 
 const Attribute = ({ text, value, ...props }) => (
   <Flex fontSize="14px" lineHeight="14px" justifyContent="flex-end" {...props}>
@@ -71,7 +62,7 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
           </Flex>
           <Flex position="relative" marginTop="4px">
             <Box w="72px" position="absolute" bottom="-12px" left="0">
-              <Image alt="car" src={getImageCar(car)} />
+              <CarImage margin="auto" car={car} />
             </Box>
             <Flex direction="column" flexGrow="1">
               <Attribute

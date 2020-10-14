@@ -12,17 +12,8 @@ import {
   useRaceDurationWithDiscount,
 } from '../helpers/hooks';
 import { cars } from '../helpers/data';
-import styled from '@emotion/styled';
-import getImageCar from '../helpers/imageMappingCars';
 import { useTrackStatsState } from '../helpers/hooksRace';
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  object-fit: contain;
-  margin: auto;
-`;
+import CarImage from './CarImage';
 
 const TrackAttribute = ({ name, value, large, ...props }) => {
   const color = percentageValue => {
@@ -194,7 +185,7 @@ const CardTrackContent = ({
               <Text fontSize="16px">{rewardCar.name}</Text>
             </Box>
             <Box w="64px">
-              <Image alt="car" src={getImageCar(rewardCar)} />
+              <CarImage margin="auto" car={rewardCar} />
             </Box>
           </Flex>
         )}

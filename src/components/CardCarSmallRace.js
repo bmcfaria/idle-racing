@@ -9,18 +9,10 @@ import {
   calculateCarAttributeValues,
 } from '../helpers/utils';
 import { colors } from '../helpers/theme';
-import getImageCar from '../helpers/imageMappingCars';
 import Button from './Button';
-import styled from '@emotion/styled';
 import { RaceContext } from '../helpers/context';
 import { useRace, useTrack } from '../helpers/hooksRace';
-
-const Image = styled.img`
-  max-width: 80px;
-  height: 100%;
-  border-radius: 16px;
-  object-fit: contain;
-`;
+import CarImage from './CarImage';
 
 const CarAttribute = ({ text, attr, ...props }) => (
   <Box w="48px" lineHeight="14px" textAlign="center" {...props}>
@@ -107,7 +99,7 @@ const CardCarSmallRace = ({ car, onClick, failedRequirements, ...props }) => {
           bg={colors.white}
           justifyContent="space-evenly"
         >
-          <Image alt="car" src={getImageCar(car)} />
+          <CarImage maxW="80px" car={car} />
           <Flex
             direction="column"
             justifyContent="space-evenly"

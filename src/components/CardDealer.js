@@ -2,20 +2,12 @@ import React from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { dealerCarsSelector } from '../state/selectors';
 import { useSelector } from 'react-redux';
-import getImageCar from '../helpers/imageMappingCars';
 import CardBig from './CardBig';
 import { capitalize } from '../helpers/utils';
 import { brandSponsors } from '../helpers/sponsors';
 import { colors } from '../helpers/theme';
-import styled from '@emotion/styled';
 import { useCarsAcquired } from '../helpers/hooksDealer';
-
-const Image = styled.img`
-  ${({ columns }) => `width: ${100 / columns}%`};
-  ${({ divider }) => `height: ${~~(100 / divider)}%`};
-  border-radius: 16px;
-  object-fit: contain;
-`;
+import CarImage from './CarImage';
 
 const CardDealer = ({ brandType, brandName, ...props }) => {
   const location = useLocation();
@@ -64,11 +56,10 @@ const CardDealer = ({ brandType, brandName, ...props }) => {
       {...props}
     >
       {brandCars.map(car => (
-        <Image
-          alt="car"
-          src={getImageCar(car)}
-          columns={columns}
-          divider={divider}
+        <CarImage
+          w={`${100 / columns}%`}
+          h={`${~~(100 / divider)}%`}
+          car={car}
           key={car.id}
         />
       ))}
