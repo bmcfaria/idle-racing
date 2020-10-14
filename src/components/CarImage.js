@@ -1,8 +1,11 @@
 import { PseudoBox } from '@chakra-ui/core';
 import React from 'react';
-import getImageCar from '../helpers/imageMappingCars';
+import { useDealerCar } from '../helpers/hooksDealer';
 
-const CarImage = ({ car, ...props }) => {
+const CarImage = ({ car, carColor, ...props }) => {
+  // Will act as a falback in case a garage car doesn't have defaultColor
+  const dealerCar = useDealerCar(car.dealerCar);
+  const color = carColor || car.defaultColor || dealerCar.defaultColor;
   return (
     // Chakra-UI Image, re-renders more than necessary or loads slower
     // creating an undesired flick effect / empty image
@@ -12,8 +15,12 @@ const CarImage = ({ car, ...props }) => {
       h="100%"
       borderRadius="16px"
       objectFit="contain"
-      alt="car"
-      src={getImageCar(car)}
+      alt={`${car.name.toLowerCase()} (${color})`}
+      src={`/images/${car.name
+        .toLowerCase()
+        // Hammer fix for the City coupé
+        .replace(/é/, 'e')
+        .replace(/ /g, '-')}_${color}.png`}
       {...props}
     />
   );

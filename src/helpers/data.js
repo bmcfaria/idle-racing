@@ -127,6 +127,7 @@ const generateCar = car => ({
   reward: car.reward,
   total: car.total,
   totalUp: car['total up'],
+  defaultColor: car['default color'],
 });
 
 const carDevaluation = 0.5;
