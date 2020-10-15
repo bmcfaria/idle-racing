@@ -4,7 +4,12 @@ import { colors } from '../helpers/theme';
 import { capitalize, carTypeText } from '../helpers/utils';
 import CarImage from './CarImage';
 
-const CarDetailsImageAndType = ({ car, bg = colors.orange, ...props }) => {
+const CarDetailsImageAndType = ({
+  car,
+  carColor,
+  bg = colors.orange,
+  ...props
+}) => {
   const { type, brand } = car;
 
   return (
@@ -27,7 +32,13 @@ const CarDetailsImageAndType = ({ car, bg = colors.orange, ...props }) => {
           {carTypeText[type]} ({type})
         </Text>
       </Flex>
-      <CarImage h="112px" position="absolute" bottom="0" car={car} />
+      <CarImage
+        h="112px"
+        position="absolute"
+        bottom="0"
+        car={car}
+        carColor={carColor}
+      />
     </Flex>
   );
 };

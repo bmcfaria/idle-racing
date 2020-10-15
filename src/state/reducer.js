@@ -48,7 +48,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
-      const garageCar = generateGarageCar(car);
+      const garageCar = generateGarageCar(
+        car,
+        payload.carColor || car.defaultColors?.[0]
+      );
 
       const businessExpInc =
         ~~(calculatedPrice / 1000) < 1 ? 1 : ~~(calculatedPrice / 1000);

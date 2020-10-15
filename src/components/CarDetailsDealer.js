@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex, Text } from '@chakra-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { buyCarAction } from '../state/actions';
@@ -11,9 +11,50 @@ import Button from './Button';
 import { useCarPriceWithDiscount, useExperience } from '../helpers/hooks';
 import CarDetailsImageAndType from './CarDetailsImageAndType';
 import { useEmptyGarageSlots } from '../helpers/hooksGarage';
+import CarImage from './CarImage';
+
+const CarColorPickerButton = ({ car, color, ...props }) => (
+  <Button
+    w="48px"
+    h="48px"
+    padding="0"
+    border={`1px solid ${colors.darkGray}`}
+    {...props}
+  >
+    <CarImage car={car} carColor={color} />
+  </Button>
+);
+
+const CarColorPicker = ({ car, setSelectedColor, ...props }) => {
+  if (car.defaultColors.length <= 1) {
+    return null;
+  }
+
+  return (
+    <Flex direction="column" {...props}>
+      <CarColorPickerButton
+        car={car}
+        onClick={() => setSelectedColor(car.defaultColors?.[0])}
+      />
+      <CarColorPickerButton
+        car={car}
+        onClick={() => setSelectedColor(car.defaultColors?.[1])}
+        color={car.defaultColors?.[1]}
+        marginTop="6px"
+      />
+      <CarColorPickerButton
+        car={car}
+        onClick={() => setSelectedColor(car.defaultColors?.[2])}
+        color={car.defaultColors?.[2]}
+        marginTop="6px"
+      />
+    </Flex>
+  );
+};
 
 const CarDetailsDealer = ({ car, ...props }) => {
   const { id, name, price, reward } = car;
+  const [selectedColor, setSelectedColor] = useState();
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -26,7 +67,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
   const rewardOnly = reward && !(experienceBusiness.rewardCars > 0);
 
   const buy = () => {
-    dispatch(buyCarAction(id));
+    dispatch(buyCarAction(id, selectedColor));
     history.goBack();
   };
 
@@ -40,7 +81,16 @@ const CarDetailsDealer = ({ car, ...props }) => {
       direction="column"
       {...props}
     >
-      <CarDetailsImageAndType car={car} />
+      <CarDetailsImageAndType car={car} carColor={selectedColor} />
+
+      <CarColorPicker
+        position="absolute"
+        top="0"
+        left={`${200 + 4}px`}
+        car={car}
+        setSelectedColor={setSelectedColor}
+      />
+
       <Flex w="100%" h="100%" direction="column" alignItems="center">
         <Text
           margin="8px 0"

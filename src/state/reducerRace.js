@@ -205,7 +205,9 @@ const reducerRace = (state = initialState, { type, payload }) => {
 
       const earnedCar = isNaN(reward) && cars.find(({ id }) => id === reward);
 
-      const garageCar = earnedCar && generateGarageCar(earnedCar, true);
+      const garageCar =
+        earnedCar &&
+        generateGarageCar(earnedCar, earnedCar.defaultColors?.[0], true);
 
       return {
         ...state,

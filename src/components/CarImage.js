@@ -3,9 +3,13 @@ import React from 'react';
 import { useDealerCar } from '../helpers/hooksDealer';
 
 const CarImage = ({ car, carColor, ...props }) => {
-  // Will act as a falback in case a garage car doesn't have defaultColor
+  // Will act as a falback in case a garage car doesn't have color or defaultColors
   const dealerCar = useDealerCar(car.dealerCar);
-  const color = carColor || car.defaultColor || dealerCar.defaultColor;
+  const color =
+    carColor ||
+    car.color ||
+    car.defaultColors?.[0] ||
+    dealerCar.defaultColors?.[0];
   return (
     // Chakra-UI Image, re-renders more than necessary or loads slower
     // creating an undesired flick effect / empty image

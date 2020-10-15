@@ -12,9 +12,9 @@ export const resetAndRecalculateDevAction = state => ({
 });
 
 export const BUY_CAR_TYPE = 'BUY_CAR';
-export const buyCarAction = carId => ({
+export const buyCarAction = (carId, carColor) => ({
   type: BUY_CAR_TYPE,
-  payload: { carId },
+  payload: { carId, carColor },
 });
 export const SELL_CAR_TYPE = 'SELL_CAR';
 export const sellCarAction = carId => ({

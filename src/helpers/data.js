@@ -127,12 +127,12 @@ const generateCar = car => ({
   reward: car.reward,
   total: car.total,
   totalUp: car['total up'],
-  defaultColor: car['default color'],
+  defaultColors: car['default colors'].trim().slice(1, -1).split(','),
 });
 
 const carDevaluation = 0.5;
 
-export const generateGarageCar = (car, reward = false) => ({
+export const generateGarageCar = (car, color, reward = false) => ({
   id: uuid(),
   name: car.name,
   type: car.type,
@@ -151,6 +151,7 @@ export const generateGarageCar = (car, reward = false) => ({
     [ATTRIBUTE_TYPES.SPEED]: 0,
     [ATTRIBUTE_TYPES.HANDLING]: 0,
   },
+  color,
 });
 
 export const upgradeAttribute = attribute => {
