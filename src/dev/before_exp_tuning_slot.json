@@ -1061,8 +1061,14 @@
       "rewardCars": 0,
       "max": 1000000
     },
-    "race": { "exp": 38, "price": 0, "prizes": 0, "max": 1000000 },
-    "mechanic": { "exp": 25, "acc": 0, "spd": 0, "hnd": 0, "max": 1000000000 }
+    "race": { "exp": 380000000, "price": 0, "prizes": 0, "max": 1000000 },
+    "mechanic": {
+      "exp": 25000000,
+      "acc": 0,
+      "spd": 0,
+      "hnd": 0,
+      "max": 1000000000
+    }
   },
   "sponsors": {
     "active": {

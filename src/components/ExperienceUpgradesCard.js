@@ -14,19 +14,21 @@ const ExperienceUpgradesCard = ({
   innerTextArray = [],
   availablePoints,
   lockedText,
+  confirmationState,
+  setConfirmationState,
+  notEnoughPointsCb,
   ...props
 }) => {
   const [hoverOnAttr, setHoverOnAttr] = useState();
-
-  const [isTouchEvent, setIsTouchEvent] = useState();
   const [showNextTouchTimeout, setShowNextTouchTimeout] = useState();
 
   const clickable = value < max && !lockedText;
-  const showNext = clickable && hoverOnAttr;
+  const inConfirmationState = confirmationState === text;
+  const showNext = (clickable && hoverOnAttr) || inConfirmationState;
 
   useEffect(() => {
     let touchHoverTimeout;
-    if (showNextTouchTimeout) {
+    if (showNextTouchTimeout && !inConfirmationState) {
       touchHoverTimeout = setTimeout(() => {
         setShowNextTouchTimeout();
         setHoverOnAttr();
@@ -36,35 +38,41 @@ const ExperienceUpgradesCard = ({
     return () => {
       clearTimeout(touchHoverTimeout);
     };
-  }, [showNextTouchTimeout]);
+  }, [showNextTouchTimeout, inConfirmationState]);
 
   const onMouseEnter = () => {
-    if (isTouchEvent && availablePoints > 0) {
-      // Don't showNext when the user is "upgrading" on a touch device
-      // or else the value will increase and show the next value
-      // creating confusion
-      setHoverOnAttr();
+    setHoverOnAttr(true);
+  };
+
+  const onClickCard = e => {
+    e.stopPropagation();
+
+    if (!clickable) {
+      return;
+    }
+
+    if (availablePoints > 0) {
+      setConfirmationState(text);
     } else {
-      setHoverOnAttr(true);
+      notEnoughPointsCb();
     }
   };
 
-  const onClickAndHandleFlag = () => {
+  const onClickAndHandleFlag = e => {
+    e.stopPropagation();
     if (onClick && clickable) {
       onClick();
     }
 
-    // reset flag
-    setIsTouchEvent();
+    setConfirmationState();
   };
 
   const onTouchStart = () => {
     // Only enable hover flag when not "upgrading"
     setHoverOnAttr(availablePoints === 0);
-    setIsTouchEvent(true);
   };
 
-  // Since touch devices don't have onHover
+  // Since touch devices don't have onHover like the desktop
   // the showNext will activate when a user touches the button
   // the timeOut will disable the showNext after 1.5s for better experience
   const onTouchEnd = () => {
@@ -72,67 +80,81 @@ const ExperienceUpgradesCard = ({
   };
 
   return (
-    <Button
-      w="80px"
-      h="104px"
-      margin="0 auto"
-      padding="4px 8px"
-      border={`1px solid ${colors.darkGray}`}
-      flexDirection="column"
-      justifyContent="space-between"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={() => setHoverOnAttr()}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-      onClick={onClickAndHandleFlag}
-      {...(!clickable && { cursor: 'auto', boxShadow: 'none' })}
-      bg={value > 0 ? bg : colors.lightGray}
-      position="relative"
-      {...props}
-    >
-      {lockedText && (
-        <Flex
-          w="100%"
-          h="100%"
-          top="0"
-          left="0"
-          padding="4px"
-          borderRadius="4px"
-          direction="column"
-          position="absolute"
-          background={`linear-gradient(180deg, ${colors.white}00 0%, ${colors.white} 50%)`}
-          zIndex="1"
-        >
-          <Text
-            marginTop="auto"
-            textAlign="center"
-            whiteSpace="normal"
-            lineHeight="14px"
-          >
-            {lockedText}
-          </Text>
-        </Flex>
-      )}
-      <Flex flexGrow="1" alignItems="center">
-        <Text textAlign="center" whiteSpace="normal" lineHeight="14px">
-          {text}
-        </Text>
-      </Flex>
-      <UpgradableCircle
-        base={base}
-        value={value}
-        max={max}
-        showNextUpgradeValue={showNext}
+    <Flex direction="column" margin="0 auto">
+      <Button
+        w="80px"
+        h="104px"
+        padding="4px 8px"
+        border={`1px solid ${colors.darkGray}`}
+        flexDirection="column"
+        justifyContent="space-between"
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={() => setHoverOnAttr()}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        onClick={onClickCard}
+        {...(!clickable && { cursor: 'auto', boxShadow: 'none' })}
+        bg={value > 0 ? bg : colors.lightGray}
+        position="relative"
+        {...props}
       >
-        {innerTextArray.length > 0 && (
-          <Flex margin="auto" alignItems="center">
-            <Text fontSize="14px" lineHeight="14px">
-              {showNext ? innerTextArray?.[value + 1] : innerTextArray?.[value]}
+        {lockedText && (
+          <Flex
+            w="100%"
+            h="100%"
+            top="0"
+            left="0"
+            padding="4px"
+            borderRadius="4px"
+            direction="column"
+            position="absolute"
+            background={`linear-gradient(180deg, ${colors.white}00 0%, ${colors.white} 50%)`}
+            zIndex="1"
+          >
+            <Text
+              marginTop="auto"
+              textAlign="center"
+              whiteSpace="normal"
+              lineHeight="14px"
+            >
+              {lockedText}
             </Text>
           </Flex>
         )}
-      </UpgradableCircle>
-    </Button>
+        <Flex flexGrow="1" alignItems="center">
+          <Text textAlign="center" whiteSpace="normal" lineHeight="14px">
+            {text}
+          </Text>
+        </Flex>
+        <UpgradableCircle
+          base={base}
+          value={value}
+          max={max}
+          showNextUpgradeValue={showNext}
+        >
+          {innerTextArray.length > 0 && (
+            <Flex margin="auto" alignItems="center">
+              <Text fontSize="14px" lineHeight="14px">
+                {showNext
+                  ? innerTextArray?.[value + 1]
+                  : innerTextArray?.[value]}
+              </Text>
+            </Flex>
+          )}
+        </UpgradableCircle>
+      </Button>
+      {inConfirmationState && (
+        <Button
+          w="80px"
+          marginTop="8px"
+          bg={colors.darkGray}
+          color={colors.white}
+          onClick={onClickAndHandleFlag}
+        >
+          Confirm
+        </Button>
+      )}
+    </Flex>
   );
 };
 

@@ -34,22 +34,13 @@ const cardTypeColors = {
 
 const ExperienceUpgrades = ({ expType, ...props }) => {
   const dispatch = useDispatch();
+  const [confirmationState, setConfirmationState] = useState();
   const [notEnoughPointsAnimation, setNotEnoughPointsAnimation] = useState();
-  const experienceBusiness = useExperience('business');
-  const experienceRace = useExperience('race');
-  const experienceMechanic = useExperience('mechanic');
-
-  const availablePointsObject =
-    (expType === 'business' && experienceBusiness) ||
-    (expType === 'race' && experienceRace) ||
-    (expType === 'mechanic' && experienceMechanic) ||
-    {};
+  const availablePointsObject = useExperience(expType);
 
   const buyBuff = (type, subType) => {
     if (availablePointsObject.availablePoints > 0) {
       dispatch(buyExperienceBuffAction(type, subType));
-    } else {
-      setNotEnoughPointsAnimation(true);
     }
   };
 
@@ -61,6 +52,7 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
       padding="24px"
       bg={colors.white}
       alignItems="center"
+      onClick={() => setConfirmationState()}
       {...props}
     >
       <Box
@@ -79,6 +71,9 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
               bg={cardTypeColors[expType]}
               availablePoints={availablePointsObject.availablePoints}
               lockedText={subTypeValue.lockedText?.(availablePointsObject.exp)}
+              confirmationState={confirmationState}
+              setConfirmationState={setConfirmationState}
+              notEnoughPointsCb={() => setNotEnoughPointsAnimation(true)}
               key={`${expType}_${subTypeKey}`}
             />
           )
