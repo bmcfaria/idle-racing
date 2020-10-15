@@ -12,11 +12,20 @@ const TextWithAnimation = styled(Text)`
   animation: ${({ blink }) =>
     blink ? 'not-enough-experience-points 0.5s ease 3' : 'none'};
 
-  :hover {
-    animation: none;
-  }
-
   @keyframes not-enough-experience-points {
+    50% {
+      background-color: ${colors.red};
+    }
+    100% {
+      background-color: inherit;
+    }
+  }
+`;
+
+const ValueWithAnimation = styled.span`
+  animation: ${({ blink }) => (blink ? 'exp-value-spent 0.5s ease 1' : 'none')};
+
+  @keyframes exp-value-spent {
     50% {
       background-color: ${colors.red};
     }
@@ -36,11 +45,13 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
   const dispatch = useDispatch();
   const [confirmationState, setConfirmationState] = useState();
   const [notEnoughPointsAnimation, setNotEnoughPointsAnimation] = useState();
+  const [expValueSpentAnimation, setExpValueSpentAnimation] = useState();
   const availablePointsObject = useExperience(expType);
 
   const buyBuff = (type, subType) => {
     if (availablePointsObject.availablePoints > 0) {
       dispatch(buyExperienceBuffAction(type, subType));
+      setExpValueSpentAnimation(true);
     }
   };
 
@@ -85,7 +96,15 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
         padding="0 8px"
         blink={notEnoughPointsAnimation}
         onAnimationEnd={() => setNotEnoughPointsAnimation()}
-      >{`Available points: ${availablePointsObject.availablePoints}`}</TextWithAnimation>
+      >
+        Available points:{' '}
+        <ValueWithAnimation
+          blink={expValueSpentAnimation}
+          onAnimationEnd={() => setExpValueSpentAnimation()}
+        >
+          {availablePointsObject.availablePoints}
+        </ValueWithAnimation>
+      </TextWithAnimation>
     </Flex>
   );
 };
