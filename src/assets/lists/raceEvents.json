@@ -1,0 +1,74 @@
+[
+  {
+    "name": "free",
+    "type": "free",
+    "exp": 1,
+    "unlocked_tracks": "",
+    "req_type": "none",
+    "req_value": ""
+  },
+  {
+    "name": "city",
+    "type": "city",
+    "exp": 2,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 5
+  },
+  {
+    "name": "offroad",
+    "type": "offroad",
+    "exp": 2,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 10
+  },
+  {
+    "name": "track",
+    "type": "track",
+    "exp": 3,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 15
+  },
+  {
+    "name": "track day",
+    "type": "track-day",
+    "exp": 3,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 20
+  },
+  {
+    "name": "beginner racing",
+    "type": "beginner-racing",
+    "exp": 3,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 25
+  },
+  {
+    "name": "pro racing",
+    "type": "pro-racing",
+    "exp": 4,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 30
+  },
+  {
+    "name": "formula world",
+    "type": "formula-world",
+    "exp": 5,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 35
+  },
+  {
+    "name": "endurance",
+    "type": "endurance",
+    "exp": 10,
+    "unlocked_tracks": "TRUE",
+    "req_type": "none",
+    "req_value": ""
+  }
+]

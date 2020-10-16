@@ -3,6 +3,7 @@ import { ATTRIBUTE_TYPES } from './utils';
 import carsFile from '../assets/lists/cars.json';
 import tracksFile from '../assets/lists/tracks.json';
 import raceSponsorsFile from '../assets/lists/raceSponsors.json';
+import raceEventsFile from '../assets/lists/raceEvents.json';
 
 // To help on manual object creation
 window.uuid = uuid;
@@ -18,58 +19,20 @@ export const dealerBrands = [
   { type: 'heavy', name: 'heavy' },
 ];
 
-export const raceEvents = [
-  { type: 'free', name: 'free', unlockRequirements: { type: 'none' }, exp: 1 },
-  {
-    type: 'city',
-    name: 'city',
-    unlockRequirements: { type: 'race-exp', value: 5 },
-    exp: 2,
+const generateRaceEvent = raceEvent => ({
+  name: raceEvent.name,
+  type: raceEvent.type,
+  exp: raceEvent.exp,
+  unlockedTracks: raceEvent['unlocked_tracks'],
+  unlockRequirements: {
+    type: raceEvent['req_type'],
+    value: raceEvent['req_value'],
   },
-  {
-    type: 'offroad',
-    name: 'offroad',
-    unlockRequirements: { type: 'race-exp', value: 10 },
-    exp: 2,
-  },
-  {
-    type: 'track',
-    name: 'track',
-    unlockRequirements: { type: 'race-exp', value: 15 },
-    exp: 3,
-  },
-  {
-    type: 'track-day',
-    name: 'track day',
-    unlockRequirements: { type: 'race-exp', value: 20 },
-    exp: 3,
-  },
-  {
-    type: 'beginner-racing',
-    name: 'beginner racing',
-    unlockRequirements: { type: 'race-exp', value: 25 },
-    exp: 3,
-  },
-  {
-    type: 'pro-racing',
-    name: 'pro racing',
-    unlockRequirements: { type: 'race-exp', value: 30 },
-    exp: 4,
-  },
-  {
-    type: 'formula-world',
-    name: 'formula world',
-    unlockRequirements: { type: 'race-exp', value: 35 },
-    exp: 5,
-  },
-  {
-    type: 'endurance',
-    name: 'endurance',
-    unlockedTracks: true,
-    unlockRequirements: { type: 'none' },
-    exp: 10,
-  },
-];
+});
+
+export const raceEvents = raceEventsFile.map(raceEvent =>
+  generateRaceEvent(raceEvent)
+);
 
 const generateAttribute = (base, unit, max, basePrice, upgrade) => {
   const value = base + unit * upgrade;
@@ -317,23 +280,19 @@ const generateSponsors = () => {
   ];
 };
 
-export const cars = [
-  ...carsFile.reduce(
-    (results, car) =>
-      car?.id.length > 0 ? [...results, generateCar(car)] : results,
-    []
-  ),
-];
+export const cars = carsFile.reduce(
+  (results, car) =>
+    car?.id.length > 0 ? [...results, generateCar(car)] : results,
+  []
+);
 window.cars = cars;
 
-export const tracks = [
-  ...tracksFile.reduce(
-    (results, track) =>
-      track?.id.length > 0 && track['prize 1']
-        ? [...results, generateTrack(track)]
-        : results,
-    []
-  ),
-];
+export const tracks = tracksFile.reduce(
+  (results, track) =>
+    track?.id.length > 0 && track['prize 1']
+      ? [...results, generateTrack(track)]
+      : results,
+  []
+);
 
 export const raceSponsors = generateSponsors();
