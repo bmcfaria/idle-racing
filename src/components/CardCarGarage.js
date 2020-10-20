@@ -23,6 +23,8 @@ const CardCarGarage = ({ car, showAttributes, ...props }) => {
       car={car}
       onClick={currentRace ? onClickPrevent : undefined}
       {...props}
+      // Override notification prop if car in race
+      {...(currentRace && { notification: false })}
     >
       {currentRace && (
         <CardProgressOverlay
