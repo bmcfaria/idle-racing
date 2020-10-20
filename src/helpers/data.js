@@ -8,6 +8,20 @@ import raceEventsFile from '../assets/lists/raceEvents.json';
 // To help on manual object creation
 window.uuid = uuid;
 
+export const availableColors = [
+  'blue',
+  'darkgray',
+  'gray',
+  'green',
+  'lightblue',
+  'lightgray',
+  'orange',
+  'pink',
+  'purple',
+  'red',
+  'yellow',
+];
+
 export const dealerBrands = [
   { type: 'compact', name: 'compact' },
   { type: 'city', name: 'city' },

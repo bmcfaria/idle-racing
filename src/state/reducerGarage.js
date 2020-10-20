@@ -6,8 +6,13 @@ import {
   DISABLE_TUTORIAL_UPGRADE_TYPE,
   BUY_GARAGE_SLOT_TYPE,
   TUNE_CAR_TYPE,
+  CHANGE_CAR_COLOR_TYPE,
 } from './actions';
-import { upgradeAttribute, generateCarPrice } from '../helpers/data';
+import {
+  upgradeAttribute,
+  generateCarPrice,
+  availableColors,
+} from '../helpers/data';
 import { ATTRIBUTE_TYPES, buffValue, discountValue } from '../helpers/utils';
 import { maxUnlockedUpgrade, requiredUpgrade } from '../helpers/garageUpgrades';
 import initialState from './initialState';
@@ -140,6 +145,36 @@ const reducerGarage = (state = initialState, { type, payload }) => {
       };
       let newCar = Object.assign({}, car);
       newCar.tuning = newTuning;
+
+      const carIndex = state.garageCars.findIndex(item => item.id === car.id);
+      return {
+        ...state,
+        garageCars: Object.assign([], state.garageCars, {
+          [carIndex]: newCar,
+        }),
+      };
+    }
+
+    case CHANGE_CAR_COLOR_TYPE: {
+      const { carId, color } = payload;
+
+      const car = state.garageCars.find(item => item.id === carId);
+
+      const expCutomizationUnlocked =
+        ~~state.experience?.mechanic?.customization > 0;
+
+      if (
+        !car ||
+        !!car.race ||
+        !expCutomizationUnlocked ||
+        !color ||
+        !availableColors.includes(color)
+      ) {
+        return state;
+      }
+
+      let newCar = Object.assign({}, car);
+      newCar.color = color;
 
       const carIndex = state.garageCars.findIndex(item => item.id === car.id);
       return {

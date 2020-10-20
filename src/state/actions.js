@@ -123,3 +123,9 @@ export const tuneCarAction = (carId, tuneAttrs) => ({
   type: TUNE_CAR_TYPE,
   payload: { carId, tuneAttrs },
 });
+
+export const CHANGE_CAR_COLOR_TYPE = 'CHANGE_CAR_COLOR';
+export const changeCarColorAction = (carId, color) => ({
+  type: CHANGE_CAR_COLOR_TYPE,
+  payload: { carId, color },
+});

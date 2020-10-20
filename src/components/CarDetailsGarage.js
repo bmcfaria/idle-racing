@@ -7,6 +7,7 @@ import CarDetailsImageAndType from './CarDetailsImageAndType';
 import CarDetailsGarageSell from './CarDetailsGarageSell';
 import CarDetailsGarageAttributes from './CarDetailsGarageAttributes';
 import CarDetailsGarageTuning from './CarDetailsGarageTuning';
+import CarDetailsGarageColor from './CarDetailsGarageColor';
 
 const CarDetailsGarage = ({ car, ...props }) => {
   const { id, name, reward } = car;
@@ -45,6 +46,8 @@ const CarDetailsGarage = ({ car, ...props }) => {
       <CarDetailsGarageAttributes car={car} marginTop="4px" />
 
       <CarDetailsGarageTuning car={car} marginTop="4px" />
+
+      <CarDetailsGarageColor car={car} marginTop="4px" />
 
       <CarDetailsGarageSell car={car} marginTop="4px" />
     </>
