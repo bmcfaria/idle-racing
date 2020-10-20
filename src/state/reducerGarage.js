@@ -61,7 +61,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
 
       const calculatedPrice = ~~discountValue(
         car[payload.type].price,
-        state.experience.mechanic[payload.type]
+        state.experience.mechanic.attrs
       );
 
       const attribute = car[payload.type];

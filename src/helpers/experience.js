@@ -45,19 +45,9 @@ const experience = {
   },
 
   mechanic: {
-    acc: {
+    attrs: {
       max: 3,
-      title: 'ACC price',
-      textArray: ['0%', '-10%', '-20%', '-30%'],
-    },
-    spd: {
-      max: 3,
-      title: 'SPD price',
-      textArray: ['0%', '-10%', '-20%', '-30%'],
-    },
-    hnd: {
-      max: 3,
-      title: 'HND price',
+      title: 'Attributes price',
       textArray: ['0%', '-10%', '-20%', '-30%'],
     },
     customization: {

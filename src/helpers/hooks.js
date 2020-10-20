@@ -140,10 +140,10 @@ export const useRacePriceWithDiscount = price => {
   return discountValue(price, ~~experience.price);
 };
 
-export const useUpgradePriceWithDiscount = (price, type) => {
+export const useUpgradePriceWithDiscount = price => {
   const experience = useExperience('mechanic');
 
-  return discountValue(price, ~~experience[type]);
+  return discountValue(price, ~~experience.attrs);
 };
 
 export const usePassiveIncomeEventSponsors = event => {

@@ -83,16 +83,13 @@ const CarDetailsGarageAttributes = ({ car, ...props }) => {
   const pastRaces = useSelector(pastRacesSelector);
 
   const calculatedPriceAcc = ~~useUpgradePriceWithDiscount(
-    car[ATTRIBUTE_TYPES.ACCELERATION].price,
-    ATTRIBUTE_TYPES.ACCELERATION
+    car[ATTRIBUTE_TYPES.ACCELERATION].price
   );
   const calculatedPriceSpd = ~~useUpgradePriceWithDiscount(
-    car[ATTRIBUTE_TYPES.SPEED].price,
-    ATTRIBUTE_TYPES.SPEED
+    car[ATTRIBUTE_TYPES.SPEED].price
   );
   const calculatedPriceHnd = ~~useUpgradePriceWithDiscount(
-    car[ATTRIBUTE_TYPES.HANDLING].price,
-    ATTRIBUTE_TYPES.HANDLING
+    car[ATTRIBUTE_TYPES.HANDLING].price
   );
 
   const [confirmationState, setConfirmationState] = useState();

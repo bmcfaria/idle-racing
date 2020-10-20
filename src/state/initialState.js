@@ -37,22 +37,14 @@ const initialState = {
   experience: {
     business: {
       exp: 0,
-      newCars: 0,
-      usedCars: 0,
-      rewardCars: 0,
       max: 10 ** (2 * 3),
     },
     race: {
       exp: 0,
-      price: 0,
-      prizes: 0,
       max: 10 ** (2 * 3),
     },
     mechanic: {
       exp: 0,
-      acc: 0,
-      spd: 0,
-      hnd: 0,
       max: 10 ** (3 * 3),
     },
   },
