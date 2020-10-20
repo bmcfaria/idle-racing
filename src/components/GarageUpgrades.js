@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { colors } from '../helpers/theme';
 import garageUpgrades from '../helpers/garageUpgrades';
@@ -44,7 +44,23 @@ const MechanicTech = ({ module, totalMechanics }) => (
 );
 
 const GarageUpgrades = props => {
+  const containerRef = useRef();
   const totalMechanics = useMechanicsCount();
+
+  const nextUpgradeIndex = garageUpgrades.findIndex(
+    upgrade => totalMechanics < upgrade.mechanics
+  );
+
+  // To auto scroll to the next unlockable upgrades
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollLeft =
+        containerRef.current?.scrollWidth -
+        containerRef.current?.clientWidth -
+        128 * (garageUpgrades.length - 1 - nextUpgradeIndex) +
+        16;
+    }
+  }, [nextUpgradeIndex]);
 
   return (
     <Flex
@@ -60,6 +76,7 @@ const GarageUpgrades = props => {
         {`Garage Upgrades (Mechanics: ${totalMechanics})`}
       </Text>
       <Flex
+        ref={containerRef}
         bg={colors.white}
         borderRadius="0 0 8px 8px"
         padding="16px"
