@@ -7,7 +7,6 @@ import {
   resetAndRecalculateDevAction,
 } from '../state/actions';
 import offroadRaceAll from '../dev/offroad_race_all.json';
-import beforeExpTuningSlot from '../dev/before_exp_tuning_slot.json';
 import Button from './Button';
 
 const inDev = process.env.NODE_ENV === 'development';
@@ -117,12 +116,25 @@ const Settings = () => {
           alignItems="center"
         >
           <Text lineHeight="18px" textAlign="center" fontSize="18px">
-            Before Exp Tuning Slot
+            Max Exp
           </Text>
           <Button
             marginTop="8px"
             bg={colors.red}
-            onClick={() => resetDev(beforeExpTuningSlot)}
+            onClick={() =>
+              resetDev({
+                money: 9999999999,
+                experience: {
+                  business: {
+                    exp: 1000000,
+                  },
+                  race: { exp: 1000000 },
+                  mechanic: {
+                    exp: 1000000000,
+                  },
+                },
+              })
+            }
           >
             Reset
           </Button>

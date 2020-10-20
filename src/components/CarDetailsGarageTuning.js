@@ -136,10 +136,12 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
     <Flex
       position="relative"
       w="200px"
-      bg={cardBg}
+      bg={colors.darkGray}
+      border={`2px solid ${cardBg}`}
       padding="8px 0"
       borderRadius="16px"
       direction="column"
+      color={colors.white}
       {...props}
     >
       <Flex
@@ -199,8 +201,9 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
           top="0"
           left="0"
           position="absolute"
-          borderRadius="inherit"
+          borderRadius="14px"
           bg={hexAlpha(colors.white, 0.98)}
+          color="initial"
         >
           <Text fontSize="24px" textAlign="center" margin="auto">
             Missing <br /> Tuning slot <br /> (exp upgrade)

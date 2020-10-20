@@ -61,7 +61,7 @@ const CarDetailsGarageColor = ({ car, ...props }) => {
           top="0"
           left="0"
           position="absolute"
-          borderRadius="inherit"
+          borderRadius="14px"
           bg={hexAlpha(colors.white, 0.98)}
         >
           <Text fontSize="24px" textAlign="center" margin="auto">
