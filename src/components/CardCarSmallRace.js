@@ -39,7 +39,9 @@ const CardCarSmallRace = ({ car, onClick, failedRequirements, ...props }) => {
 
   // To improve mobile navigation,
   // this way the back button will un-select
-  const setSelected = e => {
+  const setSelected = () => {
+    if (currentRace) return;
+
     if (!meetsRequirements) {
       // Test one by one separately
       const failedRequirementsList = selectedTrack?.requirements.map(
@@ -50,8 +52,6 @@ const CardCarSmallRace = ({ car, onClick, failedRequirements, ...props }) => {
 
       return;
     }
-
-    if (currentRace) return;
 
     if (onClick) {
       onClick(car);
