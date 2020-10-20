@@ -20,11 +20,7 @@ const CarImage = ({ car, carColor, ...props }) => {
       borderRadius="16px"
       objectFit="contain"
       alt={`${car.name.toLowerCase()} (${color})`}
-      src={`/images/${car.name
-        .toLowerCase()
-        // Hammer fix for the City coupé
-        .replace(/é/, 'e')
-        .replace(/ /g, '-')}_${color}.png`}
+      src={`/images/${car.imageFile}_${color}.png`}
       {...props}
     />
   );

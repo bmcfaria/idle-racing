@@ -224,17 +224,17 @@ export const doMeetRequirements = (car, requirements, upgradable) => {
     return true;
   }
 
-  // Requirements could allow multiple cars / brands / types
-  const { allowedCars, allowedBrands, allowedTypes } = requirements.reduce(
+  // Requirements could allow multiple cars / categories / types
+  const { allowedCars, allowedCategories, allowedTypes } = requirements.reduce(
     (result, requirement) => {
       let allowedCars = [];
       if (requirement.type === 'car') {
         allowedCars = [...result.allowedCars, requirement.value];
       }
 
-      let allowedBrands = [];
-      if (requirement.type === 'brand') {
-        allowedBrands = [...result.allowedBrands, requirement.value];
+      let allowedCategories = [];
+      if (requirement.type === 'cat') {
+        allowedCategories = [...result.allowedCategories, requirement.value];
       }
 
       let allowedTypes = [];
@@ -244,11 +244,11 @@ export const doMeetRequirements = (car, requirements, upgradable) => {
 
       return {
         allowedCars: [...result.allowedCars, ...allowedCars],
-        allowedBrands: [...result.allowedBrands, ...allowedBrands],
+        allowedCategories: [...result.allowedCategories, ...allowedCategories],
         allowedTypes: [...result.allowedTypes, ...allowedTypes],
       };
     },
-    { allowedCars: [], allowedBrands: [], allowedTypes: [] }
+    { allowedCars: [], allowedCategories: [], allowedTypes: [] }
   );
 
   // Test car
@@ -259,8 +259,11 @@ export const doMeetRequirements = (car, requirements, upgradable) => {
     return false;
   }
 
-  // Test brand
-  if (allowedBrands.length > 0 && !allowedBrands.includes(car.brand)) {
+  // Test category
+  if (
+    allowedCategories.length > 0 &&
+    !allowedCategories.every(item => car.categories.includes(item))
+  ) {
     return false;
   }
 

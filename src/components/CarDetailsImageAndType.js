@@ -10,7 +10,7 @@ const CarDetailsImageAndType = ({
   bg = colors.orange,
   ...props
 }) => {
-  const { type, brand } = car;
+  const { type, categories } = car;
 
   return (
     <Flex
@@ -20,14 +20,24 @@ const CarDetailsImageAndType = ({
       color={colors.darkGray}
       bg={colors.white}
       fontSize="14px"
+      lineHeight="16px"
       direction="column"
       textAlign="center"
       position="relative"
       alignItems="center"
       {...props}
     >
-      <Flex h="48px" direction="column" justifyContent="center">
-        <Text>{capitalize(brand)} car</Text>
+      <Flex h="64px" direction="column" justifyContent="center">
+        <Text>
+          (
+          {categories.map((category, index) => (
+            <React.Fragment key={category}>
+              <span>{capitalize(category)}</span>
+              {index < categories.length - 1 && <span>, </span>}
+            </React.Fragment>
+          ))}
+          ) car
+        </Text>
         <Text>
           {carTypeText[type]} ({type})
         </Text>

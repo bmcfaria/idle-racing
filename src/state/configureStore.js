@@ -10,7 +10,7 @@ import initialState from './initialState';
 
 const inDev = process.env.NODE_ENV === 'development';
 
-const minimunStoreVersion = 0.71;
+const minimunStoreVersion = 0.711;
 
 const moneyTrackerReducer = state => {
   const moneyEarned = ~~(

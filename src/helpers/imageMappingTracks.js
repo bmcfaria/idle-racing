@@ -13,6 +13,21 @@ import { ReactComponent as Track12 } from '../assets/tracks/track12.svg';
 import { ReactComponent as Track13 } from '../assets/tracks/track13.svg';
 import { ReactComponent as Track14 } from '../assets/tracks/track14.svg';
 
+import { ReactComponent as Countryside1 } from '../assets/tracks/countryside1.svg';
+import { ReactComponent as Countryside2 } from '../assets/tracks/countryside2.svg';
+import { ReactComponent as Countryside3 } from '../assets/tracks/countryside3.svg';
+import { ReactComponent as Countryside4 } from '../assets/tracks/countryside4.svg';
+
+import { ReactComponent as Desert1 } from '../assets/tracks/desert1.svg';
+import { ReactComponent as Desert2 } from '../assets/tracks/desert2.svg';
+import { ReactComponent as Desert3 } from '../assets/tracks/desert3.svg';
+import { ReactComponent as Desert4 } from '../assets/tracks/desert4.svg';
+
+import { ReactComponent as Uphill1 } from '../assets/tracks/uphill1.svg';
+import { ReactComponent as Uphill2 } from '../assets/tracks/uphill2.svg';
+import { ReactComponent as Uphill3 } from '../assets/tracks/uphill3.svg';
+import { ReactComponent as Uphill4 } from '../assets/tracks/uphill4.svg';
+
 import { ReactComponent as Offroad1 } from '../assets/tracks/offroad1.svg';
 import { ReactComponent as Offroad2 } from '../assets/tracks/offroad2.svg';
 import { ReactComponent as Offroad3 } from '../assets/tracks/offroad3.svg';
@@ -23,53 +38,43 @@ import { ReactComponent as LeMans } from '../assets/tracks/le_mans.svg';
 import { ReactComponent as Nascar } from '../assets/tracks/nascar.svg';
 
 export const trackImages = {
-  // Free race
   track1: Track1,
-  // Free race no ups
   track2: Track2,
-  // Free special
   track3: Track3,
-  // Free special no ups
   track4: Track4,
-
-  // City basic
   track5: Track5,
-  // Small cars
   track6: Track6,
-  // Family friendly
   track7: Track7,
-  // City special
   track8: Track8,
-  // City special no ups
   track9: Track9,
-
-  // Offroad casual
-  offroad1: Offroad1,
-  // Hill madness
-  offroad2: Offroad2,
-  // Muddy fest
-  offroad3: Offroad3,
-  // Rural beauty
-  offroad4: Offroad4,
-
-  // Casual circuit
   track10: Track10,
-  // Track basic
   track11: Track11,
-  // Track acceleration
   track12: Track12,
-  // Track speed
   track13: Track13,
-  // Track heavy
   track14: Track14,
 
-  // F1 party
-  // 'track3': Track3,
-  // F1 serious
+  countryside1: Countryside1,
+  countryside2: Countryside2,
+  countryside3: Countryside3,
+  countryside4: Countryside4,
+
+  desert1: Desert1,
+  desert2: Desert2,
+  desert3: Desert3,
+  desert4: Desert4,
+
+  uphill1: Uphill1,
+  uphill2: Uphill2,
+  uphill3: Uphill3,
+  uphill4: Uphill4,
+
+  offroad1: Offroad1,
+  offroad2: Offroad2,
+  offroad3: Offroad3,
+  offroad4: Offroad4,
+
   f1_serious: F1Serious,
-  // 24h
   le_mans: LeMans,
-  // Nascar
   nascar: Nascar,
 };
 

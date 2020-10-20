@@ -30,8 +30,12 @@ const generateRaceEvent = raceEvent => ({
   },
 });
 
-export const raceEvents = raceEventsFile.map(raceEvent =>
-  generateRaceEvent(raceEvent)
+export const raceEvents = raceEventsFile.reduce(
+  (results, raceEvent) =>
+    raceEvent?.type.length > 0
+      ? [...results, generateRaceEvent(raceEvent)]
+      : results,
+  []
 );
 
 const generateAttribute = (base, unit, max, basePrice, upgrade) => {
@@ -60,38 +64,44 @@ export const generateCarPrice = car =>
   200 * car[ATTRIBUTE_TYPES.SPEED].upgrade +
   200 * car[ATTRIBUTE_TYPES.HANDLING].upgrade;
 
-const generateCar = car => ({
-  id: car.id,
-  name: car.name,
-  type: car.type,
-  [ATTRIBUTE_TYPES.ACCELERATION]: generateAttribute(
-    car.acc,
-    1,
-    car['acc ups'],
-    ~~(car.price / 10),
-    0
-  ),
-  [ATTRIBUTE_TYPES.SPEED]: generateAttribute(
-    car.spd,
-    1,
-    car['spd ups'],
-    ~~(car.price / 10),
-    0
-  ),
-  [ATTRIBUTE_TYPES.HANDLING]: generateAttribute(
-    car.hnd,
-    1,
-    car['hnd ups'],
-    ~~(car.price / 10),
-    0
-  ),
-  brand: car.brand,
-  price: car.price,
-  reward: car.reward,
-  total: car.total,
-  totalUp: car['total up'],
-  defaultColors: car['default colors'].trim().slice(1, -1).split(','),
-});
+const generateCar = car => {
+  const categories = parseStringArray(car.categories);
+
+  return {
+    id: car.id,
+    name: car.name,
+    type: car.type,
+    [ATTRIBUTE_TYPES.ACCELERATION]: generateAttribute(
+      car.acc,
+      1,
+      car['acc ups'],
+      ~~(car.price / 10),
+      0
+    ),
+    [ATTRIBUTE_TYPES.SPEED]: generateAttribute(
+      car.spd,
+      1,
+      car['spd ups'],
+      ~~(car.price / 10),
+      0
+    ),
+    [ATTRIBUTE_TYPES.HANDLING]: generateAttribute(
+      car.hnd,
+      1,
+      car['hnd ups'],
+      ~~(car.price / 10),
+      0
+    ),
+    brand: car.brand,
+    price: car.price,
+    reward: categories.includes('reward'),
+    total: car.total,
+    totalUp: car['total up'],
+    defaultColors: car['default colors'].trim().slice(1, -1).split(','),
+    imageFile: car['image file'],
+    categories,
+  };
+};
 
 const carDevaluation = 0.5;
 
@@ -115,6 +125,8 @@ export const generateGarageCar = (car, color, reward = false) => ({
     [ATTRIBUTE_TYPES.HANDLING]: 0,
   },
   color,
+  imageFile: car.imageFile,
+  categories: car.categories,
 });
 
 export const upgradeAttribute = attribute => {
@@ -145,9 +157,9 @@ const parseRequirement = rawRequirement => {
     };
   }
 
-  if (rawRequirement.startsWith('brand_')) {
+  if (rawRequirement.startsWith('cat_')) {
     return {
-      type: 'brand',
+      type: 'cat',
       value: rawRequirement.split('_')[1],
     };
   }
@@ -172,11 +184,12 @@ const parseRequirement = rawRequirement => {
   }
 };
 
+const parseStringArray = string => {
+  return string.trim().slice(1, -1).split(',');
+};
+
 const parseRequirements = rawRequirements => {
-  return rawRequirements
-    .trim()
-    .slice(1, -1)
-    .split(',')
+  return parseStringArray(rawRequirements)
     .filter(item => item.length > 0)
     .map(requirement => parseRequirement(requirement));
 };

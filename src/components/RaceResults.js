@@ -23,8 +23,10 @@ const Row = ({ index, car, playerCarId, prize = 0 }) => (
       {index + 1}
     </Text>
     <Text marginLeft="2px">- {car ? car.name : '[selled car]'}</Text>
-    {isNaN(prize) && <Text marginLeft="auto">CAR</Text>}
-    {!isNaN(prize) && <Text marginLeft="auto">${formatMoney(prize)}</Text>}
+    {(isNaN(prize) || prize === null) && <Text marginLeft="auto">CAR</Text>}
+    {!isNaN(prize) && prize !== null && (
+      <Text marginLeft="auto">${formatMoney(prize)}</Text>
+    )}
   </Flex>
 );
 

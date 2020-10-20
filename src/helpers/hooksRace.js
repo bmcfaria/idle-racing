@@ -74,7 +74,7 @@ export const useRequirements = () => {
     switch (type) {
       case 'no_ups':
         return 'No upgrades';
-      case 'brand':
+      case 'cat':
         return `${capitalize(value)} cars`;
       case 'type':
         return `${carTypeText[value]} only`;

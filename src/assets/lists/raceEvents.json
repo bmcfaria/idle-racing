@@ -8,41 +8,113 @@
     "req_value": ""
   },
   {
-    "name": "city",
-    "type": "city",
+    "name": "",
+    "type": "",
+    "exp": "",
+    "unlocked_tracks": "",
+    "req_type": "",
+    "req_value": ""
+  },
+  {
+    "name": "metropolis",
+    "type": "metropolis",
     "exp": 2,
     "unlocked_tracks": "",
     "req_type": "race-exp",
     "req_value": 5
   },
   {
-    "name": "offroad",
-    "type": "offroad",
+    "name": "tiny world",
+    "type": "tiny-world",
     "exp": 2,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 5
+  },
+  {
+    "name": "family friendly",
+    "type": "family-friendly",
+    "exp": 2,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 8
+  },
+  {
+    "name": "street racing",
+    "type": "street-racing",
+    "exp": 4,
     "unlocked_tracks": "",
     "req_type": "race-exp",
     "req_value": 10
   },
   {
-    "name": "track",
-    "type": "track",
+    "name": "",
+    "type": "",
+    "exp": "",
+    "unlocked_tracks": "",
+    "req_type": "",
+    "req_value": ""
+  },
+  {
+    "name": "countryside",
+    "type": "countryside",
     "exp": 3,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 15
+    "req_value": 5
+  },
+  {
+    "name": "desert cup",
+    "type": "desert-cup",
+    "exp": 4,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 5
+  },
+  {
+    "name": "up hill",
+    "type": "up-hill",
+    "exp": 4,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 8
+  },
+  {
+    "name": "muddy cup",
+    "type": "muddy-cup",
+    "exp": 5,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 10
+  },
+  {
+    "name": "",
+    "type": "",
+    "exp": "",
+    "unlocked_tracks": "",
+    "req_type": "",
+    "req_value": ""
   },
   {
     "name": "track day",
     "type": "track-day",
-    "exp": 3,
+    "exp": 5,
     "unlocked_tracks": "",
     "req_type": "race-exp",
     "req_value": 20
   },
   {
+    "name": "",
+    "type": "",
+    "exp": "",
+    "unlocked_tracks": "",
+    "req_type": "",
+    "req_value": ""
+  },
+  {
     "name": "beginner racing",
     "type": "beginner-racing",
-    "exp": 3,
+    "exp": 5,
     "unlocked_tracks": "",
     "req_type": "race-exp",
     "req_value": 25
@@ -50,25 +122,73 @@
   {
     "name": "pro racing",
     "type": "pro-racing",
-    "exp": 4,
+    "exp": 6,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 30
+    "req_value": 25
   },
   {
-    "name": "formula world",
-    "type": "formula-world",
-    "exp": 5,
+    "name": "dream cup",
+    "type": "dream-cup",
+    "exp": 7,
     "unlocked_tracks": "",
     "req_type": "race-exp",
     "req_value": 35
   },
   {
+    "name": "NASCAR fever",
+    "type": "nascar-fever",
+    "exp": 8,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 35
+  },
+  {
+    "name": "heavy cup",
+    "type": "heavy-cup",
+    "exp": 9,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 50
+  },
+  {
+    "name": "reward cup",
+    "type": "reward-cup",
+    "exp": 10,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 50
+  },
+  {
+    "name": "",
+    "type": "",
+    "exp": "",
+    "unlocked_tracks": "",
+    "req_type": "",
+    "req_value": ""
+  },
+  {
+    "name": "formula world",
+    "type": "formula-world",
+    "exp": 12,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 55
+  },
+  {
     "name": "endurance",
     "type": "endurance",
-    "exp": 10,
+    "exp": 15,
     "unlocked_tracks": "TRUE",
     "req_type": "none",
     "req_value": ""
+  },
+  {
+    "name": "endurance mix",
+    "type": "endurance-mix",
+    "exp": 20,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 60
   }
 ]

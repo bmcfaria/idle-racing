@@ -25,18 +25,20 @@ const RequirementsListNoUps = () => {
   );
 };
 
-const RequirementsListBrand = ({ brand }) => {
+const RequirementsListCat = ({ category }) => {
   const garagesCars = useSelector(garageCarsSelector);
 
-  const carFromBrand = garagesCars.find(item => item.brand === brand);
+  const carFromCategory = garagesCars.find(item =>
+    item.categories?.includes(category)
+  );
 
   return (
     <Text
       h="16px"
       fontSize="12px"
-      color={!!carFromBrand ? 'unset' : colors.red}
+      color={!!carFromCategory ? 'unset' : colors.red}
     >
-      {brand}
+      {category}
     </Text>
   );
 };
@@ -103,8 +105,8 @@ const RequirementsList = ({ requirements, ...props }) => (
     {requirements.map((requirement, index) => (
       <React.Fragment key={`${requirement.type}_${index}`}>
         {requirement.type === 'no_ups' && <RequirementsListNoUps />}
-        {requirement.type === 'brand' && (
-          <RequirementsListBrand brand={requirement.value} />
+        {requirement.type === 'cat' && (
+          <RequirementsListCat category={requirement.value} />
         )}
         {requirement.type === 'type' && (
           <RequirementsListType type={requirement.value} />
