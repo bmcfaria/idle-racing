@@ -939,7 +939,7 @@
     "category": "pro-racing",
     "price": 14000,
     "duration": 600,
-    "requirements": "[cat_city,cat_supercar]",
+    "requirements": "[cat_supercar]",
     "acc": 0.5,
     "spd": 0.9,
     "hnd": 0.4,
