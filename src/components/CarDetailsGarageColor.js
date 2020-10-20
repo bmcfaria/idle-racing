@@ -8,6 +8,7 @@ import hexAlpha from 'hex-alpha';
 import { useExperience } from '../helpers/hooks';
 import CarImage from './CarImage';
 import { availableColors } from '../helpers/data';
+import experienceObject from '../helpers/experience';
 
 const CarColorPickerButton = ({ car, color, ...props }) => (
   <Button
@@ -26,6 +27,14 @@ const CarDetailsGarageColor = ({ car, ...props }) => {
   const dispatch = useDispatch();
   const experienceMechanic = useExperience('mechanic');
   const expCustomizationUnlocked = ~~experienceMechanic.customization > 0;
+
+  const lockedText = experienceObject?.mechanic?.customization?.lockedText?.(
+    experienceMechanic.exp
+  );
+  // If still locked on exp, hide it
+  if (lockedText) {
+    return null;
+  }
 
   const cardBg = (reward && colors.green) || colors.lightBlue;
 

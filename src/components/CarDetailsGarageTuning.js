@@ -10,6 +10,7 @@ import { maxUnlockedUpgrade } from '../helpers/garageUpgrades';
 import { useMechanicsCount } from '../helpers/hooksGarage';
 import hexAlpha from 'hex-alpha';
 import { useExperience } from '../helpers/hooks';
+import experienceObject from '../helpers/experience';
 
 const AttrTextValue = ({ name, value, tuning, ...props }) => (
   <Box w="60px" textAlign="center" {...props}>
@@ -96,6 +97,14 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
     'tuning_center',
     mechanics
   );
+
+  const lockedText = experienceObject?.mechanic?.tuning?.lockedText?.(
+    experienceMechanic.exp
+  );
+  // If still locked on exp, hide it
+  if (lockedText) {
+    return null;
+  }
 
   // Fallback in case no upgrade available
   const maxDifference = (~~maxUnlockedUpgradeObject?.interval[1] || 1) - 1;

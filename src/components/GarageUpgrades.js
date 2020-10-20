@@ -82,7 +82,7 @@ const GarageUpgrades = props => {
             left="0"
             position="absolute"
             borderRadius="inherit"
-            bg={hexAlpha(colors.lightGray, 0.98)}
+            bg={hexAlpha(colors.white, 0.98)}
           >
             <Text fontSize="24px" textAlign="center" margin="auto">
               Missing mechanics
