@@ -126,11 +126,11 @@ const Settings = () => {
                 money: 9999999999,
                 experience: {
                   business: {
-                    exp: 1000000,
+                    exp: 10 ** (3 * 3),
                   },
-                  race: { exp: 1000000 },
+                  race: { exp: 10 ** (3 * 3) },
                   mechanic: {
-                    exp: 1000000000,
+                    exp: 10 ** (3 * 3),
                   },
                 },
               })

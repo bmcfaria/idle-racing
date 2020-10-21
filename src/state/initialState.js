@@ -37,15 +37,15 @@ const initialState = {
   experience: {
     business: {
       exp: 0,
-      max: 10 ** (2 * 3),
+      max: 10 ** (2 * 3 + 1),
     },
     race: {
       exp: 0,
-      max: 10 ** (2 * 3),
+      max: 10 ** (3 * 3),
     },
     mechanic: {
       exp: 0,
-      max: 10 ** (3 * 3),
+      max: 10 ** (3 + 1 + 1),
     },
   },
   sponsors: {
@@ -57,7 +57,7 @@ const initialState = {
   soldCars: {},
 
   brandComplete: {},
-  version: 0.711,
+  version: 0.712,
   toasts: [],
   eventMultipliers: {},
   warnings: {
