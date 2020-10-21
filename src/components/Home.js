@@ -11,6 +11,7 @@ import Button from './Button';
 import HomeCardMoney from './HomeCardMoney';
 import HomeCardRaces from './HomeCardRaces';
 import HomeCardCars from './HomeCardCars';
+import HomeCardTimeStarted from './HomeCardTimeStarted';
 
 const Home = () => {
   const cars = useSelector(garageCarsSelector);
@@ -51,6 +52,7 @@ const Home = () => {
             gridTemplateColumns="repeat(auto-fit, minmax(160px, 1fr))"
             gridGap="8px"
           >
+            <HomeCardTimeStarted />
             <HomeCardRaces />
             <HomeCardCars />
             <HomeCardMoney />

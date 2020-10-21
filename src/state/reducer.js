@@ -77,6 +77,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
             exp: state.experience.business.exp + businessExpInc,
           },
         },
+
+        // yay, new player
+        ...(!state.globalStats.firstBuy && {
+          globalStats: {
+            ...state.globalStats,
+            firstBuy: garageCar.timestamp,
+          },
+        }),
       };
     }
 

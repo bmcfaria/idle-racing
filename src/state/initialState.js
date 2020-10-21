@@ -1,8 +1,8 @@
 const initialMoney = 650;
 
 const initialState = {
-  finishRace: true,
-  acquiredCar: true,
+  finishRace: false,
+  acquiredCar: false,
   autoRace: false,
   garageCars: [],
   garageSlots: 1,
@@ -57,7 +57,7 @@ const initialState = {
   soldCars: {},
 
   brandComplete: {},
-  version: 0.712,
+  version: 0.713,
   toasts: [],
   eventMultipliers: {},
   warnings: {
@@ -69,6 +69,10 @@ const initialState = {
       timelapse: 0,
       maxTime: 2 * 60 * 60 * 1000,
     },
+  },
+
+  globalStats: {
+    firstBuy: undefined,
   },
 };
 

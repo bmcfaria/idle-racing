@@ -65,3 +65,5 @@ export const eventMultipliersSelector = state => state.eventMultipliers;
 export const brandCompleteSelector = state => state.brandComplete;
 
 export const lockedSelector = state => state.locked;
+
+export const globalStatsSelector = state => state.globalStats;
