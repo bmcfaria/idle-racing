@@ -54,11 +54,15 @@ const GarageUpgrades = props => {
   // To auto scroll to the next unlockable upgrades
   useEffect(() => {
     if (containerRef.current) {
+      const leftUpgradesWidth =
+        nextUpgradeIndex >= 0
+          ? 128 * (garageUpgrades.length - 1 - nextUpgradeIndex) - 16
+          : 0;
+
       containerRef.current.scrollLeft =
         containerRef.current?.scrollWidth -
         containerRef.current?.clientWidth -
-        128 * (garageUpgrades.length - 1 - nextUpgradeIndex) +
-        16;
+        leftUpgradesWidth;
     }
   }, [nextUpgradeIndex]);
 
