@@ -8,6 +8,7 @@ import {
 } from '../state/actions';
 import offroadRaceAll from '../dev/offroad_race_all.json';
 import beforeAllRewardCars from '../dev/before_all_reward_cars.json';
+import allRacesGreen from '../dev/all_races_green.json';
 import Button from './Button';
 
 const inDev = process.env.NODE_ENV === 'development';
@@ -123,6 +124,28 @@ const Settings = () => {
             marginTop="8px"
             bg={colors.red}
             onClick={() => resetDev(beforeAllRewardCars)}
+          >
+            Reset
+          </Button>
+        </Flex>
+      )}
+      {inDev && (
+        <Flex
+          w="240px"
+          padding="16px"
+          borderRadius="16px"
+          marginTop="16px"
+          direction="column"
+          bg={colors.lightGray}
+          alignItems="center"
+        >
+          <Text lineHeight="18px" textAlign="center" fontSize="18px">
+            All races green
+          </Text>
+          <Button
+            marginTop="8px"
+            bg={colors.red}
+            onClick={() => resetDev(allRacesGreen)}
           >
             Reset
           </Button>
