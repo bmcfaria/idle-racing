@@ -1,4 +1,5 @@
 import starsFile from '../assets/lists/stars.json';
+import { cars } from './data';
 
 // Stars === Achievements
 
@@ -63,16 +64,62 @@ export const newRewardMoneyStars = (totalMoneyEarned, stateStars) =>
     stateStars
   );
 
-export const newRewardCarsStars = (stateRewardCars, stateStars) => {
+const rewardCarsIdList = cars.reduce(
+  (results, car) => (car.reward ? [...results, car.id] : results),
+  []
+);
+const rewardCarsAllStarId = starsByTypeObject['rewards'].find(
+  ({ requirement }) =>
+    requirement.type === 'reward_car' && requirement.value === 'all'
+)?.id;
+
+const newRewardAllCarsStars = (newRewardCar, stateRewardCars, stateStars) => {
+  if (!newRewardCar) {
+    return [false, { [rewardCarsAllStarId]: stateStars[rewardCarsAllStarId] }];
+  }
+
+  const obtainedRewardIds = Object.keys(stateRewardCars);
+
+  // Was added by the END_RACE_REWARDS_TYPE
+  const couldBeNewStar = stateRewardCars[newRewardCar.id] === 1;
+
+  const areAllRewardCarsObtained = rewardCarsIdList.every(carId =>
+    obtainedRewardIds.includes(carId)
+  );
+
+  return [
+    couldBeNewStar && areAllRewardCarsObtained,
+    {
+      [rewardCarsAllStarId]:
+        stateStars[rewardCarsAllStarId] || areAllRewardCarsObtained,
+    },
+  ];
+};
+
+export const newRewardCarsStars = (
+  newRewardCar,
+  stateRewardCars,
+  stateStars
+) => {
   const totalRewardedCars = Object.values(stateRewardCars).reduce(
     (results, numberOfCars) => results + numberOfCars,
     0
   );
 
-  return genericNewStarsNumberCompare(
+  const newStarsNumberCompare = genericNewStarsNumberCompare(
     'rewards',
     'reward_car',
     totalRewardedCars,
     stateStars
   );
+  const newRewardAllCarsStarsCompare = newRewardAllCarsStars(
+    newRewardCar,
+    stateRewardCars,
+    stateStars
+  );
+
+  return [
+    newStarsNumberCompare[0] || newRewardAllCarsStarsCompare[0],
+    { ...newStarsNumberCompare[1], ...newRewardAllCarsStarsCompare[1] },
+  ];
 };

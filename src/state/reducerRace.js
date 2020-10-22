@@ -201,7 +201,7 @@ const reducerRace = (state = initialState, { type, payload }) => {
     case END_RACE_REWARDS_TYPE: {
       const { reward } = payload;
 
-      if (!payload) {
+      if (!reward) {
         return state;
       }
 
@@ -329,7 +329,11 @@ const reducerRace = (state = initialState, { type, payload }) => {
         return state;
       }
 
+      const { reward } = pastRace;
+      const earnedCar = isNaN(reward) && cars.find(({ id }) => id === reward);
+
       const [newStars, completedStars] = newRewardCarsStars(
+        earnedCar,
         state.rewardCars,
         state.stars
       );
