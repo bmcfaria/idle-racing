@@ -8,6 +8,7 @@ import {
   CLEAR_OFFLINE_EARNINGS_TYPE,
   DISMISS_TOAST_TYPE,
   RESET_DEV_TYPE,
+  OPEN_STARS_TYPE,
 } from './actions';
 import { cars as dealerCars, generateGarageCar } from '../helpers/data';
 import { discountValue } from '../helpers/utils';
@@ -168,6 +169,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         toasts: state.toasts.filter(item => item.id !== payload.toastId),
+      };
+    }
+
+    case OPEN_STARS_TYPE: {
+      return {
+        ...state,
+        pageNotifications: {
+          ...state.pageNotifications,
+          stars: false,
+        },
       };
     }
 

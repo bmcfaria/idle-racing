@@ -12,6 +12,7 @@ import {
   END_RACE_EXPERIENCE_TYPE,
   END_RACE_SPONSORS_TYPE,
   RACE_LOCKED_REFRESH_TYPE,
+  END_RACE_STARS_TYPE,
 } from './actions';
 import {
   generateRace,
@@ -40,6 +41,7 @@ import { brandSponsors } from '../helpers/sponsors';
 import { evaluateSponsors } from '../helpers/sponsors';
 import initialState from './initialState';
 import experience from '../helpers/experience';
+import { newRewardCarsStars } from '../helpers/stars';
 
 const reducerRace = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -317,6 +319,33 @@ const reducerRace = (state = initialState, { type, payload }) => {
         ...state,
         toasts: [...allNewToasts, ...state.toasts],
         notifications: [...allNewToasts, ...state.notifications],
+      };
+    }
+
+    case END_RACE_STARS_TYPE: {
+      const { pastRace } = payload;
+
+      if (!pastRace) {
+        return state;
+      }
+
+      const [newStars, completedStars] = newRewardCarsStars(
+        state.rewardCars,
+        state.stars
+      );
+
+      return {
+        ...state,
+        stars: {
+          ...state.stars,
+          ...completedStars,
+        },
+        ...(newStars && {
+          pageNotifications: {
+            ...state.pageNotifications,
+            stars: true,
+          },
+        }),
       };
     }
 

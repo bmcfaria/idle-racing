@@ -8,6 +8,9 @@ import raceEventsFile from '../assets/lists/raceEvents.json';
 // To help on manual object creation
 window.uuid = uuid;
 
+const inDev = process.env.NODE_ENV === 'development';
+const devDuration = inDev && 1 * 1000;
+
 export const availableColors = [
   'blue',
   'darkgray',
@@ -211,7 +214,7 @@ const parseRequirements = rawRequirements => {
 const generateTrack = track => ({
   id: track.id,
   name: track.name,
-  duration: track.duration * 1000,
+  duration: devDuration || track.duration * 1000,
   price: track.price,
   prizes: [track['prize 1'], track['prize 2'], track['prize 3']],
   category: track.category,

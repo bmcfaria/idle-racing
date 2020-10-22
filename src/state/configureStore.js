@@ -7,7 +7,7 @@ import mySaga from './sagas';
 import throttle from 'lodash/throttle';
 import objectAssignDeep from 'object-assign-deep';
 import initialState from './initialState';
-import { starsByType } from '../helpers/stars';
+import { newRewardMoneyStars } from '../helpers/stars';
 
 const inDev = process.env.NODE_ENV === 'development';
 
@@ -25,12 +25,9 @@ const moneyTrackerReducer = state => {
   const totalMoneySpent = state.totalMoneySpent + moneySpent;
 
   // Check money stars/achievements
-  const completedStars = starsByType('rewards', 'money').reduce(
-    (results, star) => ({
-      ...results,
-      [star.id]: totalMoneyEarned >= star.requirement.value,
-    }),
-    {}
+  const [newStars, completedStars] = newRewardMoneyStars(
+    totalMoneyEarned,
+    state.stars
   );
 
   return {
@@ -42,6 +39,12 @@ const moneyTrackerReducer = state => {
       ...state.stars,
       ...completedStars,
     },
+    ...(newStars && {
+      pageNotifications: {
+        ...state.pageNotifications,
+        stars: true,
+      },
+    }),
   };
 };
 

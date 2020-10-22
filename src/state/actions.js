@@ -108,6 +108,7 @@ export const END_RACE_EXPERIENCE_TYPE = 'END_RACE_EXPERIENCE';
 export const END_RACE_REWARDS_TYPE = 'END_RACE_REWARDS';
 export const END_RACE_TOAST_TYPE = 'END_RACE_TOAST';
 export const END_RACE_SPONSORS_TYPE = 'END_RACE_SPONSORS';
+export const END_RACE_STARS_TYPE = 'END_RACE_STARS';
 
 export const RACE_LOCKED_REFRESH_TYPE = 'RACE_LOCKED_REFRESH';
 
@@ -129,3 +130,8 @@ export const changeCarColorAction = (carId, color) => ({
   type: CHANGE_CAR_COLOR_TYPE,
   payload: { carId, color },
 });
+
+export const OPEN_STARS_TYPE = 'OPEN_STARS';
+export const openStarsAction = {
+  type: OPEN_STARS_TYPE,
+};

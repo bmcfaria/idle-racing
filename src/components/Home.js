@@ -1,12 +1,16 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
-import { useSelector } from 'react-redux';
-import { garageCarsSelector, starsSelector } from '../state/selectors';
+import { shallowEqual, useSelector } from 'react-redux';
+import {
+  garageCarsSelector,
+  pageNotificationsSelector,
+  starsSelector,
+} from '../state/selectors';
 import { Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import { BottomSpacer } from './BottomSpacer';
 import { colors } from '../helpers/theme';
-import { ReactComponent as StarIcon } from '../assets/icons/star.svg';
+import { ReactComponent as StarIconSvg } from '../assets/icons/star.svg';
 import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
 import Button from './Button';
 import HomeCardMoney from './HomeCardMoney';
@@ -14,6 +18,34 @@ import HomeCardRaces from './HomeCardRaces';
 import HomeCardCars from './HomeCardCars';
 import HomeCardTimeStarted from './HomeCardTimeStarted';
 import { stars } from '../helpers/stars';
+import styled from '@emotion/styled';
+
+const StarIconNotification = styled(Box)`
+  ${({ starAnimation }) =>
+    starAnimation &&
+    'animation: star-icon-home-card 1s ease-out alternate-reverse infinite'};
+
+  @keyframes star-icon-home-card {
+    0% {
+      color: currentColor;
+    }
+    100% {
+      color: ${colors.purple};
+    }
+  }
+`;
+
+const StarIcon = props => {
+  const { stars: starNotification } = useSelector(pageNotificationsSelector);
+
+  return (
+    <StarIconNotification
+      as={StarIconSvg}
+      starAnimation={starNotification}
+      {...props}
+    />
+  );
+};
 
 const HomeCardButton = ({ icon, children, ...props }) => (
   <Button
@@ -39,10 +71,9 @@ const HomeCardButton = ({ icon, children, ...props }) => (
 
 const Home = () => {
   const cars = useSelector(garageCarsSelector);
-  const completedStars = Object.values(useSelector(starsSelector)).reduce(
-    (results, star) => results + ~~star,
-    0
-  );
+  const completedStars = Object.values(
+    useSelector(starsSelector, shallowEqual)
+  ).reduce((results, star) => results + ~~star, 0);
 
   return (
     <Box w="100%">

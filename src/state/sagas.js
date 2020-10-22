@@ -15,6 +15,7 @@ import {
   RESET_AND_RECALCULATE_DEV_TYPE,
   RESET_DEV_TYPE,
   RESET_TYPE,
+  END_RACE_STARS_TYPE,
 } from './actions';
 import { lockedSelector } from './selectors';
 
@@ -93,6 +94,13 @@ function* syncRace(race) {
       pastRace,
       sponsors: newSponsorForToasts,
       raceEvents: unlockedRaceEvents,
+    },
+  });
+
+  yield put({
+    type: END_RACE_STARS_TYPE,
+    payload: {
+      pastRace,
     },
   });
 }
