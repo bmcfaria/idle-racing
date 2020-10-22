@@ -74,7 +74,7 @@ const Brand = () => {
         <Flex
           w={`${containerWidth - 16}px`}
           minH="32px"
-          borderRadius="16px"
+          borderRadius="8px"
           marginLeft="16px"
           border="1px solid black"
           color={primaryColor}
