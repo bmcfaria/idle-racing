@@ -1,20 +1,48 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { useSelector } from 'react-redux';
-import { garageCarsSelector } from '../state/selectors';
+import { garageCarsSelector, starsSelector } from '../state/selectors';
 import { Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import { BottomSpacer } from './BottomSpacer';
 import { colors } from '../helpers/theme';
+import { ReactComponent as StarIcon } from '../assets/icons/star.svg';
 import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
 import Button from './Button';
 import HomeCardMoney from './HomeCardMoney';
 import HomeCardRaces from './HomeCardRaces';
 import HomeCardCars from './HomeCardCars';
 import HomeCardTimeStarted from './HomeCardTimeStarted';
+import { stars } from '../helpers/stars';
+
+const HomeCardButton = ({ icon, children, ...props }) => (
+  <Button
+    w="160px"
+    minH="76px"
+    h="auto"
+    padding="8px 16px"
+    borderRadius="16px"
+    textAlign="center"
+    bg={colors.darkGray}
+    color={colors.white}
+    justifyContent="space-around"
+    alignItems="center"
+    fontSize="20px"
+    lineHeight="20px"
+    as={Link}
+    {...props}
+  >
+    <Box w="40px" h="40px" as={icon} />
+    {children}
+  </Button>
+);
 
 const Home = () => {
   const cars = useSelector(garageCarsSelector);
+  const completedStars = Object.values(useSelector(starsSelector)).reduce(
+    (results, star) => results + ~~star,
+    0
+  );
 
   return (
     <Box w="100%">
@@ -52,29 +80,25 @@ const Home = () => {
             gridTemplateColumns="repeat(auto-fit, minmax(160px, 1fr))"
             gridGap="8px"
           >
+            <HomeCardButton icon={StarIcon} to="/stars">
+              <Box flexGrow="1">
+                <Text w="100%">Stars</Text>
+                <Text w="100%" fontSize="16px">
+                  {completedStars} / {stars.length}
+                </Text>
+              </Box>
+            </HomeCardButton>
             <HomeCardTimeStarted />
+
             <HomeCardRaces />
             <HomeCardCars />
-            <HomeCardMoney />
 
-            <Button
-              w="160px"
-              h="76px"
-              padding="8px 16px"
-              borderRadius="16px"
-              textAlign="center"
-              bg={colors.darkGray}
-              color={colors.white}
-              justifyContent="space-around"
-              alignItems="center"
-              as={Link}
-              to="/settings"
-            >
-              <Box w="40px" h="40px" as={SettingsIcon} />
-              <Text w="100%" fontSize="20px" lineHeight="20px">
+            <HomeCardMoney />
+            <HomeCardButton icon={SettingsIcon} to="/settings">
+              <Text flexGrow="1" w="100%">
                 Settings
               </Text>
-            </Button>
+            </HomeCardButton>
           </Flex>
         )}
         <BottomSpacer />

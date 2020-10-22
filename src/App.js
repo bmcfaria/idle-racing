@@ -18,6 +18,7 @@ import Toasts from './components/Toasts';
 import StopRaceModal from './components/StopRaceModal';
 import Brand from './components/Brand';
 import RaceEvent from './components/RaceEvent';
+import Stars from './components/Stars';
 
 const store = configureStore();
 
@@ -66,6 +67,9 @@ function App() {
                 </Route>
                 <Route path="/settings">
                   <Settings />
+                </Route>
+                <Route path="/stars">
+                  <Stars />
                 </Route>
                 <Route>
                   <Home />

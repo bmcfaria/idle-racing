@@ -42,6 +42,7 @@ export const useCurrentPage = () => {
   const matchRaceEvent = useRouteMatch('/race/:event');
   const matchRace = useRouteMatch('/race');
   const matchSettings = useRouteMatch('/settings');
+  const matchStars = useRouteMatch('/stars');
 
   const selectedPage =
     (matchHome && 'Home') ||
@@ -51,6 +52,7 @@ export const useCurrentPage = () => {
     (matchRace && 'Race') ||
     (matchRaceEvent && '/' + capitalize(matchRaceEvent?.params?.event)) ||
     (matchSettings && 'Settings') ||
+    (matchStars && 'Stars') ||
     '';
 
   const backPage =

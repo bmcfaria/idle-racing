@@ -32,11 +32,9 @@ const HomeCardTimeStarted = props => {
       <Text w="100%" fontSize="20px" lineHeight="20px">
         First car bought
       </Text>
-      {elapsedTime && (
-        <Text fontSize="16px" lineHeight="16px" marginTop="8px">
-          {formatDuration(elapsedTime)} ago
-        </Text>
-      )}
+      <Text minH="16px" fontSize="16px" lineHeight="16px" marginTop="8px">
+        {elapsedTime ? `${formatDuration(elapsedTime)} ago` : ''}
+      </Text>
     </Box>
   );
 };

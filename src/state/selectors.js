@@ -66,4 +66,6 @@ export const brandCompleteSelector = state => state.brandComplete;
 
 export const lockedSelector = state => state.locked;
 
+export const starsSelector = state => state.stars;
+
 export const globalStatsSelector = state => state.globalStats;

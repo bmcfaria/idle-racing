@@ -71,6 +71,8 @@ const initialState = {
     },
   },
 
+  stars: {},
+
   globalStats: {
     firstBuy: undefined,
   },

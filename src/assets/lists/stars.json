@@ -1,0 +1,450 @@
+[
+  {
+    "name": "$1k",
+    "type": "rewards",
+    "req_type": "money",
+    "req_value": 1000,
+    "id": "25fc4a8a-d1eb-4ca7-b6ff-44102f15b44b"
+  },
+  {
+    "name": "$10k",
+    "type": "rewards",
+    "req_type": "money",
+    "req_value": 10000,
+    "id": "14426114-e956-4fbd-8137-8cbfa365f6a9"
+  },
+  {
+    "name": "$100k",
+    "type": "rewards",
+    "req_type": "money",
+    "req_value": 100000,
+    "id": "470cd8f6-8169-4385-8b09-f81d6ba0be05"
+  },
+  {
+    "name": "$1m",
+    "type": "rewards",
+    "req_type": "money",
+    "req_value": 1000000,
+    "id": "bd4656ae-2173-4a45-8bc7-2a6cc1ca2128"
+  },
+  {
+    "name": "1 reward car",
+    "type": "rewards",
+    "req_type": "reward_car",
+    "req_value": 1,
+    "id": "5d328626-7bc2-4ed0-9a75-c5e524faf308"
+  },
+  {
+    "name": "3 reward cars",
+    "type": "rewards",
+    "req_type": "reward_car",
+    "req_value": 3,
+    "id": "b17c50d8-fa26-4e97-bc73-4e4995c07bb9"
+  },
+  {
+    "name": "10 reward cars",
+    "type": "rewards",
+    "req_type": "reward_car",
+    "req_value": 10,
+    "id": "cc1b3ea5-012d-48e0-85db-5d40fb40c4a7"
+  },
+  {
+    "name": "20 reward cars",
+    "type": "rewards",
+    "req_type": "reward_car",
+    "req_value": 20,
+    "id": "c86a306f-32d4-44a5-96b4-102b0c968036"
+  },
+  {
+    "name": "All reward cars",
+    "type": "rewards",
+    "req_type": "reward_car",
+    "req_value": "all",
+    "id": "d52b2a26-16ef-4607-84a2-ce2c4fd6460c"
+  },
+  {
+    "name": "All mechanics",
+    "type": "mechanics",
+    "req_type": "total",
+    "req_value": "all",
+    "id": "98f17176-192c-4ab9-bb14-055604591fc1"
+  },
+  {
+    "name": "5 mechanic upgrades",
+    "type": "mechanics",
+    "req_type": "upgrades",
+    "req_value": 5,
+    "id": "dc613413-871d-4d0e-87c8-a97f8251c860"
+  },
+  {
+    "name": "All mechanic upgrades",
+    "type": "mechanics",
+    "req_type": "upgrades",
+    "req_value": "all",
+    "id": "a5f0f287-f2ed-4183-b46f-8206c718c7e9"
+  },
+  {
+    "name": "1 money sponsor",
+    "type": "sponsors",
+    "req_type": "total",
+    "req_value": 1,
+    "id": "91197309-cee6-44a7-95a3-7628bf7c36a4"
+  },
+  {
+    "name": "5 money sponsor",
+    "type": "sponsors",
+    "req_type": "total",
+    "req_value": 5,
+    "id": "9254562e-f38d-4c95-bc1a-a5f2a74ccd61"
+  },
+  {
+    "name": "25 money sponsor",
+    "type": "sponsors",
+    "req_type": "total",
+    "req_value": 25,
+    "id": "1263c3ad-6909-450f-a0e2-b6639cc2f94f"
+  },
+  {
+    "name": "50 money sponsor",
+    "type": "sponsors",
+    "req_type": "total",
+    "req_value": 50,
+    "id": "82e67e81-4046-4e72-a964-e22dd323e2b3"
+  },
+  {
+    "name": "All money sponsor",
+    "type": "sponsors",
+    "req_type": "total",
+    "req_value": "all",
+    "id": "e7dcd836-2cca-4741-8590-be5f2c3489d1"
+  },
+  {
+    "name": "All event sponsors (1)",
+    "type": "sponsors",
+    "req_type": "event_complete",
+    "req_value": 1,
+    "id": "dd57f279-75f0-4e3d-aaee-f38606dd37f2"
+  },
+  {
+    "name": "All event sponsors (5)",
+    "type": "sponsors",
+    "req_type": "event_complete",
+    "req_value": 5,
+    "id": "7c74fbd6-5b41-457c-ab50-0dc4d67459d0"
+  },
+  {
+    "name": "All event sponsors (10)",
+    "type": "sponsors",
+    "req_type": "event_complete",
+    "req_value": 10,
+    "id": "8c282833-987b-4079-8405-b3d55d2d1ae2"
+  },
+  {
+    "name": "All event sponsors (15)",
+    "type": "sponsors",
+    "req_type": "event_complete",
+    "req_value": 15,
+    "id": "cb8d83e2-ae6d-4d00-9f5b-872e3a61326b"
+  },
+  {
+    "name": "All event sponsors (all)",
+    "type": "sponsors",
+    "req_type": "event_complete",
+    "req_value": "all",
+    "id": "c77019be-ac98-4e8f-8c3e-ae394f80c9f4"
+  },
+  {
+    "name": "Race 1 time",
+    "type": "races",
+    "req_type": "race",
+    "req_value": 1,
+    "id": "61bd7859-0f01-423c-add2-8b1dccb30dc5"
+  },
+  {
+    "name": "Race 10 times",
+    "type": "races",
+    "req_type": "race",
+    "req_value": 10,
+    "id": "a4196c87-4ba9-4736-b519-efec64e9a780"
+  },
+  {
+    "name": "Race 100 times",
+    "type": "races",
+    "req_type": "race",
+    "req_value": 100,
+    "id": "d116098b-0cef-4002-8570-23e2c7c0bc6f"
+  },
+  {
+    "name": "Race all races",
+    "type": "races",
+    "req_type": "race",
+    "req_value": "all",
+    "id": "c5b8c39f-717b-46ab-9b8c-6a53b94e9988"
+  },
+  {
+    "name": "Win 1 race",
+    "type": "races",
+    "req_type": "win",
+    "req_value": 1,
+    "id": "c472cab5-155c-4f77-b8c8-978c8a81a7a6"
+  },
+  {
+    "name": "Win 10 races",
+    "type": "races",
+    "req_type": "win",
+    "req_value": 10,
+    "id": "d6277677-bace-4d31-b9ca-4d916d96fc0d"
+  },
+  {
+    "name": "Win 50 races",
+    "type": "races",
+    "req_type": "win",
+    "req_value": 50,
+    "id": "c911d4db-8509-4519-81c1-0fd85b27b644"
+  },
+  {
+    "name": "Win all races",
+    "type": "races",
+    "req_type": "win",
+    "req_value": "all",
+    "id": "0d6491e2-08dc-49ac-94b4-bc35c9b1d139"
+  },
+  {
+    "name": "Buy 1 exp upgrade",
+    "type": "exp",
+    "req_type": "upgrades",
+    "req_value": 1,
+    "id": "6392f8f5-5638-447c-82e3-6f4c53e9b297"
+  },
+  {
+    "name": "Buy 5 exp upgrades",
+    "type": "exp",
+    "req_type": "upgrades",
+    "req_value": 5,
+    "id": "da1d0c54-87de-42be-a557-395ba1686645"
+  },
+  {
+    "name": "Buy 10 exp upgrades",
+    "type": "exp",
+    "req_type": "upgrades",
+    "req_value": 10,
+    "id": "b903c8bd-dd64-4253-a6ee-a20b16b32454"
+  },
+  {
+    "name": "Buy 15 exp upgrades",
+    "type": "exp",
+    "req_type": "upgrades",
+    "req_value": 15,
+    "id": "be778e63-5af0-49a8-b95e-b72dde929421"
+  },
+  {
+    "name": "Buy all exp upgrades",
+    "type": "exp",
+    "req_type": "upgrades",
+    "req_value": "all",
+    "id": "0507392e-2c72-411d-b503-4c63a69554b7"
+  },
+  {
+    "name": "All business exp upgrades",
+    "type": "exp",
+    "req_type": "business",
+    "req_value": "all",
+    "id": "f4399079-169e-4976-8916-f6d7d41dec44"
+  },
+  {
+    "name": "All race exp upgrades",
+    "type": "exp",
+    "req_type": "race",
+    "req_value": "all",
+    "id": "93b836e5-815a-441c-844e-05db4ce71c2d"
+  },
+  {
+    "name": "All mechanic exp upgrades",
+    "type": "exp",
+    "req_type": "mechanic",
+    "req_value": "all",
+    "id": "aa6dd80b-fddc-4830-9dc4-f4e33b7e28d6"
+  },
+  {
+    "name": "Buy 1 car",
+    "type": "buy_cars",
+    "req_type": "total",
+    "req_value": 1,
+    "id": "b7764114-71aa-46bf-a587-c3daeba48d91"
+  },
+  {
+    "name": "Buy 5 cars",
+    "type": "buy_cars",
+    "req_type": "total",
+    "req_value": 5,
+    "id": "050c968d-1a45-492a-84d7-5aa995b2f85a"
+  },
+  {
+    "name": "Buy 25 cars",
+    "type": "buy_cars",
+    "req_type": "total",
+    "req_value": 25,
+    "id": "27048266-e820-4cbc-893a-5518a1e42471"
+  },
+  {
+    "name": "Buy a reward car",
+    "type": "buy_cars",
+    "req_type": "reward_car",
+    "req_value": 1,
+    "id": "ff96185d-d0d3-44fa-8889-c3e3e2e1013b"
+  },
+  {
+    "name": "Get all cars",
+    "type": "cars",
+    "req_type": "all",
+    "req_value": "all",
+    "id": "0e5dc7ff-0022-4042-a5ea-4b057b605bda"
+  },
+  {
+    "name": "Sell 1 car",
+    "type": "sell_cars",
+    "req_type": "total",
+    "req_value": 1,
+    "id": "480a4f6a-ec24-4edd-8ab9-1a21c6ef3798"
+  },
+  {
+    "name": "Sell 5 cars",
+    "type": "sell_cars",
+    "req_type": "total",
+    "req_value": 5,
+    "id": "e418115d-f187-4b5c-b41d-b9337cf383e0"
+  },
+  {
+    "name": "Sell 10 cars",
+    "type": "sell_cars",
+    "req_type": "total",
+    "req_value": 10,
+    "id": "7f5ab29a-19a8-44b7-b64f-e270dc41d3ed"
+  },
+  {
+    "name": "Buy 5 garage slots",
+    "type": "garage_slot",
+    "req_type": "upgrades",
+    "req_value": 5,
+    "id": "983e3703-b880-4cad-9fb9-3eaf048a71a1"
+  },
+  {
+    "name": "Buy 10 garage slots",
+    "type": "garage_slot",
+    "req_type": "upgrades",
+    "req_value": 10,
+    "id": "9b599132-5df0-4681-9421-31f33a6651d4"
+  },
+  {
+    "name": "Upgrade car attributes (1)",
+    "type": "attr_upgrades",
+    "req_type": "total",
+    "req_value": 1,
+    "id": "1dbf5c6f-4778-4f48-b10e-6e00763e3d57"
+  },
+  {
+    "name": "Upgrade car attributes (5)",
+    "type": "attr_upgrades",
+    "req_type": "total",
+    "req_value": 5,
+    "id": "5a718fc3-eba5-45d2-84b4-869f3dd81090"
+  },
+  {
+    "name": "Upgrade car attributes (25)",
+    "type": "attr_upgrades",
+    "req_type": "total",
+    "req_value": 25,
+    "id": "2e7155ed-04f0-44e4-b57f-125a4ddaabf9"
+  },
+  {
+    "name": "Upgrade car attributes (50)",
+    "type": "attr_upgrades",
+    "req_type": "total",
+    "req_value": 50,
+    "id": "94f110b0-b411-4267-b56d-e9cf7fbc25aa"
+  },
+  {
+    "name": "Change car color (1)",
+    "type": "customizations",
+    "req_type": "total",
+    "req_value": 1,
+    "id": "06605020-a47a-4620-91da-9d6d80830012"
+  },
+  {
+    "name": "Change car color (5)",
+    "type": "customizations",
+    "req_type": "total",
+    "req_value": 5,
+    "id": "3697e860-4f20-449e-9c40-a3a477bf5b87"
+  },
+  {
+    "name": "Change car color (10)",
+    "type": "customizations",
+    "req_type": "total",
+    "req_value": 10,
+    "id": "05a147fa-5611-41f6-939a-dfbf2ff4f4e8"
+  },
+  {
+    "name": "Tune car (1)",
+    "type": "tuning",
+    "req_type": "total",
+    "req_value": 1,
+    "id": "ac657557-0825-4266-8410-ac0be8e425da"
+  },
+  {
+    "name": "Tune car (5)",
+    "type": "tuning",
+    "req_type": "total",
+    "req_value": 5,
+    "id": "0369b65b-1496-4428-81a5-64a971a06760"
+  },
+  {
+    "name": "Tune car (10)",
+    "type": "tuning",
+    "req_type": "total",
+    "req_value": 10,
+    "id": "95705380-e438-463d-bb9c-7bec3520b399"
+  },
+  {
+    "name": "Go to settings page",
+    "type": "use_of_ui",
+    "req_type": "page",
+    "req_value": "settings",
+    "id": "74827c96-cfcd-4e6c-8acd-4a684803f631"
+  },
+  {
+    "name": "Go to about page",
+    "type": "use_of_ui",
+    "req_type": "page",
+    "req_value": "about",
+    "id": "484a8967-b84d-4b60-bca3-e2e517f2d31b"
+  },
+  {
+    "name": "",
+    "type": "",
+    "req_type": "",
+    "req_value": "",
+    "id": "8bd48b0f-2b55-451a-8886-5aafde145593"
+  },
+  {
+    "name": "",
+    "type": "",
+    "req_type": "",
+    "req_value": "",
+    "id": "433e27d5-7163-4d6e-880f-cb3c94c9d5c2"
+  },
+  {
+    "name": "",
+    "type": "",
+    "req_type": "",
+    "req_value": "",
+    "id": "51ac599b-348b-42a8-8ae9-025fe26a7cff"
+  },
+  {
+    "name": "",
+    "type": "",
+    "req_type": "",
+    "req_value": "",
+    "id": "1f68e6bd-3770-4ba8-bd2c-8b7371e8492a"
+  }
+]
