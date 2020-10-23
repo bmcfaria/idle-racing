@@ -34,6 +34,8 @@ export const starsByType = (type, reqType) =>
     ({ requirement }) => requirement.type === reqType
   );
 
+const generateStoreStar = () => new Date().getTime();
+
 const genericNewStarsNumberCompare = (
   type,
   subType,
@@ -50,7 +52,7 @@ const genericNewStarsNumberCompare = (
         {
           ...results[1],
           ...(compareResult && {
-            [star.id]: stateStars[star.id] || new Date().getTime(),
+            [star.id]: stateStars[star.id] || generateStoreStar(),
           }),
         },
       ];
@@ -94,7 +96,7 @@ const newRewardAllCarsStars = (newRewardCar, stateRewardCars, stateStars) => {
     {
       [rewardCarsAllStarId]:
         stateStars[rewardCarsAllStarId] ||
-        (areAllRewardCarsObtained && new Date().getTime()),
+        (areAllRewardCarsObtained && generateStoreStar()),
     },
   ];
 };
