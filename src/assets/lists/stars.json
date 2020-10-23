@@ -70,14 +70,14 @@
     "id": "98f17176-192c-4ab9-bb14-055604591fc1"
   },
   {
-    "name": "5 mechanic upgrades",
+    "name": "5 garage upgrades",
     "type": "mechanics",
     "req_type": "upgrades",
     "req_value": 5,
     "id": "dc613413-871d-4d0e-87c8-a97f8251c860"
   },
   {
-    "name": "All mechanic upgrades",
+    "name": "All garage upgrades",
     "type": "mechanics",
     "req_type": "upgrades",
     "req_value": "all",

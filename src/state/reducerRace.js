@@ -41,7 +41,7 @@ import { brandSponsors } from '../helpers/sponsors';
 import { evaluateSponsors } from '../helpers/sponsors';
 import initialState from './initialState';
 import experience from '../helpers/experience';
-import { newRewardCarsStars } from '../helpers/stars';
+import { newRewardCarsStars, newMechanicsStars } from '../helpers/stars';
 
 const reducerRace = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -332,19 +332,35 @@ const reducerRace = (state = initialState, { type, payload }) => {
       const { reward } = pastRace;
       const earnedCar = isNaN(reward) && cars.find(({ id }) => id === reward);
 
-      const [newStars, completedStars] = newRewardCarsStars(
-        earnedCar,
-        state.rewardCars,
+      let newStarsRewardCars = false;
+      let completedStarsRewardCars = {};
+      if (!!earnedCar) {
+        [newStarsRewardCars, completedStarsRewardCars] = newRewardCarsStars(
+          earnedCar,
+          state.rewardCars,
+          state.stars
+        );
+      }
+
+      const [newStarsMechanics, completedStarsMechanics] = newMechanicsStars(
+        state.sponsors,
         state.stars
       );
+
+      // TODO: Money Sponsors (1 | 5 | 25 | 50 | all)
+      // TODO: Money Sponsors Event complete
+
+      // TODO: total raced (1 | 10 | 100 | all)
+      // TODO: total won (1 | 10 | 50 | all)
 
       return {
         ...state,
         stars: {
           ...state.stars,
-          ...completedStars,
+          ...completedStarsRewardCars,
+          ...completedStarsMechanics,
         },
-        ...(newStars && {
+        ...((newStarsRewardCars || newStarsMechanics) && {
           pageNotifications: {
             ...state.pageNotifications,
             stars: true,
