@@ -1,6 +1,4 @@
 import starsFile from '../assets/lists/stars.json';
-import { cars, raceSponsors } from './data';
-import upgrades from './garageUpgrades';
 
 // Stars === Achievements
 
@@ -21,7 +19,7 @@ export const stars = starsFile.reduce(
 );
 window.stars = stars;
 
-const starsByTypeObject = stars.reduce(
+export const starsByTypeObject = stars.reduce(
   (results, star) => ({
     ...results,
     [star.type]: [...(results[star.type] || []), star],
@@ -35,9 +33,9 @@ export const starsByType = (type, reqType) =>
     ({ requirement }) => requirement.type === reqType
   );
 
-const generateStoreStar = () => new Date().getTime();
+export const generateStoreStar = () => new Date().getTime();
 
-const genericNewStarsNumberCompare = (
+export const genericNewStarsNumberCompare = (
   type,
   subType,
   numberToCompare,
@@ -61,124 +59,16 @@ const genericNewStarsNumberCompare = (
     [false, {}]
   );
 
-export const newRewardMoneyStars = (totalMoneyEarned, stateStars) =>
-  genericNewStarsNumberCompare(
-    'rewards',
-    'money',
-    totalMoneyEarned,
-    stateStars
-  );
-
-const rewardCarsIdList = cars.reduce(
-  (results, car) => (car.reward ? [...results, car.id] : results),
-  []
-);
-const rewardCarsAllStarId = starsByTypeObject['rewards'].find(
-  ({ requirement }) =>
-    requirement.type === 'reward_car' && requirement.value === 'all'
-)?.id;
-const newRewardAllCarsStars = (newRewardCar, stateRewardCars, stateStars) => {
-  if (!newRewardCar || !!stateStars[rewardCarsAllStarId]) {
-    return [false, { [rewardCarsAllStarId]: stateStars[rewardCarsAllStarId] }];
-  }
-
-  const obtainedRewardIds = Object.keys(stateRewardCars);
-
-  const areAllRewardCarsObtained = rewardCarsIdList.every(carId =>
-    obtainedRewardIds.includes(carId)
-  );
-
-  return [
-    !stateStars[rewardCarsAllStarId] && areAllRewardCarsObtained,
-    {
-      [rewardCarsAllStarId]:
-        stateStars[rewardCarsAllStarId] ||
-        (areAllRewardCarsObtained && generateStoreStar()),
-    },
-  ];
-};
-
-export const newRewardCarsStars = (
-  newRewardCar,
-  stateRewardCars,
+export const genericAllCompare = (
+  currentTotal,
+  maxTotal,
+  starId,
   stateStars
 ) => {
-  const totalRewardedCars = Object.values(stateRewardCars).reduce(
-    (results, numberOfCars) => results + numberOfCars,
-    0
-  );
-
-  const newStarsNumberCompare = genericNewStarsNumberCompare(
-    'rewards',
-    'reward_car',
-    totalRewardedCars,
-    stateStars
-  );
-  const newRewardAllCarsStarsCompare = newRewardAllCarsStars(
-    newRewardCar,
-    stateRewardCars,
-    stateStars
-  );
-
-  return [
-    newStarsNumberCompare[0] || newRewardAllCarsStarsCompare[0],
-    { ...newStarsNumberCompare[1], ...newRewardAllCarsStarsCompare[1] },
-  ];
-};
-
-const mechanicsAllStarId = starsByTypeObject['mechanics'].find(
-  ({ requirement }) =>
-    requirement.type === 'total' && requirement.value === 'all'
-)?.id;
-const mechanicsUpgradesAllStarId = starsByTypeObject['mechanics'].find(
-  ({ requirement }) =>
-    requirement.type === 'upgrades' && requirement.value === 'all'
-)?.id;
-const totalMechanicSponsorsCount = raceSponsors.filter(
-  ({ reward }) => reward === 'mechanic'
-).length;
-export const newMechanicsStars = (stateSponsors, stateStars) => {
-  const obtainedMechanicsCount = Object.values(stateSponsors.active).filter(
-    sponsor => sponsor.reward === 'mechanic'
-  ).length;
-
-  const newMechanicsTotalAll = {
-    [mechanicsAllStarId]:
-      stateStars[mechanicsAllStarId] ||
-      (totalMechanicSponsorsCount === obtainedMechanicsCount &&
-        generateStoreStar()),
+  const newAll = {
+    [starId]:
+      stateStars[starId] || (currentTotal === maxTotal && generateStoreStar()),
   };
-  const newMechanicsTotalAllNotify =
-    !stateStars[mechanicsAllStarId] &&
-    !!newMechanicsTotalAll[mechanicsAllStarId];
 
-  const obtainedGarageUpgradesCount = upgrades.filter(
-    ({ mechanics }) => mechanics <= obtainedMechanicsCount
-  ).length;
-  const newStarsGarageUpgradesNumberCompare = genericNewStarsNumberCompare(
-    'mechanics',
-    'upgrades',
-    obtainedGarageUpgradesCount,
-    stateStars
-  );
-
-  const newMechanicsUpgradesTotalAll = {
-    [mechanicsUpgradesAllStarId]:
-      stateStars[mechanicsUpgradesAllStarId] ||
-      (obtainedGarageUpgradesCount === upgrades.length && generateStoreStar()),
-  };
-  const newMechanicsUpgradesTotalAllNotify =
-    !stateStars[mechanicsUpgradesAllStarId] &&
-    !!newMechanicsUpgradesTotalAll[mechanicsUpgradesAllStarId];
-
-  return [
-    newMechanicsTotalAllNotify ||
-      newStarsGarageUpgradesNumberCompare[0] ||
-      newMechanicsUpgradesTotalAllNotify,
-    {
-      ...newMechanicsTotalAll,
-      ...newStarsGarageUpgradesNumberCompare[1],
-      ...newMechanicsUpgradesTotalAll,
-    },
-  ];
+  return [!stateStars[starId] && !!newAll[starId], newAll];
 };

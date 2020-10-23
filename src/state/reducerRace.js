@@ -41,7 +41,8 @@ import { brandSponsors } from '../helpers/sponsors';
 import { evaluateSponsors } from '../helpers/sponsors';
 import initialState from './initialState';
 import experience from '../helpers/experience';
-import { newRewardCarsStars, newMechanicsStars } from '../helpers/stars';
+import { newMechanicsStars, newSponsorsStars } from '../helpers/starsSponsors';
+import { newRewardCarsStars } from '../helpers/starsRewards';
 
 const reducerRace = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -347,8 +348,10 @@ const reducerRace = (state = initialState, { type, payload }) => {
         state.stars
       );
 
-      // TODO: Money Sponsors (1 | 5 | 25 | 50 | all)
-      // TODO: Money Sponsors Event complete
+      const [newStarsSponsors, completedStarsSponsors] = newSponsorsStars(
+        state.sponsors,
+        state.stars
+      );
 
       // TODO: total raced (1 | 10 | 100 | all)
       // TODO: total won (1 | 10 | 50 | all)
@@ -359,8 +362,9 @@ const reducerRace = (state = initialState, { type, payload }) => {
           ...state.stars,
           ...completedStarsRewardCars,
           ...completedStarsMechanics,
+          ...completedStarsSponsors,
         },
-        ...((newStarsRewardCars || newStarsMechanics) && {
+        ...((newStarsRewardCars || newStarsMechanics || newStarsSponsors) && {
           pageNotifications: {
             ...state.pageNotifications,
             stars: true,

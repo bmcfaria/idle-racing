@@ -7,7 +7,7 @@ import mySaga from './sagas';
 import throttle from 'lodash/throttle';
 import objectAssignDeep from 'object-assign-deep';
 import initialState from './initialState';
-import { newRewardMoneyStars } from '../helpers/stars';
+import { newRewardMoneyStars } from '../helpers/starsRewards';
 
 const inDev = process.env.NODE_ENV === 'development';
 
