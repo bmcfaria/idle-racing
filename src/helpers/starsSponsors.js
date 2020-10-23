@@ -1,20 +1,18 @@
 import { raceSponsors } from './data';
 import upgrades from './garageUpgrades';
 import {
-  starsByTypeObject,
   genericAllCompare,
   genericNewStarsNumberCompare,
+  genericFindStarId,
 } from './stars';
 
 // Mechanics base stars
-const mechanicsAllStarId = starsByTypeObject['mechanics'].find(
-  ({ requirement }) =>
-    requirement.type === 'total' && requirement.value === 'all'
-)?.id;
-const mechanicsUpgradesAllStarId = starsByTypeObject['mechanics'].find(
-  ({ requirement }) =>
-    requirement.type === 'upgrades' && requirement.value === 'all'
-)?.id;
+const mechanicsAllStarId = genericFindStarId('mechanics', 'total', 'all');
+const mechanicsUpgradesAllStarId = genericFindStarId(
+  'mechanics',
+  'upgrades',
+  'all'
+);
 const totalMechanicSponsorsCount = raceSponsors.filter(
   ({ reward }) => reward === 'mechanic'
 ).length;
@@ -60,10 +58,7 @@ export const newMechanicsStars = (stateSponsors, stateStars) => {
 };
 
 // Sponsor base stars
-const moneySponsorsAllStarId = starsByTypeObject['sponsors'].find(
-  ({ requirement }) =>
-    requirement.type === 'total' && requirement.value === 'all'
-)?.id;
+const moneySponsorsAllStarId = genericFindStarId('sponsors', 'total', 'all');
 const totalMoneySponsorsCount = raceSponsors.filter(
   ({ reward }) => reward === 'money'
 ).length;
@@ -74,10 +69,11 @@ const sponsorsIdsByRaceByRaceEvent = raceSponsors.reduce(
   }),
   {}
 );
-const sponsorsEventCompeteAllStarId = starsByTypeObject['sponsors'].find(
-  ({ requirement }) =>
-    requirement.type === 'event_complete' && requirement.value === 'all'
-)?.id;
+const sponsorsEventCompeteAllStarId = genericFindStarId(
+  'sponsors',
+  'event_complete',
+  'all'
+);
 export const newSponsorsStars = (stateSponsors, stateStars) => {
   const obtainedMoneySponsors = Object.values(stateSponsors.active).filter(
     sponsor => sponsor.reward === 'money'

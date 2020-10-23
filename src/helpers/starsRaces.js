@@ -1,5 +1,5 @@
 import { tracks } from './data';
-import { genericNewStarsNumberCompare, starsByTypeObject } from './stars';
+import { genericFindStarId, genericNewStarsNumberCompare } from './stars';
 
 // Raced base stars
 export const genericNewRacesStars = (
@@ -31,13 +31,8 @@ export const genericNewRacesStars = (
   ];
 };
 
-const racedAllStarId = starsByTypeObject['races'].find(
-  ({ requirement }) =>
-    requirement.type === 'race' && requirement.value === 'all'
-)?.id;
-const winAllStarId = starsByTypeObject['races'].find(
-  ({ requirement }) => requirement.type === 'win' && requirement.value === 'all'
-)?.id;
+const racedAllStarId = genericFindStarId('races', 'race', 'all');
+const winAllStarId = genericFindStarId('races', 'win', 'all');
 
 export const newRacedStars = (totalRaced, tracksStats, stateStars) =>
   genericNewRacesStars(

@@ -1,8 +1,8 @@
 import { cars } from './data';
 import {
   genericNewStarsNumberCompare,
-  starsByTypeObject,
   generateStoreStar,
+  genericFindStarId,
 } from './stars';
 
 // Reward money base stars
@@ -19,10 +19,7 @@ const rewardCarsIdList = cars.reduce(
   (results, car) => (car.reward ? [...results, car.id] : results),
   []
 );
-const rewardCarsAllStarId = starsByTypeObject['rewards'].find(
-  ({ requirement }) =>
-    requirement.type === 'reward_car' && requirement.value === 'all'
-)?.id;
+const rewardCarsAllStarId = genericFindStarId('rewards', 'reward_car', 'all');
 const newRewardAllCarsStars = (newRewardCar, stateRewardCars, stateStars) => {
   if (!newRewardCar || !!stateStars[rewardCarsAllStarId]) {
     return [false, { [rewardCarsAllStarId]: stateStars[rewardCarsAllStarId] }];
