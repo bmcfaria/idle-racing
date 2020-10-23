@@ -24,6 +24,7 @@ const initialState = {
 
   races: [],
   pastRaces: [],
+  totalRaced: 0,
   totalRacesWon: 0,
   totalRacesLost: 0,
   totalRacesCanceled: 0,

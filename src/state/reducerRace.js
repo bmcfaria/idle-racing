@@ -43,6 +43,7 @@ import initialState from './initialState';
 import experience from '../helpers/experience';
 import { newMechanicsStars, newSponsorsStars } from '../helpers/starsSponsors';
 import { newRewardCarsStars } from '../helpers/starsRewards';
+import { newRacedStars, newRaceWinStars } from '../helpers/starsRaces';
 
 const reducerRace = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -156,6 +157,7 @@ const reducerRace = (state = initialState, { type, payload }) => {
 
       return {
         ...state,
+        totalRaced: state.totalRaced + 1,
         totalRacesWon: state.totalRacesWon + ~~(position === 1),
         totalRacesLost: state.totalRacesLost + ~~(position !== 1),
         tracksStats: Object.assign({}, state.tracksStats, {
@@ -353,8 +355,21 @@ const reducerRace = (state = initialState, { type, payload }) => {
         state.stars
       );
 
-      // TODO: total raced (1 | 10 | 100 | all)
-      // TODO: total won (1 | 10 | 50 | all)
+      const [newStarsRaced, completedStarsRaced] = newRacedStars(
+        state.totalRaced,
+        state.tracksStats,
+        state.stars
+      );
+
+      let newStarsRaceWin = false;
+      let completedStarsRaceWin = {};
+      if (pastRace.position === 1) {
+        [newStarsRaceWin, completedStarsRaceWin] = newRaceWinStars(
+          state.totalRaced,
+          state.tracksStats,
+          state.stars
+        );
+      }
 
       return {
         ...state,
@@ -363,8 +378,14 @@ const reducerRace = (state = initialState, { type, payload }) => {
           ...completedStarsRewardCars,
           ...completedStarsMechanics,
           ...completedStarsSponsors,
+          ...completedStarsRaced,
+          ...completedStarsRaceWin,
         },
-        ...((newStarsRewardCars || newStarsMechanics || newStarsSponsors) && {
+        ...((newStarsRewardCars ||
+          newStarsMechanics ||
+          newStarsSponsors ||
+          newStarsRaced ||
+          newStarsRaceWin) && {
           pageNotifications: {
             ...state.pageNotifications,
             stars: true,

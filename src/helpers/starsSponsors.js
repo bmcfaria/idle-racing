@@ -58,6 +58,7 @@ export const newMechanicsStars = (stateSponsors, stateStars) => {
     },
   ];
 };
+
 // Sponsor base stars
 const moneySponsorsAllStarId = starsByTypeObject['sponsors'].find(
   ({ requirement }) =>

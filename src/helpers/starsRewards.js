@@ -6,7 +6,6 @@ import {
 } from './stars';
 
 // Reward money base stars
-
 export const newRewardMoneyStars = (totalMoneyEarned, stateStars) =>
   genericNewStarsNumberCompare(
     'rewards',
@@ -14,6 +13,7 @@ export const newRewardMoneyStars = (totalMoneyEarned, stateStars) =>
     totalMoneyEarned,
     stateStars
   );
+
 // Reward cars base stars
 const rewardCarsIdList = cars.reduce(
   (results, car) => (car.reward ? [...results, car.id] : results),
