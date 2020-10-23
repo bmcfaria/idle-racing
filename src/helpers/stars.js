@@ -72,3 +72,9 @@ export const genericAllCompare = (
 
   return [!stateStars[starId] && !!newAll[starId], newAll];
 };
+
+export const genericFindStarId = (type, reqType, reqValue) =>
+  starsByTypeObject[type].find(
+    ({ requirement }) =>
+      requirement.type === reqType && requirement.value === reqValue
+  )?.id;

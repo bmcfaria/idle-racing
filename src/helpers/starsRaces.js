@@ -1,6 +1,7 @@
 import { tracks } from './data';
 import { genericNewStarsNumberCompare, starsByTypeObject } from './stars';
 
+// Raced base stars
 export const genericNewRacesStars = (
   reqType,
   totalToCompare,
@@ -30,7 +31,6 @@ export const genericNewRacesStars = (
   ];
 };
 
-// Raced base stars
 const racedAllStarId = starsByTypeObject['races'].find(
   ({ requirement }) =>
     requirement.type === 'race' && requirement.value === 'all'

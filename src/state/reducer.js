@@ -15,6 +15,7 @@ import { discountValue } from '../helpers/utils';
 import objectAssignDeep from 'object-assign-deep';
 import initialState from './initialState';
 import experience, { experienceTypePointsSpent } from '../helpers/experience';
+import { newExpStars } from '../helpers/starsExp';
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -130,16 +131,33 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
+      const newExperienceObject = {
+        ...state.experience,
+        [payload.type]: {
+          ...(state.experience[payload.type] || {}),
+          [payload.subType]:
+            ~~state.experience?.[payload.type][payload.subType] + 1,
+        },
+      };
+
+      const [newStarsExp, completedStarsExp] = newExpStars(
+        newExperienceObject,
+        state.stars
+      );
+
       return {
         ...state,
-        experience: {
-          ...state.experience,
-          [payload.type]: {
-            ...(state.experience[payload.type] || {}),
-            [payload.subType]:
-              ~~state.experience?.[payload.type][payload.subType] + 1,
-          },
+        experience: newExperienceObject,
+        stars: {
+          ...state.stars,
+          ...completedStarsExp,
         },
+        ...(newStarsExp && {
+          pageNotifications: {
+            ...state.pageNotifications,
+            stars: true,
+          },
+        }),
       };
     }
 
