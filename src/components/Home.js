@@ -73,7 +73,7 @@ const Home = () => {
   const cars = useSelector(garageCarsSelector);
   const completedStars = Object.values(
     useSelector(starsSelector, shallowEqual)
-  ).reduce((results, star) => results + ~~star, 0);
+  ).reduce((results, star) => results + ~~!!star, 0);
 
   return (
     <Box w="100%">

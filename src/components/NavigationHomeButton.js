@@ -43,8 +43,19 @@ const DynamicIcon = props => {
   );
 };
 
-const NavigationHomeButton = props => (
-  <NavigationButton icon={DynamicIcon} to="/" text="Home" exact {...props} />
-);
+const NavigationHomeButton = props => {
+  const { stars: starsNotification } = useSelector(pageNotificationsSelector);
+
+  return (
+    <NavigationButton
+      icon={DynamicIcon}
+      to="/"
+      text="Home"
+      exact
+      notification={starsNotification}
+      {...props}
+    />
+  );
+};
 
 export default NavigationHomeButton;

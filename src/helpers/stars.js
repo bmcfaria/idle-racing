@@ -41,18 +41,20 @@ const genericNewStarsNumberCompare = (
   stateStars
 ) =>
   starsByType(type, subType).reduce(
-    (results, star) => [
-      results[0] ||
-        (!stateStars[star.id] &&
-          Number.isInteger(star.requirement.value) &&
-          numberToCompare >= star.requirement.value),
-      {
-        ...results[1],
-        ...(Number.isInteger(star.requirement.value) && {
-          [star.id]: numberToCompare >= star.requirement.value,
-        }),
-      },
-    ],
+    (results, star) => {
+      const compareResult =
+        Number.isInteger(star.requirement.value) &&
+        numberToCompare >= star.requirement.value;
+      return [
+        results[0] || (!stateStars[star.id] && compareResult),
+        {
+          ...results[1],
+          ...(compareResult && {
+            [star.id]: stateStars[star.id] || new Date().getTime(),
+          }),
+        },
+      ];
+    },
     [false, {}]
   );
 
@@ -91,7 +93,8 @@ const newRewardAllCarsStars = (newRewardCar, stateRewardCars, stateStars) => {
     couldBeNewStar && areAllRewardCarsObtained,
     {
       [rewardCarsAllStarId]:
-        stateStars[rewardCarsAllStarId] || areAllRewardCarsObtained,
+        stateStars[rewardCarsAllStarId] ||
+        (areAllRewardCarsObtained && new Date().getTime()),
     },
   ];
 };
