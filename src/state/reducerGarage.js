@@ -17,6 +17,7 @@ import { ATTRIBUTE_TYPES, buffValue, discountValue } from '../helpers/utils';
 import { maxUnlockedUpgrade, requiredUpgrade } from '../helpers/garageUpgrades';
 import initialState from './initialState';
 import { newSellCarsStars } from '../helpers/starsCars';
+import { newGarageSlotsStars } from '../helpers/starsGarage';
 
 const reducerGarage = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -251,6 +252,11 @@ const reducerGarage = (state = initialState, { type, payload }) => {
         return state;
       }
 
+      const [
+        newStarsGarageSlots,
+        completedStarsGarageSlots,
+      ] = newGarageSlotsStars(state.garageSlots, state.stars);
+
       return {
         ...state,
         money: state.money - slotPrice,
@@ -262,6 +268,16 @@ const reducerGarage = (state = initialState, { type, payload }) => {
             exp: state.experience.mechanic.exp + state.garageSlots,
           },
         },
+        stars: {
+          ...state.stars,
+          ...completedStarsGarageSlots,
+        },
+        ...(newStarsGarageSlots && {
+          pageNotifications: {
+            ...state.pageNotifications,
+            stars: true,
+          },
+        }),
       };
     }
 
