@@ -16,6 +16,7 @@ import objectAssignDeep from 'object-assign-deep';
 import initialState from './initialState';
 import experience, { experienceTypePointsSpent } from '../helpers/experience';
 import { newExpStars } from '../helpers/starsExp';
+import { newBuyCarsStars, newGetAllCars } from '../helpers/starsCars';
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -58,14 +59,27 @@ const rootReducer = (state = initialState, { type, payload }) => {
       const businessExpInc =
         ~~(calculatedPrice / 1000) < 1 ? 1 : ~~(calculatedPrice / 1000);
 
+      const newBoughtCarsObject = {
+        ...state.boughtCars,
+        [car.id]: ~~state.boughtCars[car.id] + 1,
+      };
+
+      const [newStarsBuyCars, completedStarsBuyCars] = newBuyCarsStars(
+        newBoughtCarsObject,
+        state.stars
+      );
+
+      const [newStarsGetAllCars, completedStarsGetAllCars] = newGetAllCars(
+        newBoughtCarsObject,
+        state.rewardCars,
+        state.stars
+      );
+
       return {
         ...state,
         acquiredCar: true,
         money: state.money - calculatedPrice,
-        boughtCars: {
-          ...state.boughtCars,
-          [car.id]: ~~state.boughtCars[car.id] + 1,
-        },
+        boughtCars: newBoughtCarsObject,
         garageCars: [...state.garageCars, garageCar],
         pageNotifications: {
           ...state.pageNotifications,
@@ -85,6 +99,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
           globalStats: {
             ...state.globalStats,
             firstBuy: garageCar.timestamp,
+          },
+        }),
+        stars: {
+          ...state.stars,
+          ...completedStarsBuyCars,
+          ...completedStarsGetAllCars,
+        },
+        ...((newStarsBuyCars || newStarsGetAllCars) && {
+          pageNotifications: {
+            ...state.pageNotifications,
+            stars: true,
           },
         }),
       };

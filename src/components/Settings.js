@@ -10,6 +10,7 @@ import offroadRaceAll from '../dev/offroad_race_all.json';
 import beforeAllRewardCars from '../dev/before_all_reward_cars.json';
 import beforeAllMechanics from '../dev/before_all_mechanics.json';
 import beforeAllRacesGreen from '../dev/before_all_races_green.json';
+import beforeGettingAllCars from '../dev/before_getting_all_cars.json';
 import allRacesGreen from '../dev/all_races_green.json';
 import Button from './Button';
 
@@ -192,6 +193,28 @@ const Settings = () => {
             marginTop="8px"
             bg={colors.red}
             onClick={() => resetDev(allRacesGreen)}
+          >
+            Reset
+          </Button>
+        </Flex>
+      )}
+      {inDev && (
+        <Flex
+          w="240px"
+          padding="16px"
+          borderRadius="16px"
+          marginTop="16px"
+          direction="column"
+          bg={colors.lightGray}
+          alignItems="center"
+        >
+          <Text lineHeight="18px" textAlign="center" fontSize="18px">
+            Before Getting All Cars
+          </Text>
+          <Button
+            marginTop="8px"
+            bg={colors.red}
+            onClick={() => resetDev(beforeGettingAllCars)}
           >
             Reset
           </Button>

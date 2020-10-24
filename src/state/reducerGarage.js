@@ -16,6 +16,7 @@ import {
 import { ATTRIBUTE_TYPES, buffValue, discountValue } from '../helpers/utils';
 import { maxUnlockedUpgrade, requiredUpgrade } from '../helpers/garageUpgrades';
 import initialState from './initialState';
+import { newSellCarsStars } from '../helpers/starsCars';
 
 const reducerGarage = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -34,6 +35,16 @@ const reducerGarage = (state = initialState, { type, payload }) => {
       const businessExpInc =
         ~~(calculatedPrice / 1000) < 1 ? 1 : ~~(calculatedPrice / 1000);
 
+      const newSoldCarsObject = {
+        ...state.soldCars,
+        [car.dealerCar]: ~~state.soldCars[car.dealerCar] + 1,
+      };
+
+      const [newStarsSellCars, completedStarsSellCars] = newSellCarsStars(
+        newSoldCarsObject,
+        state.stars
+      );
+
       return {
         ...state,
         soldCars: {
@@ -49,6 +60,16 @@ const reducerGarage = (state = initialState, { type, payload }) => {
             exp: state.experience.business.exp + businessExpInc,
           },
         },
+        stars: {
+          ...state.stars,
+          ...completedStarsSellCars,
+        },
+        ...(newStarsSellCars && {
+          pageNotifications: {
+            ...state.pageNotifications,
+            stars: true,
+          },
+        }),
       };
     }
 
