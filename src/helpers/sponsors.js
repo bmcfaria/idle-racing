@@ -63,5 +63,7 @@ export const brandSponsors = {
   supercar: 10000,
   f1: 10000,
   racer: 10000,
+  nascar: 10000,
+  prototype: 10000,
   heavy: 10000,
 };

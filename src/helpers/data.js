@@ -33,6 +33,8 @@ export const dealerBrands = [
   { type: 'supercar', name: 'supercar' },
   { type: 'f1', name: 'f1' },
   { type: 'racer', name: 'racer' },
+  { type: 'nascar', name: 'nascar' },
+  { type: 'prototype', name: 'prototype' },
   { type: 'heavy', name: 'heavy' },
 ];
 
