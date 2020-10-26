@@ -21,6 +21,7 @@ import {
   newAttrUpgradesStars,
   newGarageSlotsStars,
   newChangeColorStars,
+  newCarTuningStars,
 } from '../helpers/starsGarage';
 
 const reducerGarage = (state = initialState, { type, payload }) => {
@@ -190,11 +191,29 @@ const reducerGarage = (state = initialState, { type, payload }) => {
       let newCar = Object.assign({}, car);
       newCar.tuning = newTuning;
 
+      const totalCarTunings = ~~state.totalCarTunings + 1;
+
+      const [newStarsCarTuning, completedStarsCarTuning] = newCarTuningStars(
+        totalCarTunings,
+        state.stars
+      );
+
       const carIndex = state.garageCars.findIndex(item => item.id === car.id);
       return {
         ...state,
+        totalCarTunings,
         garageCars: Object.assign([], state.garageCars, {
           [carIndex]: newCar,
+        }),
+        ...(newStarsCarTuning && {
+          stars: {
+            ...state.stars,
+            ...completedStarsCarTuning,
+          },
+          pageNotifications: {
+            ...state.pageNotifications,
+            stars: true,
+          },
         }),
       };
     }

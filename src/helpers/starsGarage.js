@@ -25,3 +25,6 @@ export const newChangeColorStars = (totalCarChangeColor, stateStars) =>
     totalCarChangeColor,
     stateStars
   );
+
+export const newCarTuningStars = (totalCarTunings, stateStars) =>
+  genericNewStarsNumberCompare('tuning', 'total', totalCarTunings, stateStars);
