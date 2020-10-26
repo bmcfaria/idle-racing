@@ -35,11 +35,11 @@ const moneyTrackerReducer = state => {
     totalMoneyEarned,
     totalMoneySpent,
     lastMoneyValue: state.money,
-    stars: {
-      ...state.stars,
-      ...completedStars,
-    },
     ...(newStars && {
+      stars: {
+        ...state.stars,
+        ...completedStars,
+      },
       pageNotifications: {
         ...state.pageNotifications,
         stars: true,
