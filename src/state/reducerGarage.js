@@ -17,7 +17,10 @@ import { ATTRIBUTE_TYPES, buffValue, discountValue } from '../helpers/utils';
 import { maxUnlockedUpgrade, requiredUpgrade } from '../helpers/garageUpgrades';
 import initialState from './initialState';
 import { newSellCarsStars } from '../helpers/starsCars';
-import { newGarageSlotsStars } from '../helpers/starsGarage';
+import {
+  newAttrUpgradesStars,
+  newGarageSlotsStars,
+} from '../helpers/starsGarage';
 
 const reducerGarage = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -61,11 +64,11 @@ const reducerGarage = (state = initialState, { type, payload }) => {
             exp: state.experience.business.exp + businessExpInc,
           },
         },
-        stars: {
-          ...state.stars,
-          ...completedStarsSellCars,
-        },
         ...(newStarsSellCars && {
+          stars: {
+            ...state.stars,
+            ...completedStarsSellCars,
+          },
           pageNotifications: {
             ...state.pageNotifications,
             stars: true,
@@ -105,10 +108,18 @@ const reducerGarage = (state = initialState, { type, payload }) => {
       newCar[payload.type] = upgradeAttribute(attribute);
       newCar.price = generateCarPrice(newCar);
 
+      const totalCarUpgrades = ~~state.totalCarUpgrades + 1;
+
+      const [
+        newStarsAttrUpgrades,
+        completedStarsAttrUpgrades,
+      ] = newAttrUpgradesStars(totalCarUpgrades, state.stars);
+
       const carIndex = state.garageCars.findIndex(item => item.id === car.id);
       return {
         ...state,
         money: state.money - calculatedPrice,
+        totalCarUpgrades,
         garageCars: Object.assign([], state.garageCars, {
           [carIndex]: newCar,
         }),
@@ -119,6 +130,16 @@ const reducerGarage = (state = initialState, { type, payload }) => {
             exp: state.experience.mechanic.exp + 1,
           },
         },
+        ...(newStarsAttrUpgrades && {
+          stars: {
+            ...state.stars,
+            ...completedStarsAttrUpgrades,
+          },
+          pageNotifications: {
+            ...state.pageNotifications,
+            stars: true,
+          },
+        }),
       };
     }
 
@@ -268,11 +289,11 @@ const reducerGarage = (state = initialState, { type, payload }) => {
             exp: state.experience.mechanic.exp + state.garageSlots,
           },
         },
-        stars: {
-          ...state.stars,
-          ...completedStarsGarageSlots,
-        },
         ...(newStarsGarageSlots && {
+          stars: {
+            ...state.stars,
+            ...completedStarsGarageSlots,
+          },
           pageNotifications: {
             ...state.pageNotifications,
             stars: true,

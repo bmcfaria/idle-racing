@@ -28,6 +28,9 @@ const initialState = {
   totalRacesWon: 0,
   totalRacesLost: 0,
   totalRacesCanceled: 0,
+  totalCarUpgrades: 0,
+  totalCarTunes: 0,
+  totalCarChangeColor: 0,
 
   tutorial: {
     winChance: true,
