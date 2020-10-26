@@ -36,7 +36,9 @@ const StarIconNotification = styled(Box)`
 `;
 
 const StarIcon = props => {
-  const { stars: starNotification } = useSelector(pageNotificationsSelector);
+  const { starsPage: starNotification } = useSelector(
+    pageNotificationsSelector
+  );
 
   return (
     <StarIconNotification

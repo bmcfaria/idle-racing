@@ -22,7 +22,9 @@ const StarNotification = styled(Box)`
 `;
 
 const DynamicIcon = props => {
-  const { stars: starsNotification } = useSelector(pageNotificationsSelector);
+  const { starsPage: starsNotification } = useSelector(
+    pageNotificationsSelector
+  );
 
   return (
     <Box position="relative" {...props}>
@@ -44,7 +46,9 @@ const DynamicIcon = props => {
 };
 
 const NavigationHomeButton = props => {
-  const { stars: starsNotification } = useSelector(pageNotificationsSelector);
+  const { starsPage: starsNotification } = useSelector(
+    pageNotificationsSelector
+  );
 
   return (
     <NavigationButton

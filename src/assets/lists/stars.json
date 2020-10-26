@@ -385,21 +385,21 @@
     "id": "05a147fa-5611-41f6-939a-dfbf2ff4f4e8"
   },
   {
-    "name": "Tune car (1)",
+    "name": "Car tuning (1)",
     "type": "tuning",
     "req_type": "total",
     "req_value": 1,
     "id": "ac657557-0825-4266-8410-ac0be8e425da"
   },
   {
-    "name": "Tune car (5)",
+    "name": "Car tuning (5)",
     "type": "tuning",
     "req_type": "total",
     "req_value": 5,
     "id": "0369b65b-1496-4428-81a5-64a971a06760"
   },
   {
-    "name": "Tune car (10)",
+    "name": "Car tuning (10)",
     "type": "tuning",
     "req_type": "total",
     "req_value": 10,

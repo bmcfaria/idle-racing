@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import CarDetailsGarage from './CarDetailsGarage';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   garageCarsSelector,
   pageNotificationsGarageSelector,
@@ -11,7 +11,6 @@ import Modal from './Modal';
 import { useLocation, Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
-import { openGarageAction } from '../state/actions';
 import { colors } from '../helpers/theme';
 import GarageBuySlot from './GarageBuySlot';
 import GarageUpgrades from './GarageUpgrades';
@@ -75,15 +74,10 @@ const Garage = () => {
   const location = useLocation();
   const cars = useSelector(garageCarsSelector);
   const containerWidth = useDynamicCardContainerWidth();
-  const dispatch = useDispatch();
 
   const selected = location?.state?.car;
 
   const selectedCar = cars.find(item => item.id === selected);
-
-  useEffect(() => {
-    dispatch(openGarageAction);
-  }, [dispatch]);
 
   return (
     <Box>

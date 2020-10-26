@@ -19,7 +19,12 @@ const initialState = {
   pageNotifications: {
     garagePage: false,
     garage: [],
-    stars: false,
+    starsPage: false,
+  },
+  pageStats: {
+    stars: 0,
+    settings: 0,
+    about: 0,
   },
 
   races: [],

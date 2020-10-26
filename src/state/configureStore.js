@@ -42,7 +42,7 @@ const moneyTrackerReducer = state => {
       },
       pageNotifications: {
         ...state.pageNotifications,
-        stars: true,
+        starsPage: true,
       },
     }),
   };

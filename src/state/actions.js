@@ -55,11 +55,6 @@ export const disableTutorialUpgradeAction = {
   type: DISABLE_TUTORIAL_UPGRADE_TYPE,
 };
 
-export const OPEN_GARAGE_TYPE = 'OPEN_GARAGE';
-export const openGarageAction = {
-  type: OPEN_GARAGE_TYPE,
-};
-
 export const OPEN_GARAGE_CAR_TYPE = 'OPEN_GARAGE_CAR';
 export const openGarageCarAction = carId => ({
   type: OPEN_GARAGE_CAR_TYPE,
@@ -131,7 +126,8 @@ export const changeCarColorAction = (carId, color) => ({
   payload: { carId, color },
 });
 
-export const OPEN_STARS_TYPE = 'OPEN_STARS';
-export const openStarsAction = {
-  type: OPEN_STARS_TYPE,
-};
+export const OPEN_PAGE_TYPE = 'OPEN_PAGE';
+export const openPageAction = pathname => ({
+  type: OPEN_PAGE_TYPE,
+  payload: { pathname },
+});

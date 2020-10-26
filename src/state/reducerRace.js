@@ -401,7 +401,7 @@ const reducerRace = (state = initialState, { type, payload }) => {
           newStarsGetAllCars) && {
           pageNotifications: {
             ...state.pageNotifications,
-            stars: true,
+            starsPage: true,
           },
         }),
       };

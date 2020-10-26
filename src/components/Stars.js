@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Flex, Text, Box } from '@chakra-ui/core';
 import { colors } from '../helpers/theme';
 import { ReactComponent as StarIcon } from '../assets/icons/star.svg';
 import { stars } from '../helpers/stars';
 import { BottomSpacer } from './BottomSpacer';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { starsSelector } from '../state/selectors';
-import { openStarsAction } from '../state/actions';
 
 const StarItem = ({ star, active, ...props }) => (
   <Flex
@@ -44,12 +43,7 @@ const StarItem = ({ star, active, ...props }) => (
 
 const Stars = () => {
   const completedStars = useSelector(starsSelector);
-  const dispatch = useDispatch();
   const containerWidth = useDynamicCardContainerWidth(160, 8, 16);
-
-  useEffect(() => {
-    dispatch(openStarsAction);
-  }, [dispatch]);
 
   return (
     <Flex w="100%" direction="column" alignItems="center">

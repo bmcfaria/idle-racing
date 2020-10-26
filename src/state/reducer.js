@@ -8,7 +8,7 @@ import {
   CLEAR_OFFLINE_EARNINGS_TYPE,
   DISMISS_TOAST_TYPE,
   RESET_DEV_TYPE,
-  OPEN_STARS_TYPE,
+  OPEN_PAGE_TYPE,
 } from './actions';
 import { cars as dealerCars, generateGarageCar } from '../helpers/data';
 import { discountValue } from '../helpers/utils';
@@ -75,6 +75,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
         state.stars
       );
 
+      const newStars = newStarsBuyCars || newStarsGetAllCars;
+
       return {
         ...state,
         acquiredCar: true,
@@ -84,6 +86,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         pageNotifications: {
           ...state.pageNotifications,
           garagePage: true,
+          starsPage: newStars,
           garage: [...state.pageNotifications.garage, garageCar.id],
         },
         experience: {
@@ -101,15 +104,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
             firstBuy: garageCar.timestamp,
           },
         }),
-        stars: {
-          ...state.stars,
-          ...completedStarsBuyCars,
-          ...completedStarsGetAllCars,
-        },
-        ...((newStarsBuyCars || newStarsGetAllCars) && {
-          pageNotifications: {
-            ...state.pageNotifications,
-            stars: true,
+        ...(newStars && {
+          stars: {
+            ...state.stars,
+            ...completedStarsBuyCars,
+            ...completedStarsGetAllCars,
           },
         }),
       };
@@ -173,14 +172,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         experience: newExperienceObject,
-        stars: {
-          ...state.stars,
-          ...completedStarsExp,
-        },
         ...(newStarsExp && {
+          stars: {
+            ...state.stars,
+            ...completedStarsExp,
+          },
           pageNotifications: {
             ...state.pageNotifications,
-            stars: true,
+            starsPage: true,
           },
         }),
       };
@@ -215,13 +214,34 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
     }
 
-    case OPEN_STARS_TYPE: {
+    case OPEN_PAGE_TYPE: {
+      const { pathname } = payload;
+      const normalizePathname = pathname
+        .toLowerCase()
+        .substring(1)
+        .split('/')[0];
+
+      if (
+        !(normalizePathname in state.pageStats) &&
+        state.pageNotifications[`${normalizePathname}Page`] !== true
+      ) {
+        return state;
+      }
+
       return {
         ...state,
-        pageNotifications: {
-          ...state.pageNotifications,
-          stars: false,
-        },
+        ...(normalizePathname in state.pageStats && {
+          pageStats: {
+            ...state.pageStats,
+            [normalizePathname]: state.pageStats[normalizePathname] + 1,
+          },
+        }),
+        ...(state.pageNotifications[`${normalizePathname}Page`] === true && {
+          pageNotifications: {
+            ...state.pageNotifications,
+            [`${normalizePathname}Page`]: false,
+          },
+        }),
       };
     }
 

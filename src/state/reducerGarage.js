@@ -1,7 +1,6 @@
 import {
   SELL_CAR_TYPE,
   UPGRADE_ATTRIBUTE_TYPE,
-  OPEN_GARAGE_TYPE,
   OPEN_GARAGE_CAR_TYPE,
   DISABLE_TUTORIAL_UPGRADE_TYPE,
   BUY_GARAGE_SLOT_TYPE,
@@ -73,7 +72,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            stars: true,
+            starsPage: true,
           },
         }),
       };
@@ -139,7 +138,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            stars: true,
+            starsPage: true,
           },
         }),
       };
@@ -212,7 +211,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            stars: true,
+            starsPage: true,
           },
         }),
       };
@@ -260,7 +259,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            stars: true,
+            starsPage: true,
           },
         }),
       };
@@ -272,16 +271,6 @@ const reducerGarage = (state = initialState, { type, payload }) => {
         tutorial: {
           ...state.tutorial,
           upgrade: false,
-        },
-      };
-    }
-
-    case OPEN_GARAGE_TYPE: {
-      return {
-        ...state,
-        pageNotifications: {
-          ...state.pageNotifications,
-          garagePage: false,
         },
       };
     }
@@ -334,7 +323,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            stars: true,
+            starsPage: true,
           },
         }),
       };
