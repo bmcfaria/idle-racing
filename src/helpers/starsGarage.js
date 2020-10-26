@@ -17,3 +17,11 @@ export const newAttrUpgradesStars = (totalCarUpgrades, stateStars) =>
     totalCarUpgrades,
     stateStars
   );
+
+export const newChangeColorStars = (totalCarChangeColor, stateStars) =>
+  genericNewStarsNumberCompare(
+    'customizations',
+    'total',
+    totalCarChangeColor,
+    stateStars
+  );
