@@ -17,6 +17,7 @@ import initialState from './initialState';
 import experience, { experienceTypePointsSpent } from '../helpers/experience';
 import { newExpStars } from '../helpers/starsExp';
 import { newBuyCarsStars, newGetAllCars } from '../helpers/starsCars';
+import { newUseOfUIPageStars } from '../helpers/stars';
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -228,6 +229,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
+      let newStarsUseOfUIPage = false;
+      let completedStarsUseOfUIPage = {};
+      if (normalizePathname in state.pageStats) {
+        [newStarsUseOfUIPage, completedStarsUseOfUIPage] = newUseOfUIPageStars(
+          normalizePathname,
+          state.pageStats[normalizePathname] + 1,
+          state.stars
+        );
+      }
+
       return {
         ...state,
         ...(normalizePathname in state.pageStats && {
@@ -236,9 +247,20 @@ const rootReducer = (state = initialState, { type, payload }) => {
             [normalizePathname]: state.pageStats[normalizePathname] + 1,
           },
         }),
+        ...(newStarsUseOfUIPage && {
+          stars: {
+            ...state.stars,
+            ...completedStarsUseOfUIPage,
+          },
+          pageNotifications: {
+            ...state.pageNotifications,
+            starsPage: true,
+          },
+        }),
         ...(state.pageNotifications[`${normalizePathname}Page`] === true && {
           pageNotifications: {
             ...state.pageNotifications,
+            starsPage: newStarsUseOfUIPage,
             [`${normalizePathname}Page`]: false,
           },
         }),

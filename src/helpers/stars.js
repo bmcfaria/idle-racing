@@ -78,3 +78,11 @@ export const genericFindStarId = (type, reqType, reqValue) =>
     ({ requirement }) =>
       requirement.type === reqType && requirement.value === reqValue
   )?.id;
+
+export const newUseOfUIPageStars = (currentPage, totalPageCount, stateStars) =>
+  genericNewStarsNumberCompare(
+    'use_of_ui',
+    `${currentPage}_page`,
+    totalPageCount,
+    stateStars
+  );

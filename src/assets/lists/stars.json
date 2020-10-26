@@ -408,43 +408,15 @@
   {
     "name": "Go to settings page",
     "type": "use_of_ui",
-    "req_type": "page",
-    "req_value": "settings",
+    "req_type": "settings_page",
+    "req_value": 1,
     "id": "74827c96-cfcd-4e6c-8acd-4a684803f631"
   },
   {
     "name": "Go to about page",
     "type": "use_of_ui",
-    "req_type": "page",
-    "req_value": "about",
+    "req_type": "about_page",
+    "req_value": 1,
     "id": "484a8967-b84d-4b60-bca3-e2e517f2d31b"
-  },
-  {
-    "name": "",
-    "type": "",
-    "req_type": "",
-    "req_value": "",
-    "id": "8bd48b0f-2b55-451a-8886-5aafde145593"
-  },
-  {
-    "name": "",
-    "type": "",
-    "req_type": "",
-    "req_value": "",
-    "id": "433e27d5-7163-4d6e-880f-cb3c94c9d5c2"
-  },
-  {
-    "name": "",
-    "type": "",
-    "req_type": "",
-    "req_value": "",
-    "id": "51ac599b-348b-42a8-8ae9-025fe26a7cff"
-  },
-  {
-    "name": "",
-    "type": "",
-    "req_type": "",
-    "req_value": "",
-    "id": "1f68e6bd-3770-4ba8-bd2c-8b7371e8492a"
   }
 ]
