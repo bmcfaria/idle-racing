@@ -4,7 +4,7 @@ import rootReducer from './reducer';
 import raceReducer from './reducerRace';
 import garageReducer from './reducerGarage';
 import mySaga from './sagas';
-import throttle from 'lodash/throttle';
+import throttle from 'lodash.throttle';
 import objectAssignDeep from 'object-assign-deep';
 import initialState from './initialState';
 import { newRewardMoneyStars } from '../helpers/starsRewards';
