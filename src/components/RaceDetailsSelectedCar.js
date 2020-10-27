@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
-// import RaceDetailsSelectedCarWinningChance from './RaceDetailsSelectedCarWinningChance';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES, doMeetRequirements } from '../helpers/utils';
 import { ReactComponent as ChangeIcon } from '../assets/icons/change.svg';
@@ -87,7 +86,6 @@ const RaceDetailsSelectedCar = ({ car, track, carsModalOpen, ...props }) => {
         marginTop="-4px"
         paddingTop="4px"
       />
-      {/* <RaceDetailsSelectedCarWinningChance car={car} track={track} w="100%" /> */}
     </Flex>
   );
 };
