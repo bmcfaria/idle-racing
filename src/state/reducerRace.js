@@ -172,6 +172,7 @@ const reducerRace = (state = initialState, { type, payload }) => {
           [carIndex]: {
             ...car,
             race: undefined,
+            previousRace: pastRace.id,
           },
         }),
       };

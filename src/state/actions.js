@@ -26,11 +26,12 @@ export const upgradeAttributeAction = (type, carId) => ({
   type: UPGRADE_ATTRIBUTE_TYPE,
   payload: { type, carId },
 });
-export const START_RACE_TYPE = 'START_RACE';
-export const startRaceAction = (carId, trackId, auto) => ({
-  type: START_RACE_TYPE,
-  payload: { carId, trackId, auto },
+export const START_RACE_UI_TYPE = 'START_RACE_UI';
+export const startRaceAction = (carId, trackId) => ({
+  type: START_RACE_UI_TYPE,
+  payload: { carId, trackId },
 });
+export const START_RACE_TYPE = 'START_RACE';
 export const CHECK_END_RACE_TYPE = 'CHECK_END_RACE';
 export const checkEndRaceAction = raceId => ({
   type: CHECK_END_RACE_TYPE,

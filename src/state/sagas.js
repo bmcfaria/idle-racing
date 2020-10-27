@@ -16,6 +16,9 @@ import {
   RESET_DEV_TYPE,
   RESET_TYPE,
   END_RACE_STARS_TYPE,
+  START_RACE_UI_TYPE,
+  START_RACE_TYPE,
+  CLOSE_RESULTS_TYPE,
 } from './actions';
 import { lockedSelector } from './selectors';
 
@@ -119,6 +122,28 @@ function* sync() {
   }
 }
 
+function* startRace({ payload }) {
+  try {
+    const { garageCars } = yield select();
+    const pastRaceId = garageCars.find(item => item.id === payload.carId)
+      ?.previousRace;
+
+    if (pastRaceId) {
+      yield put({
+        type: CLOSE_RESULTS_TYPE,
+        payload: { pastRaceId },
+      });
+    }
+
+    yield put({
+      type: START_RACE_TYPE,
+      payload,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 function* reset({ type, payload }) {
   if (type === RESET_AND_RECALCULATE_DEV_TYPE) {
     yield put({ type: RESET_DEV_TYPE, payload });
@@ -140,6 +165,7 @@ function* mySaga() {
   yield takeLatest(SYNC_TYPE, sync);
   yield takeEvery(RESET_AND_RECALCULATE_TYPE, reset);
   yield takeEvery(RESET_AND_RECALCULATE_DEV_TYPE, reset);
+  yield takeEvery(START_RACE_UI_TYPE, startRace);
 }
 
 export default mySaga;
