@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text } from '@chakra-ui/core';
+import { Box, Flex, Text, Link as ChakraLink } from '@chakra-ui/core';
 import { shallowEqual, useSelector } from 'react-redux';
 import {
   garageCarsSelector,
@@ -7,11 +7,11 @@ import {
   starsSelector,
 } from '../state/selectors';
 import { Link } from 'react-router-dom';
-import { Link as ChakraLink } from '@chakra-ui/core';
 import { BottomSpacer } from './BottomSpacer';
 import { colors } from '../helpers/theme';
 import { ReactComponent as StarIconSvg } from '../assets/icons/star.svg';
 import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
+import { ReactComponent as InfoIcon } from '../assets/icons/info.svg';
 import Button from './Button';
 import HomeCardMoney from './HomeCardMoney';
 import HomeCardRaces from './HomeCardRaces';
@@ -78,65 +78,69 @@ const Home = () => {
   ).reduce((results, star) => results + ~~!!star, 0);
 
   return (
-    <Box w="100%">
-      <Flex
-        w="100%"
-        direction="column"
-        bg="white"
-        borderRadius="16px"
-        minH="50vh"
-        alignItems="center"
-      >
-        <Text marginTop="16px" textAlign="center" fontSize="32px">
-          IdleRacing
-        </Text>
-        {cars.length === 0 && (
-          <Flex margin="auto" direction="column">
-            <Text fontSize="24px">Buy your first car</Text>
-            <Text fontSize="24px">and start racing!</Text>
-            <ChakraLink
-              as={Link}
-              to="/dealer"
-              fontSize="12px"
-              color="teal.500"
-              margin="8px auto 0"
-            >
-              go to Dealer
-            </ChakraLink>
-          </Flex>
-        )}
-        {cars.length > 0 && (
-          <Flex
-            maxW={`${2 * 160 + 8}px`}
-            marginTop="24px"
-            display="grid"
-            gridTemplateColumns="repeat(auto-fit, minmax(160px, 1fr))"
-            gridGap="8px"
+    <Flex
+      w="100%"
+      direction="column"
+      bg="white"
+      borderRadius="16px"
+      minH="50vh"
+      alignItems="center"
+    >
+      <Text marginTop="16px" textAlign="center" fontSize="32px">
+        IdleRacing
+      </Text>
+      {cars.length === 0 && (
+        <Flex margin="auto" direction="column">
+          <Text fontSize="24px">Buy your first car</Text>
+          <Text fontSize="24px">and start racing!</Text>
+          <ChakraLink
+            as={Link}
+            to="/dealer"
+            fontSize="12px"
+            color="teal.500"
+            margin="8px auto 0"
           >
-            <HomeCardButton icon={StarIcon} to="/stars">
-              <Box flexGrow="1">
-                <Text w="100%">Stars</Text>
-                <Text w="100%" fontSize="16px">
-                  {completedStars} / {stars.length}
-                </Text>
-              </Box>
-            </HomeCardButton>
-            <HomeCardTimeStarted />
-
-            <HomeCardRaces />
-            <HomeCardCars />
-
-            <HomeCardMoney />
-            <HomeCardButton icon={SettingsIcon} to="/settings">
-              <Text flexGrow="1" w="100%">
-                Settings
+            go to Dealer
+          </ChakraLink>
+        </Flex>
+      )}
+      {cars.length > 0 && (
+        <Flex
+          maxW={`${2 * 160 + 8}px`}
+          marginTop="24px"
+          display="grid"
+          gridTemplateColumns="repeat(auto-fit, minmax(160px, 1fr))"
+          gridGap="8px"
+        >
+          <HomeCardButton icon={StarIcon} to="/stars">
+            <Box flexGrow="1">
+              <Text w="100%">Stars</Text>
+              <Text w="100%" fontSize="16px">
+                {completedStars} / {stars.length}
               </Text>
-            </HomeCardButton>
-          </Flex>
-        )}
-        <BottomSpacer />
-      </Flex>
-    </Box>
+            </Box>
+          </HomeCardButton>
+          <HomeCardTimeStarted />
+
+          <HomeCardRaces />
+          <HomeCardCars />
+
+          <HomeCardMoney />
+          <HomeCardButton icon={SettingsIcon} to="/settings">
+            <Text flexGrow="1" w="100%">
+              Settings
+            </Text>
+          </HomeCardButton>
+
+          <HomeCardButton icon={InfoIcon} to="/about">
+            <Text flexGrow="1" w="100%">
+              About
+            </Text>
+          </HomeCardButton>
+        </Flex>
+      )}
+      <BottomSpacer />
+    </Flex>
   );
 };
 

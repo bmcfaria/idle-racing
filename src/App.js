@@ -19,6 +19,7 @@ import StopRaceModal from './components/StopRaceModal';
 import Brand from './components/Brand';
 import RaceEvent from './components/RaceEvent';
 import Stars from './components/Stars';
+import About from './components/About';
 
 const store = configureStore();
 
@@ -70,6 +71,9 @@ function App() {
                 </Route>
                 <Route path="/stars">
                   <Stars />
+                </Route>
+                <Route path="/about">
+                  <About />
                 </Route>
                 <Route>
                   <Home />
