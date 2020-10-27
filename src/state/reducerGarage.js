@@ -128,7 +128,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           ...state.experience,
           mechanic: {
             ...state.experience.mechanic,
-            exp: state.experience.mechanic.exp + 1,
+            exp: state.experience.mechanic.exp + ~~attribute.value,
           },
         },
         ...(newStarsAttrUpgrades && {
