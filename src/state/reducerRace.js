@@ -382,23 +382,26 @@ const reducerRace = (state = initialState, { type, payload }) => {
         );
       }
 
+      const newStars =
+        newStarsRewardCars ||
+        newStarsMechanics ||
+        newStarsSponsors ||
+        newStarsRaced ||
+        newStarsRaceWin ||
+        newStarsGetAllCars;
+
       return {
         ...state,
-        stars: {
-          ...state.stars,
-          ...completedStarsRewardCars,
-          ...completedStarsMechanics,
-          ...completedStarsSponsors,
-          ...completedStarsRaced,
-          ...completedStarsRaceWin,
-          ...completedStarsGetAllCars,
-        },
-        ...((newStarsRewardCars ||
-          newStarsMechanics ||
-          newStarsSponsors ||
-          newStarsRaced ||
-          newStarsRaceWin ||
-          newStarsGetAllCars) && {
+        ...(newStars && {
+          stars: {
+            ...state.stars,
+            ...completedStarsRewardCars,
+            ...completedStarsMechanics,
+            ...completedStarsSponsors,
+            ...completedStarsRaced,
+            ...completedStarsRaceWin,
+            ...completedStarsGetAllCars,
+          },
           pageNotifications: {
             ...state.pageNotifications,
             starsPage: true,
