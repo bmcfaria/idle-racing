@@ -9,7 +9,7 @@ import {
   DrawerBody,
   CircularProgress,
 } from '@chakra-ui/core';
-import { MdFlag } from 'react-icons/md';
+import { ReactComponent as FlagIcon } from '../assets/icons/flag.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { notificationsSelector, racesSelector } from '../state/selectors';
 import NotificationsActiveRace from './NotificationsActiveRace';
@@ -70,11 +70,11 @@ const Notifications = () => {
         }}
       >
         <Box
-          as={MdFlag}
+          as={FlagIcon}
           margin="auto"
           size="100%"
-          w="24px"
-          h="24px"
+          w="18px"
+          h="18px"
           color={open ? 'black' : colors.white}
         />
         <CustomCircularProgress
