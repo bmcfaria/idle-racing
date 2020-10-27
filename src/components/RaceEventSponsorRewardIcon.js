@@ -28,10 +28,11 @@ const RaceEventSponsorRewardIcon = ({
       {sponsor.reward !== 'mechanic' && (
         <Text
           w="100%"
-          h="100%"
+          h="22px"
           textAlign="center"
           lineHeight="22px"
           fontSize="22px"
+          margin="auto"
         >
           $
         </Text>
