@@ -36,11 +36,15 @@ const Content = ({ children, ...props }) => {
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
   const dispatch = useDispatch();
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    dispatch(openPageAction(location.pathname));
-  }, [dispatch, location]);
+    dispatch(openPageAction(pathname));
+
+    if (ref.current) {
+      ref.current.scrollTo(0, 0);
+    }
+  }, [dispatch, pathname]);
 
   // Anytime the window is resized or a new page loaded
   // verify the presence and width of the scrollbar
@@ -48,7 +52,7 @@ const Content = ({ children, ...props }) => {
     if (ref.current?.clientWidth) {
       setScrollbarWidth(windowWidth - ref.current.clientWidth);
     }
-  }, [location.pathname, windowWidth, windowHeight]);
+  }, [pathname, windowWidth, windowHeight]);
 
   // The scrollbar is applied to the content component and
   // to avoid having the component jumping to the left
