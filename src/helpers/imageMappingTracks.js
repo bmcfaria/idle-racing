@@ -78,4 +78,6 @@ export const trackImages = {
   nascar: Nascar,
 };
 
-export default item => trackImages[item.image];
+const getImageTrack = item => trackImages[item.image];
+
+export default getImageTrack;

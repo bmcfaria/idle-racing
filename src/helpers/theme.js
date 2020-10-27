@@ -44,7 +44,9 @@ export const cardsContainerWidthPaddingStyles = `
   }
 `;
 
-export default {
+const themeObject = {
   zIndex,
   colors,
 };
+
+export default themeObject;
