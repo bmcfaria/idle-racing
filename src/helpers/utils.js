@@ -44,7 +44,7 @@ const cloneCar = car => ({
   hnd: { ...car.hnd },
 });
 
-const attrUpgradeValue = (attr, car, max, seed) => {
+const attrUpgradeValue = (attr, car, max, rng) => {
   const compAttrs = {
     acc: ['spd', 'hnd'],
     spd: ['acc', 'hnd'],
@@ -59,7 +59,6 @@ const attrUpgradeValue = (attr, car, max, seed) => {
       car[compAttrs[attr][1]].value <
     max
   ) {
-    const rng = seedrandom(seed);
     result =
       car[attr].base +
         car[attr].max +
@@ -67,7 +66,7 @@ const attrUpgradeValue = (attr, car, max, seed) => {
         car[compAttrs[attr][1]].value >
       max
         ? ~~(
-            Math.random() *
+            rng() *
             (1 +
               max -
               (car[attr].base +
@@ -103,9 +102,9 @@ const calculateCompetitors = (track, withRandom = false) => {
   }
 
   const competitorsProcessed = competitors.map(car => {
-    car.acc.value += attrUpgradeValue('acc', car, track.max, rngSeed);
-    car.spd.value += attrUpgradeValue('spd', car, track.max, rngSeed);
-    car.hnd.value += attrUpgradeValue('hnd', car, track.max, rngSeed);
+    car.acc.value += attrUpgradeValue('acc', car, track.max, rng);
+    car.spd.value += attrUpgradeValue('spd', car, track.max, rng);
+    car.hnd.value += attrUpgradeValue('hnd', car, track.max, rng);
 
     return car;
   });
