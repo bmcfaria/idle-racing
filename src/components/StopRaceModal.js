@@ -40,8 +40,7 @@ const StopRaceModal = props => {
           <Button
             onClick={stopRace}
             minW="72px"
-            h="24px"
-            fontSize="12px"
+            h="32px"
             bg={colors.darkGray}
             color={colors.white}
           >
@@ -50,8 +49,7 @@ const StopRaceModal = props => {
           <Button
             onClick={onClose}
             minW="72px"
-            h="24px"
-            fontSize="12px"
+            h="32px"
             color={colors.darkGray}
             bg={colors.lightGray}
             marginLeft="16px"

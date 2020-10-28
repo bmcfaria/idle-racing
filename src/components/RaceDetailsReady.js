@@ -64,7 +64,6 @@ const RaceDetailsReady = ({
               color: colors.white,
               boxShadow: 'none',
             }}
-            fontSize="12px"
             whiteSpace={'normal'}
             onClick={toggleAuto}
           >

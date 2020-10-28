@@ -111,7 +111,6 @@ const RaceDetailsCarsContainer = ({ cars, selectCar, onClose, ...props }) => {
               <ChakraLink
                 as={Link}
                 to="/dealer"
-                fontSize="12px"
                 color="teal.500"
                 margin="8px auto 0"
               >
