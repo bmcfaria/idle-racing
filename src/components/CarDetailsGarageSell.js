@@ -42,11 +42,13 @@ const CarDetailsGarageSell = ({ car, ...props }) => {
     <Flex
       position="relative"
       w="200px"
+      h="72px"
       bg={cardBg}
       padding="8px"
       borderRadius="16px"
       direction="column"
       alignItems="center"
+      justifyContent="center"
       {...props}
     >
       {confirmationState && (

@@ -134,7 +134,7 @@ const RaceDetails = ({ onClose, ...props }) => {
             gridGap="4px"
             onClick={onClose}
           >
-            <BlockContainer w="200px">
+            <BlockContainer>
               <CardTrackContent
                 track={selectedTrack}
                 borderRadius="16px"
@@ -144,13 +144,13 @@ const RaceDetails = ({ onClose, ...props }) => {
             </BlockContainer>
 
             {!selectedCar && (
-              <BlockContainer w="200px">
+              <BlockContainer>
                 <RaceDetailsSelectCar onClick={carsModalOpen} />
               </BlockContainer>
             )}
 
             {selectedCar && (
-              <BlockContainer w="200px">
+              <BlockContainer>
                 <RaceDetailsReady
                   selectedCar={selectedCar}
                   selectedTrack={selectedTrack}
@@ -164,7 +164,7 @@ const RaceDetails = ({ onClose, ...props }) => {
               </BlockContainer>
             )}
 
-            <BlockContainer w="200px">
+            <BlockContainer>
               <RaceResults />
             </BlockContainer>
           </Box>

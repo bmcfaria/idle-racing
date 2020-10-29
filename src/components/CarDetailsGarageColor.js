@@ -5,10 +5,9 @@ import Button from './Button';
 import { useDispatch } from 'react-redux';
 import { changeCarColorAction } from '../state/actions';
 import hexAlpha from 'hex-alpha';
-import { useExperience } from '../helpers/hooks';
 import CarImage from './CarImage';
 import { availableColors } from '../helpers/data';
-import experienceObject from '../helpers/experience';
+import { useCarDetailsCustomTypeVisibility } from '../helpers/hooksGarage';
 
 const CarColorPickerButton = ({ car, color, ...props }) => (
   <Button
@@ -25,14 +24,14 @@ const CarColorPickerButton = ({ car, color, ...props }) => (
 const CarDetailsGarageColor = ({ car, ...props }) => {
   const { id, reward } = car;
   const dispatch = useDispatch();
-  const experienceMechanic = useExperience('mechanic');
-  const expCustomizationUnlocked = ~~experienceMechanic.customization > 0;
 
-  const lockedText = experienceObject?.mechanic?.customization?.lockedText?.(
-    experienceMechanic.exp
-  );
+  const {
+    availableToBuy,
+    unlocked: expCustomizationUnlocked,
+  } = useCarDetailsCustomTypeVisibility('customization');
+
   // If still locked on exp, hide it
-  if (lockedText) {
+  if (!availableToBuy) {
     return null;
   }
 

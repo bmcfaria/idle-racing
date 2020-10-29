@@ -7,10 +7,11 @@ import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import { useDispatch } from 'react-redux';
 import { tuneCarAction } from '../state/actions';
 import { maxUnlockedUpgrade } from '../helpers/garageUpgrades';
-import { useMechanicsCount } from '../helpers/hooksGarage';
+import {
+  useCarDetailsCustomTypeVisibility,
+  useMechanicsCount,
+} from '../helpers/hooksGarage';
 import hexAlpha from 'hex-alpha';
-import { useExperience } from '../helpers/hooks';
-import experienceObject from '../helpers/experience';
 
 const AttrTextValue = ({ name, value, tuning, ...props }) => (
   <Box w="60px" textAlign="center" {...props}>
@@ -74,8 +75,10 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
   const { id, reward } = car;
   const dispatch = useDispatch();
   const mechanics = useMechanicsCount();
-  const experienceMechanic = useExperience('mechanic');
-  const expTuningSlotUnlocked = ~~experienceMechanic.tuning > 0;
+  const {
+    availableToBuy,
+    unlocked: expTuningSlotUnlocked,
+  } = useCarDetailsCustomTypeVisibility('tuning');
 
   // Fallback values in case the car is from a previous store version
   const tuning = {
@@ -98,11 +101,8 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
     mechanics
   );
 
-  const lockedText = experienceObject?.mechanic?.tuning?.lockedText?.(
-    experienceMechanic.exp
-  );
   // If still locked on exp, hide it
-  if (lockedText) {
+  if (!availableToBuy) {
     return null;
   }
 
@@ -215,7 +215,7 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
           color="initial"
         >
           <Text fontSize="24px" textAlign="center" margin="auto">
-            Missing <br /> Tuning slot <br /> (exp upgrade)
+            Missing <br /> Tuning car <br /> (exp upgrade)
           </Text>
         </Flex>
       )}

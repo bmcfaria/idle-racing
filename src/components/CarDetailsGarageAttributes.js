@@ -77,7 +77,7 @@ const AttributeCircleButton = ({
   );
 };
 
-const CarDetailsGarageAttributes = ({ car, ...props }) => {
+const CarDetailsGarageAttributes = ({ car, children, ...props }) => {
   const { id, reward } = car;
   const mechanics = useMechanicsCount();
   const pastRaces = useSelector(pastRacesSelector);
@@ -177,11 +177,13 @@ const CarDetailsGarageAttributes = ({ car, ...props }) => {
     <Flex
       position="relative"
       w="200px"
-      h="128px"
+      h="184px"
       bg={cardBg}
       padding="8px 0"
       borderRadius="16px"
       direction="column"
+      justifyContent="space-around"
+      alignItems="center"
       {...props}
     >
       <Flex w="100%" justifyContent="space-evenly">
@@ -259,6 +261,8 @@ const CarDetailsGarageAttributes = ({ car, ...props }) => {
           </Flex>
         )}
       </Flex>
+
+      {children}
     </Flex>
   );
 };

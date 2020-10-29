@@ -8,7 +8,7 @@ import {
 } from '../state/selectors';
 import CardCarGarage from './CardCarGarage';
 import Modal from './Modal';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useHistory } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { colors } from '../helpers/theme';
@@ -74,6 +74,7 @@ const Garage = () => {
   const location = useLocation();
   const cars = useSelector(garageCarsSelector);
   const containerWidth = useDynamicCardContainerWidth();
+  const history = useHistory();
 
   const selected = location?.state?.car;
 
@@ -82,7 +83,12 @@ const Garage = () => {
   return (
     <Box>
       <Modal isOpen={!!selectedCar} backOnClose>
-        {selectedCar && <CarDetailsGarage car={selectedCar} />}
+        {selectedCar && (
+          <CarDetailsGarage
+            car={selectedCar}
+            onClose={() => history.goBack()}
+          />
+        )}
       </Modal>
       <Flex direction="column" minH="50vh">
         {cars.length > 0 && <GarageUpgrades w={`${containerWidth - 16}px`} />}

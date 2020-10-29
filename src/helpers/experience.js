@@ -61,7 +61,7 @@ const experience = {
     },
     tuning: {
       max: 1,
-      title: 'Tuning slot',
+      title: 'Tuning car',
       textArray: ['OFF', 'ON'],
       lockedText: currentExp =>
         currentExp < 20

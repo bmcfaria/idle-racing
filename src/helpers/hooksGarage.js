@@ -4,6 +4,8 @@ import {
   garageSlotsSelector,
   raceSponsorsActiveSelector,
 } from '../state/selectors';
+import { useExperience } from './hooks';
+import experienceObject from '../helpers/experience';
 
 export const useGarageCar = carId => {
   const garageCars = useSelector(garageCarsSelector);
@@ -33,4 +35,17 @@ export const useEmptyGarageSlots = () => {
   );
 
   return rewardedCarsCount - (garageCars.length - garageSlots);
+};
+
+export const useCarDetailsCustomTypeVisibility = type => {
+  const experienceMechanic = useExperience('mechanic');
+  const expCustomizationUnlocked = ~~experienceMechanic?.[type] > 0;
+  const customizeLockedText = experienceObject?.mechanic?.[type]?.lockedText?.(
+    experienceMechanic.exp
+  );
+
+  return {
+    availableToBuy: !customizeLockedText,
+    unlocked: expCustomizationUnlocked,
+  };
 };
