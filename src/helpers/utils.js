@@ -51,33 +51,19 @@ const attrUpgradeValue = (attr, car, max, rng) => {
     hnd: ['acc', 'spd'],
   };
 
-  let result = 0;
-
-  if (
+  const totalCarAttrs =
     car[attr].value +
-      car[compAttrs[attr][0]].value +
-      car[compAttrs[attr][1]].value <
-    max
-  ) {
-    result =
-      car[attr].base +
-        car[attr].max +
-        car[compAttrs[attr][0]].value +
-        car[compAttrs[attr][1]].value >
-      max
-        ? ~~(
-            rng() *
-            (1 +
-              max -
-              (car[attr].base +
-                car[attr].max +
-                car[compAttrs[attr][0]].value +
-                car[compAttrs[attr][1]].value))
-          )
-        : ~~(rng() * (1 + car[attr].max - car[attr].base));
+    car[compAttrs[attr][0]].value +
+    car[compAttrs[attr][1]].value;
+
+  if (totalCarAttrs < max) {
+    const attrUpgradeMargin =
+      max - (car[compAttrs[attr][0]].value + car[compAttrs[attr][1]].value);
+
+    return ~~(rng() * (1 + Math.min(car[attr].max, attrUpgradeMargin)));
   }
 
-  return result;
+  return 0;
 };
 
 const calculateCompetitors = (track, withRandom = false) => {
@@ -101,10 +87,36 @@ const calculateCompetitors = (track, withRandom = false) => {
     return competitors;
   }
 
+  const trackAttrs = [
+    {
+      attr: ATTRIBUTE_TYPES.ACCELERATION,
+      value: track[ATTRIBUTE_TYPES.ACCELERATION],
+    },
+    { attr: ATTRIBUTE_TYPES.SPEED, value: track[ATTRIBUTE_TYPES.SPEED] },
+    { attr: ATTRIBUTE_TYPES.HANDLING, value: track[ATTRIBUTE_TYPES.HANDLING] },
+  ];
+  const trackAttrsSorted = trackAttrs.sort((a, b) => b.value - a.value);
+  const trackAttrsSortedKeys = trackAttrsSorted.map(({ attr }) => attr);
+
   const competitorsProcessed = competitors.map(car => {
-    car.acc.value += attrUpgradeValue('acc', car, track.max, rng);
-    car.spd.value += attrUpgradeValue('spd', car, track.max, rng);
-    car.hnd.value += attrUpgradeValue('hnd', car, track.max, rng);
+    car[trackAttrsSortedKeys[0]].value += attrUpgradeValue(
+      trackAttrsSortedKeys[0],
+      car,
+      track.max,
+      rng
+    );
+    car[trackAttrsSortedKeys[1]].value += attrUpgradeValue(
+      trackAttrsSortedKeys[1],
+      car,
+      track.max,
+      rng
+    );
+    car[trackAttrsSortedKeys[2]].value += attrUpgradeValue(
+      trackAttrsSortedKeys[2],
+      car,
+      track.max,
+      rng
+    );
 
     return car;
   });
