@@ -184,6 +184,7 @@ const CarDetailsGarageAttributes = ({ car, children, ...props }) => {
       direction="column"
       justifyContent="space-around"
       alignItems="center"
+      onClick={e => e.stopPropagation()}
       {...props}
     >
       <Flex w="100%" justifyContent="space-evenly">

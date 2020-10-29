@@ -151,6 +151,7 @@ const CarDetailsGarageTuning = ({ car, ...props }) => {
       borderRadius="16px"
       direction="column"
       color={colors.white}
+      onClick={e => e.stopPropagation()}
       {...props}
     >
       <Flex

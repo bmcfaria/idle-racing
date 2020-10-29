@@ -48,6 +48,7 @@ const CarDetailsGarageColor = ({ car, ...props }) => {
       padding="4px 0 8px"
       borderRadius="16px"
       direction="column"
+      onClick={e => e.stopPropagation()}
       {...props}
     >
       <Flex flexWrap="wrap" paddingRight="4px" justifyContent="center">

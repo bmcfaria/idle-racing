@@ -49,6 +49,7 @@ const CarDetailsGarageSell = ({ car, ...props }) => {
       direction="column"
       alignItems="center"
       justifyContent="center"
+      onClick={e => e.stopPropagation()}
       {...props}
     >
       {confirmationState && (
