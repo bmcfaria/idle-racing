@@ -3,8 +3,8 @@ import { Flex, Text } from '@chakra-ui/core';
 import { useSelector } from 'react-redux';
 import { garageCarsSelector } from '../state/selectors';
 import { colors } from '../helpers/theme';
-import { validateAttrRequirements } from '../helpers/utils';
 import { useDealerCar } from '../helpers/hooksDealer';
+import { validateAttrRequirements } from '../helpers/race';
 
 const RequirementsListNoUps = () => {
   const garagesCars = useSelector(garageCarsSelector);

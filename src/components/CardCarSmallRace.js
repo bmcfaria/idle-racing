@@ -3,7 +3,6 @@ import { Box, Text, Flex } from '@chakra-ui/core';
 import CardProgressOverlay from './CardProgressOverlay';
 import CardWinningChance from './CardWinningChance';
 import {
-  doMeetRequirements,
   capitalize,
   ATTRIBUTE_TYPES,
   calculateCarAttributeValues,
@@ -13,6 +12,7 @@ import Button from './Button';
 import { RaceContext } from '../helpers/context';
 import { useRace, useTrack } from '../helpers/hooksRace';
 import CarImage from './CarImage';
+import { doMeetRequirements } from '../helpers/race';
 
 const CarAttribute = ({ text, attr, ...props }) => (
   <Box w="48px" lineHeight="14px" textAlign="center" {...props}>

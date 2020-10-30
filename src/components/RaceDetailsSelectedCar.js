@@ -1,11 +1,12 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { colors } from '../helpers/theme';
-import { ATTRIBUTE_TYPES, doMeetRequirements } from '../helpers/utils';
+import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import { ReactComponent as ChangeIcon } from '../assets/icons/change.svg';
 import Button from './Button';
 import CardWinningChance from './CardWinningChance';
 import CarImage from './CarImage';
+import { doMeetRequirements } from '../helpers/race';
 
 const Attribute = ({ text, value, ...props }) => (
   <Flex fontSize="14px" lineHeight="14px" justifyContent="flex-end" {...props}>

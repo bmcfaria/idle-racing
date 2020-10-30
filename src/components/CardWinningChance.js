@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Text } from '@chakra-ui/core';
-import { winProbability } from '../helpers/utils';
 import { colors } from '../helpers/theme';
+import { useWinProbability } from '../helpers/hooksRace';
 
 const winningChances = {
   0: { text: 'BAD', color: colors.red },
@@ -32,9 +32,10 @@ export const CardWinningChanceComponent = ({
 );
 
 const CardWinningChance = ({ car, track, meetsRequirements, ...props }) => {
+  const winProbability = useWinProbability(car, track);
   const winProbabilityValue = !meetsRequirements
     ? 'na'
-    : track && winProbability(car, track);
+    : track && winProbability;
 
   return (
     <CardWinningChanceComponent

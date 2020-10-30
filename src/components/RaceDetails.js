@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Box } from '@chakra-ui/core';
 import CardProgressOverlay from './CardProgressOverlay';
 import { useDispatch, useSelector } from 'react-redux';
-import { startRaceAction } from '../state/actions';
+import {
+  generateTrackCompetitorsAction,
+  startRaceAction,
+} from '../state/actions';
 import RaceResults from './RaceResults';
 import { useLocation, useHistory } from 'react-router-dom';
 import {
@@ -18,11 +21,16 @@ import {
   useOpenClose,
   useRacePriceWithDiscount,
 } from '../helpers/hooks';
-import { doMeetRequirements, winProbability } from '../helpers/utils';
 import { RaceContext } from '../helpers/context';
 import RaceDetailsCarsContainer from './RaceDetailsCarsContainer';
 import RaceDetailsReady from './RaceDetailsReady';
-import { usePastRace, useRace, useTrackStats } from '../helpers/hooksRace';
+import {
+  usePastRace,
+  useRace,
+  useTrackStats,
+  useWinProbability,
+} from '../helpers/hooksRace';
+import { doMeetRequirements } from '../helpers/race';
 
 const BlockContainer = ({ borderColor, children, ...props }) => (
   <Box
@@ -58,8 +66,16 @@ const RaceDetails = ({ onClose, ...props }) => {
   const pastRace = usePastRace(trackStats?.lastRace);
   const results = !!pastRace && pastRace.checked === false;
 
-  const winProbabilityValue =
-    selectedTrack && selectedCar && winProbability(selectedCar, selectedTrack);
+  const winProbability = useWinProbability(selectedCar, selectedTrack);
+
+  const winProbabilityValue = selectedTrack && selectedCar && winProbability;
+
+  useEffect(() => {
+    // Generate competitors if race doesn't have it yet
+    if (!trackStats?.competitors) {
+      dispatch(generateTrackCompetitorsAction(selectedTrack.id));
+    }
+  }, [dispatch, selectedTrack.id, trackStats, trackStats?.competitors]);
 
   useEffect(() => {
     if (results && pastRace) {

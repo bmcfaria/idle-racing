@@ -26,6 +26,13 @@ export const upgradeAttributeAction = (type, carId) => ({
   type: UPGRADE_ATTRIBUTE_TYPE,
   payload: { type, carId },
 });
+
+export const GENERATE_TRACK_COMPETITORS_TYPE = 'GENERATE_TRACK_COMPETITORS';
+export const generateTrackCompetitorsAction = trackId => ({
+  type: GENERATE_TRACK_COMPETITORS_TYPE,
+  payload: { trackId },
+});
+
 export const START_RACE_UI_TYPE = 'START_RACE_UI';
 export const startRaceAction = (carId, trackId) => ({
   type: START_RACE_UI_TYPE,

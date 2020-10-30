@@ -13,6 +13,7 @@ import {
 } from '../state/selectors';
 import { eventSponsorsStats } from './utils';
 import { raceEvents, tracks } from './data';
+import { winProbability } from './race';
 
 export const useTrack = trackId => tracks.find(item => item.id === trackId);
 
@@ -114,4 +115,13 @@ export const useEventsLockedState = () => {
   };
 
   return { isLocked, lockedText };
+};
+
+export const useWinProbability = (car, track) => {
+  const trackStats = useSelector(tracksStatsSelector)[track?.id];
+  if (!car || !track) {
+    return false;
+  }
+
+  return winProbability(car, track, trackStats);
 };

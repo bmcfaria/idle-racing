@@ -13,6 +13,7 @@ import {
   END_RACE_SPONSORS_TYPE,
   RACE_LOCKED_REFRESH_TYPE,
   END_RACE_STARS_TYPE,
+  GENERATE_TRACK_COMPETITORS_TYPE,
 } from './actions';
 import {
   generateRace,
@@ -25,7 +26,6 @@ import {
   raceEvents,
 } from '../helpers/data';
 import {
-  raceResults,
   buffValue,
   discountValue,
   TOAST_TYPES,
@@ -45,9 +45,31 @@ import { newMechanicsStars, newSponsorsStars } from '../helpers/starsSponsors';
 import { newRewardCarsStars } from '../helpers/starsRewards';
 import { newRacedStars, newRaceWinStars } from '../helpers/starsRaces';
 import { newGetAllCars } from '../helpers/starsCars';
+import { generateTrackStatsCompetitors, raceResults } from '../helpers/race';
 
 const reducerRace = (state = initialState, { type, payload }) => {
   switch (type) {
+    case GENERATE_TRACK_COMPETITORS_TYPE: {
+      const track = tracks.find(item => item.id === payload.trackId);
+      const trackStats = state.tracksStats[track?.id];
+
+      if (!track || trackStats?.competitors) {
+        return state;
+      }
+
+      const competitors = generateTrackStatsCompetitors(track);
+
+      return {
+        ...state,
+        tracksStats: Object.assign({}, state.tracksStats, {
+          [track.id]: {
+            ...(state.tracksStats[track.id] || {}),
+            competitors,
+          },
+        }),
+      };
+    }
+
     case START_RACE_TYPE: {
       const car = state.garageCars.find(item => item.id === payload.carId);
       const track = tracks.find(item => item.id === payload.trackId);
