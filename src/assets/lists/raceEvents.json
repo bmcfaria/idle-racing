@@ -16,14 +16,6 @@
     "req_value": ""
   },
   {
-    "name": "metropolis",
-    "type": "metropolis",
-    "exp": 2,
-    "unlocked_tracks": "",
-    "req_type": "race-exp",
-    "req_value": 5
-  },
-  {
     "name": "tiny world",
     "type": "tiny-world",
     "exp": 2,
@@ -32,12 +24,20 @@
     "req_value": 5
   },
   {
+    "name": "metropolis",
+    "type": "metropolis",
+    "exp": 2,
+    "unlocked_tracks": "",
+    "req_type": "race-exp",
+    "req_value": 12
+  },
+  {
     "name": "family friendly",
     "type": "family-friendly",
     "exp": 2,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 8
+    "req_value": 20
   },
   {
     "name": "street racing",
@@ -45,7 +45,7 @@
     "exp": 4,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 10
+    "req_value": 40
   },
   {
     "name": "",
@@ -61,7 +61,7 @@
     "exp": 3,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 5
+    "req_value": 20
   },
   {
     "name": "desert cup",
@@ -69,7 +69,7 @@
     "exp": 4,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 5
+    "req_value": 30
   },
   {
     "name": "up hill",
@@ -77,7 +77,7 @@
     "exp": 4,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 8
+    "req_value": 40
   },
   {
     "name": "muddy cup",
@@ -85,7 +85,7 @@
     "exp": 5,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 10
+    "req_value": 60
   },
   {
     "name": "",
@@ -101,7 +101,7 @@
     "exp": 5,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 20
+    "req_value": 80
   },
   {
     "name": "",
@@ -117,7 +117,7 @@
     "exp": 5,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 25
+    "req_value": 80
   },
   {
     "name": "pro racing",
@@ -125,7 +125,7 @@
     "exp": 6,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 25
+    "req_value": 110
   },
   {
     "name": "dream cup",
@@ -133,7 +133,7 @@
     "exp": 7,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 35
+    "req_value": 110
   },
   {
     "name": "NASCAR fever",
@@ -141,7 +141,7 @@
     "exp": 8,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 35
+    "req_value": 150
   },
   {
     "name": "heavy cup",
@@ -149,7 +149,7 @@
     "exp": 9,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 50
+    "req_value": 150
   },
   {
     "name": "reward cup",
@@ -157,7 +157,7 @@
     "exp": 10,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 50
+    "req_value": 200
   },
   {
     "name": "",
@@ -173,7 +173,7 @@
     "exp": 12,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 55
+    "req_value": 200
   },
   {
     "name": "endurance",
@@ -189,6 +189,6 @@
     "exp": 20,
     "unlocked_tracks": "",
     "req_type": "race-exp",
-    "req_value": 60
+    "req_value": 300
   }
 ]
