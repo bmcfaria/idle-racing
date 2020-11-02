@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Flex } from '@chakra-ui/core';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import CardProgressOverlay from './CardProgressOverlay';
 import CardTrackContent from './CardTrackContent';
 import { colors } from '../helpers/theme';
@@ -8,11 +8,12 @@ import hexAlpha from 'hex-alpha';
 import Button from './Button';
 import { useGarageCar } from '../helpers/hooksGarage';
 import { usePastRace, useRace, useTrackStats } from '../helpers/hooksRace';
+import { useHistoryHelper } from '../helpers/hooks';
 
 const CardTrack = ({ track, locked }) => {
   const { id } = track;
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
 
   const trackStats = useTrackStats(track.id);
   const currentRace = useRace(trackStats?.race);

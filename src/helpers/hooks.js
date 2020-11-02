@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
   experienceSelector,
@@ -19,6 +19,7 @@ import {
 } from './utils';
 import { MAX_WIDTH_VALUE } from './theme';
 import experience, { experienceTypePointsSpent } from './experience';
+import { PageContentContext } from './context';
 
 export const useOpenClose = defaultValue => {
   const [open, setOpen] = useState(!!defaultValue);
@@ -61,6 +62,36 @@ export const useCurrentPage = () => {
     (matchDealerBrand && '/dealer') || (matchRaceEvent && '/race') || '/';
 
   return { name: selectedPage, ...(!matchHome && { back: backPage }) };
+};
+
+export const useHistoryHelper = () => {
+  const { pageContentRef } = useContext(PageContentContext);
+  const location = useLocation();
+  const history = useHistory();
+
+  const setScrollPositionInState = () => {
+    const currentScrollPosition = pageContentRef?.scrollTop;
+
+    history.replace({
+      pathname: location.pathname,
+      state: {
+        ...(location.state || {}),
+        scrollPosition: currentScrollPosition,
+      },
+    });
+  };
+
+  const push = (...args) => {
+    setScrollPositionInState();
+    history.push(...args);
+  };
+
+  const goBack = (...args) => {
+    setScrollPositionInState();
+    history.goBack(...args);
+  };
+
+  return { ...history, push, goBack };
 };
 
 const getWindowDimensions = () => {

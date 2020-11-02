@@ -8,9 +8,12 @@ import {
 } from '../state/selectors';
 import CardCarGarage from './CardCarGarage';
 import Modal from './Modal';
-import { useLocation, Link, useHistory } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/core';
-import { useDynamicCardContainerWidth } from '../helpers/hooks';
+import {
+  useDynamicCardContainerWidth,
+  useHistoryHelper,
+} from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import GarageBuySlot from './GarageBuySlot';
 import GarageUpgrades from './GarageUpgrades';
@@ -74,7 +77,7 @@ const Garage = () => {
   const location = useLocation();
   const cars = useSelector(garageCarsSelector);
   const containerWidth = useDynamicCardContainerWidth();
-  const history = useHistory();
+  const history = useHistoryHelper();
 
   const selected = location?.state?.car;
 

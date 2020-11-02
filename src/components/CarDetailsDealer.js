@@ -3,12 +3,15 @@ import { Flex, Text } from '@chakra-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { buyCarAction } from '../state/actions';
 import { enoughMoneySelector } from '../state/selectors';
-import { useHistory } from 'react-router-dom';
 import { colors } from '../helpers/theme';
 import { ATTRIBUTE_TYPES } from '../helpers/utils';
 import AttributeCircle from './AttributeCircle';
 import Button from './Button';
-import { useCarPriceWithDiscount, useExperience } from '../helpers/hooks';
+import {
+  useCarPriceWithDiscount,
+  useExperience,
+  useHistoryHelper,
+} from '../helpers/hooks';
 import CarDetailsImageAndType from './CarDetailsImageAndType';
 import { useEmptyGarageSlots } from '../helpers/hooksGarage';
 import CarImage from './CarImage';
@@ -57,7 +60,7 @@ const CarDetailsDealer = ({ car, ...props }) => {
   const [selectedColor, setSelectedColor] = useState();
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useHistoryHelper();
   const emptySlots = useEmptyGarageSlots();
 
   const calculatedPrice = ~~useCarPriceWithDiscount(price);

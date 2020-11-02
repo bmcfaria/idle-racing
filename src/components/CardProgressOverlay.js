@@ -3,7 +3,8 @@ import { Text, Flex } from '@chakra-ui/core';
 import CardProgressCircle from './CardProgressCircle';
 import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useHistoryHelper } from '../helpers/hooks';
 
 const CardProgressOverlay = ({
   race,
@@ -15,7 +16,7 @@ const CardProgressOverlay = ({
   ...props
 }) => {
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
 
   if (!race) {
     return null;

@@ -9,12 +9,13 @@ import {
   pastRacesSelector,
   racesSelector,
 } from '../state/selectors';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { clearOfflineEarningsAction } from '../state/actions';
 import { formatMoney } from '../helpers/utils';
 import { ReactComponent as TrophyIcon } from '../assets/icons/trophy.svg';
 import { tracks, cars } from '../helpers/data';
 import OfflineEarningsNotificationDetails from './OfflineEarningsNotificationDetails';
+import { useHistoryHelper } from '../helpers/hooks';
 
 const RaceRow = ({ race, ...props }) => (
   <Flex lineHeight="24px" alignItems="center" {...props}>
@@ -48,7 +49,7 @@ const OfflineEarningsNotification = props => {
   const races = useSelector(racesSelector);
   const pastRaces = useSelector(pastRacesSelector);
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
 
   const showModal = location.state?.offlineEarnings;
 

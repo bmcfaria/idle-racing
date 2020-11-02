@@ -6,10 +6,11 @@ import { buyGarageSlotAction } from '../state/actions';
 import { colors } from '../helpers/theme';
 import Button from './Button';
 import Modal from './Modal';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { formatMoney } from '../helpers/utils';
 import { useGarageSlotPrice, useMechanicsCount } from '../helpers/hooksGarage';
 import { maxUnlockedUpgrade } from '../helpers/garageUpgrades';
+import { useHistoryHelper } from '../helpers/hooks';
 
 const GarageBuySlot = props => {
   const slotPrice = useGarageSlotPrice();
@@ -19,7 +20,7 @@ const GarageBuySlot = props => {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
   const showModal = location.state?.buySlot;
 
   const buyUnlocked = !!maxUnlockedUpgrade('garage_expanse', mechanics);

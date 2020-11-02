@@ -1,13 +1,16 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
-import { useLocation, useHistory, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import CardTrack from './CardTrack';
 import RaceDetails from './RaceDetails';
 import { useSelector, useDispatch } from 'react-redux';
 import { tracksSelector } from '../state/selectors';
 import Modal from './Modal';
 import { closeResultsAction } from '../state/actions';
-import { useDynamicCardContainerWidth } from '../helpers/hooks';
+import {
+  useDynamicCardContainerWidth,
+  useHistoryHelper,
+} from '../helpers/hooks';
 import { colors } from '../helpers/theme';
 import hexAlpha from 'hex-alpha';
 import { BottomSpacer } from './BottomSpacer';
@@ -65,7 +68,7 @@ const TracksContainer = ({ tracks, eventType, ...props }) => {
 const RaceEvent = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
   const { event } = useParams();
   const tracks = useSelector(tracksSelector).filter(
     item => item.category === event

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CSSReset, Flex, ThemeProvider, theme } from '@chakra-ui/core';
 import './App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
@@ -20,6 +20,7 @@ import Brand from './components/Brand';
 import RaceEvent from './components/RaceEvent';
 import Stars from './components/Stars';
 import About from './components/About';
+import { PageContentContext } from './helpers/context';
 
 const store = configureStore();
 
@@ -34,58 +35,66 @@ const customTheme = {
 };
 
 function App() {
+  const [pageContentRef, setPageContentRef] = useState();
   return (
     <ThemeProvider theme={customTheme}>
       <CSSReset />
       <Provider store={store}>
         <BrowserRouter>
-          <Flex
-            direction="column"
-            pos="fixed"
-            w="100%"
-            h="100%"
-            top="0"
-            left="0"
-            bg="grey"
+          <PageContentContext.Provider
+            value={{
+              pageContentRef,
+              setPageContentRef,
+            }}
           >
-            <HeaderBar />
-            <Content flexGrow="1">
-              <Switch>
-                <Route path="/garage">
-                  <Garage />
-                </Route>
-                <Route path="/race/:event">
-                  <RaceEvent />
-                </Route>
-                <Route path="/race">
-                  <Race />
-                </Route>
-                <Route path="/dealer/:brand">
-                  <Brand />
-                </Route>
-                <Route path="/dealer">
-                  <Dealer />
-                </Route>
-                <Route path="/settings">
-                  <Settings />
-                </Route>
-                <Route path="/stars">
-                  <Stars />
-                </Route>
-                <Route path="/about">
-                  <About />
-                </Route>
-                <Route>
-                  <Home />
-                </Route>
-              </Switch>
-            </Content>
-            <Navigation />
-            <StopRaceModal />
-            <Toasts />
-            <ForcedResetWarning />
-            <OfflineEarningsNotification />
-          </Flex>
+            <Flex
+              direction="column"
+              pos="fixed"
+              w="100%"
+              h="100%"
+              top="0"
+              left="0"
+              bg="grey"
+            >
+              <HeaderBar />
+              <Content flexGrow="1">
+                <Switch>
+                  <Route path="/garage">
+                    <Garage />
+                  </Route>
+                  <Route path="/race/:event">
+                    <RaceEvent />
+                  </Route>
+                  <Route path="/race">
+                    <Race />
+                  </Route>
+                  <Route path="/dealer/:brand">
+                    <Brand />
+                  </Route>
+                  <Route path="/dealer">
+                    <Dealer />
+                  </Route>
+                  <Route path="/settings">
+                    <Settings />
+                  </Route>
+                  <Route path="/stars">
+                    <Stars />
+                  </Route>
+                  <Route path="/about">
+                    <About />
+                  </Route>
+                  <Route>
+                    <Home />
+                  </Route>
+                </Switch>
+              </Content>
+              <Navigation />
+              <StopRaceModal />
+              <Toasts />
+              <ForcedResetWarning />
+              <OfflineEarningsNotification />
+            </Flex>
+          </PageContentContext.Provider>
         </BrowserRouter>
       </Provider>
     </ThemeProvider>

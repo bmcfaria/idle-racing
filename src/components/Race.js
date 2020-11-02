@@ -1,6 +1,9 @@
 import React from 'react';
 import { Box, Flex } from '@chakra-ui/core';
-import { useDynamicCardContainerWidth } from '../helpers/hooks';
+import {
+  useDynamicCardContainerWidth,
+  useHistoryHelper,
+} from '../helpers/hooks';
 import { BottomSpacer } from './BottomSpacer';
 import CardRaceEvent from './CardRaceEvent';
 import { useSelector } from 'react-redux';
@@ -8,7 +11,7 @@ import { raceEventsSelector } from '../state/selectors';
 import Button from './Button';
 import { colors } from '../helpers/theme';
 import Modal from './Modal';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useEventsLockedState } from '../helpers/hooksRace';
 
 const RaceEvents = ({ containerWidth, showAll, ...props }) => {
@@ -42,7 +45,7 @@ const RaceEvents = ({ containerWidth, showAll, ...props }) => {
 
 const Race = props => {
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
   const containerWidth = useDynamicCardContainerWidth(320);
 
   const showAllEvents = location?.state?.allEvents;

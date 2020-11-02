@@ -4,14 +4,15 @@ import { colors, zIndex } from '../helpers/theme';
 import Modal from './Modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { warningsSelector } from '../state/selectors';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { clearStoreResetAction } from '../state/actions';
+import { useHistoryHelper } from '../helpers/hooks';
 
 const ForcedResetWarning = props => {
   const dispatch = useDispatch();
   const warnings = useSelector(warningsSelector);
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
   const showModal = location.state?.warningStoreReset;
 
   useEffect(() => {

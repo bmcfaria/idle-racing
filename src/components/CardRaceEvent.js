@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { tracksSelector } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
@@ -8,7 +8,10 @@ import getImageTrack from '../helpers/imageMappingTracks';
 import CardBig from './CardBig';
 import CardProgressOverlay from './CardProgressOverlay';
 import { capitalize } from '../helpers/utils';
-import { usePassiveIncomeEventSponsors } from '../helpers/hooks';
+import {
+  useHistoryHelper,
+  usePassiveIncomeEventSponsors,
+} from '../helpers/hooks';
 import {
   useEventsLockedState,
   useEventTracksStatsState,
@@ -64,7 +67,7 @@ const TrackItem = ({ track, active = true, ...props }) => {
 
 const CardRaceEvent = ({ eventType, eventName, ...props }) => {
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
   const tracks = useSelector(tracksSelector);
   const tracksStatsState = useEventTracksStatsState(eventType);
   const eventPassiveIncome = usePassiveIncomeEventSponsors(eventType);

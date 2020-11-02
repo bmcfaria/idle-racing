@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Flex, Text } from '@chakra-ui/core';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { colors } from '../helpers/theme';
 import Button from './Button';
 import styled from '@emotion/styled';
+import { PageContentContext } from '../helpers/context';
 
 const BlinkingDot = styled(Box)`
   animation: dot-pulse-blink 1s ease-out infinite;
@@ -22,6 +23,15 @@ const BlinkingDot = styled(Box)`
 
 const NavigationButton = ({ icon, to, exact, text, notification }) => {
   const match = useRouteMatch({ path: to, exact });
+  const { pageContentRef } = useContext(PageContentContext);
+
+  const onClick = () => {
+    // It will scroll to top even if it doesn't need to change pages
+    if (pageContentRef) {
+      pageContentRef.scrollTo(0, 0);
+    }
+  };
+
   return (
     <Button
       as={Link}
@@ -39,6 +49,7 @@ const NavigationButton = ({ icon, to, exact, text, notification }) => {
       paddingLeft="0"
       paddingRight="0"
       pointerEvents="auto"
+      onClick={onClick}
     >
       <Flex
         w="100%"

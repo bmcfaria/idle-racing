@@ -7,7 +7,7 @@ import {
   startRaceAction,
 } from '../state/actions';
 import RaceResults from './RaceResults';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   garageCarsSelector,
   tracksSelector,
@@ -18,6 +18,7 @@ import { colors } from '../helpers/theme';
 import RaceDetailsSelectCar from './RaceDetailsSelectCar';
 import {
   useDynamicCardContainerWidth,
+  useHistoryHelper,
   useOpenClose,
   useRacePriceWithDiscount,
 } from '../helpers/hooks';
@@ -51,7 +52,7 @@ const RaceDetails = ({ onClose, ...props }) => {
   const containerWidth = useDynamicCardContainerWidth(200, 2, 0);
   const dispatch = useDispatch();
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
   const cars = useSelector(garageCarsSelector);
   const tracks = useSelector(tracksSelector);
   const selectedTrackId = location?.state?.track;

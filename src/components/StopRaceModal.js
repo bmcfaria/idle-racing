@@ -3,14 +3,15 @@ import { Text, Flex } from '@chakra-ui/core';
 import { colors } from '../helpers/theme';
 import Modal from './Modal';
 import Button from './Button';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { stopRaceAction } from '../state/actions';
 import { useRace } from '../helpers/hooksRace';
+import { useHistoryHelper } from '../helpers/hooks';
 
 const StopRaceModal = props => {
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
   const raceId = location.state?.cancelRaceModal;
   const race = useRace(raceId);
   const dispatch = useDispatch();

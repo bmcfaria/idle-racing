@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@chakra-ui/core';
 import { zIndex } from '../helpers/theme';
-import { useHistory } from 'react-router-dom';
+import { useHistoryHelper } from '../helpers/hooks';
 
 const Modal = ({
   children,
@@ -11,7 +11,7 @@ const Modal = ({
   wrapperProps = {},
   ...props
 }) => {
-  const history = useHistory();
+  const history = useHistoryHelper();
 
   const onCloseClick = () => {
     if (backOnClose) {

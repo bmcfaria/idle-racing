@@ -1,15 +1,16 @@
 import React from 'react';
 import { Box, Text } from '@chakra-ui/core';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import CardProgressCircle from './CardProgressCircle';
 import { colors } from '../helpers/theme';
 import Button from './Button';
 import { useGarageCar } from '../helpers/hooksGarage';
 import { useRace, useTrack } from '../helpers/hooksRace';
+import { useHistoryHelper } from '../helpers/hooks';
 
 const NotificationsActiveRace = ({ race, onClose }) => {
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
 
   const currentRace = useRace(race);
   const car = useGarageCar(currentRace.car);

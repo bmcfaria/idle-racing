@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, PseudoBox } from '@chakra-ui/core';
 import { Flex } from '@chakra-ui/core';
 import { Text } from '@chakra-ui/core';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Notifications from './Notifications';
 import { useSelector } from 'react-redux';
 import { moneySelector } from '../state/selectors';
@@ -10,6 +10,7 @@ import { zIndex, colors, MAX_WIDTH } from '../helpers/theme';
 import {
   useCurrentPage,
   useExperience,
+  useHistoryHelper,
   usePassiveIncome,
 } from '../helpers/hooks';
 import Button from './Button';
@@ -154,7 +155,7 @@ const ExperienceButton = ({
 
 const HeaderBar = () => {
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
   const experienceBusiness = useExperience('business');
   const experienceRace = useExperience('race');
   const experienceMechanic = useExperience('mechanic');

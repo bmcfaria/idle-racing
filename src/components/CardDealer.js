@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { dealerCarsSelector } from '../state/selectors';
 import { useSelector } from 'react-redux';
 import CardBig from './CardBig';
@@ -8,10 +8,11 @@ import { brandSponsors } from '../helpers/sponsors';
 import { colors } from '../helpers/theme';
 import { useCarsAcquired } from '../helpers/hooksDealer';
 import CarImage from './CarImage';
+import { useHistoryHelper } from '../helpers/hooks';
 
 const CardDealer = ({ brandType, brandName, ...props }) => {
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
   const cars = useSelector(dealerCarsSelector);
 
   const allBrandCars = cars.filter(item => item.brand === brandType);

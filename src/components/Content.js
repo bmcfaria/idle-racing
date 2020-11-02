@@ -1,10 +1,17 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Box, Flex } from '@chakra-ui/core';
 import { colors, MAX_WIDTH, MAX_WIDTH_VALUE } from '../helpers/theme';
 import { useWindowDimensions } from '../helpers/hooks';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { openPageAction } from '../state/actions';
+import { PageContentContext } from '../helpers/context';
 
 const marginPaddingToEaseScrollbar = (scrollbarWidth, windowWidth) => {
   const diffBetweenWindowScrollMaxWidth =
@@ -36,15 +43,17 @@ const Content = ({ children, ...props }) => {
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
+  const { setPageContentRef } = useContext(PageContentContext);
 
   useEffect(() => {
     dispatch(openPageAction(pathname));
 
+    setPageContentRef(ref.current);
     if (ref.current) {
-      ref.current.scrollTo(0, 0);
+      ref.current.scrollTo(0, ~~state?.scrollPosition);
     }
-  }, [dispatch, pathname]);
+  }, [dispatch, pathname, setPageContentRef, state?.scrollPosition]);
 
   // Anytime the window is resized or a new page loaded
   // verify the presence and width of the scrollbar

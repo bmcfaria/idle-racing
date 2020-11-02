@@ -1,12 +1,13 @@
 import React from 'react';
 import { Box, Text, Flex } from '@chakra-ui/core';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { capitalize, ATTRIBUTE_TYPES } from '../helpers/utils';
 import { colors } from '../helpers/theme';
 import AttributeCircle from './AttributeCircle';
 import Button from './Button';
 import CarImage from './CarImage';
+import { useHistoryHelper } from '../helpers/hooks';
 
 const BlinkCard = styled(Button)`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -42,7 +43,7 @@ const CardCarSmall = ({
 }) => {
   const { id } = car;
   const location = useLocation();
-  const history = useHistory();
+  const history = useHistoryHelper();
 
   // To improve mobile navigation,
   // this way the back button will un-select
