@@ -9,7 +9,7 @@ import { colors } from '../helpers/theme';
 import { useCarPriceWithBuff } from '../helpers/hooks';
 
 const CarDetailsGarageSell = ({ car, ...props }) => {
-  const { id, price, reward } = car;
+  const { id, price } = car;
 
   const calculatedSellPrice = ~~useCarPriceWithBuff(price);
 
@@ -33,10 +33,7 @@ const CarDetailsGarageSell = ({ car, ...props }) => {
     }
   };
 
-  const cardBg =
-    (confirmationState && colors.lightGray) ||
-    (reward && colors.green) ||
-    colors.lightBlue;
+  const cardBg = colors.red;
 
   return (
     <Flex
