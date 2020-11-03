@@ -45,7 +45,7 @@ const HomeCardCars = props => {
           Earned
         </Text>
         <Text fontSize="16px" lineHeight="16px">
-          {soldCarsCount}
+          {rewardCarsCount}
         </Text>
       </Flex>
       <Flex w="100%" justifyContent="space-between">
@@ -53,7 +53,7 @@ const HomeCardCars = props => {
           Sold
         </Text>
         <Text fontSize="16px" lineHeight="16px">
-          {rewardCarsCount}
+          {soldCarsCount}
         </Text>
       </Flex>
     </Box>
