@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flex, Text, Box } from '@chakra-ui/core';
 import { colors } from '../helpers/theme';
 import { ReactComponent as StarIcon } from '../assets/icons/star.svg';
@@ -6,9 +6,25 @@ import { stars } from '../helpers/stars';
 import { BottomSpacer } from './BottomSpacer';
 import { useDynamicCardContainerWidth } from '../helpers/hooks';
 import { useSelector } from 'react-redux';
-import { starsSelector } from '../state/selectors';
+import { pageNotificationsSelector, starsSelector } from '../state/selectors';
+import styled from '@emotion/styled';
 
-const StarItem = ({ star, active, ...props }) => (
+const StarIconNotification = styled(Box)`
+  ${({ starAnimation }) =>
+    starAnimation &&
+    'animation: star-icon 1s ease-out alternate-reverse infinite'};
+
+  @keyframes star-icon {
+    0% {
+      color: currentColor;
+    }
+    100% {
+      color: ${colors.purple};
+    }
+  }
+`;
+
+const StarItem = ({ star, active, animate, ...props }) => (
   <Flex
     borderRadius="16px"
     minW="160px"
@@ -32,7 +48,13 @@ const StarItem = ({ star, active, ...props }) => (
         color={colors.white}
         bg={colors.darkGray}
       >
-        <Box maxW="24px" maxH="24px" margin="auto" as={StarIcon} />
+        <StarIconNotification
+          maxW="24px"
+          maxH="24px"
+          margin="auto"
+          as={StarIcon}
+          starAnimation={animate}
+        />
       </Flex>
     )}
     <Box flexGrow="1" padding="0 4px">
@@ -44,6 +66,16 @@ const StarItem = ({ star, active, ...props }) => (
 const Stars = () => {
   const completedStars = useSelector(starsSelector);
   const containerWidth = useDynamicCardContainerWidth(160, 8, 16);
+  const [lastOpening, setLastOpening] = useState();
+  const { starsPage: starNotification } = useSelector(
+    pageNotificationsSelector
+  );
+
+  useEffect(() => {
+    if (starNotification) {
+      setLastOpening(starNotification);
+    }
+  }, [starNotification]);
 
   return (
     <Flex w="100%" direction="column" alignItems="center">
@@ -60,6 +92,7 @@ const Stars = () => {
             active={completedStars[star.id]}
             key={star.id}
             margin="auto"
+            animate={!!lastOpening && lastOpening <= completedStars[star.id]}
           />
         ))}
       </Box>

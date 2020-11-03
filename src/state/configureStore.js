@@ -24,6 +24,8 @@ const moneyTrackerReducer = state => {
   const totalMoneyEarned = state.totalMoneyEarned + moneyEarned;
   const totalMoneySpent = state.totalMoneySpent + moneySpent;
 
+  const currentTime = new Date().getTime();
+
   // Check money stars/achievements
   const [newStars, completedStars] = newRewardMoneyStars(
     totalMoneyEarned,
@@ -42,7 +44,7 @@ const moneyTrackerReducer = state => {
       },
       pageNotifications: {
         ...state.pageNotifications,
-        starsPage: true,
+        starsPage: state.pageNotifications.starsPage || currentTime,
       },
     }),
   };

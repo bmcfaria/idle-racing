@@ -359,6 +359,8 @@ const reducerRace = (state = initialState, { type, payload }) => {
       const { reward } = pastRace;
       const earnedCar = isNaN(reward) && cars.find(({ id }) => id === reward);
 
+      const currentTime = new Date().getTime();
+
       let newStarsRewardCars = false;
       let completedStarsRewardCars = {};
       if (!!earnedCar) {
@@ -427,7 +429,7 @@ const reducerRace = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            starsPage: true,
+            starsPage: state.pageNotifications.starsPage || currentTime,
           },
         }),
       };

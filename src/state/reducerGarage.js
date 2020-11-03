@@ -45,6 +45,8 @@ const reducerGarage = (state = initialState, { type, payload }) => {
         [car.dealerCar]: ~~state.soldCars[car.dealerCar] + 1,
       };
 
+      const currentTime = new Date().getTime();
+
       const [newStarsSellCars, completedStarsSellCars] = newSellCarsStars(
         newSoldCarsObject,
         state.stars
@@ -72,7 +74,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            starsPage: true,
+            starsPage: state.pageNotifications.starsPage || currentTime,
           },
         }),
       };
@@ -111,6 +113,8 @@ const reducerGarage = (state = initialState, { type, payload }) => {
 
       const totalCarUpgrades = ~~state.totalCarUpgrades + 1;
 
+      const currentTime = new Date().getTime();
+
       const [
         newStarsAttrUpgrades,
         completedStarsAttrUpgrades,
@@ -138,7 +142,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            starsPage: true,
+            starsPage: state.pageNotifications.starsPage || currentTime,
           },
         }),
       };
@@ -192,6 +196,8 @@ const reducerGarage = (state = initialState, { type, payload }) => {
 
       const totalCarTunings = ~~state.totalCarTunings + 1;
 
+      const currentTime = new Date().getTime();
+
       const [newStarsCarTuning, completedStarsCarTuning] = newCarTuningStars(
         totalCarTunings,
         state.stars
@@ -211,7 +217,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            starsPage: true,
+            starsPage: state.pageNotifications.starsPage || currentTime,
           },
         }),
       };
@@ -240,6 +246,8 @@ const reducerGarage = (state = initialState, { type, payload }) => {
 
       const totalCarChangeColor = ~~state.totalCarChangeColor + 1;
 
+      const currentTime = new Date().getTime();
+
       const [
         newStarsChangeColor,
         completedStarsChangeColor,
@@ -259,7 +267,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            starsPage: true,
+            starsPage: state.pageNotifications.starsPage || currentTime,
           },
         }),
       };
@@ -300,6 +308,8 @@ const reducerGarage = (state = initialState, { type, payload }) => {
         return state;
       }
 
+      const currentTime = new Date().getTime();
+
       const [
         newStarsGarageSlots,
         completedStarsGarageSlots,
@@ -323,7 +333,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            starsPage: true,
+            starsPage: state.pageNotifications.starsPage || currentTime,
           },
         }),
       };

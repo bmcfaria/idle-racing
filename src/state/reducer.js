@@ -65,6 +65,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
         [car.id]: ~~state.boughtCars[car.id] + 1,
       };
 
+      const currentTime = new Date().getTime();
+
       const [newStarsBuyCars, completedStarsBuyCars] = newBuyCarsStars(
         newBoughtCarsObject,
         state.stars
@@ -87,7 +89,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
         pageNotifications: {
           ...state.pageNotifications,
           garagePage: true,
-          starsPage: newStars,
+          starsPage:
+            state.pageNotifications.starsPage || (newStars && currentTime),
           garage: [...state.pageNotifications.garage, garageCar.id],
         },
         experience: {
@@ -165,6 +168,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
         },
       };
 
+      const currentTime = new Date().getTime();
+
       const [newStarsExp, completedStarsExp] = newExpStars(
         newExperienceObject,
         state.stars
@@ -180,7 +185,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            starsPage: true,
+            starsPage: state.pageNotifications.starsPage || currentTime,
           },
         }),
       };
@@ -229,6 +234,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
+      const currentTime = new Date().getTime();
+
       let newStarsUseOfUIPage = false;
       let completedStarsUseOfUIPage = {};
       if (normalizePathname in state.pageStats) {
@@ -254,13 +261,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
           },
           pageNotifications: {
             ...state.pageNotifications,
-            starsPage: true,
+            starsPage: state.pageNotifications.starsPage || currentTime,
           },
         }),
-        ...(state.pageNotifications[`${normalizePathname}Page`] === true && {
+        ...((state.pageNotifications[`${normalizePathname}Page`] === true ||
+          `${normalizePathname}Page` === 'starsPage') && {
           pageNotifications: {
             ...state.pageNotifications,
-            starsPage: newStarsUseOfUIPage,
             [`${normalizePathname}Page`]: false,
           },
         }),
