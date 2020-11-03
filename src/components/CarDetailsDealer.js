@@ -135,6 +135,17 @@ const CarDetailsDealer = ({ car, ...props }) => {
         >
           {rewardOnly ? 'Reward' : `$${calculatedPrice}`}
         </Button>
+        {emptySlots <= 0 && !rewardOnly && (
+          <Text
+            marginBottom="8px"
+            textAlign="center"
+            fontSize="16px"
+            lineHeight="16px"
+            padding="0 8px"
+          >
+            Not enough garage space
+          </Text>
+        )}
       </Flex>
     </Flex>
   );
