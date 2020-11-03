@@ -71,12 +71,17 @@ const GarageUpgrades = props => {
       minWidth="320px"
       direction="column"
       margin="0 auto"
-      bg={colors.lightBlue}
       borderRadius="8px"
-      padding="0 1px 1px"
+      border={`2px solid ${colors.darkGray}`}
       {...props}
     >
-      <Text h="32px" lineHeight="32px" textAlign="center">
+      <Text
+        h="32px"
+        lineHeight="32px"
+        textAlign="center"
+        borderRadius="6px 6px 0 0"
+        bg={colors.lightBlue}
+      >
         {`Garage Upgrades (Mechanics: ${totalMechanics})`}
       </Text>
       <Flex
