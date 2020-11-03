@@ -33,7 +33,7 @@ const CarDetailsGarageSell = ({ car, ...props }) => {
     }
   };
 
-  const cardBg = colors.red;
+  const cardBg = colors.lightGray;
 
   return (
     <Flex
@@ -65,8 +65,7 @@ const CarDetailsGarageSell = ({ car, ...props }) => {
           minW="72px"
           h="32px"
           isDisabled={buttonDisable}
-          color={colors.white}
-          bg={colors.darkGray}
+          bg={colors.red}
         >
           {buttonText}
         </Button>
