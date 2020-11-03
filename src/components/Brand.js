@@ -76,9 +76,10 @@ const Brand = () => {
           minH="32px"
           borderRadius="8px"
           marginLeft="16px"
-          border="1px solid black"
+          border={`2px solid ${colors.darkGray}`}
           color={primaryColor}
           bg={primaryBg}
+          padding="8px"
         >
           {!allCarsAcquired && (
             <Text margin="auto" textAlign="center">
