@@ -1,3 +1,5 @@
+import { expValueByLevel } from '../helpers/utils';
+
 const initialMoney = 650;
 
 const initialState = {
@@ -47,15 +49,15 @@ const initialState = {
   experience: {
     business: {
       exp: 0,
-      max: 10 ** (2 * 3 + 1),
+      max: expValueByLevel(2 * 3 + 1),
     },
     race: {
       exp: 0,
-      max: 10 ** (3 * 3),
+      max: expValueByLevel(3 * 3),
     },
     mechanic: {
       exp: 0,
-      max: 10 ** (3 + 1 + 1),
+      max: expValueByLevel(3 + 1 + 1),
     },
   },
   sponsors: {

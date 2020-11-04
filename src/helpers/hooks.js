@@ -140,7 +140,7 @@ export const useExperience = type => {
   const { exp, max } = experience[type];
   const level = expLevel(exp, max);
   const pointsSpent = experienceTypePointsSpent([type], experience);
-  const availablePoints = level - 1 - pointsSpent;
+  const availablePoints = level - pointsSpent;
 
   return {
     ...experience[type],

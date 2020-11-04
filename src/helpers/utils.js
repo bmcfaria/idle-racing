@@ -1,4 +1,5 @@
 import numbro from 'numbro';
+import { expLevelPoints } from './experience';
 import { brandSponsors } from './sponsors';
 
 export const displayResponsivePanel = condition => [
@@ -33,10 +34,26 @@ export const buffValue = (value, times, buffPercentage = 0.1) =>
 export const discountValue = (value, times, buffPercentage = 0.1) =>
   value * (1 - buffPercentage * ~~times);
 
-export const expLevel = (exp, max) =>
-  exp < max ? `${~~exp}`.length : `${~~max}`.length;
+const calculateExpLevel = value => {
+  const result = expLevelPoints.findIndex(item => item > value);
+  return result < 0 ? expLevelPoints.length : result;
+};
+export const expValueByLevel = level => {
+  const normalizedLevel =
+    (level < 1 && 1) ||
+    (level > expLevelPoints.length && expLevelPoints.length) ||
+    level;
 
-export const expNextLevel = exp => 10 ** `${~~exp}`.length;
+  return expLevelPoints[normalizedLevel - 1];
+};
+
+export const expLevel = (exp, max) =>
+  exp < max ? calculateExpLevel(exp) : calculateExpLevel(max);
+
+export const expNextLevel = exp => {
+  const currentLvl = calculateExpLevel(exp);
+  return expValueByLevel(currentLvl + 1);
+};
 
 export const PROBABILITY_GOOD_VALUE = 3;
 

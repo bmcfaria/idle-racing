@@ -11,7 +11,7 @@ import {
   OPEN_PAGE_TYPE,
 } from './actions';
 import { cars as dealerCars, generateGarageCar } from '../helpers/data';
-import { discountValue } from '../helpers/utils';
+import { discountValue, expLevel } from '../helpers/utils';
 import objectAssignDeep from 'object-assign-deep';
 import initialState from './initialState';
 import experience, { experienceTypePointsSpent } from '../helpers/experience';
@@ -147,8 +147,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return state;
       }
 
-      const exp = ~~state.experience?.[payload.type].exp;
-      const totalEarnedPoints = `${~~exp}`.length - 1;
+      const { exp, max } = state.experience?.[payload.type];
+      const totalEarnedPoints = expLevel(exp, max);
+
       const pointsSpent = experienceTypePointsSpent(
         payload.type,
         state.experience

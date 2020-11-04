@@ -71,6 +71,9 @@ const experience = {
   },
 };
 
+// Max 9 levels
+export const expLevelPoints = [10, 100, 250, 500, 1000, 1500, 2000, 2500, 3000];
+
 export const experienceTypePointsSpent = (type, stateExperience) =>
   Object.keys(experience[type]).reduce(
     (result, subType) => result + ~~stateExperience?.[type][subType],
