@@ -4,10 +4,11 @@ export const resetAndRecalculateAction = {
   type: RESET_AND_RECALCULATE_TYPE,
 };
 
-export const RESET_DEV_TYPE = 'RESET_DEV';
-export const RESET_AND_RECALCULATE_DEV_TYPE = 'RESET_AND_RECALCULATE_DEV';
-export const resetAndRecalculateDevAction = state => ({
-  type: RESET_AND_RECALCULATE_DEV_TYPE,
+export const RESET_WITH_STATE_TYPE = 'RESET_WITH_STATE';
+export const RESET_AND_RECALCULATE_WITH_STATE_TYPE =
+  'RESET_AND_RECALCULATE_WITH_STATe';
+export const resetAndRecalculateWithStateAction = state => ({
+  type: RESET_AND_RECALCULATE_WITH_STATE_TYPE,
   payload: { state },
 });
 

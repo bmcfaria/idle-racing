@@ -7,7 +7,7 @@ import {
   CLEAR_STORE_RESET_TYPE,
   CLEAR_OFFLINE_EARNINGS_TYPE,
   DISMISS_TOAST_TYPE,
-  RESET_DEV_TYPE,
+  RESET_WITH_STATE_TYPE,
   OPEN_PAGE_TYPE,
 } from './actions';
 import { cars as dealerCars, generateGarageCar } from '../helpers/data';
@@ -25,7 +25,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return initialState;
     }
 
-    case RESET_DEV_TYPE: {
+    case RESET_WITH_STATE_TYPE: {
       return objectAssignDeep({}, initialState, payload.state || {});
     }
 

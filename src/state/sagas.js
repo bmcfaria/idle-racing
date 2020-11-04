@@ -12,8 +12,8 @@ import {
   END_RACE_SPONSORS_TYPE,
   RACE_LOCKED_REFRESH_TYPE,
   RESET_AND_RECALCULATE_TYPE,
-  RESET_AND_RECALCULATE_DEV_TYPE,
-  RESET_DEV_TYPE,
+  RESET_AND_RECALCULATE_WITH_STATE_TYPE,
+  RESET_WITH_STATE_TYPE,
   RESET_TYPE,
   END_RACE_STARS_TYPE,
   START_RACE_UI_TYPE,
@@ -145,8 +145,8 @@ function* startRace({ payload }) {
 }
 
 function* reset({ type, payload }) {
-  if (type === RESET_AND_RECALCULATE_DEV_TYPE) {
-    yield put({ type: RESET_DEV_TYPE, payload });
+  if (type === RESET_AND_RECALCULATE_WITH_STATE_TYPE) {
+    yield put({ type: RESET_WITH_STATE_TYPE, payload });
   } else {
     yield put({ type: RESET_TYPE });
   }
@@ -164,7 +164,7 @@ function* mySaga() {
 
   yield takeLatest(SYNC_TYPE, sync);
   yield takeEvery(RESET_AND_RECALCULATE_TYPE, reset);
-  yield takeEvery(RESET_AND_RECALCULATE_DEV_TYPE, reset);
+  yield takeEvery(RESET_AND_RECALCULATE_WITH_STATE_TYPE, reset);
   yield takeEvery(START_RACE_UI_TYPE, startRace);
 }
 
