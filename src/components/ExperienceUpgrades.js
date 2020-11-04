@@ -46,14 +46,23 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
   const [confirmationState, setConfirmationState] = useState();
   const [notEnoughPointsAnimation, setNotEnoughPointsAnimation] = useState();
   const [expValueSpentAnimation, setExpValueSpentAnimation] = useState();
-  const availablePointsObject = useExperience(expType);
+  const experience = useExperience(expType);
 
   const buyBuff = (type, subType) => {
-    if (availablePointsObject.availablePoints > 0) {
+    if (experience.availablePoints > 0) {
       dispatch(buyExperienceBuffAction(type, subType));
       setExpValueSpentAnimation(true);
     }
   };
+
+  const currentPoints = Object.keys(experienceObject?.[expType]).reduce(
+    (results, key) => results + ~~experience[key],
+    0
+  );
+  const maxPoints = Object.values(experienceObject?.[expType]).reduce(
+    (results, { max }) => results + max,
+    0
+  );
 
   return (
     <Flex
@@ -75,13 +84,13 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
           ([subTypeKey, subTypeValue]) => (
             <ExperienceUpgradesCard
               text={subTypeValue.title}
-              value={availablePointsObject[subTypeKey]}
+              value={experience[subTypeKey]}
               max={subTypeValue.max}
               onClick={() => buyBuff(expType, subTypeKey)}
               innerTextArray={subTypeValue.textArray}
               bg={cardTypeColors[expType]}
-              availablePoints={availablePointsObject.availablePoints}
-              lockedText={subTypeValue.lockedText?.(availablePointsObject.exp)}
+              availablePoints={experience.availablePoints}
+              lockedText={subTypeValue.lockedText?.(experience.exp)}
               confirmationState={confirmationState}
               setConfirmationState={setConfirmationState}
               notEnoughPointsCb={() => setNotEnoughPointsAnimation(true)}
@@ -90,34 +99,40 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
           )
         )}
       </Box>
-      <TextWithAnimation
-        marginTop="16px"
-        textAlign="center"
-        padding="0 8px"
-        blink={notEnoughPointsAnimation}
-        onAnimationEnd={() => setNotEnoughPointsAnimation()}
-      >
-        Available points:{' '}
-        <ValueWithAnimation
-          blink={expValueSpentAnimation}
-          onAnimationEnd={() => setExpValueSpentAnimation()}
+      {currentPoints < maxPoints && (
+        <TextWithAnimation
+          marginTop="16px"
+          textAlign="center"
+          padding="0 8px"
+          blink={notEnoughPointsAnimation}
+          onAnimationEnd={() => setNotEnoughPointsAnimation()}
         >
-          {availablePointsObject.availablePoints}
-        </ValueWithAnimation>
-      </TextWithAnimation>
-      <Text
-        fontSize="14px"
-        lineHeight="16px"
-        marginTop="8px"
-        text
-        textAlign="center"
-      >
-        ({experienceTip[expType].message})
-      </Text>
-      {experienceTip[expType].submessage && (
-        <Text fontSize="14px" lineHeight="16px" text textAlign="center">
-          ({experienceTip[expType].submessage})
-        </Text>
+          Available points:{' '}
+          <ValueWithAnimation
+            blink={expValueSpentAnimation}
+            onAnimationEnd={() => setExpValueSpentAnimation()}
+          >
+            {experience.availablePoints}
+          </ValueWithAnimation>
+        </TextWithAnimation>
+      )}
+      {experience.exp < experience.max && (
+        <>
+          <Text
+            fontSize="14px"
+            lineHeight="16px"
+            marginTop="8px"
+            text
+            textAlign="center"
+          >
+            ({experienceTip[expType].message})
+          </Text>
+          {experienceTip[expType].submessage && (
+            <Text fontSize="14px" lineHeight="16px" text textAlign="center">
+              ({experienceTip[expType].submessage})
+            </Text>
+          )}
+        </>
       )}
     </Flex>
   );
