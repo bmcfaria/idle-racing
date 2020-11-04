@@ -151,6 +151,8 @@ const Notifications = () => {
                 />
               ))}
             </Flex>
+
+            <Box h="72px" />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
