@@ -99,18 +99,20 @@ const Notifications = () => {
           zIndex={zIndex.sidebar}
         >
           <DrawerCloseButton />
-          <Link
-            top="12px"
-            left="16px"
-            position="absolute"
-            border={`1px solid ${colors.darkGray}`}
-            borderRadius="4px"
-            bg={colors.red}
-            padding="0 4px"
-            onClick={clearNotifications}
-          >
-            Clear notifications
-          </Link>
+          {notifications.length > 0 && (
+            <Link
+              top="12px"
+              left="16px"
+              position="absolute"
+              border={`1px solid ${colors.darkGray}`}
+              borderRadius="4px"
+              bg={colors.red}
+              padding="0 4px"
+              onClick={clearNotifications}
+            >
+              Clear notifications
+            </Link>
+          )}
 
           <DrawerBody
             marginTop="48px"
