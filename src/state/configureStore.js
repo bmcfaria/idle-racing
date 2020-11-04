@@ -96,6 +96,11 @@ const loadState = () => {
     ) {
       // enable flag
       state.acquiredCar = true;
+
+      // reset exp max values
+      state.experience.business.max = initialState.experience.business.max;
+      state.experience.race.max = initialState.experience.race.max;
+      state.experience.mechanic.max = initialState.experience.mechanic.max;
     }
 
     if (state.version < minimunStoreVersion) {
