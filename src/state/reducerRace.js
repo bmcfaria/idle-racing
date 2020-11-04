@@ -594,6 +594,7 @@ const reducerRace = (state = initialState, { type, payload }) => {
         brandComplete,
         toasts: toasts.length > 0 ? [...state.toasts, ...toasts] : state.toasts,
         ...(newBusinessExpValue && {
+          brandCompleteExpBonus: newBrandCompleteExpBonus,
           experience: {
             ...state.experience,
             business: {
