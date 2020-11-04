@@ -8,6 +8,7 @@ import {
   DrawerCloseButton,
   DrawerBody,
   CircularProgress,
+  Link,
 } from '@chakra-ui/core';
 import { ReactComponent as FlagIcon } from '../assets/icons/flag.svg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,7 +17,7 @@ import NotificationsActiveRace from './NotificationsActiveRace';
 import { useOpenClose, usePassiveIncome } from '../helpers/hooks';
 import { colors, zIndex } from '../helpers/theme';
 import styled from '@emotion/styled';
-import { syncAction } from '../state/actions';
+import { clearNotificationsAction, syncAction } from '../state/actions';
 import Toast from './Toast';
 
 // Workaround to override the circle color without the theme color variants
@@ -54,6 +55,10 @@ const Notifications = () => {
       clearInterval(countDown);
     };
   }, [dispatch, races, passiveIncome]);
+
+  const clearNotifications = () => {
+    dispatch(clearNotificationsAction);
+  };
 
   return (
     <>
@@ -94,6 +99,18 @@ const Notifications = () => {
           zIndex={zIndex.sidebar}
         >
           <DrawerCloseButton />
+          <Link
+            top="12px"
+            left="16px"
+            position="absolute"
+            border={`1px solid ${colors.darkGray}`}
+            borderRadius="4px"
+            bg={colors.red}
+            padding="0 4px"
+            onClick={clearNotifications}
+          >
+            Clear notifications
+          </Link>
 
           <DrawerBody
             marginTop="48px"
