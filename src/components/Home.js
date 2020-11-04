@@ -19,6 +19,7 @@ import HomeCardCars from './HomeCardCars';
 import HomeCardTimeStarted from './HomeCardTimeStarted';
 import { stars } from '../helpers/stars';
 import styled from '@emotion/styled';
+import { useStarsLegend } from '../helpers/hooks';
 
 const StarIconNotification = styled(Box)`
   ${({ starAnimation }) =>
@@ -49,7 +50,7 @@ const StarIcon = props => {
   );
 };
 
-const HomeCardButton = ({ icon, children, ...props }) => (
+const HomeCardButton = ({ icon, iconColor, children, ...props }) => (
   <Button
     w="160px"
     minH="76px"
@@ -66,7 +67,7 @@ const HomeCardButton = ({ icon, children, ...props }) => (
     as={Link}
     {...props}
   >
-    <Box w="40px" h="40px" as={icon} />
+    <Box w="40px" h="40px" as={icon} {...(iconColor && { color: iconColor })} />
     {children}
   </Button>
 );
@@ -76,6 +77,7 @@ const Home = () => {
   const completedStars = Object.values(
     useSelector(starsSelector, shallowEqual)
   ).reduce((results, star) => results + ~~!!star, 0);
+  const { isLegend } = useStarsLegend();
 
   return (
     <Flex
@@ -111,9 +113,18 @@ const Home = () => {
           gridTemplateColumns="repeat(auto-fit, minmax(160px, 1fr))"
           gridGap="8px"
         >
-          <HomeCardButton icon={StarIcon} to="/stars">
+          <HomeCardButton
+            icon={StarIcon}
+            to="/stars"
+            {...(isLegend && { iconColor: colors.lightBlue })}
+          >
             <Box flexGrow="1">
               <Text w="100%">Stars</Text>
+              {isLegend && (
+                <Text w="100%" color={colors.lightBlue}>
+                  Legend
+                </Text>
+              )}
               <Text w="100%" fontSize="16px">
                 {completedStars} / {stars.length}
               </Text>

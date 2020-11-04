@@ -6,6 +6,8 @@ import {
   raceSponsorsActiveSelector,
   eventMultipliersSelector,
   brandCompleteSelector,
+  tracksSelector,
+  tracksStatsSelector,
 } from '../state/selectors';
 import {
   buffValue,
@@ -216,4 +218,15 @@ export const useRaceDurationWithDiscount = duration => {
   const { value } = experience.race.duration;
 
   return discountValue(duration, ~~raceExperience.duration, value);
+};
+
+export const useStarsLegend = () => {
+  const tracksTotalCount = useSelector(tracksSelector).length;
+  const won10RacesCount = Object.values(
+    useSelector(tracksStatsSelector)
+  ).filter(({ won }) => won >= 10).length;
+
+  const isLegend = won10RacesCount === tracksTotalCount;
+  const percentageComplete = (won10RacesCount * 100) / tracksTotalCount;
+  return { isLegend, percentageComplete };
 };

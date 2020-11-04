@@ -4,7 +4,7 @@ import { colors } from '../helpers/theme';
 import { ReactComponent as StarIcon } from '../assets/icons/star.svg';
 import { stars } from '../helpers/stars';
 import { BottomSpacer } from './BottomSpacer';
-import { useDynamicCardContainerWidth } from '../helpers/hooks';
+import { useDynamicCardContainerWidth, useStarsLegend } from '../helpers/hooks';
 import { useSelector } from 'react-redux';
 import { pageNotificationsSelector, starsSelector } from '../state/selectors';
 import styled from '@emotion/styled';
@@ -23,6 +23,59 @@ const StarIconNotification = styled(Box)`
     }
   }
 `;
+
+const LegendStarItem = props => {
+  const { isLegend, percentageComplete } = useStarsLegend();
+
+  if (percentageComplete === 0) {
+    return null;
+  }
+
+  return (
+    <Flex
+      borderRadius="16px"
+      minW="160px"
+      w="160px"
+      h="48px"
+      marginBottom="24px"
+      border={`1px solid ${colors.darkGray}`}
+      lineHeight="16px"
+      alignItems="center"
+      {...(!isLegend && {
+        background: `linear-gradient(to right, ${colors.lightBlue} ${percentageComplete}%, ${colors.white} ${percentageComplete}%)`,
+      })}
+      {...(isLegend && { bg: colors.darkGray })}
+      color={colors.lightBlue}
+      {...props}
+    >
+      {isLegend && (
+        <>
+          <Flex w="40px">
+            <StarIconNotification
+              maxW="24px"
+              maxH="24px"
+              margin="auto"
+              as={StarIcon}
+              starAnimation
+            />
+          </Flex>
+          <Box flexGrow="1" padding="0 4px" color={colors.white}>
+            <Text textAlign="center">Legend</Text>
+          </Box>
+          <Flex w="40px">
+            <StarIconNotification
+              maxW="24px"
+              maxH="24px"
+              margin="auto"
+              as={StarIcon}
+              starAnimation
+            />
+          </Flex>
+        </>
+      )}
+    </Flex>
+  );
+};
 
 const StarItem = ({ star, active, animate, ...props }) => (
   <Flex
@@ -79,6 +132,8 @@ const Stars = () => {
 
   return (
     <Flex w="100%" direction="column" alignItems="center">
+      <LegendStarItem />
+
       <Box
         w={`${containerWidth}px`}
         minWidth="320px"
