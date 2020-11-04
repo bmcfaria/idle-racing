@@ -87,7 +87,16 @@ const loadState = () => {
     if (serializedState === null) {
       return undefined;
     }
-    const state = JSON.parse(serializedState);
+    let state = JSON.parse(serializedState);
+
+    // Force RECALCULATE_BRAND_COMPLETE_TYPE if comming from an older version
+    if (
+      ~~state.brandCompleteExpBonus === 0 &&
+      Object.values(state.brandComplete).filter(brand => brand).length > 0
+    ) {
+      // enable flag
+      state.acquiredCar = true;
+    }
 
     if (state.version < minimunStoreVersion) {
       return {

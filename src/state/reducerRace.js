@@ -40,7 +40,7 @@ import {
 import { brandSponsors } from '../helpers/sponsors';
 import { evaluateSponsors } from '../helpers/sponsors';
 import initialState from './initialState';
-import experience from '../helpers/experience';
+import experience, { brandExpBonus } from '../helpers/experience';
 import { newMechanicsStars, newSponsorsStars } from '../helpers/starsSponsors';
 import { newRewardCarsStars } from '../helpers/starsRewards';
 import { newRacedStars, newRaceWinStars } from '../helpers/starsRaces';
@@ -574,12 +574,34 @@ const reducerRace = (state = initialState, { type, payload }) => {
         []
       );
 
+      const brandCompleteCount = Object.values(brandComplete).filter(
+        brand => brand
+      ).length;
+      const newBrandCompleteExpBonus = brandCompleteCount * brandExpBonus;
+
+      let newBusinessExpValue;
+      if (newBrandCompleteExpBonus !== state.brandCompleteExpBonus) {
+        const businessExpWithoutBrandBonus =
+          state.experience.business.exp - ~~state.brandCompleteExpBonus;
+        newBusinessExpValue =
+          businessExpWithoutBrandBonus + newBrandCompleteExpBonus;
+      }
+
       return {
         ...state,
         //Disable flag
         acquiredCar: false,
         brandComplete,
         toasts: toasts.length > 0 ? [...state.toasts, ...toasts] : state.toasts,
+        ...(newBusinessExpValue && {
+          experience: {
+            ...state.experience,
+            business: {
+              ...state.experience.business,
+              exp: newBusinessExpValue,
+            },
+          },
+        }),
       };
     }
 

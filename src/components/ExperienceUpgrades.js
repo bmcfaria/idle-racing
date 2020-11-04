@@ -6,7 +6,7 @@ import { buyExperienceBuffAction } from '../state/actions';
 import { useExperience } from '../helpers/hooks';
 import styled from '@emotion/styled';
 import ExperienceUpgradesCard from './ExperienceUpgradesCard';
-import experienceObject from '../helpers/experience';
+import experienceObject, { experienceTip } from '../helpers/experience';
 
 const TextWithAnimation = styled(Text)`
   animation: ${({ blink }) =>
@@ -105,6 +105,20 @@ const ExperienceUpgrades = ({ expType, ...props }) => {
           {availablePointsObject.availablePoints}
         </ValueWithAnimation>
       </TextWithAnimation>
+      <Text
+        fontSize="14px"
+        lineHeight="16px"
+        marginTop="8px"
+        text
+        textAlign="center"
+      >
+        ({experienceTip[expType].message})
+      </Text>
+      {experienceTip[expType].submessage && (
+        <Text fontSize="14px" lineHeight="16px" text textAlign="center">
+          ({experienceTip[expType].submessage})
+        </Text>
+      )}
     </Flex>
   );
 };

@@ -71,6 +71,16 @@ const experience = {
   },
 };
 
+export const brandExpBonus = 100;
+export const experienceTip = {
+  business: {
+    message: 'Earn exp by buying and selling cars',
+    submessage: `Brand sponsors give a ${brandExpBonus} exp bonus once unlocked`,
+  },
+  race: { message: 'Earn exp by racing' },
+  mechanic: { message: 'Earn exp by upgrading cars and expanding the garage' },
+};
+
 // Max 9 levels
 export const expLevelPoints = [10, 100, 250, 500, 1000, 1500, 2000, 2500, 3000];
 
