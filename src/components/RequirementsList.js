@@ -58,9 +58,8 @@ const RequirementsListType = ({ type }) => {
 const RequirementsListAttr = ({ attr, requirements }) => {
   const garagesCars = useSelector(garageCarsSelector);
 
-  const meetRequirement = garagesCars.reduce(
-    (result, car) => result && validateAttrRequirements(car, requirements),
-    true
+  const meetRequirement = garagesCars.find(car =>
+    validateAttrRequirements(car, requirements)
   );
 
   const compare = {
