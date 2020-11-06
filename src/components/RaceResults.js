@@ -17,7 +17,8 @@ const Row = ({ index, car, playerCarId, prize = 0 }) => (
     w="100%"
     fontSize="14px"
     lineHeight="14px"
-    color={car?.id === playerCarId ? colors.blue : colors.white}
+    // Colorize even if the car was selled
+    color={!car || car?.id === playerCarId ? colors.blue : colors.white}
   >
     <Text w="8px" textAlign="center">
       {index + 1}
