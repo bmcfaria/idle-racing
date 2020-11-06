@@ -4,8 +4,10 @@ IdleRacing is an idle/incremental game made in react.
 
 ### Screenshots
 
-![Home](screenshots/home.png)
-![Race](screenshots/race.png)
-![Races](screenshots/races.png)
-![Cars](screenshots/cars.png)
-![Garege](screenshots/garage.png)
+<img src="screenshots/home.png" width="300">
+<img src="screenshots/races.png" width="300">
+<br />
+<img src="screenshots/cars.png" width="400">
+<br />
+<img src="screenshots/race.png" width="200">
+<img src="screenshots/garage.png" width="200">
