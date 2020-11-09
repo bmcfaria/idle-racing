@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Flex, Text, Box } from '@chakra-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { colors } from '../helpers/theme';
 import {
   resetAndRecalculateAction,
@@ -14,6 +14,7 @@ import beforeGettingAllCars from '../dev/before_getting_all_cars.json';
 import allRacesGreen from '../dev/all_races_green.json';
 import beforeAllRacesBlue from '../dev/before_all_races_blue.json';
 import Button from './Button';
+import { versionSelector } from '../state/selectors';
 
 const inDev = process.env.NODE_ENV === 'development';
 
@@ -25,6 +26,7 @@ const loadSaveStates = {
 
 const Settings = () => {
   const dispatch = useDispatch();
+  const version = useSelector(versionSelector);
   const fileRef = useRef();
   const [loadSaveNotification, setLoadSaveNotification] = useState(
     loadSaveStates.NONE
@@ -151,6 +153,19 @@ const Settings = () => {
         <Button marginTop="8px" bg={colors.red} onClick={downloadSaveFile}>
           Download
         </Button>
+      </Flex>
+      <Flex
+        w="240px"
+        padding="16px"
+        borderRadius="16px"
+        marginTop="16px"
+        direction="column"
+        bg={colors.lightGray}
+        alignItems="center"
+      >
+        <Text lineHeight="18px" textAlign="center" fontSize="18px">
+          Version: {version}
+        </Text>
       </Flex>
       {inDev && (
         <Flex

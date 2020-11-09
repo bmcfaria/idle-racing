@@ -71,3 +71,5 @@ export const lockedSelector = state => state.locked;
 export const starsSelector = state => state.stars;
 
 export const globalStatsSelector = state => state.globalStats;
+
+export const versionSelector = state => state.version;
