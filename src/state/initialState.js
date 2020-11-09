@@ -21,6 +21,7 @@ const initialState = {
   pageNotifications: {
     garagePage: false,
     garage: [],
+    garageUpgrades: [],
     starsPage: false,
   },
   pageStats: {
@@ -70,7 +71,7 @@ const initialState = {
 
   brandComplete: {},
   brandCompleteExpBonus: 0,
-  version: 0.713,
+  version: 0.714,
   toasts: [],
   eventMultipliers: {},
   warnings: {

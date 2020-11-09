@@ -36,6 +36,7 @@ import {
   passiveMoneyBrands,
   capitalize,
   raceEventToastSubtitle,
+  mechanicSponsorsCount,
 } from '../helpers/utils';
 import { brandSponsors } from '../helpers/sponsors';
 import { evaluateSponsors } from '../helpers/sponsors';
@@ -46,6 +47,7 @@ import { newRewardCarsStars } from '../helpers/starsRewards';
 import { newRacedStars, newRaceWinStars } from '../helpers/starsRaces';
 import { newGetAllCars } from '../helpers/starsCars';
 import { generateTrackStatsCompetitors, raceResults } from '../helpers/race';
+import upgrades from '../helpers/garageUpgrades';
 
 const reducerRace = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -283,6 +285,23 @@ const reducerRace = (state = initialState, { type, payload }) => {
           ? new Date().getTime()
           : state.sponsors.timestamp;
 
+      const mechanicsCount = mechanicSponsorsCount(state.sponsors.active);
+      const newMechanicsCount = mechanicSponsorsCount({
+        ...state.sponsors.active,
+        ...sponsors,
+      });
+      const newGarageUpgrades = upgrades
+        .filter(
+          ({ mechanics }) =>
+            mechanicsCount < mechanics && newMechanicsCount >= mechanics
+        )
+        .map(({ type }) => type);
+
+      const totalGarageUpgrades = [
+        ...state.pageNotifications.garageUpgrades,
+        ...newGarageUpgrades,
+      ];
+
       return {
         ...state,
         ...(Object.keys(sponsors).length > 0 && {
@@ -293,6 +312,11 @@ const reducerRace = (state = initialState, { type, payload }) => {
               ...sponsors,
             },
             timestamp: sponsorsTimestamp,
+          },
+          pageNotifications: {
+            ...state.pageNotifications,
+            garageUpgrades: totalGarageUpgrades,
+            garagePage: newGarageUpgrades.length > 0,
           },
         }),
       };

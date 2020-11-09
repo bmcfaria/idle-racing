@@ -37,6 +37,8 @@ export const pageNotificationsSelector = state => state.pageNotifications;
 
 export const pageNotificationsGarageSelector = state =>
   state.pageNotifications?.garage;
+export const pageNotificationsGarageUpgradesSelector = state =>
+  state.pageNotifications?.garageUpgrades;
 
 export const experienceSelector = state => state.experience;
 

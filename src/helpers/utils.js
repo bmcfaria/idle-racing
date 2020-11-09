@@ -101,6 +101,9 @@ export const moneySponsorsCount = (sponsors, event) =>
     sponsor => (sponsor.event === event || !event) && sponsor.reward === 'money'
   ).length;
 
+export const mechanicSponsorsCount = sponsors =>
+  Object.values(sponsors).filter(({ reward }) => reward === 'mechanic').length;
+
 export const eventSponsorsStats = (tracks, tracksStats) =>
   tracks.reduce(
     (result, track) => ({

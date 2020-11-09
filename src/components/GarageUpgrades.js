@@ -4,10 +4,27 @@ import { colors } from '../helpers/theme';
 import garageUpgrades from '../helpers/garageUpgrades';
 import { useMechanicsCount } from '../helpers/hooksGarage';
 import hexAlpha from 'hex-alpha';
+import styled from '@emotion/styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { pageNotificationsGarageUpgradesSelector } from '../state/selectors';
+import { useState } from 'react';
+import { clearGarageUpgradesNotificationsAction } from '../state/actions';
 
-const MechanicTech = ({ module, totalMechanics }) => (
+const AnimatedBorderMechanicTech = styled(Flex)`
+  ${({ starAnimation }) =>
+    starAnimation &&
+    'animation: mechanic-tech-animation 1s ease-out alternate-reverse infinite'};
+
+  @keyframes mechanic-tech-animation {
+    100% {
+      background-color: ${colors.purple};
+    }
+  }
+`;
+
+const MechanicTech = ({ module, starAnimation, totalMechanics }) => (
   <Flex minW="128px" direction="column" alignItems="center">
-    <Flex
+    <AnimatedBorderMechanicTech
       w="100px"
       h="64px"
       bg={
@@ -20,10 +37,11 @@ const MechanicTech = ({ module, totalMechanics }) => (
       direction="column"
       justifyContent="center"
       lineHeight="20px"
+      starAnimation={starAnimation}
     >
       <Text>{module.text}</Text>
       {module.subText && <Text fontSize="14px">{module.subText}</Text>}
-    </Flex>
+    </AnimatedBorderMechanicTech>
     <Box
       w="100%"
       borderRight="2px solid black"
@@ -45,7 +63,15 @@ const MechanicTech = ({ module, totalMechanics }) => (
 
 const GarageUpgrades = props => {
   const containerRef = useRef();
+  const dispatch = useDispatch();
   const totalMechanics = useMechanicsCount();
+  const newGarageUpgrades = useSelector(
+    pageNotificationsGarageUpgradesSelector
+  );
+  const [
+    garageUpgradesNotifications,
+    setGarageUpgradesNotifications,
+  ] = useState([]);
 
   const nextUpgradeIndex = garageUpgrades.findIndex(
     upgrade => totalMechanics < upgrade.mechanics
@@ -65,6 +91,14 @@ const GarageUpgrades = props => {
         leftUpgradesWidth;
     }
   }, [nextUpgradeIndex]);
+
+  useEffect(() => {
+    if (newGarageUpgrades.length > 0) {
+      setGarageUpgradesNotifications(...newGarageUpgrades);
+
+      dispatch(clearGarageUpgradesNotificationsAction);
+    }
+  }, [dispatch, newGarageUpgrades]);
 
   return (
     <Flex
@@ -97,6 +131,7 @@ const GarageUpgrades = props => {
           <MechanicTech
             module={module}
             totalMechanics={totalMechanics}
+            starAnimation={garageUpgradesNotifications.includes(module.type)}
             key={module.type}
           />
         ))}

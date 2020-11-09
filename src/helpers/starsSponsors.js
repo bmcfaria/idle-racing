@@ -5,6 +5,7 @@ import {
   genericNewStarsNumberCompare,
   genericFindStarId,
 } from './stars';
+import { mechanicSponsorsCount } from './utils';
 
 // Mechanics base stars
 const mechanicsAllStarId = genericFindStarId('mechanics', 'total', 'all');
@@ -13,13 +14,9 @@ const mechanicsUpgradesAllStarId = genericFindStarId(
   'upgrades',
   'all'
 );
-const totalMechanicSponsorsCount = raceSponsors.filter(
-  ({ reward }) => reward === 'mechanic'
-).length;
+const totalMechanicSponsorsCount = mechanicSponsorsCount(raceSponsors);
 export const newMechanicsStars = (stateSponsors, stateStars) => {
-  const obtainedMechanicsCount = Object.values(stateSponsors.active).filter(
-    sponsor => sponsor.reward === 'mechanic'
-  ).length;
+  const obtainedMechanicsCount = mechanicSponsorsCount(stateSponsors.active);
 
   const newMechanicsTotalAll = genericAllCompare(
     obtainedMechanicsCount,

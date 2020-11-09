@@ -6,13 +6,19 @@ import {
   BUY_GARAGE_SLOT_TYPE,
   TUNE_CAR_TYPE,
   CHANGE_CAR_COLOR_TYPE,
+  CLEAR_GARAGE_UPGRADES_NOTIFICATIONS_TYPE,
 } from './actions';
 import {
   upgradeAttribute,
   generateCarPrice,
   availableColors,
 } from '../helpers/data';
-import { ATTRIBUTE_TYPES, buffValue, discountValue } from '../helpers/utils';
+import {
+  ATTRIBUTE_TYPES,
+  buffValue,
+  discountValue,
+  mechanicSponsorsCount,
+} from '../helpers/utils';
 import { maxUnlockedUpgrade, requiredUpgrade } from '../helpers/garageUpgrades';
 import initialState from './initialState';
 import { newSellCarsStars } from '../helpers/starsCars';
@@ -93,9 +99,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
       );
 
       const attribute = car[payload.type];
-      const mechanics = Object.values(state.sponsors.active).filter(
-        sponsor => sponsor.reward === 'mechanic'
-      ).length;
+      const mechanics = mechanicSponsorsCount(state.sponsors.active);
       const requiredUpgradeObject = requiredUpgrade(
         'upgrade_center',
         attribute.value
@@ -153,9 +157,7 @@ const reducerGarage = (state = initialState, { type, payload }) => {
 
       const car = state.garageCars.find(item => item.id === carId);
 
-      const mechanics = Object.values(state.sponsors.active).filter(
-        sponsor => sponsor.reward === 'mechanic'
-      ).length;
+      const mechanics = mechanicSponsorsCount(state.sponsors.active);
 
       const maxUnlockedUpgradeObject = maxUnlockedUpgrade(
         'tuning_center',
@@ -295,12 +297,20 @@ const reducerGarage = (state = initialState, { type, payload }) => {
       };
     }
 
+    case CLEAR_GARAGE_UPGRADES_NOTIFICATIONS_TYPE: {
+      return {
+        ...state,
+        pageNotifications: {
+          ...state.pageNotifications,
+          garageUpgrades: [],
+        },
+      };
+    }
+
     case BUY_GARAGE_SLOT_TYPE: {
       const slotPrice = 250 * 2 ** state.garageSlots;
 
-      const mechanics = Object.values(state.sponsors.active).filter(
-        sponsor => sponsor.reward === 'mechanic'
-      ).length;
+      const mechanics = mechanicSponsorsCount(state.sponsors.active);
 
       const unlockedUpgrade = maxUnlockedUpgrade('garage_expanse', mechanics);
 

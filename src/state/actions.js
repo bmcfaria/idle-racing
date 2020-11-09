@@ -70,6 +70,12 @@ export const openGarageCarAction = carId => ({
   payload: { carId },
 });
 
+export const CLEAR_GARAGE_UPGRADES_NOTIFICATIONS_TYPE =
+  'CLEAR_GARAGE_UPGRADES_NOTIFICATIONS';
+export const clearGarageUpgradesNotificationsAction = {
+  type: CLEAR_GARAGE_UPGRADES_NOTIFICATIONS_TYPE,
+};
+
 export const BUY_EXPERIENCE_BUFF_TYPE = 'BUY_EXPERIENCE_BUFF';
 export const buyExperienceBuffAction = (type, subType) => ({
   type: BUY_EXPERIENCE_BUFF_TYPE,

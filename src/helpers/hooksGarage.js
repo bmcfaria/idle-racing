@@ -6,6 +6,7 @@ import {
 } from '../state/selectors';
 import { useExperience } from './hooks';
 import experienceObject from '../helpers/experience';
+import { mechanicSponsorsCount } from './utils';
 
 export const useGarageCar = carId => {
   const garageCars = useSelector(garageCarsSelector);
@@ -20,9 +21,7 @@ export const useGarageSlotPrice = () => {
 export const useMechanicsCount = () => {
   const sponsors = useSelector(raceSponsorsActiveSelector);
 
-  return Object.values(sponsors).filter(
-    sponsor => sponsor.reward === 'mechanic'
-  ).length;
+  return mechanicSponsorsCount(sponsors);
 };
 
 export const useEmptyGarageSlots = () => {
