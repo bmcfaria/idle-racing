@@ -81,8 +81,6 @@ const reducerRace = (state = initialState, { type, payload }) => {
         state.experience.race.price
       );
 
-      // TODO: return state if not allowed to auto in case of auto
-
       if (
         !car ||
         !track ||
@@ -486,10 +484,6 @@ const reducerRace = (state = initialState, { type, payload }) => {
             race: undefined,
           },
         }),
-        // TODO: cancel race history?
-        // TODO: auto race history
-        // notifications: [pastRace, ...state.notifications],
-        // pastRaces: [pastRace, ...state.pastRaces],
       };
     }
 

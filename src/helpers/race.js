@@ -109,7 +109,6 @@ const getCompetitors = (track, withRandom = false) =>
 export const generateTrackStatsCompetitors = track => {
   const numberOfSamples = 10;
 
-  // TODO: use random seed
   const multipleScoresArrays = [...Array(numberOfSamples)].map(() =>
     getCompetitors(track, true)
       .map(competitor => calculateScore(competitor, track))
@@ -198,7 +197,7 @@ export const raceResults = (car, track) => {
 
 export const validateAttrRequirements = (car, requirements, upgradable) => {
   const carAttrs = calculateCarAttributeValues(car);
-  // TODO: handle upgradable tuned cars
+
   return requirements.reduce((result, requirement) => {
     if (requirement.type === 'attr') {
       const sum =
