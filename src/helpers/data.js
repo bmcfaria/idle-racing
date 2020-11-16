@@ -5,9 +5,6 @@ import tracksFile from '../assets/lists/tracks.json';
 import raceSponsorsFile from '../assets/lists/raceSponsors.json';
 import raceEventsFile from '../assets/lists/raceEvents.json';
 
-// To help on manual object creation
-window.uuid = uuid;
-
 const inDev = process.env.NODE_ENV === 'development';
 const devDuration = inDev && 1 * 1000;
 
@@ -317,7 +314,6 @@ export const cars = carsFile.reduce(
     car?.id.length > 0 ? [...results, generateCar(car)] : results,
   []
 );
-window.cars = cars;
 
 export const tracks = tracksFile.reduce(
   (results, track) =>

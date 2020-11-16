@@ -103,7 +103,6 @@ const calculateCompetitors = (track, withRandom = false) => {
 };
 
 const getCompetitors = (track, withRandom = false) =>
-  // competitors.filter(item => item['track id'] === track.id);
   calculateCompetitors(track, withRandom);
 
 export const generateTrackStatsCompetitors = track => {

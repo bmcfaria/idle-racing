@@ -121,7 +121,6 @@ const OfflineEarningsNotification = props => {
       isOpen={showModal && earningsToShow}
       onClose={onClose}
       zIndex={zIndex.warningModal}
-      // To center modal vertically
       paddingTop="80px"
     >
       <Flex

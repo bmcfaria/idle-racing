@@ -155,7 +155,6 @@ const reducerRace = (state = initialState, { type, payload }) => {
         finishRace: true,
 
         races: state.races.filter(item => item.id !== race.id),
-        // notifications: [pastRace, ...state.notifications],
         pastRaces: [pastRace, ...state.pastRaces],
       };
     }

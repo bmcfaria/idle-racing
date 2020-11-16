@@ -11,7 +11,7 @@ const initialState = {
   tracksStats: {},
 
   money: initialMoney,
-  // This will be used to take track of overall spending
+  // This will be used to track of overall spending
   lastMoneyValue: initialMoney,
   // For statistics
   totalMoneyEarned: 0,

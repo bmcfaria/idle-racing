@@ -17,7 +17,6 @@ export const stars = starsFile.reduce(
     star?.type.length > 0 ? [...results, generateStar(star)] : results,
   []
 );
-window.stars = stars;
 
 export const starsByTypeObject = stars.reduce(
   (results, star) => ({
@@ -26,7 +25,6 @@ export const starsByTypeObject = stars.reduce(
   }),
   {}
 );
-window.starsByType = starsByTypeObject;
 
 export const starsByType = (type, reqType) =>
   starsByTypeObject[type]?.filter(
