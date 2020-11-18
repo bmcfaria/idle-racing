@@ -2,7 +2,13 @@
 
 idle/incremental game made in react.
 
-### Live version
+### Armorgames version
+
+https://armorgames.com/idleracing-game/19065
+
+### Live version (auto deploy)
+
+This version is in sync with the master branch and it's responsive (better suited for mobile devices than the armorgames version)
 
 https://idleracing.netlify.app/
 
