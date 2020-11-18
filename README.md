@@ -4,7 +4,7 @@ idle/incremental game made in react.
 
 ### Armorgames version
 
-https://armorgames.com/idleracing-game/19065
+https://armorgames.com/idleracing-game
 
 ### Live version (auto deploy)
 
